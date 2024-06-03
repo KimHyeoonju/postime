@@ -1,0 +1,33 @@
+.write-wrap{
+    width: 100%;
+    height: 100%;
+    background: #F6F7F9;
+    
+    display: flex;
+}
+.write-inner {
+    width: 1220px;
+    height: 100%;
+
+}
+.write-header{
+    width: 100%;
+    height: 310px;
+    border-bottom: solid 1px #DDDFE1;
+}
+.write-main{
+    width: 100%;
+    height: 100%;
+}
+.write-main-text{}
+.write-main-img{}
+
+.chat-wrap{
+    width: 400px;
+    height: 100%;
+    /* background: #000; */
+    border-left: solid 1px #DDDFE1;
+}
+.chat-header{}
+.chat-comment{}
+.chat-comment-write{}
