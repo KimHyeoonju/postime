@@ -1,0 +1,11 @@
+nav {
+  background-color: yellow;
+  min-width: 300px;
+  width: 300px;
+
+  /* min-width: 315px;
+  width: 315px; */
+
+  min-height: 100%;
+  display: flex;
+}
