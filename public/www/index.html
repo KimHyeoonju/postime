@@ -3,41 +3,197 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+    />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/common.css" />
     <!-- nav 담당자 : 김현주 -->
     <link rel="stylesheet" href="./css/nav.css" />
     <!-- header 담당자 : 박성호 -->
     <link rel="stylesheet" href="./css/header.css" />
-    <link rel="stylesheet" href="./css/section.css" />
+
+    <link rel="stylesheet" href="./css/todolist.css" />
+
     <title>POSTIME</title>
   </head>
   <body>
     <div class="wrap">
+      <!-- menu 담당자 : 김현주 -->
       <nav>
-        <!-- menu 담당자 : 김현주 -->
-        <div class="menu"></div>
+        <div class="menu">
+          <!-- nav.js 들어오는 곳 -->
+          <div class="div-menu-header">
+            <h1 class="menu-header">
+              <a href="index.html">
+                <div class="postime-logo"></div>
+                <span class="blind">POSTIME</span>
+              </a>
+            </h1>
+          </div>
+
+          <div class="move-writepage-btn-area-wrap">
+            <div class="move-writepage-btn-area">
+              <span class="move-writepage">
+                <button type="button" class="move-writepage-btn">
+                  <!-- <div class="writepage-btn-icon"></div> -->
+                  <span class="ns-font-bold-17">일정 등록</span>
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <!-- 리액트에서 수정 -->
+              <i class="xi-home-o icon-35">전체 일정</i>
+            </div>
+          </div>
+
+          <div class="nav-content">
+            <div class="nav-wrap">
+              <div class="nav-inner">
+                <div class="div-calender div-mycalender-title">
+                  <h1 class="mycalender-title">
+                    <span class="">내 캘린더</span>
+                  </h1>
+                </div>
+                <div class="div-calender div-mycalender-list">
+                  <div class="div-calender mycalender-list mycalender">
+                    <div class="calender-color"></div>
+                    <div class="calender-name">내 캘린더</div>
+                  </div>
+                  <div class="div-calender calender-list a-team-calender">
+                    <div class="calender-color"></div>
+                    <div class="calender-name">A팀 캘린더</div>
+                  </div>
+                  <div class="div-calender mycalender-list b-team-calender">
+                    <div class="calender-color"></div>
+                    <div class="calender-name">B팀 캘린더</div>
+                  </div>
+                </div>
+              </div>
+              <!-- 리액트에서 수정 -->
+              <!-- <i class="xi-home-o icon-35">전체 일정</i> -->
+            </div>
+          </div>
+        </div>
       </nav>
       <main>
-        <header>
-          <!-- header 담당자 : 박성호 -->
-          <div class="header"></div>
-        </header>
-        <section>
-          <!-- main-calender 담당자 : 김현주 -->
-          <!-- <div class="main-calender">캘린더</div> -->
-          <div class=""></div>
-        </section>
+        <div>
+          <header>
+            <!-- header 담당자 : 박성호 -->
+            <div class="header">test</div>
+          </header>
+        </div>
+        <div>
+          <section>
+            <!-- main-calender 담당자 : 김현주 -->
+            <!-- <div class="main-calender">캘린더</div> -->
+            <div class="text"></div>
+          </section>
+          <section>
+            <!-- todo-list 담당자 : 김현주 -->
+            <div class="todo-list-menu-wrap">
+              <div class="todo-list-menu-div">
+                <div class="todo-list-wrap">
+                  <div class="todo-list-btn-wrap">
+                    <button type="button" class="todo-create-btn">
+                      + 추가
+                    </button>
+                  </div>
+
+                  <!-- todo-list-box : start -->
+                  <div class="todo-list-box">
+                    <!-- today -->
+                    <div class="todo-list-sub-title todo-list-today">
+                      <span class="todo-list-sub-title-text">오늘까지 (1)</span>
+                    </div>
+                    <div class="todo-list">
+                      <div class="todo">
+                        <input
+                          type="checkbox"
+                          class="todo-checkbox today-checkbox-01"
+                        />
+                        <div class="todo-info-wrap todo-info-no-01">
+                          <div class="todo-info">
+                            <div class="todo-info-tag">태그</div>
+                            <div class="todo-info-title">개인 일정 1</div>
+                          </div>
+                          <div class="todo-deadline">
+                            <span class="todo-deadline-text">6월 3일 마감</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- this-month -->
+                    <div class="todo-list-sub-title todo-list-this-month">
+                      <span class="todo-list-sub-title-text"
+                        >이번달까지 (3)</span
+                      >
+                    </div>
+                    <div class="todo-list">
+                      <div class="todo">
+                        <input
+                          type="checkbox"
+                          class="todo-checkbox this-month-checkbox-01"
+                        />
+                        <div class="todo-info-wrap todo-info-no-01">
+                          <div class="todo-info">
+                            <div class="todo-info-tag dis-none">태그</div>
+                            <div class="todo-info-title">개인 일정 1</div>
+                          </div>
+                          <div class="todo-deadline">
+                            <span class="todo-deadline-text">6월 3일 마감</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="todo">
+                        <input
+                          type="checkbox"
+                          class="todo-checkbox this-month-checkbox-02"
+                        />
+                        <div class="todo-info-wrap todo-info-no-02">
+                          <div class="todo-info">
+                            <div class="todo-info-tag dis-none">태그</div>
+                            <div class="todo-info-title">개인 일정 1</div>
+                          </div>
+                          <div class="todo-deadline">
+                            <span class="todo-deadline-text">6월 3일 마감</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="todo">
+                        <input
+                          type="checkbox"
+                          class="todo-checkbox this-month-checkbox-02"
+                        />
+                        <div class="todo-info-wrap todo-info-no-03">
+                          <div class="todo-info">
+                            <div class="todo-info-tag dis-none">태그</div>
+                            <div class="todo-info-title">개인 일정 1</div>
+                          </div>
+                          <div class="todo-deadline">
+                            <span class="todo-deadline-text">6월 3일 마감</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- todo-list-box : end -->
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </main>
-      <aside>
-        <!-- todo-list 담당자 : 김현주 -->
-        <div class="todo-list"></div>
-      </aside>
     </div>
   </body>
 </html>
 
 <!-- menu 담당자 : 김현주 -->
-<script src="./js/nav.js"></script>
+<!-- <script src="./js/nav.js"></script> -->
 <!-- header 담당자 : 박성호 -->
-<script src="./js/header.js"></script>
+<!-- <script src="./js/header.js"></script> -->

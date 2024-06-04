@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>회원가입</h1>
+      </header>
+      <div class="signup-input">
+        <div class="signup-input-name">
+          <p>성명</p>
+          <input type="text" class="name" placeholder="성명" />
+        </div>
+        <br />
+        <div class="signup-input-id">
+          <p>아이디</p>
+          <input
+            type="text"
+            class="id"
+            placeholder="아이디 입력 (6~12자)"
+          /><br /><button type="button"><span>중복확인</span></button>
+        </div>
+        <br />
+        <div class="signup-input-email">
+          <p>이메일</p>
+          <input type="text" class="email" placeholder="이메일" /><br /><button
+            type="button"
+          >
+            <span>중복확인</span>
+          </button>
+        </div>
+        <br />
+        <div class="signup-input-pw">
+          <p>비밀번호</p>
+          <input
+            type="password"
+            class="pw"
+            placeholder="(영어, 숫자, 특수문자 포함 8~20자)"
+          />
+        </div>
+        <br />
+        <div class="signup-input-pwcheck">
+          <p>비밀번호 확인</p>
+          <input
+            type="password"
+            class="pwcheck"
+            placeholder="비밀번호 재입력"
+          />
+        </div>
+      </div>
+      <button>
+        <span>가입하기</span>
+      </button>
+    </div>
+  </body>
+</html>
