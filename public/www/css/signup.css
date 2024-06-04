@@ -1,0 +1,57 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.signup-input {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.signup-input p {
+  font-size: 20px;
+  color: #0f1015;
+}
+
+.signup-input- {
+  margin-bottom: 30px;
+}
+
+.signup-input-name {
+}
+
+.signup-input-id {
+}
+.signup-input-email {
+}
+.signup-input-pw {
+}
+.signup-input-pwcheck {
+}
+
+.double-check {
+  width: 80px;
+  height: 35px;
+  margin-top: 10px;
+  float: right;
+}
+
+.double-check span {
+  font-size: 14px;
+  /* font-weight: bold; */
+  color: #f6f7f9;
+}
+
+.bubble {
+  position: absolute;
+  font-size: 14px;
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 15px 15px 0 15px;
+  padding: 10px;
+  width: 280px;
+  margin: 30px;
+}

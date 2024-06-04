@@ -3,37 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>회원가입</title>
+    <title>회원가입 페이지</title>
+    <link rel="stylesheet" href="./css/signup.css" />
+    <link rel="stylesheet" href="./css/userstyle.css" />
   </head>
   <body>
     <div class="wrap">
       <header>
-        <h1>회원가입</h1>
+        <div class="user-title-line">
+          <h1>회원가입</h1>
+        </div>
       </header>
       <div class="signup-input">
         <div class="signup-input-name">
           <p>성명</p>
           <input type="text" class="name" placeholder="성명" />
         </div>
-        <br />
+
         <div class="signup-input-id">
           <p>아이디</p>
-          <input
-            type="text"
-            class="id"
-            placeholder="아이디 입력 (6~12자)"
-          /><br /><button type="button"><span>중복확인</span></button>
-        </div>
-        <br />
-        <div class="signup-input-email">
-          <p>이메일</p>
-          <input type="text" class="email" placeholder="이메일" /><br /><button
-            type="button"
-          >
+          <input type="text" class="id" placeholder="아이디 입력 (6~12자)" />
+          <br /><button type="button" class="double-check">
             <span>중복확인</span>
           </button>
         </div>
-        <br />
+
+        <div class="signup-input-email">
+          <div class="bubble">이미 존재하는 이메일입니다.</div>
+          <p>이메일</p>
+
+          <input type="text" class="email" placeholder="이메일" /><br />
+          <button type="button" class="double-check">
+            <span>중복확인</span>
+          </button>
+        </div>
+
         <div class="signup-input-pw">
           <p>비밀번호</p>
           <input
@@ -42,7 +46,7 @@
             placeholder="(영어, 숫자, 특수문자 포함 8~20자)"
           />
         </div>
-        <br />
+
         <div class="signup-input-pwcheck">
           <p>비밀번호 확인</p>
           <input
