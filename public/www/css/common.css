@@ -65,7 +65,7 @@ section {
   position: absolute;
   width: 100%;
   height: calc(100% - 80px);
-  background-color: green;
+  /* background-color: green; */
   /* height: 100%; */
 }
 
