@@ -37,6 +37,12 @@ body {
   border-radius: 12px;
 }
 
+.ns-font-bold-17 {
+  /* font-family: 추가; */
+  font-size: 17px;
+  font-weight: bold;
+}
+
 main {
   display: flex;
   flex-direction: column;
