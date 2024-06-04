@@ -57,15 +57,15 @@ main {
 }
 
 header {
-  z-index: 9999;
+  /* z-index: 9999; */
 }
 
 section {
-  z-index: 1;
-  position: absolute;
+  /* z-index: 1; */
+  /* position: absolute; */
   width: 100%;
   height: calc(100% - 80px);
-  background-color: green;
+  /* background-color: green; */
   /* height: 100%; */
 }
 
