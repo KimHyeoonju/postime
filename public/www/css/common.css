@@ -48,6 +48,12 @@ button {
   font-weight: bold;
 }
 
+.ns-font-bold-20 {
+  /* font-family: 추가; */
+  font-size: 20px;
+  font-weight: bold;
+}
+
 main {
   display: flex;
   flex-direction: column;
