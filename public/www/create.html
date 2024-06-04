@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/common.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+    />
     <!-- nav 담당자 : 김현주 -->
     <link rel="stylesheet" href="./css/nav.css" />
     <!-- header 담당자 : 박성호 -->
@@ -32,20 +36,60 @@
             <!-- 메인 좌측 -->
             <div class="write-inner">
               <!-- 글쓰기 상단 제목부 -->
-              <div class="write-header"></div>
+              <div class="write-header">
+                <div class="write-header-text">
+                  <div class="write-header-title">
+                    <textarea
+                      id="write-header-title"
+                      type="text"
+                      placeholder="제목 없음"
+                      maxlength="25"
+                    ></textarea>
+                  </div>
+                  <div class="write-header-dec">
+                    <span>2024.06.03</span>
+                    <span>태그</span>
+                    <span>설명</span>
+                  </div>
+                </div>
+                <div class="write-button">
+                  <button class="write-button-primary">
+                    <span>수정</span>
+                  </button>
+                  <button class="write-button-primary">
+                    <span>삭제</span>
+                  </button>
+                </div>
+              </div>
               <!-- 글쓰기 본문 -->
               <div class="write-main">
                 <div class="write-main-text">
-                  <div class="fack-text"></div>
+                  <textarea
+                    type="text"
+                    placeholder="내용을 입력하세요."
+                  ></textarea>
                 </div>
-                <div class="write-main-img"></div>
+                <div class="write-img">
+                  <div class="write-img-inner">
+                    <div class="write-img-contain">1</div>
+                    <div class="write-img-contain">1</div>
+                    <div class="write-img-contain">1</div>
+                    <div class="write-img-contain">1</div>
+                    <div class="write-img-contain">1</div>
+                    <div class="write-img-contain-button">
+                      <i class="xi-plus"></i>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- 메인 우측 댓글 -->
             <div class="chat-wrap">
-              <div class="chat-header"></div>
-              <div class="chat-comment"></div>
-              <div class="chat-comment-write"></div>
+              <div class="chat-inner">
+                <div class="chat-header"></div>
+                <div class="chat-comment"></div>
+                <div class="chat-comment-write"></div>
+              </div>
             </div>
           </div>
         </section>
@@ -62,3 +106,5 @@
 <script src="./js/nav.js"></script>
 <!-- header 담당자 : 박성호 -->
 <script src="./js/header.js"></script>
+<!-- main write 담당자 : 김수민 -->
+<script src="./js/write.js"></script>
