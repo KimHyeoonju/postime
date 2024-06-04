@@ -1,0 +1,30 @@
+.complete {
+  width: 100%;
+  height: calc(100% - 80px);
+
+  background-color: #f6f7f9;
+}
+
+.complete-inner {
+  padding: 0 50px;
+}
+
+.complete-inner h1 {
+  font-size: 30px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.complete-inner ul {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.complete-inner li {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #cacaca;
+  padding: 10 0px;
+}
