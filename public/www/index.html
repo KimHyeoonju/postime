@@ -9,13 +9,10 @@
     />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/common.css" />
-    <!-- nav 담당자 : 김현주 -->
+    <!-- nav 담당자 :  -->
     <link rel="stylesheet" href="./css/nav.css" />
     <!-- header 담당자 : 박성호 -->
     <link rel="stylesheet" href="./css/header.css" />
-
-    <link rel="stylesheet" href="./css/todolist.css" />
-
     <title>POSTIME</title>
   </head>
   <body>
@@ -38,7 +35,9 @@
               <span class="move-writepage">
                 <button type="button" class="move-writepage-btn">
                   <!-- <div class="writepage-btn-icon"></div> -->
-                  <span class="ns-font-bold-17">일정 등록</span>
+                  <span class="ns-font-bold-17" onclick="todolistMenuBtnClick()"
+                    >일정 등록</span
+                  >
                 </button>
               </span>
             </div>
@@ -56,20 +55,27 @@
               <div class="nav-inner">
                 <div class="div-calender div-mycalender-title">
                   <h1 class="mycalender-title">
-                    <span class="">내 캘린더</span>
+                    <div class="mycalender-btn">
+                      <!-- 추후 여닫는 아이콘 추가 -->
+                    </div>
+                    <span class="ns-font-bold-20">내 캘린더</span>
                   </h1>
                 </div>
                 <div class="div-calender div-mycalender-list">
                   <div class="div-calender mycalender-list mycalender">
-                    <div class="calender-color"></div>
+                    <!-- <div class="calender-color"> -->
+                    <input type="checkbox" class="calender-color" />
+                    <!-- </div> -->
                     <div class="calender-name">내 캘린더</div>
                   </div>
                   <div class="div-calender calender-list a-team-calender">
-                    <div class="calender-color"></div>
+                    <!-- <div class="calender-color"></div> -->
+                    <input type="checkbox" class="calender-color" />
                     <div class="calender-name">A팀 캘린더</div>
                   </div>
                   <div class="div-calender mycalender-list b-team-calender">
-                    <div class="calender-color"></div>
+                    <!-- <div class="calender-color"></div> -->
+                    <input type="checkbox" class="calender-color" />
                     <div class="calender-name">B팀 캘린더</div>
                   </div>
                 </div>
@@ -95,97 +101,8 @@
           </section>
           <section>
             <!-- todo-list 담당자 : 김현주 -->
-            <div class="todo-list-menu-wrap">
-              <div class="todo-list-menu-div">
-                <div class="todo-list-wrap">
-                  <div class="todo-list-btn-wrap">
-                    <button type="button" class="todo-create-btn">
-                      + 추가
-                    </button>
-                  </div>
-
-                  <!-- todo-list-box : start -->
-                  <div class="todo-list-box">
-                    <!-- today -->
-                    <div class="todo-list-sub-title todo-list-today">
-                      <span class="todo-list-sub-title-text">오늘까지 (1)</span>
-                    </div>
-                    <div class="todo-list">
-                      <div class="todo">
-                        <input
-                          type="checkbox"
-                          class="todo-checkbox today-checkbox-01"
-                        />
-                        <div class="todo-info-wrap todo-info-no-01">
-                          <div class="todo-info">
-                            <div class="todo-info-tag">태그</div>
-                            <div class="todo-info-title">개인 일정 1</div>
-                          </div>
-                          <div class="todo-deadline">
-                            <span class="todo-deadline-text">6월 3일 마감</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- this-month -->
-                    <div class="todo-list-sub-title todo-list-this-month">
-                      <span class="todo-list-sub-title-text"
-                        >이번달까지 (3)</span
-                      >
-                    </div>
-                    <div class="todo-list">
-                      <div class="todo">
-                        <input
-                          type="checkbox"
-                          class="todo-checkbox this-month-checkbox-01"
-                        />
-                        <div class="todo-info-wrap todo-info-no-01">
-                          <div class="todo-info">
-                            <div class="todo-info-tag dis-none">태그</div>
-                            <div class="todo-info-title">개인 일정 1</div>
-                          </div>
-                          <div class="todo-deadline">
-                            <span class="todo-deadline-text">6월 3일 마감</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="todo">
-                        <input
-                          type="checkbox"
-                          class="todo-checkbox this-month-checkbox-02"
-                        />
-                        <div class="todo-info-wrap todo-info-no-02">
-                          <div class="todo-info">
-                            <div class="todo-info-tag dis-none">태그</div>
-                            <div class="todo-info-title">개인 일정 1</div>
-                          </div>
-                          <div class="todo-deadline">
-                            <span class="todo-deadline-text">6월 3일 마감</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="todo">
-                        <input
-                          type="checkbox"
-                          class="todo-checkbox this-month-checkbox-02"
-                        />
-                        <div class="todo-info-wrap todo-info-no-03">
-                          <div class="todo-info">
-                            <div class="todo-info-tag dis-none">태그</div>
-                            <div class="todo-info-title">개인 일정 1</div>
-                          </div>
-                          <div class="todo-deadline">
-                            <span class="todo-deadline-text">6월 3일 마감</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- todo-list-box : end -->
-                </div>
-              </div>
-            </div>
+            <!-- 애니메이션은 React 에서 추가 예정 -->
+            <div class="todo-list-menu-wrap todolistOff"></div>
           </section>
         </div>
       </main>
@@ -193,7 +110,12 @@
   </body>
 </html>
 
+<!-- todolist 담당자 : 김현주 -->
+<link rel="stylesheet" href="./css/todolist.css" />
 <!-- menu 담당자 : 김현주 -->
 <!-- <script src="./js/nav.js"></script> -->
 <!-- header 담당자 : 박성호 -->
-<!-- <script src="./js/header.js"></script> -->
+<script src="./js/header.js"></script>
+<script src="./js/todolist.js"></script>
+<!-- todolistMenuBtnClick 담당자 : 김현주 -->
+<script src="./js/todolistMenuBtnClick.js"></script>
