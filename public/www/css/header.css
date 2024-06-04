@@ -48,7 +48,6 @@ header {
   border: 1px solid #cacaca;
   outline: none;
 }
-
 .header-list .search {
   width: 24px;
   height: 24px;
@@ -56,7 +55,6 @@ header {
   background-size: contain;
   margin-right: 25px;
 }
-
 .header-list .menu {
   width: 24px;
   height: 24px;

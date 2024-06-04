@@ -16,20 +16,18 @@ const headerClass = document.querySelector(".header");
 headerClass.innerHTML = headerHtml;
 
 // window.addEventListener("load", function () {
-//   const search = document.querySelector(".search");
-//   const searchBox = document.querySelector(".search-box");
+//   const search = document.querySelector(".icon-search");
+//   const searchBox = document.querySelector(".header-search-box");
 
 //   let searchOpen = false;
 
 //   search.addEventListener("click", function () {
 //     if (searchOpen) {
-//       searchBox.classList.remove("search-box-active");
-//       //   text.classList.remove(".search-text-open");
+//       searchBox.classList.remove("header-search-box-active");
 //       //   console.log("클로즈");
 //       searchOpen = false;
 //     } else {
-//       searchBox.classList.add("search-box-active");
-//       //   text.classList.add(".search-text-open");
+//       searchBox.classList.add("header-search-box-active");
 //       //   console.log("오픈");
 //       searchOpen = true;
 //     }
