@@ -1,0 +1,63 @@
+/* login, signup, userinfo, usermodify, searchid, searchpw에서 사용 중입니다 */
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 600;
+}
+
+header {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.user-title-line {
+  border-bottom: 5px solid #512772;
+  display: inline-block;
+  padding: 0 45px;
+}
+
+.user-title-line h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+input {
+  width: 400px;
+  height: 40px;
+  background: #d8dae3;
+  border-radius: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  font-size: 17px;
+  color: #393d50;
+}
+::placeholder {
+  font-size: 17px;
+  font-weight: bold;
+  color: #7f85a4;
+}
+
+button {
+  width: 260px;
+  height: 40px;
+  background: #512772;
+  border-radius: 10px;
+  margin: 60px auto 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+span {
+  color: #ffffff;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: #f6f7f9;
+  border-color: #512772;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+button:hover span {
+  color: #512772;
+}
