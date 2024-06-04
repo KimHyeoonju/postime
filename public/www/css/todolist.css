@@ -1,3 +1,7 @@
+.todolistOff {
+  display: none;
+}
+
 .todo-list-menu-wrap {
   position: absolute;
   /* top: 80px; */
@@ -83,6 +87,14 @@
   border-bottom: 1px solid #dddfe1;
 }
 
+.this-month-todo-list > .this-month-01 {
+  border-left: 7px solid #ad7cfe;
+}
+
+.this-month-todo-list > .this-month-02 {
+  border-left: 7px solid #fee17c;
+}
+
 .todo:last-child {
   border-bottom: none;
 }
@@ -139,6 +151,10 @@ input[type="checkbox"]:checked + .todo-info-wrap .todo-info-title {
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
+}
+
+.next-month-todo-list .todo-info-tag {
+  background-color: #b197fc;
 }
 
 .todo-info-title {

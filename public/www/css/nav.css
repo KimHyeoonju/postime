@@ -115,3 +115,37 @@ nav {
   /* height: 59px; */
   box-sizing: border-box;
 }
+
+.mycalender-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: center;
+  margin: 5px 0px;
+}
+.mycalender-btn {
+  width: 21px;
+  height: 12px;
+  background-color: bisque;
+  margin-right: 13px;
+}
+
+.mycalender-list {
+  padding-left: 50px;
+  display: flex;
+  flex-direction: row;
+  margin: 10px 0;
+}
+
+.calender-color {
+  width: 20px;
+  height: 20px;
+  color: red;
+}
+
+.calender-name {
+  padding-left: 10px;
+  font-size: 17px;
+  /* font-weight: 500; */
+}
