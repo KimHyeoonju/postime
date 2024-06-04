@@ -1,11 +1,117 @@
 nav {
-  background-color: yellow;
+  position: relative;
+
+  z-index: 1200;
+  flex-shrink: 0;
+  height: 100%;
   min-width: 300px;
+  max-width: 300px;
   width: 300px;
+  border-right: 1px solid #dddfe1;
+  background-color: #ffffff;
+  margin-left: 0;
+}
 
-  /* min-width: 315px;
-  width: 315px; */
-
-  min-height: 100%;
+.menu {
   display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+  align-items: center;
+}
+
+.div-menu-header {
+  visibility: visible;
+  display: block;
+  position: relative;
+  padding-top: 18px;
+  padding-bottom: 10px;
+  /* padding: 18px 0 0 22px; */
+  height: auto;
+  box-sizing: border-box;
+}
+
+.menu-header {
+  display: inline-block;
+  padding: 7px 0;
+  font-size: 1.4rem;
+}
+
+.postime-logo {
+  background-image: url("../image/logo.png");
+  background-size: cover;
+  height: 36px;
+  width: 177px;
+}
+
+.blind {
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+
+.move-writepage-btn-area-wrap {
+  /* position: relative; */
+  width: 100%;
+  flex-basis: auto;
+  padding: 0;
+  margin: 22px 0;
+}
+
+.move-writepage-btn-area {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0 40px;
+}
+
+.move-writepage {
+}
+
+.move-writepage-btn {
+  border: 0;
+  background-color: #242733;
+  width: 200px;
+  height: 60px;
+  color: #f6f7f9;
+  border-radius: 5px;
+}
+
+.icon-35 {
+  font-size: 35px;
+}
+
+.nav-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1;
+  overflow: hidden;
+}
+
+.nav-wrap {
+  width: 100%;
+  padding: 0;
+  margin: 31px 0 0;
+}
+
+.nav-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.div-calender {
+  padding-left: 22px;
+  /* min-height: 33px; */
+  height: auto;
+}
+
+.div-mycalender-title {
+  position: relative;
+  display: flex;
+  align-items: center;
+  /* height: 59px; */
+  box-sizing: border-box;
 }
