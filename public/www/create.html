@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./css/header.css" />
     <!-- main write 담당자 : 김수민 -->
     <link rel="stylesheet" href="./css/write.css" />
+    <link rel="stylesheet" href="./css/modal.css" />
 
     <title>POSTIME</title>
   </head>
@@ -35,6 +36,16 @@
           <section>
             <!-- main write create 담당자 : 김수민 -->
             <div class="write-wrap">
+              <!-- 모달창 -->
+              <!-- <div class="modal-wrap">
+                <div class="modal-inner">
+                  <div class="modal-header"></div>
+                  <div class="modal-contain">
+                    <div class="modal-text"></div>
+                    <div class="modal-button"></div>
+                  </div>
+                </div>
+              </div> -->
               <!-- 메인 좌측 -->
               <div class="write-inner">
                 <!-- 글쓰기 상단 제목부 -->
@@ -55,11 +66,14 @@
                         placeholder="제목 없음"
                         maxlength="25"
                       ></textarea>
+                      <span><i class="xi-bookmark"></i> 내 캘린더</span>
                     </div>
                     <div class="write-header-dec">
-                      <span><i class="xi-calendar"></i> 2024.06.03</span>
-                      <span><i class="xi-tag"></i> 태그</span>
-                      <span><i class="xi-pen"></i> 설명</span>
+                      <span
+                        ><i class="xi-calendar"></i> 2024.06.03 -
+                        2024.06.07</span
+                      >
+                      <span><i class="xi-tag"></i> #태그</span>
                     </div>
                   </div>
                 </div>
@@ -71,30 +85,40 @@
                       placeholder="내용을 입력하세요."
                     ></textarea>
                   </div>
+                  <!-- 이미지 업로드 부분 -->
                   <div class="write-img">
                     <div class="write-img-inner">
-                      <div class="write-img-contain">
-                        <i class="xi-close"></i>
-                        <i class="xi-file-image xi-2x"></i>
-                      </div>
-                      <div class="write-img-contain">
-                        <i class="xi-close"></i>
-                        <i class="xi-file-image xi-2x"></i>
-                      </div>
-                      <div class="write-img-contain">
-                        <i class="xi-close"></i>
-                        <i class="xi-file-image xi-2x"></i>
-                      </div>
-                      <div class="write-img-contain">
-                        <i class="xi-close"></i>
-                        <i class="xi-file-image xi-2x"></i>
-                      </div>
-                      <div class="write-img-contain">
-                        <i class="xi-close"></i>
-                        <i class="xi-file-image xi-2x"></i>
-                      </div>
-                      <div class="write-img-contain-button">
+                      <div class="img-upload">
+                        <input
+                          type="file"
+                          class="img-upload-button"
+                          accept="image/*"
+                          required
+                          multiple
+                          style="display: none"
+                        />
                         <i class="xi-plus"></i>
+                      </div>
+
+                      <div class="write-img-contain" id="write-img-show">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
                       </div>
                     </div>
                   </div>
@@ -114,7 +138,14 @@
                       </div>
                       <i class="xi-minus-circle-o xi-2x"></i>
                     </div>
-                    <div class="chat-comment-write"></div>
+                    <div class="chat-comment-write">
+                      <input
+                        type="text"
+                        placeholder="댓글을 작성하세요."
+                        class="chat-comment-input"
+                      />
+                      <i class="xi-location-arrow xi-2x"></i>
+                    </div>
                   </div>
                 </div>
               </div>
