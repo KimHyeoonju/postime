@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <!-- nav 담당자 : 김현주 -->
+    <link rel="stylesheet" href="./css/nav.css" />
+    <!-- header 담당자 : 박성호 -->
+    <link rel="stylesheet" href="./css/header.css" />
+    <!-- 회원정보 페이지 담당자 : 조수현 -->
+    <link rel="stylesheet" href="./css/userinfo.css" />
+
+    <title>POSTIME</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav>
+        <!-- menu 담당자 : 김현주 -->
+        <div class="menu"></div>
+      </nav>
+      <main>
+        <div>
+          <header>
+            <!-- header 담당자 : 박성호 -->
+            <div class="header"></div>
+          </header>
+        </div>
+        <div>
+          <section>
+            <!-- 회원정보 수정 페이지 담당자 : (조수현) -->
+            <div class="user-wrap">
+              <div class="user-title-line">
+                <h1>회원정보 수정</h1>
+              </div>
+
+              <div class="usermodify-input">
+                <div class="usermodify-input-name">
+                  <label for="name">성명</label>
+                  <input type="text" class="name" placeholder="성명" />
+                </div>
+
+                <div class="usermodify-input-email">
+                  <div class="label-field">
+                    <label for="email">이메일</label>
+                    <div class="bubble">
+                      <span>이미 존재하는 이메일입니다.</span>
+                    </div>
+                  </div>
+
+                  <div class="check-field">
+                    <input
+                      type="email"
+                      class="email"
+                      placeholder="이메일 입력"
+                    />
+                    <div class="result-icon"></div>
+                  </div>
+
+                  <button type="submit" class="double-check">
+                    <span>중복확인</span>
+                  </button>
+                </div>
+
+                <div class="usermodify-input-pw">
+                  <label for="pwnow">비밀번호 입력</label>
+                  <div class="check-field">
+                    <input
+                      type="password"
+                      class="pwnow"
+                      placeholder="기존 비밀번호 입력"
+                    />
+                    <div class="result-icon"></div>
+                  </div>
+                </div>
+
+                <div class="usermodify-input-pwchange">
+                  <label for="pw">비밀번호 변경</label>
+                  <div class="check-field">
+                    <input
+                      type="password"
+                      class="pw"
+                      placeholder="(영문 대/소문자, 숫자, 특수문자 포함 8~20자)"
+                    />
+                    <div class="result-icon"></div>
+                  </div>
+                </div>
+
+                <div class="usermodify-input-pwcheck">
+                  <label for="pwcheck">비밀번호 확인</label>
+                  <div class="check-field">
+                    <input
+                      type="password"
+                      class="pwcheck"
+                      placeholder="비밀번호 재입력"
+                    />
+                    <div class="result-icon"></div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="user-button">
+                <span>수정하기</span>
+              </button>
+            </div>
+          </section>
+          <section>
+            <!-- todo-list 담당자 : 김현주 -->
+            <div class="todo-list-menu-wrap"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
+
+<!-- header 담당자 : 박성호 -->
+<script src="./js/header.js"></script>
+<!-- menu 담당자 : 김현주 -->
+<script src="./js/menu.js"></script>

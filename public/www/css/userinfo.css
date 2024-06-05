@@ -1,16 +1,4 @@
-/* signup,  searchid, searchpw에서 사용 중입니다 */
-
-@charset "utf-8";
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
-/* @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap"); */
-
-* {
-  box-sizing: border-box;
-  font-family: "Noto Sans KR", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-}
-.wrap {
+.user-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,17 +17,39 @@
 .user-title-line h1 {
   font-size: 24px;
   font-weight: bold;
+  padding: 10px 0;
 }
 
-label {
-  display: block;
+.userinfo-contents,
+.usermodify-input {
+  display: grid;
+  gap: 30px;
+}
+.userinfo-contents {
+  width: 350px;
+}
+
+.usermodify-input {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.userinfo-contents p {
+  font-weight: 600;
   font-size: 20px;
-  font-weight: bold;
+  color: #0f1015;
+  margin-bottom: 10px;
+}
+.usermodify-input label {
+  display: block;
+  font-weight: 600;
+  font-size: 20px;
   color: #0f1015;
   margin: 10px 0;
 }
 
-input {
+.usermodify-input input {
   width: 400px;
   height: 40px;
   background: #d8dae3;
@@ -49,13 +59,44 @@ input {
   font-size: 17px;
   color: #393d50;
 }
-::placeholder {
+
+.user-content,
+.usermodify-input ::placeholder {
   font-size: 17px;
   font-weight: bold;
   color: #7f85a4;
 }
+.user-content span {
+  padding: 10px;
+}
 
-button {
+.label-field {
+  display: block;
+  width: 400px;
+  align-items: center;
+}
+.label-field label {
+  display: inline-block;
+}
+
+.bubble {
+  text-align: center;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 15px 15px 0 15px;
+  margin-top: 10px;
+  padding: 5px;
+  width: 250px;
+  float: right;
+}
+.bubble span {
+  font-size: 14px;
+  font-weight: 400;
+  color: #f6532b;
+}
+
+/* 버튼 영역 */
+.user-button {
   width: 260px;
   height: 40px;
   background: #512772;
@@ -67,28 +108,28 @@ button {
   justify-content: center;
   align-items: center;
 }
-span {
+.user-button span {
   color: #ffffff;
   font-size: 20px;
 }
 
-button:hover {
+.user-button:hover {
   background-color: #f6f7f9;
   border-color: #512772;
-  border-style: solid;
-  border-width: 2px;
   transition: background-color 0.2s;
   cursor: pointer;
 }
-button:hover span {
+.double-check:hover span,
+.user-button button:hover span {
   color: #512772;
 }
 
 .double-check {
   width: 80px;
   height: 35px;
-  border-style: solid;
-  border-width: 2px;
+  background: #512772;
+  border-color: #0f1015;
+  border-radius: 10px;
   margin-top: 10px;
   margin-right: 65px;
   float: right;
@@ -98,6 +139,15 @@ button:hover span {
   font-size: 14px;
   /* font-weight: bold; */
   color: #f6f7f9;
+}
+
+.double-check:hover {
+  background-color: #f6f7f9;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #512772;
+  transition: background-color 0.2s;
+  cursor: pointer;
 }
 
 /* (V)/(X) 아이콘 영역 */
