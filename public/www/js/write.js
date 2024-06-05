@@ -5,3 +5,11 @@ window.addEventListener("keydown", function (event) {
     event.preventDefault();
   }
 });
+
+// 이미지 업로드 버튼 관련
+window.addEventListener("load", () => {
+  const imgUploadBt = document.querySelector(".img-upload-button");
+  const imgUpload = document.querySelector(".img-upload");
+
+  imgUpload.addEventListener("click", () => imgUploadBt.click());
+});
