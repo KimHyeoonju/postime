@@ -78,8 +78,33 @@ nav {
   border-radius: 5px;
 }
 
-.icon-35 {
-  font-size: 35px;
+.icon-30 {
+  font-size: 30px;
+}
+
+.nav-all-calender-wrap {
+  width: 100%;
+  display: flex;
+  /* margin-top: 20px; */
+  padding: 20px 0px;
+  padding-left: 20px;
+  border-bottom: 1px solid #dddfe1;
+  align-content: center;
+  flex-direction: row;
+}
+
+.nav-all-calender {
+  display: flex;
+  /* align-content: center; */
+  /* justify-content: center; */
+  align-content: center;
+  flex-direction: row;
+
+  gap: 10px;
+}
+
+.all-calender-icon {
+  align-content: center;
 }
 
 .nav-content {
@@ -88,12 +113,28 @@ nav {
   flex-direction: column;
   flex: 1 1;
   overflow: hidden;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dddfe1;
+}
+
+.nav-content:nth-last-child(2) {
+  /* color: red;
+  background-color: yellow; */
+  /* border-bottom: none; */
+}
+
+.nav-content:last-child {
+  position: absolute;
+  bottom: 0;
+  /* background-color: #242733; */
+  border-bottom: none;
+  border-top: 1px solid #dddfe1;
 }
 
 .nav-wrap {
   width: 100%;
   padding: 0;
-  margin: 31px 0 0;
+  margin: 20px 0 0;
 }
 
 .nav-inner {
@@ -124,15 +165,25 @@ nav {
   justify-content: center;
   margin: 5px 0px;
 }
+
 .mycalender-btn {
   width: 21px;
   height: 12px;
   background-color: bisque;
   margin-right: 13px;
 }
+.nav-menu-gap {
+  gap: 10px;
+}
+.nav-icon-style {
+  width: 22px;
+  height: 22px;
+  background-color: aqua;
+  margin-right: 13px;
+}
 
 .mycalender-list {
-  padding-left: 50px;
+  padding-left: 40px;
   display: flex;
   flex-direction: row;
   margin: 10px 0;
@@ -146,6 +197,11 @@ nav {
 
 .calender-name {
   padding-left: 10px;
-  font-size: 17px;
+  align-content: center;
+  font-size: 14px;
   /* font-weight: 500; */
+}
+
+.calenderListOff {
+  display: none;
 }
