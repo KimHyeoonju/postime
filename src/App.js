@@ -8,9 +8,6 @@ import SearchPwPage from "./pages/user/SearchPwPage";
 import SignUpPage from "./pages/user/SignUpPage";
 
 function App() {
-  // 로그인 여부를 상태로 관리
-  const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
-  // const [isLogin, setIsLogin] = useState(false); // 로그인이 되어 있지 않은 경우
 
   return (
     <BrowserRouter>
