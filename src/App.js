@@ -5,7 +5,6 @@ import Header from "./components/layout/Header";
 import Nav from "./components/layout/Nav";
 import TodoList from "./components/layout/TodoList";
 import "./css/common.css";
-import "./css/header.css";
 import "./css/nav.css";
 import "./css/reset.css";
 import Complete from "./pages/Complete";

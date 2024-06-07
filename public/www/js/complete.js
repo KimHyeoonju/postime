@@ -22,12 +22,12 @@ window.addEventListener("load", function () {
     })
     .then(result => {
       //   console.log(result);
-      const listWhere = document.querySelector(".complete-list-wrap");
+      const listWhere = document.querySelector(".common-list-wrap");
 
       let listTags = "";
 
       result.forEach(item => {
-        const tag = `<ul class="complete-list">
+        const tag = `<ul class="common-list">
         <li class="checkbox-area">
           <input type="checkbox" class="com-checkbox" value=${item.id} />
         </li>
@@ -57,7 +57,7 @@ window.addEventListener("load", function () {
     });
 
   // 삭제 버튼 기능 구현
-  const deleteBt = document.querySelector(".complete-button-delete");
+  const deleteBt = document.querySelector(".common-button-delete");
   deleteBt.addEventListener("click", function () {
     const selectedBoxes = document.querySelectorAll(
       'input[type="checkbox"]:checked',
@@ -65,10 +65,10 @@ window.addEventListener("load", function () {
     console.log(selectedBoxes);
     if (selectedBoxes.length > 0) {
       selectedBoxes.forEach(item => {
-        const listItem = item.closest(".complete-list");
+        const listItem = item.closest(".common-list");
         listItem.remove();
       });
-      alert("선택한 항목이 삭제되었습니다.");
+      alert("선택한 항목을 휴지통으로 이동합니다.");
     } else {
       alert("체크박스를 선택해주세요.");
     }

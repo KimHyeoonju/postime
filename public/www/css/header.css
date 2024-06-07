@@ -79,8 +79,8 @@ header {
 }
 /* 더보기 눌렀을때 마이페잊,로그아웃 open */
 .header-more-open {
-  width: 150px;
-  height: 100px;
+  width: 120px;
+  height: 70px;
   transition: height 0.2s ease-in;
 }
 .header-my {
