@@ -25,9 +25,9 @@ import Modify from "./pages/write/Modify";
 
 function App() {
   // 로그인 안된 경우 (로그인, 회원가입, 아이디 찾기, 비밀번호 찾기, 404 페이지만)
-  // const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
   // 로그인이 된 경우
-  const [isLogin, setIsLogin] = useState(true);
+  // const [isLogin, setIsLogin] = useState(true);
 
   return (
     <BrowserRouter>

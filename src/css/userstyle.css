@@ -1,21 +1,28 @@
-/* signup,  searchid, searchpw에서 사용 중입니다 */
-
+/* signup,  searchid, searchpw에서 사용 중 */
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 /* @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap"); */
 
+body {
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
 * {
   box-sizing: border-box;
   font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;
+  font-weight: 400;
   font-style: normal;
 }
+
 .user-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-bottom: 100px;
 }
 
 .user-title-line {
@@ -29,6 +36,8 @@
 .user-title-line h1 {
   font-size: 24px;
   font-weight: bold;
+  padding-bottom: 10px;
+  margin: 0;
 }
 
 .search-input {
@@ -43,10 +52,6 @@
   font-weight: bold;
   color: #0f1015;
   margin: 10px 0;
-}
-
-.label-field label {
-  display: inline-block;
 }
 
 .check-field input,
@@ -67,7 +72,7 @@ input {
   color: #7f85a4;
 }
 
-button {
+.user-button {
   width: 260px;
   height: 40px;
   background: #512772;
@@ -79,12 +84,14 @@ button {
   justify-content: center;
   align-items: center;
 }
-button span {
+
+.user-button span {
+  font-family: "Noto Sans KR", sans-serif;
   color: #ffffff;
   font-size: 20px;
 }
 
-button:hover {
+.user-button:hover {
   background-color: #f6f7f9;
   border-color: #512772;
   border-style: solid;
@@ -92,7 +99,7 @@ button:hover {
   transition: background-color 0.2s;
   cursor: pointer;
 }
-button:hover span {
+.user-button:hover span {
   color: #512772;
 }
 
