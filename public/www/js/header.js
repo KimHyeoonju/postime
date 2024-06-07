@@ -1,4 +1,4 @@
-const headerHtml = ` <div class="header-inner">
+const headerHtml = ` <div class="header"><div class="header-inner">
 <ul class="header-list">
   <li class="header-user-name">{username}<a href="#">V</a></li>
   <li class="search-box">
@@ -10,6 +10,7 @@ const headerHtml = ` <div class="header-inner">
 <div class="header-more">
   <div class="header-my">마이페이지</div>
   <div class="header-logout">로그아웃</div>
+</div>
 </div>
 </div>
 `;

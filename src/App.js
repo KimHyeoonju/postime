@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Index from "./pages/Index";
-import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/user/LoginPage";
 import SearchIdPage from "./pages/user/SearchIdPage";
 import SearchPwPage from "./pages/user/SearchPwPage";

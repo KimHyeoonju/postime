@@ -53,6 +53,7 @@ window.addEventListener("load", function () {
       </ul>`;
         listTags += tags;
       });
+      console.log(listTags);
     } else {
       listTags = "<p>검색결과가 없습니다</p>";
     }

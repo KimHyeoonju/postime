@@ -1,4 +1,4 @@
-const todoMenuBtn = document.querySelector(".move-writepage-btn");
+const todoMenuBtn = document.querySelector(".header-menu");
 const todolistClick = document.querySelector(".todo-list-menu-wrap");
 
 todoMenuBtn.addEventListener("click", () => {
