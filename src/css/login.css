@@ -68,7 +68,7 @@
   cursor: pointer;
 }
 
-button {
+.user-button {
   width: 260px;
   height: 40px;
   background: #512772;
@@ -78,17 +78,17 @@ button {
   justify-content: center;
   align-items: center;
 }
-span {
+.user-button span {
   color: #ffffff;
   font-size: 20px;
 }
 
-button:hover {
+.user-button:hover {
   background-color: #f6f7f9;
   border-color: #512772;
   transition: background-color 0.2s;
   cursor: pointer;
 }
-button:hover span {
+.user-button:hover span {
   color: #512772;
 }
