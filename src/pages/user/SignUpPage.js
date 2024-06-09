@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../../css/reset.css";
-import "../../css/signup.css";
-import "../../css/userstyle.css";
+// import "../../css/signup.css";
+// import "../../css/userstyle.css";
 import axios from "axios";
 
 const SignUpPage = () => {

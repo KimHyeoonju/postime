@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
+.fc * {
+  font-family: "Noto Sans KR";
+}
+
+/* 캘린더 전체 사이즈 조정 */
+.fc {
+  width: 100%;
+  display: flex;
+  bottom: 0px;
+}
+
+/* 캘린더 위의 해더 스타일(날짜가 있는 부분) */
+.fc-header-toolbar {
+  /* height: 100px; */
+  /* padding-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em; */
+  /* height: 200px; */
+}
+
+.fc-toolbar-chunk {
+  height: auto;
+}
+
+.fc-toolbar-chunk > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  /* width: 100%; */
+}
+
+.fc .fc-toolbar-title:nth-child(1) {
+  font-size: 1.75em;
+  line-height: 100%;
+  color: #dddee0;
+}
+
+.fc .fc-toolbar-title:nth-child(2) {
+  font-size: 35px;
+  /* line-height: 100%; */
+  /* color: #356eff; */
+}
+
+.css-1eyv12h .fc-theme-standard th.fc-scrollgrid-sync-inner {
+  padding-top: 3.5px;
+  position: relative;
+}
+
+/* 요일 영역 가운데 정렬 */
+.fc th .fc-scrollgrid-sync-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* 일요일 날짜: 빨간색 */
+.fc-day-sun a {
+  color: red;
+}
+
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a {
+  color: blue;
+}
+
+/* 일정 */
+.fc-event {
+  cursor: pointer;
+  padding: 5px;
+  margin-bottom: 2px;
+  display: flex;
+  width: 100%;
+  padding: 1px 152px 3px 12px;
+  align-items: center;
+}

@@ -14,7 +14,7 @@ const SearchButtonStyle = styled.button`
 const ListIconStyle = styled.li`
   cursor: pointer;
 `;
-const Header = () => {
+const Header = ({ todoListhandleButtonClick }) => {
   const moreMenu = useRef(null);
   const navigate = useNavigate();
   // const searchBt = useRef(null);
@@ -28,6 +28,11 @@ const Header = () => {
     } else {
       moreMenu.current.classList.add("header-more-open");
       setToggle(true);
+    }
+
+    // todoList 클릭 이벤트 처리
+    if (todoListhandleButtonClick) {
+      todoListhandleButtonClick();
     }
   };
   const searchBt = () => {
@@ -69,7 +74,10 @@ const Header = () => {
               searchBt();
             }}
           ></ListIconStyle>
-          <ListIconStyle className="header-menu"></ListIconStyle>
+          <ListIconStyle
+            className="header-menu"
+            onClick={todoListhandleButtonClick}
+          ></ListIconStyle>
         </ul>
         <div className="header-more" ref={moreMenu}>
           <div className="header-my">마이페이지</div>

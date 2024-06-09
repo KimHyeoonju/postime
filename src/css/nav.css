@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+
 .menu {
   display: flex;
   flex-direction: column;
@@ -62,6 +64,7 @@
   height: 60px;
   color: #f6f7f9;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .icon-30 {
@@ -69,11 +72,11 @@
 }
 
 .nav-all-calender-wrap {
-  width: calc(100% - 20px);
+  width: 100%;
   display: flex;
   /* margin-top: 20px; */
   padding: 20px 0px;
-  padding-left: 20px;
+  padding-left: 22px;
   border-bottom: 1px solid #dddfe1;
   align-content: center;
   flex-direction: row;
@@ -85,8 +88,6 @@
   /* justify-content: center; */
   align-content: center;
   flex-direction: row;
-
-  gap: 10px;
 }
 
 .all-calender-icon {
@@ -153,18 +154,21 @@
 }
 
 .mycalender-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 21px;
   height: 12px;
-  background-color: bisque;
+  /* background-color: bisque; */
   margin-right: 13px;
 }
 .nav-menu-gap {
   gap: 10px;
 }
 .nav-icon-style {
-  width: 22px;
-  height: 22px;
-  background-color: aqua;
+  width: auto;
+  height: auto;
+  /* background-color: aqua; */
   margin-right: 13px;
 }
 
@@ -190,4 +194,8 @@
 
 .calenderListOff {
   display: none;
+}
+
+* {
+  font-family: "Noto Sans KR" !important;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../../css/login.css";
+// import "../../css/login.css";
 import axios from "axios";
 
 const LoginPage = () => {
