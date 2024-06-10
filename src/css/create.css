@@ -75,6 +75,7 @@
 
   font-size: 17px;
   font-weight: 300;
+  color: #9da2b9;
 }
 .write-header-dec > span {
   display: flex;
@@ -195,12 +196,13 @@
   display: none;
 }
 
-.xi-close {
+.img-delete {
   position: absolute;
   top: 5px;
   right: 5px;
 
-  color: #d8dae3;
+  color: #512772;
+  z-index: 100001;
 }
 
 .xi-file-image {
