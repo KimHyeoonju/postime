@@ -1,0 +1,11 @@
+.write-tags{
+    background-color: red;
+    height: 10px;
+}
+.PiTagFill{
+    background-color: black;
+}
+.tagify__tag {
+    background-color: black;
+    color: blue;
+}

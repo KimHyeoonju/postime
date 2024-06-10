@@ -61,6 +61,9 @@
   font-weight: 700;
   background-color: #f6f7f9;
 }
+.write-header-title > textarea::placeholder{
+  font-size: 42px;
+}
 .write-header-title > span {
   font-size: 20px;
 }
@@ -78,6 +81,14 @@
   gap: 10px;
   font-size: 20px;
   margin-bottom: 15px;
+}
+.write-header-icon {
+  display: flex;
+  gap: 10px;
+}
+
+.write-tags{
+  border-width: 0;
 }
 
 .write-main {
@@ -119,25 +130,32 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative; /* To contain absolute positioning */
+  position: relative;
+  margin-top: 15px;
 
-  background-color: #fff;
-  -ms-overflow-style: none;
-}
-.write-img::-webkit-scrollbar {
-  display: none;
+  /* background-color: #fff; */
 }
 
 .write-img-warp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 50px; /* Padding to account for the height of the button */
+  padding-bottom: 60px;
+  -ms-overflow-style: none;
 }
+.write-img-warp::-webkit-scrollbar {
+  display: none;
+}
+
 
 .write-img-inner {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .write-img-contain {
@@ -145,17 +163,30 @@
   height: 120px;
   background: #9da2b9;
   position: relative;
+
+  object-fit: cover;
 }
 
 .img-upload {
-  width: 100%;
+  width: 70%;
   height: 40px;
-  background: #4f546e;
+  border: solid 1px #512772;
+  border-radius: 50px;
+  /* font-size: 14px;
+  font-weight: 700;
+  color: #512772; */
+
   text-align: center;
   position: absolute;
-  bottom: 0;
-
+  bottom: 10px;
   z-index: 100001;
+}
+.img-upload:hover {
+  background-color: #512772;
+  color: #f6f7f9;
+}
+.img-upload-button{
+  display: none;
 }
 
 .xi-close {

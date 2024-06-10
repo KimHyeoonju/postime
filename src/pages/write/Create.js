@@ -1,11 +1,65 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FaRegCalendar } from "react-icons/fa6";
+import { IoBookmarkSharp } from "react-icons/io5";
+import { PiTagFill } from "react-icons/pi";
+
+import Tagify from '@yaireo/tagify';
+import '@yaireo/tagify/dist/tagify.css';
+import "../../css/tag.css";
+
 import "../../css/create.css";
-import { FaRegCalendarCheck } from "react-icons/fa6";
 
 const Create = () => {
-  useEffect(() => {
-    return () => {};
+  const input = useRef(null);
+  const tagify = useRef(null);
+
+  const [imgFile, setImgFile] = useState([]);
+  const uploadImg = useRef();
+
+  const fileUpload = () => {
+    const imgUploadBt = document.querySelector(".img-upload-button");
+    // const imgUpload = document.querySelector(".img-upload");
+
+    // imgUpload.addEventListener("click", () => imgUploadBt.click());
+    imgUploadBt.click();
+    
+  }
+
+  useEffect (() => {
+    const handleKeyDown = (event) => {
+      const textarea = document.querySelector("#write-header-title");
+      if (event.target === textarea && event.key === "Enter"){
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
+
+
+  const imgUpload = () => {
+    console.log(uploadImg.current.files);
+    setImgFile(prev => [...prev, URL.createObjectURL(uploadImg.current.files[0])]);
+  };
+  
+  useEffect(() => {
+    tagify.current = new Tagify(input.current);
+
+    tagify.current.on('add', () => {
+      console.log(tagify.current.value);
+    });
+
+    return () => {
+      if (tagify.current){
+        tagify.current.destroy();
+      }
+    };
+  }, []);
+
 
   return (
     <div className="write-wrap">
@@ -26,18 +80,24 @@ const Create = () => {
                 id="write-header-title"
                 type="text"
                 placeholder="제목 없음"
-                maxLength="25"
+                maxLength="28"
               ></textarea>
             </div>
             <div className="write-header-dec">
               <span>
-                <FaRegCalendarCheck /> 내 캘린더
+                <IoBookmarkSharp /> 내 캘린더
               </span>
-              <div>
-                <i className="xi-calendar"></i> 2024.06.03 - 2024.06.07
+              <div className="write-header-icon">
+                <FaRegCalendar /> 2024.06.03 - 2024.06.07
               </div>
-              <div>
-                <i className="xi-tag"></i> #태그
+              <div className="write-header-icon">
+                <PiTagFill />
+                <input 
+                name="tags" 
+                className="write-tags" 
+                placeholder="태그를 입력하세요"
+                ref={input}>
+                </input>
               </div>
             </div>
           </div>
@@ -51,13 +111,32 @@ const Create = () => {
           <div className="write-img">
             <div className="write-img-warp">
               <div className="write-img-inner">
+                <button className="img-upload" onClick={fileUpload}>
+                  <span>이미지 업로드</span>
+                  <input
+                    type="file"
+                    className="img-upload-button"
+                    accept="image/*"
+                    required
+                    multiple
+                    onChange={imgUpload}
+                    ref={uploadImg}
+                  />
+                  <i className="xi-plus"></i>
+                </button>
                 <div className="write-img-contain" id="write-img-show">
-                  <i className="xi-close"></i>
-                  <i className="xi-file-image xi-2x"></i>
+                  {imgFile?.map((img, idx) => (
+                    <div key={idx}>
+                      <img src={img} alt="img" className="write-img-contain"/>
+                    </div>
+                  ))}
                 </div>
-                <div className="write-img-contain">
-                  <i className="xi-close"></i>
-                  <i className="xi-file-image xi-2x"></i>
+                <div className="write-img-contain" id="write-img-show">
+                  {imgFile?.map((img, idx) => (
+                    <div key={idx}>
+                      <img src={img} alt="img" className="write-img-contain"/>
+                    </div>
+                  ))}
                 </div>
                 <div className="write-img-contain">
                   <i className="xi-close"></i>
@@ -72,17 +151,7 @@ const Create = () => {
                   <i className="xi-file-image xi-2x"></i>
                 </div>
               </div>
-              <div className="img-upload">
-                <input
-                  type="file"
-                  className="img-upload-button"
-                  accept="image/*"
-                  required
-                  multiple
-                  style={{ display: "none" }}
-                />
-                <i className="xi-plus"></i>
-              </div>
+                
             </div>
           </div>
         </div>
