@@ -48,6 +48,11 @@ const SectionListStyle = styled.div`
   background-color: ${colorSystem.primaryW};
 `;
 
+const TodoListStyle = styled.div`
+  position: absolute;
+  right: 0;
+`;
+
 // "/write" 경로의 하위 라우트들을 포함한 컴포넌트
 const WriteRoutes = () => {
   return (
@@ -80,6 +85,15 @@ const Index = () => {
             </header>
             <SectionListStyle>
               <SectionStyle>
+                <TodoListStyle>
+                  <TodoList
+                    todoListClassAdded={todoListClassAdded}
+                    onTodoListToggle={todoListhandleButtonClick}
+                    todoListClose={todoListhandleButtonClick}
+                  />
+                </TodoListStyle>
+              </SectionStyle>
+              <SectionStyle>
                 <Routes>
                   <Route path="/" element={<MainCalender />} />
                   <Route
@@ -95,14 +109,6 @@ const Index = () => {
                   <Route path="/usermodify" element={<UserModify />} />
                 </Routes>
               </SectionStyle>
-              {/* <SectionStyle>
-                <TodoList
-                  todoListClassAdded={todoListClassAdded}
-                  onTodoListToggle={todoListhandleButtonClick}
-                  todoListClose={todoListhandleButtonClick}
-                  
-                />
-              </SectionStyle> */}
             </SectionListStyle>
           </MainStyle>
         </WrapStyle>
