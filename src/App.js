@@ -10,11 +10,12 @@ import Index from "./pages/Index";
 function App() {
   const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
   // const [isLogin, setIsLogin] = useState(false); // 로그인이 되어 있지 않은 경우
+  const [signUserId, setSignUserId] = useState("qorckus183");
 
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index />
+        <Index signUserId={signUserId} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>
