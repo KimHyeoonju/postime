@@ -5,10 +5,17 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const SearchButtonStyle = styled.button`
+  border: 0;
+  background-color: transparent;
+
   > svg {
+    margin-left: 10px;
     width: 24px;
     height: 24px;
     cursor: pointer;
+    &:hover {
+      border: 1px solid #512772;
+    }
   }
 `;
 const ListIconStyle = styled.li`
@@ -28,11 +35,6 @@ const Header = ({ todoListhandleButtonClick }) => {
     } else {
       moreMenu.current.classList.add("header-more-open");
       setToggle(true);
-    }
-
-    // todoList 클릭 이벤트 처리
-    if (todoListhandleButtonClick) {
-      todoListhandleButtonClick();
     }
   };
   const searchBt = () => {

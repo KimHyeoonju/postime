@@ -9,6 +9,7 @@ const Button = ({ label, onClick }) => {
     font-size: 14px;
     font-weight: 700;
     color: #512772;
+
     &:hover {
       background-color: #512772;
       color: #f6f7f9;
