@@ -14,52 +14,9 @@ import UserInfoPage from "./user/UserInfoPage";
 import UserModify from "./user/UserModify";
 import Detail from "./write/Detail";
 import Modify from "./write/Modify";
-// import "../css/common.css";
-
-// const globalStyles = css`
-//   @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
-
-//   * {
-//     margin: 0px;
-//     padding: 0px;
-//     box-sizing: border-box;
-//     font-family: "Noto Sans KR", sans-serif;
-//     font-optical-sizing: auto;
-//     font-weight: 400;
-//     font-style: normal;
-//   }
-//   a {
-//     text-decoration: none;
-//     color: #000000;
-//   }
-
-//   body {
-//     color: rgb(32, 32, 32);
-//     overflow-wrap: break-word;
-//     background-color: rgb(247, 247, 247);
-//   }
-
-//   .br-12 {
-//     border-radius: 12px;
-//   }
-
-//   .ns-font-17 {
-//     /* font-family: 추가; */
-//     font-size: 17px;
-//   }
-
-//   .ns-font-bold-17 {
-//     /* font-family: 추가; */
-//     font-size: 17px;
-//     font-weight: bold;
-//   }
-
-//   .ns-font-bold-20 {
-//     /* font-family: 추가; */
-//     font-size: 20px;
-//     font-weight: bold;
-//   }
-// `;
+import "../css/common.css";
+import { useState } from "react";
+import { colorSystem } from "../css/color";
 
 const WrapStyle = styled.div`
   position: absolute;
@@ -78,7 +35,17 @@ const MainStyle = styled.div`
 `;
 
 const SectionStyle = styled.div`
+  position: absolute;
   width: 100%;
+  height: 100%;
+`;
+
+const SectionListStyle = styled.div`
+  position: relative;
+  /* display: flex; */
+  width: 100%;
+  height: 100%;
+  background-color: ${colorSystem.primaryW};
 `;
 
 // "/write" 경로의 하위 라우트들을 포함한 컴포넌트
@@ -94,21 +61,33 @@ const WriteRoutes = () => {
 };
 
 const Index = () => {
+  const [todoListClassAdded, setTodoListClassAdded] = useState(false);
+
+  // todoList 메뉴 여닫는 버튼 체크
+  const todoListhandleButtonClick = () => {
+    // 클래스를 추가할 요소의 상태를 변경합니다.
+    setTodoListClassAdded(!todoListClassAdded);
+  };
+
   return (
     <>
       <div>
-        {/* <div css={globalStyles}> */}
         <WrapStyle>
           <Nav />
           <MainStyle>
             <header>
-              <Header />
+              <Header todoListhandleButtonClick={todoListhandleButtonClick} />
             </header>
-            <div>
+            <SectionListStyle>
               <SectionStyle>
                 <Routes>
                   <Route path="/" element={<MainCalender />} />
-                  <Route path="/write/*" element={<WriteRoutes />} />
+                  <Route
+                    path="/write/*"
+                    element={<WriteRoutes />}
+                    todoListClassAdded={todoListClassAdded}
+                    onTodoListToggle={todoListhandleButtonClick}
+                  />
                   <Route path="/complete" element={<Complete />} />
                   <Route path="/delete" element={<Delete />} />
                   <Route path="/search" element={<Search />} />
@@ -117,9 +96,13 @@ const Index = () => {
                 </Routes>
               </SectionStyle>
               <SectionStyle>
-                <TodoList />
+                <TodoList
+                  todoListClassAdded={todoListClassAdded}
+                  onTodoListToggle={todoListhandleButtonClick}
+                  todoListClose={todoListhandleButtonClick}
+                />
               </SectionStyle>
-            </div>
+            </SectionListStyle>
           </MainStyle>
         </WrapStyle>
       </div>

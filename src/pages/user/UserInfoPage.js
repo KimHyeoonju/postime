@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import "../../css/userinfo.css";
+// import "../../css/userinfo.css";
 
 const UserInfoPage = () => {
   useEffect(() => {

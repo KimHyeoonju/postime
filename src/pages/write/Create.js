@@ -7,6 +7,7 @@ import Tagify from '@yaireo/tagify';
 import '@yaireo/tagify/dist/tagify.css';
 import "../../css/tag.css";
 
+
 import "../../css/create.css";
 
 const Create = () => {
