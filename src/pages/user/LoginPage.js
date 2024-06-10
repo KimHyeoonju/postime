@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../css/login.css";
 import axios from "axios";
 
-const LoginPage = () => {
+const LoginPage = ({ setIsLogin }) => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState("");
@@ -18,6 +18,7 @@ const LoginPage = () => {
       alert(result.resultMsg);
       return;
     }
+    setIsLogin(true);
     navigate("/");
   };
 
@@ -29,6 +30,7 @@ const LoginPage = () => {
         pwd: userPass,
       });
       console.log(response.data);
+      return response.data;
     } catch (error) {
       console.log(error);
     }

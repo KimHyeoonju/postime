@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../css/reset.css";
 import "../../css/signup.css";
 import "../../css/userstyle.css";
@@ -15,10 +15,80 @@ const SignUpPage = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [userPass2, setUserPass2] = useState("");
+  // 비밀번호 및 비밀번호 확인 일치 여부 플래그
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+  // 서버에서 결과가 왔는지 를 체크 합니다.
+  const [isServer, setIsServer] = useState(false);
+
+  // 비밀번호 형식이 맞는지 아닌지
+  const [passwordCheck, setPassWordCheck] = useState(true);
+
+  const handlePassWord = e => {
+    setUserPass(e.target.value);
+  };
+  useEffect(() => {
+    chkPW();
+  }, [passwordCheck, userPass]);
+  // 비밀번호 문자열 검사
+  function chkPW() {
+    var pw = userPass;
+    var num = pw.search(/[0-9]/g);
+    var eng = pw.search(/[a-z]/gi);
+    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+    if (pw.length < 8 || pw.length > 20) {
+      // alert("8자리 ~ 20자리 이내로 입력해주세요.");
+      setPassWordCheck(false);
+    } else if (pw.search(/\s/) != -1) {
+      // alert("비밀번호는 공백 없이 입력해주세요.");
+      setPassWordCheck(false);
+    } else if (num < 0 || eng < 0 || spe < 0) {
+      // alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+      setPassWordCheck(false);
+    } else {
+      setPassWordCheck(true);
+    }
+  }
+
+  // 패스워드가 같은지 다른지 감시
+  useEffect(() => {
+    if (userPass === userPass2) {
+      setPasswordMatchError(true);
+      return;
+    } else {
+      setPasswordMatchError(false);
+      // console.log("비밀번호가 일치하지 않습니다.");
+    }
+  }, [userPass2]);
 
   // 회원가입시 처리할 함수
   const signupMember = async event => {
     event.preventDefault();
+
+    if (userName === "") {
+      alert("성명을 입력하세요.");
+      return;
+    }
+
+    if (userId === "") {
+      alert("아이디를 입력하세요.");
+      return;
+    }
+
+    if (userEmail === "") {
+      alert("이메일을 입력하세요.");
+      return;
+    }
+
+    if (userPass === "") {
+      alert("비밀번호를 입력하세요.");
+      return;
+    }
+
+    if (userPass2 === "") {
+      alert("비밀번호를 확인하세요.");
+      return;
+    }
 
     const requestData = {
       id: userId,
@@ -30,9 +100,10 @@ const SignUpPage = () => {
     console.log(result);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
+
       return;
     }
-
+    alert("회원가입이 완료되었습니다.");
     navigate("/");
   };
 
@@ -40,6 +111,7 @@ const SignUpPage = () => {
     try {
       const response = await axios.post("/api/user", { id, pwd, name, email });
       console.log(response.data);
+      return response.data;
     } catch (error) {
       console.log(error);
     }
@@ -91,9 +163,9 @@ const SignUpPage = () => {
             <label htmlFor="email" className="email-label">
               이메일
             </label>
-            <div className="bubble">
+            {/* <div className="bubble">
               <span>이미 존재하는 이메일입니다.</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="check-field">
@@ -120,9 +192,9 @@ const SignUpPage = () => {
             <label htmlFor="pw" className="pw-label">
               비밀번호
             </label>
-            <div className="bubble">
+            {/* <div className="bubble">
               <span>잘못된 비밀번호 형식입니다.</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="check-field">
@@ -131,12 +203,16 @@ const SignUpPage = () => {
               id="userPass"
               value={userPass}
               onChange={event => {
-                setUserPass(event.target.value);
+                handlePassWord(event);
               }}
               className="pw"
               placeholder="(영문 대/소문자, 숫자, 특수문자 포함 8~20자)"
             />
-            <div className="result-icon"></div>
+            {passwordCheck ? (
+              <div className="result-icon-yes"></div>
+            ) : (
+              <div className="result-icon"></div>
+            )}
           </div>
         </div>
 
@@ -153,7 +229,12 @@ const SignUpPage = () => {
               className="pwcheck"
               placeholder="비밀번호 재입력"
             />
-            <div className="result-icon"></div>
+            {passwordMatchError ? (
+              <div className="result-icon-yes"></div>
+            ) : (
+              <div className="result-icon"></div>
+            )}
+            {/* <div className="result-icon"></div> */}
           </div>
         </div>
       </div>
