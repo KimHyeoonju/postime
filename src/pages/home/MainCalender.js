@@ -3,9 +3,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import FullCalendar from "@fullcalendar/react";
 import "../../css/calender.css";
 import { colorSystem } from "../../css/color.js";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-// import asdfasdf from "../../json/calenderColor";
 
 const CalenderStyle = styled.div`
   position: relative;
@@ -30,7 +29,7 @@ const CalenderStyle = styled.div`
     height: 12%;
     /* font-family: "Noto Sans KR"; */
     font-weight: bold;
-    color: ${colorSystem.aaa};
+    color: ${colorSystem.g900};
     /* font-size: 20px; */
     /* line-height: 100%; */
   }
@@ -74,7 +73,8 @@ const CalenderStyle = styled.div`
     /* margin: auto; */
     /* padding: auto; */
     /* padding-top: 3.5px; */
-    background: ${colorSystem.g900};
+    /* background: ${colorSystem.g900}; */
+    background: "asdfasdf[0].calenderColor";
     border: 1px solid #dddee0;
     font-weight: bold;
     font-size: 16px;
@@ -112,32 +112,9 @@ const CalenderStyle = styled.div`
 `;
 
 const MainCalender = ({ signUserId }) => {
-  // console.log(asdfasdf.aaa);
-  const userId = signUserId;
+  const userId = 8;
 
-  // 화면에 보일때 할일 작성
-  useEffect(() => {
-    // console.log(userId);
-    const getCalenderList = async userId => {
-      console.log(userId);
-      try {
-        // const rqData = `/api/calendar?signed_user_id=${userId}`;
-        // console.log(rqData);
-
-        const resepons = await axios.get(`/api/calendar?signed_user_id=${132}`);
-        console.log(resepons.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getCalenderList(userId);
-
-    return () => {
-      // cleanup 함수
-      // 화면에서 사라질때 할일 작성
-    };
-  }, []);
+  console.log(userId);
 
   // 일 빼기
   // 일자의 날짜 출력 포맷 변경하기
@@ -146,7 +123,6 @@ const MainCalender = ({ signUserId }) => {
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
-
   return (
     <CalenderStyle>
       <div className="App">

@@ -26,13 +26,16 @@ const NavStyle = styled.div`
   }
 `;
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false); // 메뉴가 열려있는지 여부를 상태로 관리
+  const [calenderListArr, setCalenderListArr] = useState([]);
 
+  const userId = 8;
   // 메뉴를 열거나 닫는 함수
   const toggleMenu = () => {
     setIsOpen(!isOpen); // isOpen 상태를 토글
@@ -71,13 +74,38 @@ const Nav = () => {
       setToggle(true);
     }
   };
-  // const searchBt = () => {
-  //   console.log(searchText);
-  //   navigate("/search");
-  // };
+  const getCalenderList = async userId => {
+    // console.log(userId);
+    try {
+      const resepons = await axios.get(
+        `/api/calendar?signed_user_id=${userId}`,
+      );
+      const status = resepons.status.toString().charAt(0);
+      // console.log(status);
+      if (status === "2") {
+        return resepons.data;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  };
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(); // 드롭다운 메뉴에 대한 참조
+  const calenderList = async () => {
+    const result = await getCalenderList(userId);
+
+    setCalenderListArr(result.resultData);
+    console.log(result.resultData);
+  };
+
+  // 좌측 메뉴의 캘린더 리스트
+  useEffect(() => {
+    calenderList();
+    return () => {};
+  }, []);
 
   return (
     <NavStyle>
@@ -138,7 +166,25 @@ const Nav = () => {
                 </h1>
               </div>
               <div className="div-calender div-mycalender-list">
-                <div className="div-calender mycalender-list mycalender">
+                {calenderListArr.map((item, index) => {
+                  return (
+                    <div
+                      className="div-calender mycalender-list mycalender"
+                      key={index}
+                    >
+                      <input type="checkbox" className="calender-color" />
+                      <div
+                        className="calender-name"
+                        style={{ backgroundColor: "#555555" }}
+                        // style={{ color: `${item.color}` }}
+                      >
+                        {item.title}
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
                   <div className="calender-name">내 캘린더</div>
                 </div>
@@ -149,7 +195,7 @@ const Nav = () => {
                 <div className="div-calender mycalender-list b-team-calender">
                   <input type="checkbox" className="calender-color" />
                   <div className="calender-name">B팀 캘린더</div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
