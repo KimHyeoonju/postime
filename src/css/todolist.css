@@ -22,7 +22,7 @@
   position: absolute;
   z-index: 99999;
   width: 400px;
-  height: 100%;
+  height: calc(100vh - 97px);
   background-color: #f2f2f2;
   border-left: 1px solid #dddfe1;
   right: 0;
