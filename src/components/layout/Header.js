@@ -37,6 +37,14 @@ const Header = ({ todoListhandleButtonClick }) => {
       setToggle(true);
     }
   };
+
+  const todoListView = () => {
+    // todoList 클릭 이벤트 처리
+    if (todoListhandleButtonClick) {
+      todoListhandleButtonClick();
+    }
+  };
+
   const searchBt = () => {
     console.log(searchText);
     navigate("/search");
