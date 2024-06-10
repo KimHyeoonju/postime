@@ -95,13 +95,14 @@ const Index = () => {
                   <Route path="/usermodify" element={<UserModify />} />
                 </Routes>
               </SectionStyle>
-              <SectionStyle>
+              {/* <SectionStyle>
                 <TodoList
                   todoListClassAdded={todoListClassAdded}
                   onTodoListToggle={todoListhandleButtonClick}
                   todoListClose={todoListhandleButtonClick}
+                  
                 />
-              </SectionStyle>
+              </SectionStyle> */}
             </SectionListStyle>
           </MainStyle>
         </WrapStyle>
