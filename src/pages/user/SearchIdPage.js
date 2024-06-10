@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-// import "../../css/userstyle.css";
+import "../../css/userstyle.css";
 
 const SearchIdPage = () => {
   useEffect(() => {

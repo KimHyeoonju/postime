@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../../css/reset.css";
-// import "../../css/signup.css";
-// import "../../css/userstyle.css";
+import "../../css/signup.css";
+import "../../css/userstyle.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUpPage = () => {
+  // 라우터
+  const navigate = useNavigate();
+
   // 입력할 항목 변수
   const [userName, setUserName] = useState("");
   const [userId, setUserId] = useState("");
@@ -13,17 +17,23 @@ const SignUpPage = () => {
   const [userPass2, setUserPass2] = useState("");
 
   // 회원가입시 처리할 함수
-  const signupMember = event => {
+  const signupMember = async event => {
     event.preventDefault();
-    // console.log(userName, userId, userPass);
 
-    const sendData = {
-      id: "userId",
-      pwd: "userPass",
-      name: "userName",
-      email: "userEmail",
+    const requestData = {
+      id: userId,
+      pwd: userPass,
+      name: userName,
+      email: userEmail,
     };
-    postUser(sendData);
+    const result = await postUser(requestData);
+    console.log(result);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
+
+    navigate("/");
   };
 
   const postUser = async ({ id, pwd, name, email }) => {
@@ -35,9 +45,6 @@ const SignUpPage = () => {
     }
   };
 
-  useEffect(() => {
-    return () => {};
-  }, []);
   return (
     <div className="user-wrap">
       <div className="user-title-line">
