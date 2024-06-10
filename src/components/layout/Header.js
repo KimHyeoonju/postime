@@ -14,7 +14,7 @@ const SearchButtonStyle = styled.button`
     height: 24px;
     cursor: pointer;
     &:hover {
-      border: 1px solid #512772;
+      border: 1px solid #7f85a4;
     }
   }
 `;

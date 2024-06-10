@@ -24,8 +24,8 @@ const Modal = ({ isOpen, message, onClose, onConfirm }) => {
         }}
       >
         <p>{message}</p>
-        <button onClick={onConfirm}>확인</button>
         <button onClick={onClose}>취소</button>
+        <button onClick={onConfirm}>확인</button>
       </div>
     </div>
   );
