@@ -182,7 +182,16 @@
 .calender-color {
   width: 15px;
   height: 15px;
-  accent-color: red;
+  /* accent-color: red; */
+  --chkfg: 240, 100%, 50%;
+}
+
+.calender-color:checked + label:before {
+  content: "";
+  background-color: #f47c7c;
+  border-color: #f47c7c;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .calender-name {
