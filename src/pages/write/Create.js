@@ -10,6 +10,7 @@ import "@yaireo/tagify/dist/tagify.css";
 
 import "../../css/create.css";
 import axios from "axios";
+import Comment from "./Comment";
 
 const Create = () => {
   const input = useRef(null);
@@ -22,34 +23,31 @@ const Create = () => {
   const [createWrite, setCreateWrite] = useState("");
   const [createDate, setCreateDate] = useState();
 
-  // 댓글 관련
-  const [commentInput, setCommentInput] = useState("");
+  // const createPost = async event => {
+  //   event.preventDefault();
 
-  const createPost = async event => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.post("/api/board", {
-        calendarId: "calendarId",
-        signedUserId: "signedUserId",
-        title: "title",
-        content: "content",
-        startDay: "startDay",
-        deadLine: "deadLine",
-        existTag: [1, 2],
-        notExistTag: [
-          {
-            calendarId: "calendarId",
-            title: "tag1",
-            color: 1,
-          },
-        ],
-        dDay: "dDay",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
+  //     const response = await axios.post("/api/board", {
+  //       calendarId: "calendarId",
+  //       signedUserId: "signedUserId",
+  //       title: "title",
+  //       content: "content",
+  //       startDay: "startDay",
+  //       deadLine: "deadLine",
+  //       existTag: [1, 2],
+  //       notExistTag: [
+  //         {
+  //           calendarId: "calendarId",
+  //           title: "tag1",
+  //           color: 1,
+  //         },
+  //       ],
+  //       dDay: "dDay",
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
@@ -58,10 +56,6 @@ const Create = () => {
 
   const handleWriteChange = event => {
     setCreateWrite(event.target.value);
-  };
-
-  const handleCommentChange = event => {
-    setCommentInput(event.target.value);
   };
 
   const fileUpload = () => {
@@ -221,36 +215,9 @@ const Create = () => {
             </div>
           </div>
         </form>
-        <form className="chat-wrap">
-          {/* 메인 우측 댓글 */}
-
-          <div className="chat-header">댓글</div>
-          <div className="chat-inner">
-            <div className="chat-comment">
-              <div className="chat-comment-inner">
-                <div className="chat-user-text">
-                  <div className="chat-user">수민</div>
-                  <div className="user-comment">부탁드립니다.</div>
-                </div>
-              </div>
-              <div className="chat-comment-inner">
-                <div className="chat-user-text">
-                  <div className="chat-user">작성자</div>
-                  <div className="user-comment">{handleCommentChange}</div>
-                </div>
-              </div>
-            </div>
-            <div className="chat-comment-write">
-              <input
-                type="text"
-                placeholder="댓글을 작성하세요."
-                className="chat-comment-input"
-                value={commentInput}
-                onChange={handleCommentChange}
-              />
-            </div>
-          </div>
-        </form>
+        <div className="chat-wrap">
+          <Comment />
+        </div>
       </div>
     </div>
   );
