@@ -8,18 +8,18 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
 
 function App() {
-  // const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
-  const [isLogin, setIsLogin] = useState(false); // 로그인이 되어 있지 않은 경우
+  const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
+  // const [isLogin, setIsLogin] = useState(false); // 로그인이 되어 있지 않은 경우
   const [signUserId, setSignUserId] = useState("test1234");
 
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index signUserId={signUserId} />
+        <Index signUserId={signUserId} setIsLogin={setIsLogin} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage setIsLogin={setIsLogin} />} />
           <Route path="/searchid" element={<SearchIdPage />} />
           <Route path="/searchpw" element={<SearchPwPage />} />
           <Route path="/signup" element={<SignUpPage />} />

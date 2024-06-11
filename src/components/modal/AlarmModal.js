@@ -1,10 +1,12 @@
+import { useEffect, useRef } from "react";
+import "./alarmmodalstyle.css";
 import styled from "@emotion/styled";
-import React, { useEffect, useRef } from "react";
+import { colorSystem } from "../../css/color";
 
 const AlarmModalStyle = styled.div`
   .container {
-    width: 300px;
-    height: 200px;
+    /* width: 300px; */
+    /* height: 200px; */
 
     z-index: 999999;
 
@@ -19,19 +21,27 @@ const AlarmModalStyle = styled.div`
   }
 
   /* 모달창 내부 X버튼 */
-  .close {
+  /* button {
     position: absolute;
+    font-size: 20px;
+    cursor: pointer;
+    color: ${colorSystem.g800};
     right: 10px;
     top: 10px;
+    border: 0;
+    background-color: transparent;
+  } */
+
+  .modal-content {
+    border: 1px solid ${colorSystem.g800};
+  }
+  td {
+    height: 100px;
+    overflow: hidden;
   }
 `;
 
-const ShowAlarmModal = ({ setModalOpen, id, title, content, writer }) => {
-  // 모달 끄기
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
+const AlarmModal = ({ modalCancel }) => {
   // useRef()를 사용하여 modalRef 생성
   const modalRef = useRef(null);
 
@@ -40,7 +50,7 @@ const ShowAlarmModal = ({ setModalOpen, id, title, content, writer }) => {
     const handler = event => {
       // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
       if (modalRef.current && !modalRef.current.contains(event.target)) {
-        setModalOpen(false);
+        modalCancel(false);
       }
     };
 
@@ -53,19 +63,29 @@ const ShowAlarmModal = ({ setModalOpen, id, title, content, writer }) => {
       document.removeEventListener("mousedown", handler);
       // document.removeEventListener('touchstart', handler); // 모바일 대응
     };
-  }, [setModalOpen]);
+  }, [modalCancel]);
 
   return (
     <AlarmModalStyle>
-      {/* modalRef를 ref로 할당 */}
-      <div ref={modalRef} className="container">
-        <button className="close" onClick={closeModal}>
-          X
-        </button>
-        <p>모달창입니다.</p>
+      <div ref={modalRef} className="modal-wrap">
+        <div className="modal-content">
+          <main>
+            <div>내용</div>
+            <div>내용</div>
+            <div>내용</div>
+            <div>내용</div>
+            {/* <button
+              onClick={() => {
+                modalCancel();
+              }}
+            >
+              x
+            </button> */}
+          </main>
+        </div>
       </div>
     </AlarmModalStyle>
   );
 };
 
-export default ShowAlarmModal;
+export default AlarmModal;

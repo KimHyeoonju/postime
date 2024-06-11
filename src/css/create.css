@@ -225,12 +225,12 @@
 }
 
 .chat-inner {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   margin: 20px;
-  height: calc(100% - 40px);
+  /* height: calc(100% - 40px); */
 
-  position: relative;
+  /* position: relative; */
 }
 
 .chat-comment {

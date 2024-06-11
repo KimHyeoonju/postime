@@ -62,8 +62,7 @@ const CalenderStyle = styled.div`
     height: auto;
     /* background-color: #356eff; */
     /* word-break: keep-all; */
-
-    color: ${colorSystem.g900};
+    color: ${colorSystem.g300};
   }
 
   // 요일 부분(수정)
@@ -74,7 +73,6 @@ const CalenderStyle = styled.div`
     /* padding: auto; */
     /* padding-top: 3.5px; */
     background: ${colorSystem.g900};
-    background: "asdfasdf[0].calenderColor";
     border-top: 1px solid ${colorSystem.g800};
     border-bottom: 1px solid ${colorSystem.g800};
     font-weight: bold;
@@ -119,8 +117,7 @@ const CalenderStyle = styled.div`
 const MainCalender = () => {
   const userId = 8;
   const [calenderArr, setCalenderArr] = useState([]);
-
-  console.log(userId);
+  // console.log(userId);
 
   // 일 빼기
   // 일자의 날짜 출력 포맷 변경하기
@@ -134,10 +131,11 @@ const MainCalender = () => {
     // console.log(userId);
     try {
       const resepons = await axios.get(
-        `/api/calendar?signed_user_id=${userId}`,
+        `/api/board/mini?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      console.log(status);
+      // console.log("result", resepons);
+
       if (status === "2") {
         return resepons.data;
       } else {
@@ -153,21 +151,13 @@ const MainCalender = () => {
   const calenderDayPrint = async () => {
     const result = await getCalender(userId);
 
-    console.log("result", result.resultData);
-    setCalenderArr(result.resultData);
-    console.log("타이틀 : ", result.resultData.title);
+    console.log("result", result.resultData.res);
+
+    setCalenderArr(result.resultData.res);
+    // console.log("타이틀 : ", result.resultData.title);
     // console.log(result.resultData.untilNextMonthBoard);
     // console.log("체크", todoListArr[1].dDay);
     // checkDay();
-  };
-
-  const calenderDayPrintaaa = () => {
-    // const aaa = moment(dDay).format("M월 D일");
-    // console.log("check", aaa);
-    // return calenderArr.map((item, index) => {
-    console.log("bbb", calenderArr[0].title);
-    return;
-    // });
   };
 
   useEffect(() => {
@@ -194,6 +184,17 @@ const MainCalender = () => {
     console.log(clickInfo.event._instance.range.start);
   };
 
+  const array = [];
+  const [isCalender, setIsCalender] = useState("");
+  calenderArr.map((item, index) =>
+    array.push({
+      title: item.title,
+      start: item.start,
+      end: item.end,
+      backgroundColor: item.backgroundColor,
+    }),
+  );
+
   return (
     <CalenderStyle>
       <div className="App">
@@ -204,28 +205,14 @@ const MainCalender = () => {
             // start: "prev,title,title,next",
             start: "prev,title,next",
             center: "",
-            end: "",
-          }}
-          // monthNames={[
-          //   "1월",
-          //   "2월",
-          //   "3월",
-          //   "4월",
-          //   "5월",
-          //   "6월",
-          //   "7월",
-          //   "8월",
-          //   "9월",
-          //   "10월",
-          //   "11월",
-          //   "12월",
-          // ]}
-          buttonText={{ today: "오늘" }}
-          titleFormat={{
-            year: "numeric",
-            month: "numeric",
             end: "today",
           }}
+          buttonText={{ today: "오늘" }}
+          // titleFormat={{
+          //   year: "numeric",
+          //   month: "numeric",
+          //   end: "today",
+          // }}
           // titleFormat={{
           //   year: "numeric",
           //   month: "numeric",
@@ -244,40 +231,44 @@ const MainCalender = () => {
           // events={[calenderArr()]}
           eventTextColor="black" // 이벤트 글자 색
           eventborderColor="none" // 이벤트 글자 색
-          events={[
-            { title: calenderArr[0].title, date: calenderArr[0].createdAt },
-            {
-              title: calenderArr[1].title,
-              date: "2024-06-17",
-              textColor: "#000000",
-            },
-            {
-              title: calenderArr[2].title,
-              start: "2024-06-17",
-              end: "2024-06-17",
-              textColor: "#000000",
-            },
-            { title: "event 1", date: "2024-06-01" },
-            { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
-            {
-              title: "event 3",
-              start: "2024-06-02",
-              end: "2024-06-05",
-              // date: "2024-06-02",
-              backgroundColor: "red",
-              borderColor: "red",
-              textColor: "#000000",
-            },
-            {
-              title: "event 4",
-              start: "2024-06-10",
-              end: "2024-06-18",
-              // date: "2024-06-02",
-              backgroundColor: "#ABD5BD",
-              borderColor: "#ABD5BD",
-              textColor: "#000000",
-            },
-          ]}
+          dayMaxEvents={true}
+          // events={
+          //   [
+          // { title: calenderArr[0].title, date: calenderArr[0].createdAt },
+          // {
+          //   title: calenderArr[1].title,
+          //   date: "2024-06-17",
+          //   textColor: "#000000",
+          // },
+          // {
+          //   title: calenderArr[2].title,
+          //   start: "2024-06-17",
+          //   end: "2024-06-17",
+          //   textColor: "#000000",
+          // },
+          // { title: "event 1", date: "2024-06-01" },
+          // { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
+          // {
+          //   title: "event 3",
+          //   start: "2024-06-02",
+          //   end: "2024-06-05",
+          //   // date: "2024-06-02",
+          //   backgroundColor: "red",
+          //   borderColor: "red",
+          //   textColor: "#000000",
+          // },
+          // {
+          //   title: "event 4",
+          //   start: "2024-06-10",
+          //   end: "2024-06-18",
+          //   // date: "2024-06-02",
+          //   backgroundColor: "#ABD5BD",
+          //   borderColor: "#ABD5BD",
+          //   textColor: "#000000",
+          // },
+          //   ]
+          // }
+          events={array}
           eventColor={"#F2921D"}
           // droppable={true}
           editable={true}

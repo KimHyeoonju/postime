@@ -28,10 +28,15 @@ const TodoListMenu = styled.div`
 const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const [toggle, setToggle] = useState(todoListClassAdded);
   const todoListRef = useRef(null);
-
   const userId = 8;
-  const [todoListArr, setTodoListArr] = useState([]);
-  // const [isOk, isOk] = useState(null);
+
+  // 오늘까지
+  const [todoTodayListArr, setTodoTodayListArr] = useState([]);
+  // 이번달까지
+  const [todoMonthListArr, setTodoMonthListArr] = useState([]);
+  // 다음달
+  const [todoNextMonthListArr, setTodoNextMonthListArr] = useState([]);
+  const nextMonth = moment().add(1, "months").format("YYYY년 M월");
 
   useEffect(() => {
     setToggle(todoListClassAdded);
@@ -44,7 +49,6 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
         `/api/board/todo?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      console.log(status);
       if (status === "2") {
         return resepons.data;
       } else {
@@ -60,7 +64,13 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const todoListPrint = async () => {
     const result = await getTodoList(userId);
 
-    // setTodoListArr(result.resultData.untilNextMonthBoard);
+
+    setTodoListArr(result.resultData.untilNextMonthBoard);
+    setTodoTodayListArr(result.resultData.untilTodayBoard);
+    setTodoMonthListArr(result.resultData.untilThisMonthBoard);
+    setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
+    // console.log("캘린더 목차 확인", result.resultData);
+
     // console.log("길이", todoListArr.length);
     // console.log(result.resultData.untilNextMonthBoard);
     // console.log("체크", todoListArr[1].dDay);
@@ -82,13 +92,11 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
       console.log(resepons.data);
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   };
 
   useEffect(() => {
     todoListPrint();
-    // deleteTodoList();
     return () => {};
   }, []);
 
@@ -115,9 +123,9 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   }, [toggle, onTodoListToggle]);
 
   const checkDay = dDay => {
-    const aaa = moment(dDay).format("M월 D일");
-    // console.log("check", aaa);
-    return <span>{aaa}</span>;
+    const endDay = moment(dDay).format("M월 D일");
+    // console.log("check", endDay);
+    return <span>{endDay}</span>;
   };
 
   return (
@@ -142,29 +150,46 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
               <div className="todo-list-sub-title todo-list-today">
                 {/* <span className="todo-list-sub-title-text">오늘까지 (1)</span> */}
                 <span className="todo-list-sub-title-text">
-                  오늘까지 ({todoListArr.length})
+                  오늘까지 ({todoTodayListArr.length})
                 </span>
               </div>
               <div className="todo-list today-todo-list">
-                <div className="todo today-01">
-                  <input type="checkbox" className="todo-checkbox" />
-                  <div className="todo-info-wrap todo-info-no-01">
-                    <div className="todo-info">
-                      <div className="todo-info-tag">태그</div>
-                      <div className="todo-info-title">개인 일정 1</div>
+                {todoTodayListArr.map((item, index) => {
+                  return (
+                    <div
+                      className="todo today-01"
+                      style={{ borderLeft: "7px solid #666666" }}
+                      key={index}
+                    >
+                      <input type="checkbox" className="todo-checkbox" />
+                      <div className="todo-info-wrap">
+                        <div className="todo-info">
+                          {/* 태그가 없을 때, 있을 때 처리 */}
+                          {item.tags ? (
+                            <div className="todo-info-tag">1</div>
+                          ) : (
+                            <div className="todo-info-tag dis-none">2</div>
+                          )}
+                          <div className="todo-info-title">{item.title}</div>
+                        </div>
+                        <div className="todo-deadline">
+                          <span className="todo-deadline-text">
+                            {checkDay(item.dDay)} 마감
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="todo-deadline">
-                      <span className="todo-deadline-text">6월 3일 마감</span>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })}
               </div>
 
               <div className="todo-list-sub-title todo-list-this-month">
-                <span className="todo-list-sub-title-text">이번달까지 (3)</span>
+                <span className="todo-list-sub-title-text">
+                  이번달까지 ({todoTodayListArr.length})
+                </span>
               </div>
               <div className="todo-list this-month-todo-list">
-                {todoListArr.map((item, index) => {
+                {todoMonthListArr.map((item, index) => {
                   return (
                     <div
                       className="todo this-month-01"
@@ -231,10 +256,46 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
               </div>
 
               <div className="todo-list-sub-title todo-list-next-month">
-                <span className="todo-list-sub-title-text">2024년 7월 (1)</span>
+                <span className="todo-list-sub-title-text">
+                  {nextMonth} ({todoNextMonthListArr.length})
+                </span>
               </div>
               <div className="todo-list next-month-todo-list">
-                <div className="todo next-month-01">
+                {todoNextMonthListArr.map((item, index) => {
+                  return (
+                    <div
+                      className="todo next-month-01"
+                      style={{ borderLeft: `7px solid ${item.color}` }}
+                      key={index}
+                    >
+                      <input
+                        type="checkbox"
+                        className="todo-checkbox"
+                        onClick={() => {
+                          deleteTodoList();
+                        }}
+                      />
+                      <div className="todo-info-wrap">
+                        <div className="todo-info">
+                          {/* 태그가 없을 때, 있을 때 처리 */}
+                          {item.tags ? (
+                            <div className="todo-info-tag">1</div>
+                          ) : (
+                            <div className="todo-info-tag dis-none">2</div>
+                          )}
+                          <div className="todo-info-title">{item.title}</div>
+                        </div>
+                        <div className="todo-deadline">
+                          <span className="todo-deadline-text">
+                            {checkDay(item.dDay)} 마감
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* <div className="todo next-month-01">
                   <input type="checkbox" className="todo-checkbox" />
                   <div className="todo-info-wrap todo-info-no-01">
                     <div className="todo-info">
@@ -245,7 +306,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       <span className="todo-deadline-text">7월 5일 마감</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
