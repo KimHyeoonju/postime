@@ -3,6 +3,8 @@ import "../../css/todolist.css";
 import { useEffect, useRef, useState } from "react";
 import { colorSystem } from "../../css/color";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
 
 const TodoListMenu = styled.div`
   &.todolistOff {
@@ -27,9 +29,68 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const [toggle, setToggle] = useState(todoListClassAdded);
   const todoListRef = useRef(null);
 
+  const userId = 8;
+  const [todoListArr, setTodoListArr] = useState([]);
+  // const [isOk, isOk] = useState(null);
+
   useEffect(() => {
     setToggle(todoListClassAdded);
   }, [todoListClassAdded]);
+
+  const getTodoList = async userId => {
+    // console.log(userId);
+    try {
+      const resepons = await axios.get(
+        `/api/board/todo?signed_user_id=${userId}`,
+      );
+      const status = resepons.status.toString().charAt(0);
+      console.log(status);
+      if (status === "2") {
+        return resepons.data;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  };
+
+  const todoListPrint = async () => {
+    const result = await getTodoList(userId);
+
+    setTodoListArr(result.resultData.untilNextMonthBoard);
+    // console.log("길이", todoListArr.length);
+    console.log(result.resultData.untilNextMonthBoard);
+    // console.log("체크", todoListArr[1].dDay);
+    // checkDay();
+  };
+
+  // 수정 바람
+  const deleteTodoList = async (boardId, calendarId) => {
+    // console.log(userId);
+    try {
+      const resepons = await axios.delete(`/api/board`);
+      const status = resepons.status.toString().charAt(0);
+      console.log(status);
+      if (status === "2") {
+        return resepons.data;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  };
+
+  useEffect(() => {
+    todoListPrint();
+    // deleteTodoList();
+    return () => {};
+  }, []);
 
   const handleClickOutside = e => {
     // 투두 리스트가 열려있는 상태에서만 실행합니다.
@@ -53,8 +114,10 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
     };
   }, [toggle, onTodoListToggle]);
 
-  const handleCreateButtonClick = () => {
-    window.location.href = "/write/create";
+  const checkDay = dDay => {
+    const aaa = moment(dDay).format("M월 D일");
+    // console.log("check", aaa);
+    return <span>{aaa}</span>;
   };
 
   return (
@@ -77,7 +140,10 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
 
             <div className="todo-list-box">
               <div className="todo-list-sub-title todo-list-today">
-                <span className="todo-list-sub-title-text">오늘까지 (1)</span>
+                {/* <span className="todo-list-sub-title-text">오늘까지 (1)</span> */}
+                <span className="todo-list-sub-title-text">
+                  오늘까지 ({todoListArr.length})
+                </span>
               </div>
               <div className="todo-list today-todo-list">
                 <div className="todo today-01">
@@ -98,7 +164,35 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                 <span className="todo-list-sub-title-text">이번달까지 (3)</span>
               </div>
               <div className="todo-list this-month-todo-list">
-                <div className="todo this-month-01">
+                {todoListArr.map((item, index) => {
+                  return (
+                    <div
+                      className="todo this-month-01"
+                      style={{ borderLeft: "7px solid #666666" }}
+                      key={index}
+                    >
+                      <input type="checkbox" className="todo-checkbox" />
+                      <div className="todo-info-wrap">
+                        <div className="todo-info">
+                          {/* 태그가 없을 때, 있을 때 처리 */}
+                          {item.tags ? (
+                            <div className="todo-info-tag">1</div>
+                          ) : (
+                            <div className="todo-info-tag dis-none">2</div>
+                          )}
+                          <div className="todo-info-title">{item.title}</div>
+                        </div>
+                        <div className="todo-deadline">
+                          <span className="todo-deadline-text">
+                            {checkDay(item.dDay)} 마감
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* <div className="todo this-month-01">
                   <input type="checkbox" className="todo-checkbox" />
                   <div className="todo-info-wrap">
                     <div className="todo-info">
@@ -109,8 +203,8 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       <span className="todo-deadline-text">6월 13일 마감</span>
                     </div>
                   </div>
-                </div>
-                <div className="todo this-month-02">
+                </div> */}
+                {/* <div className="todo this-month-02">
                   <input type="checkbox" className="todo-checkbox" />
                   <div className="todo-info-wrap todo-info-no-02">
                     <div className="todo-info">
@@ -121,8 +215,8 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       <span className="todo-deadline-text">6월 14일 마감</span>
                     </div>
                   </div>
-                </div>
-                <div className="todo this-month-03">
+                </div> */}
+                {/* <div className="todo this-month-03">
                   <input type="checkbox" className="todo-checkbox" />
                   <div className="todo-info-wrap todo-info-no-03">
                     <div className="todo-info">
@@ -133,7 +227,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       <span className="todo-deadline-text">6월 29일 마감</span>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="todo-list-sub-title todo-list-next-month">
