@@ -238,9 +238,6 @@ const MainCalender = () => {
               textColor: "#000000",
             },
             { title: "event 1", date: "2024-06-01" },
-            { title: "event 1", date: "2024-05-01" },
-            { title: "event 1", date: "2024-04-01" },
-            { title: "event 1", date: "2024-06-01" },
             { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
             {
               title: "event 3",
