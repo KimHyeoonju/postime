@@ -5,6 +5,7 @@ import "../../css/calender.css";
 import { colorSystem } from "../../css/color.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const CalenderStyle = styled.div`
   position: relative;
@@ -37,8 +38,8 @@ const CalenderStyle = styled.div`
   /* 캘린더의 헤더 영역 */
   // toolbar 버튼(수정)
   .fc .fc-button-primary {
-    /* background-color: asdfasdf.2; */
-    background-color: ${colorSystem.g700};
+
+    background-color: ${colorSystem.g500};
     border: none;
     /* width: 40px;
     height: 37px; */
@@ -178,12 +179,28 @@ const MainCalender = () => {
     return () => {};
   }, []);
 
+  const handleEventClick = clickInfo => {
+    console.log(clickInfo);
+
+    const event = clickInfo.event;
+    const mouseX = clickInfo.jsEvent.clientX;
+    const mouseY = clickInfo.jsEvent.clientY - 90;
+    this.setState({ selectedEvent: event, mouseX, mouseY });
+  };
+
+  const insertModalOpen = clickInfo => {
+    // alert(clickInfo);
+    console.log(clickInfo);
+    console.log(clickInfo.event._def.title);
+    console.log(clickInfo.event._instance.range.start);
+  };
+
   return (
     <CalenderStyle>
       <div className="App">
         <FullCalendar
           defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
+          plugins={[dayGridPlugin, interactionPlugin]}
           headerToolbar={{
             // start: "prev,title,title,next",
             start: "prev,title,next",
@@ -208,11 +225,15 @@ const MainCalender = () => {
           titleFormat={{
             year: "numeric",
             month: "numeric",
+            end: "today",
           }}
+          // titleFormat={{
+          //   year: "numeric",
+          //   month: "numeric",
+          // }}
           locale={"kr"}
           height={"91.4vh"}
           // formatShortWeekday={formatShortWeekday}
-
           dayCellContent={dayCellContent}
           // formatDay={(locale, date) => {
           //   date.toLocaleString("en", { day: "numeric" });
@@ -258,6 +279,11 @@ const MainCalender = () => {
               textColor: "#000000",
             },
           ]}
+          eventColor={"#F2921D"}
+          droppable={true}
+          editable={true}
+          dateClick={handleEventClick}
+          eventClick={insertModalOpen}
         />
       </div>
     </CalenderStyle>
