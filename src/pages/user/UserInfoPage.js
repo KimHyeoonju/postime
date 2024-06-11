@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import "../../css/userinfo.css";
+import { Link } from "react-router-dom";
+import UserModify from "./UserModify";
 
 const UserInfoPage = () => {
   useEffect(() => {
@@ -26,7 +28,9 @@ const UserInfoPage = () => {
         </div>
       </div>
       <button type="submit" className="user-button">
-        <span>회원정보 수정</span>
+        <Link to="/UserModify">
+          <span>회원정보 수정</span>
+        </Link>
       </button>
     </div>
   );

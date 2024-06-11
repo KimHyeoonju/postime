@@ -1,7 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "../../css/userstyle.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SearchPwPage = () => {
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  const findPw = () => {
+    const rqData = `/api/user/resetpwd?email=${userEmail}&id=${userId}`;
+  };
+
+  const getResetPwd = async data => {
+    try {
+      const response = await axios.get(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     return () => {};
   }, []);
@@ -35,7 +53,13 @@ const SearchPwPage = () => {
           />
         </div>
       </div>
-      <button type="submit" className="user-button">
+      <button
+        type="button"
+        className="user-button"
+        onClick={() => {
+          SearchPw();
+        }}
+      >
         <span>비밀번호 찾기</span>
       </button>
     </div>

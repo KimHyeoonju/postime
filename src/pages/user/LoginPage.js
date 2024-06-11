@@ -32,7 +32,7 @@ const LoginPage = ({ setIsLogin }) => {
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      return error;
     }
   };
 
@@ -68,7 +68,7 @@ const LoginPage = ({ setIsLogin }) => {
         </div>
         <button
           type="submit"
-          className="user-button"
+          className="login-button"
           onClick={event => {
             handleSubmit(event);
           }}

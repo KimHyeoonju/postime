@@ -40,6 +40,20 @@ body {
   margin: 0;
 }
 
+.signup-input {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label-field {
+  width: 400px;
+}
+
+.label-field label {
+  display: inline-block;
+}
+
 .search-input {
   display: flex;
   flex-direction: column;
