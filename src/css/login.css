@@ -10,6 +10,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 100px;
 }
 
 .login-header {
@@ -68,27 +69,27 @@
   cursor: pointer;
 }
 
-.user-button {
+.login-button {
   width: 260px;
   height: 40px;
   background: #512772;
   border-radius: 10px;
-  margin: 60px auto 0 auto;
+  margin: 80px auto 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.user-button span {
+.login-button span {
   color: #ffffff;
   font-size: 20px;
 }
 
-.user-button:hover {
+.login-button:hover {
   background-color: #f6f7f9;
   border-color: #512772;
   transition: background-color 0.2s;
   cursor: pointer;
 }
-.user-button:hover span {
+.login-button:hover span {
   color: #512772;
 }
