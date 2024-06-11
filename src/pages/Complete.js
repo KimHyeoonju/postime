@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-labels */
+import { useEffect, useState } from "react";
 import "../../src/css/commonpage.css";
 import Button from "../components/Button";
-import { getCompleteList } from "../apis/etc/completeApi";
+import { deleteCompleteList, getCompleteList } from "../apis/etc/apicomplete";
 
 const Complete = () => {
   const [completeList, setCompleteList] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
-
-  useEffect(() => {
-    getApi();
-  }, []);
+  const [selectedBoardId, setSelectBoardId] = useState([]);
 
   const getApi = async () => {
     const result = await getCompleteList();
     setCompleteList(result.resultData);
-    console.log(result.resultData);
+    // console.log(result.resultData);
+  };
+
+  // 완료 > 삭제 상태변경 state 2 > 3
+  const deleteApi = async () => {
+    console.log(selectedBoardId);
+    await deleteCompleteList(selectedBoardId);
+    setSelectBoardId([]);
   };
 
   const handleCheckboxChange = (item, isChecked) => {
@@ -36,7 +41,18 @@ const Complete = () => {
   };
 
   useEffect(() => {
-    console.log("해해 : ", selectedItems);
+    getApi();
+  }, [completeList]);
+
+  useEffect(() => {
+    console.log("선택항목 : ", selectedItems);
+
+    const BoardIds = selectedItems.map(item => ({
+      boardId: item.boardId,
+      state: 3,
+    }));
+    console.log(BoardIds);
+    setSelectBoardId(BoardIds);
   }, [selectedItems]);
 
   return (
@@ -45,7 +61,12 @@ const Complete = () => {
         <h1>완료된 일정</h1>
         <div className="common-button">
           <Button label="복원" onClick={() => {}}></Button>
-          <Button label="삭제"></Button>
+          <Button
+            label="삭제"
+            onClick={() => {
+              deleteApi();
+            }}
+          ></Button>
         </div>
         <div className="common-menu">
           <div className="cmt">
@@ -82,7 +103,7 @@ const Complete = () => {
                 <span className="com-date">{item.dDay}</span>
               </li>
               <li className="calender-area">
-                <span className="com-calender">{item.calendarId}</span>
+                <span className="com-calender">{item.calendarName}</span>
               </li>
             </ul>
           ))}

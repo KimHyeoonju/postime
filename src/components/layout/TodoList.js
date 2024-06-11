@@ -70,6 +70,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
     setTodoMonthListArr(result.resultData.untilThisMonthBoard);
     setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
     // console.log("캘린더 목차 확인", result.resultData);
+
     // console.log("길이", todoListArr.length);
     // console.log(result.resultData.untilNextMonthBoard);
     // console.log("체크", todoListArr[1].dDay);
