@@ -60,9 +60,9 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const todoListPrint = async () => {
     const result = await getTodoList(userId);
 
-    setTodoListArr(result.resultData.untilNextMonthBoard);
+    // setTodoListArr(result.resultData.untilNextMonthBoard);
     // console.log("길이", todoListArr.length);
-    console.log(result.resultData.untilNextMonthBoard);
+    // console.log(result.resultData.untilNextMonthBoard);
     // console.log("체크", todoListArr[1].dDay);
     // checkDay();
   };

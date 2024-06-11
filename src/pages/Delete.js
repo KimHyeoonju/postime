@@ -3,11 +3,17 @@ import "../../src/css/commonpage.css";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
-import { deleteDelList, getDelList } from "../apis/etc/DeleteApi";
+import { deleteDelList, getDelList } from "../apis/etc/apidelete";
 
 const Delete = () => {
-  const { isModalOpen, modalMessage, confirmAction, openModal, closeModal } =
-    useModal();
+  const {
+    isModalOpen,
+    modalTitle,
+    modalMessage,
+    confirmAction,
+    openModal,
+    closeModal,
+  } = useModal();
 
   const [deleteList, setDeleteList] = useState([]);
 
@@ -16,24 +22,29 @@ const Delete = () => {
   }, []);
 
   const deleteBt = () => {
+    // checkebox가 체크 됐을때 모달이 뜨도록
     openModal({
+      title: "삭제 알람",
       message: "정말 삭제하시겠습니까?",
+      // onConfirm: () => {
+      //   const selectedBoxes = document.querySelectorAll(
+      //     'input[type="checkbox"]:checked',
+      //   );
+      //   // console.log(selectedBoxes);
+      //   if (selectedBoxes.length > 0) {
+      //     selectedBoxes.forEach(item => {
+      //       const listItem = item.closest(".common-list");
+      //       // console.log(listItem);
+      //       listItem.remove();
+      //       // alert("선택한 항목을 휴지통으로 이동합니다.");
+      //       closeModal();
+      //     });
+      //   } else {
+      //     alert("체크박스를 선택해주세요.");
+      //   }
+      // },
       onConfirm: () => {
-        const selectedBoxes = document.querySelectorAll(
-          'input[type="checkbox"]:checked',
-        );
-        // console.log(selectedBoxes);
-        if (selectedBoxes.length > 0) {
-          selectedBoxes.forEach(item => {
-            const listItem = item.closest(".common-list");
-            // console.log(listItem);
-            listItem.remove();
-            // alert("선택한 항목을 휴지통으로 이동합니다.");
-            closeModal();
-          });
-        } else {
-          alert("체크박스를 선택해주세요.");
-        }
+        console.log("삭제할게요");
       },
     });
   };
@@ -44,10 +55,12 @@ const Delete = () => {
     setDeleteList(result.resultData);
   };
 
+  // test중
   const deleteApi = async () => {
     const result = await deleteDelList();
     console.log(result);
   };
+
   return (
     <div className="common">
       <div className="common-inner">
@@ -99,7 +112,7 @@ const Delete = () => {
                   <span className="com-date">{item.dDay}</span>
                 </li>
                 <li className="calender-area">
-                  <span className="com-calender">{item.calendarId}</span>
+                  <span className="com-calender">{item.calendarName}</span>
                 </li>
               </ul>
             );
@@ -108,6 +121,7 @@ const Delete = () => {
         {/* 모달 관련 */}
         <Modal
           isOpen={isModalOpen}
+          title={modalTitle}
           message={modalMessage}
           onClose={closeModal}
           onConfirm={confirmAction}

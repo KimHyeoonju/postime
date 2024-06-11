@@ -77,7 +77,7 @@ header {
 
   z-index: 1;
 }
-/* 더보기 눌렀을때 마이페잊,로그아웃 open */
+/* 더보기 눌렀을때 마이페이지,로그아웃 open */
 .header-more-open {
   width: 120px;
   height: 70px;

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import "../../css/header.css";
 import styled from "@emotion/styled";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 const SearchButtonStyle = styled.button`
   border: 0;
@@ -23,25 +22,16 @@ const ListIconStyle = styled.li`
 `;
 const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
   const moreMenu = useRef(null);
-  const navigate = useNavigate();
-  // const searchBt = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
 
-  const moreView = () => {
+  const handleMoreView = () => {
     if (toggle) {
       moreMenu.current.classList.remove("header-more-open");
       setToggle(false);
     } else {
       moreMenu.current.classList.add("header-more-open");
       setToggle(true);
-    }
-  };
-
-  const todoListView = () => {
-    // todoList 클릭 이벤트 처리
-    if (todoListhandleButtonClick) {
-      todoListhandleButtonClick();
     }
   };
 
@@ -61,7 +51,7 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
             username
             <SearchButtonStyle
               onClick={() => {
-                moreView();
+                handleMoreView();
               }}
             >
               <MdKeyboardArrowDown />
@@ -97,20 +87,5 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
       </div>
     </div>
   );
-
-  //여기 확인
-  //import styled from "@emotion/styled";
-  //import "../../css/header.css";
-
-  // const HeaderStyle = styled.div`
-  //   position: relative;
-  //   height: 80px;
-  //   width: 100%;
-  //   background-color: #7f85a4;
-  // `;
-
-  // const Header = () => {
-  //   return <HeaderStyle>Header</HeaderStyle>;
-  // };
 };
 export default Header;
