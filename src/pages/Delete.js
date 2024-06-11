@@ -3,13 +3,13 @@ import "../../src/css/commonpage.css";
 import Button from "../components/Button";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
-import axios from "axios";
+import { deleteDelList, getDelList } from "../apis/etc/DeleteApi";
 
-const Complete = () => {
+const Delete = () => {
   const { isModalOpen, modalMessage, confirmAction, openModal, closeModal } =
     useModal();
 
-  const [completeList, setCompleteList] = useState([]);
+  const [deleteList, setDeleteList] = useState([]);
 
   useEffect(() => {
     getApi();
@@ -39,34 +39,14 @@ const Complete = () => {
   };
 
   const getApi = async () => {
-    const getCompleteList = async () => {
-      try {
-        const response = await axios.get(`/api/board/deleted?signed_user_id=8`);
-        // console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const result = await getCompleteList();
-    console.log(result.resultData);
-    setCompleteList(result.resultData);
+    const result = await getDelList();
+    // console.log(result.resultData);
+    setDeleteList(result.resultData);
   };
 
-  const DeleteApi = async () => {
-    const DeleteList = async () => {
-      try {
-        const response = await axios.delete(`/api/board`, {
-          boardId: 59,
-          calendarId: 61,
-        });
-        console.log(response.data);
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const result = DeleteList();
+  const deleteApi = async () => {
+    const result = await deleteDelList();
+    console.log(result);
   };
   return (
     <div className="common">
@@ -77,7 +57,7 @@ const Complete = () => {
           <Button
             label="api"
             onClick={() => {
-              DeleteApi();
+              deleteApi();
             }}
           ></Button>
           <Button
@@ -103,7 +83,7 @@ const Complete = () => {
         </div>
 
         <div className="common-list-wrap">
-          {completeList.map((item, index) => {
+          {deleteList.map((item, index) => {
             return (
               <ul className="common-list" key={index}>
                 <li className="checkbox-area">
@@ -137,4 +117,4 @@ const Complete = () => {
   );
 };
 
-export default Complete;
+export default Delete;

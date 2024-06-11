@@ -1,5 +1,4 @@
 /* eslint-disable react/no-unknown-property */
-import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { Route, Routes } from "react-router-dom";
 import Header from "../components/layout/Header";
@@ -66,6 +65,9 @@ const WriteRoutes = () => {
 };
 
 const Index = () => {
+  // 검색어 관련
+  const [searchTextIndex, setSearchTextIndex] = useState("");
+
   const [todoListClassAdded, setTodoListClassAdded] = useState(false);
 
   // todoList 메뉴 여닫는 버튼 체크
@@ -81,7 +83,10 @@ const Index = () => {
           <Nav />
           <MainStyle>
             <header>
-              <Header todoListhandleButtonClick={todoListhandleButtonClick} />
+              <Header
+                todoListhandleButtonClick={todoListhandleButtonClick}
+                setSearchTextIndex={setSearchTextIndex}
+              />
             </header>
             <SectionListStyle>
               <SectionStyle>
@@ -104,7 +109,10 @@ const Index = () => {
                   />
                   <Route path="/complete" element={<Complete />} />
                   <Route path="/delete" element={<Delete />} />
-                  <Route path="/search" element={<Search />} />
+                  <Route
+                    path="/search"
+                    element={<Search searchTextIndex={searchTextIndex} />}
+                  />
                   <Route path="/userinfo" element={<UserInfoPage />} />
                   <Route path="/usermodify" element={<UserModify />} />
                 </Routes>
