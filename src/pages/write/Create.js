@@ -22,7 +22,7 @@ const Create = () => {
   const [createWrite, setCreateWrite] = useState("");
   const [createDate, setCreateDate] = useState();
 
-  const 
+  // const
 
   const fileUpload = () => {
     const imgUploadBt = document.querySelector(".img-upload-button");

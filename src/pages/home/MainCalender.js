@@ -5,6 +5,7 @@ import "../../css/calender.css";
 import { colorSystem } from "../../css/color.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const CalenderStyle = styled.div`
   position: relative;
@@ -37,8 +38,7 @@ const CalenderStyle = styled.div`
   /* 캘린더의 헤더 영역 */
   // toolbar 버튼(수정)
   .fc .fc-button-primary {
-    background-color: asdfasdf.2;
-    /* background-color: ${colorSystem.g700}; */
+    background-color: ${colorSystem.g500};
     border: none;
     /* width: 40px;
     height: 37px; */
@@ -73,8 +73,7 @@ const CalenderStyle = styled.div`
     /* margin: auto; */
     /* padding: auto; */
     /* padding-top: 3.5px; */
-    /* background: ${colorSystem.g900}; */
-    background: "asdfasdf[0].calenderColor";
+    background: ${colorSystem.g900};
     border: 1px solid #dddee0;
     font-weight: bold;
     font-size: 16px;
@@ -123,38 +122,58 @@ const MainCalender = ({ signUserId }) => {
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
+
+  const handleEventClick = clickInfo => {
+    console.log(clickInfo);
+
+    const event = clickInfo.event;
+    const mouseX = clickInfo.jsEvent.clientX;
+    const mouseY = clickInfo.jsEvent.clientY - 90;
+    this.setState({ selectedEvent: event, mouseX, mouseY });
+  };
+
+  const insertModalOpen = clickInfo => {
+    // alert(clickInfo);
+    console.log(clickInfo);
+    console.log(clickInfo.event._def.title);
+    console.log(clickInfo.event._instance.range.start);
+  };
+
   return (
     <CalenderStyle>
       <div className="App">
         <FullCalendar
           defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
+          plugins={[dayGridPlugin, interactionPlugin]}
           headerToolbar={{
             // start: "prev,title,title,next",
             start: "prev,title,next",
             center: "",
-            end: "",
+            end: "today",
           }}
-          titleFormat={{
-            year: "numeric",
-            month: "numeric",
-          }}
+          // titleFormat={{
+          //   year: "numeric",
+          //   month: "numeric",
+          // }}
           locale={"kr"}
           height={"91.4vh"}
           // formatShortWeekday={formatShortWeekday}
-
           dayCellContent={dayCellContent}
-          formatDay={(locale, date) => {
-            date.toLocaleString("en", { day: "numeric" });
-          }}
+          // formatDay={(locale, date) => {
+          //   date.toLocaleString("en", { day: "numeric" });
+          // }}
           // titleContent={({ date, view }) => null}
           //
           fixedWeekCount={false}
-          droppable={true}
           events={[
             { title: "event 1", date: "2024-06-01" },
             { title: "event 2", date: "2024-06-02" },
           ]}
+          eventColor={"#F2921D"}
+          droppable={true}
+          editable={true}
+          dateClick={handleEventClick}
+          eventClick={insertModalOpen}
         />
       </div>
     </CalenderStyle>

@@ -30,9 +30,12 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import Modal from "../Modal";
+import AlarmModal from "../../pages/home/AlarmModal";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false); // 메뉴가 열려있는지 여부를 상태로 관리
+  const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
   const [calenderListArr, setCalenderListArr] = useState([]);
 
   const userId = 8;
@@ -98,7 +101,7 @@ const Nav = () => {
     const result = await getCalenderList(userId);
 
     setCalenderListArr(result.resultData);
-    console.log(result.resultData);
+    // console.log(result.resultData);
   };
 
   // 좌측 메뉴의 캘린더 리스트
@@ -107,8 +110,13 @@ const Nav = () => {
     return () => {};
   }, []);
 
+  const onClickModalOn = () => {
+    setAlarmModalIsOpen(true);
+  };
   return (
     <NavStyle>
+      <AlarmModal />
+
       <div className="menu">
         <div className="div-menu-header">
           <h1 className="menu-header">
@@ -231,7 +239,10 @@ const Nav = () => {
         <div className="nav-content">
           <div className="nav-wrap">
             <div className="nav-inner nav-menu-gap">
-              <div className="div-calender div-mycalender-title">
+              <div
+                className="div-calender div-mycalender-title"
+                onClick={() => onClickModalOn(true)}
+              >
                 <div className="mycalender-title">
                   <div className="nav-icon-style nav-alarm-icon">
                     <VscBell />
