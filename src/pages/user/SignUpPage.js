@@ -19,6 +19,9 @@ const SignUpPage = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   // 서버에서 결과가 왔는지를 체크
   const [isServer, setIsServer] = useState(false);
+  // 중복 확인
+  const [idChecked, setIdChecked] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false);
 
   // 아이디 형식이 맞는지 아닌지
   const [idCheck, setIdCheck] = useState(true);
@@ -93,7 +96,7 @@ const SignUpPage = () => {
       setPasswordMatchError(false);
       // console.log("비밀번호가 일치하지 않습니다.");
     }
-  }, [userPass2]);
+  }, [userPass, userPass2]);
 
   // 회원가입시 처리할 함수
   const signupMember = async event => {
@@ -124,6 +127,22 @@ const SignUpPage = () => {
       return;
     }
 
+    if (userPass !== userPass2) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    // 중복 확인 안 했을 때
+    if (!idChecked) {
+      alert("아이디 중복 확인을 해 주세요.");
+      return;
+    }
+
+    if (!emailChecked) {
+      alert("이메일 중복 확인을 해 주세요.");
+      return;
+    }
+
     const requestData = {
       id: userId,
       pwd: userPass,
@@ -141,6 +160,7 @@ const SignUpPage = () => {
     navigate("/");
   };
 
+  // 가입하기
   const postUser = async ({ id, pwd, name, email }) => {
     try {
       const response = await axios.post("/api/user", { id, pwd, name, email });
@@ -165,11 +185,15 @@ const SignUpPage = () => {
       return;
     }
     alert("사용 가능한 아이디입니다.");
+    // 아이디 중복 확인 체크
+    setIdChecked(true);
   };
 
   const postUserId = async ({ id }) => {
     try {
-      const response = await axios.post("/api/user", { id });
+      const response = await axios.get("/api/user/checkuser", {
+        params: { id },
+      });
       return response.data;
     } catch (error) {
       return error;
@@ -190,12 +214,16 @@ const SignUpPage = () => {
 
       return;
     }
-    alert("사용 가능한 아이디입니다.");
+    alert("사용 가능한 이메일입니다.");
+    // 이메일 중복 확인 체크
+    setEmailChecked(true);
   };
 
   const postUserEmail = async ({ email }) => {
     try {
-      const response = await axios.post("/api/user", { email });
+      const response = await axios.get("/api/user/checkuser", {
+        params: { email },
+      });
       return response.data;
     } catch (error) {
       return error;
@@ -347,6 +375,14 @@ const SignUpPage = () => {
       >
         <span>가입하기</span>
       </button>
+      {/* 모달 관련 */}
+      {/* <UserModal
+        isOpen={userModalOpen}
+        title={"아이디 확인"}
+        message={userModalMessage}
+        onConfirm={userModalOnConfirm}
+        buttonComment={"로그인"}
+      /> */}
     </div>
   );
 };

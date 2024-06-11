@@ -15,11 +15,11 @@ function App() {
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index signUserId={signUserId} />
+        <Index signUserId={signUserId} setIsLogin={setIsLogin} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage setIsLogin={setIsLogin} />} />
           <Route path="/searchid" element={<SearchIdPage />} />
           <Route path="/searchpw" element={<SearchPwPage />} />
           <Route path="/signup" element={<SignUpPage />} />

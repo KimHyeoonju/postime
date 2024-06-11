@@ -38,7 +38,6 @@ const CalenderStyle = styled.div`
   /* 캘린더의 헤더 영역 */
   // toolbar 버튼(수정)
   .fc .fc-button-primary {
-
     background-color: ${colorSystem.g500};
     border: none;
     /* width: 40px;
@@ -280,7 +279,7 @@ const MainCalender = () => {
             },
           ]}
           eventColor={"#F2921D"}
-          droppable={true}
+          // droppable={true}
           editable={true}
           dateClick={handleEventClick}
           eventClick={insertModalOpen}
