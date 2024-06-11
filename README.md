@@ -1,6 +1,1 @@
-```js
-const BoardIds = selectedItems.map(item => ({
-  boardId: item.boardId,
-  state: 3,
-}));
-```
+# 프로잭트
