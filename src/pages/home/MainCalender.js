@@ -5,6 +5,7 @@ import "../../css/calender.css";
 import { colorSystem } from "../../css/color.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import interactionPlugin from "@fullcalendar/interaction";
 
 const CalenderStyle = styled.div`
   position: relative;
@@ -37,8 +38,8 @@ const CalenderStyle = styled.div`
   /* 캘린더의 헤더 영역 */
   // toolbar 버튼(수정)
   .fc .fc-button-primary {
-    background-color: asdfasdf.2;
-    /* background-color: ${colorSystem.g700}; */
+
+    background-color: ${colorSystem.g500};
     border: none;
     /* width: 40px;
     height: 37px; */
@@ -53,7 +54,7 @@ const CalenderStyle = styled.div`
     }
 
     :hover {
-      background-color: ${colorSystem.g800};
+      background-color: ${colorSystem.g500};
     }
   }
 
@@ -63,7 +64,7 @@ const CalenderStyle = styled.div`
     /* background-color: #356eff; */
     /* word-break: keep-all; */
 
-    color: ${colorSystem.g200};
+    color: ${colorSystem.g900};
   }
 
   // 요일 부분(수정)
@@ -73,9 +74,10 @@ const CalenderStyle = styled.div`
     /* margin: auto; */
     /* padding: auto; */
     /* padding-top: 3.5px; */
-    /* background: ${colorSystem.g900}; */
+    background: ${colorSystem.g900};
     background: "asdfasdf[0].calenderColor";
-    border: 1px solid #dddee0;
+    border-top: 1px solid ${colorSystem.g800};
+    border-bottom: 1px solid ${colorSystem.g800};
     font-weight: bold;
     font-size: 16px;
     line-height: 19px;
@@ -109,10 +111,15 @@ const CalenderStyle = styled.div`
     font-weight: 500;
     font-size: 14px;
   } */
+
+  .fc-event {
+    border: none;
+  }
 `;
 
-const MainCalender = ({ signUserId }) => {
+const MainCalender = () => {
   const userId = 8;
+  const [calenderArr, setCalenderArr] = useState([]);
 
   console.log(userId);
 
@@ -123,38 +130,160 @@ const MainCalender = ({ signUserId }) => {
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
+
+  const getCalender = async userId => {
+    // console.log(userId);
+    try {
+      const resepons = await axios.get(
+        `/api/calendar?signed_user_id=${userId}`,
+      );
+      const status = resepons.status.toString().charAt(0);
+      console.log(status);
+      if (status === "2") {
+        return resepons.data;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  };
+
+  const calenderDayPrint = async () => {
+    const result = await getCalender(userId);
+
+    console.log("result", result.resultData);
+    setCalenderArr(result.resultData);
+    console.log("타이틀 : ", result.resultData.title);
+    // console.log(result.resultData.untilNextMonthBoard);
+    // console.log("체크", todoListArr[1].dDay);
+    // checkDay();
+  };
+
+  const calenderDayPrintaaa = () => {
+    // const aaa = moment(dDay).format("M월 D일");
+    // console.log("check", aaa);
+    // return calenderArr.map((item, index) => {
+    console.log("bbb", calenderArr[0].title);
+    return;
+    // });
+  };
+
+  useEffect(() => {
+    calenderDayPrint();
+    // deleteTodoList();
+    // calenderDayPrintaaa();
+
+    return () => {};
+  }, []);
+
+  const handleEventClick = clickInfo => {
+    console.log(clickInfo);
+
+    const event = clickInfo.event;
+    const mouseX = clickInfo.jsEvent.clientX;
+    const mouseY = clickInfo.jsEvent.clientY - 90;
+    this.setState({ selectedEvent: event, mouseX, mouseY });
+  };
+
+  const insertModalOpen = clickInfo => {
+    // alert(clickInfo);
+    console.log(clickInfo);
+    console.log(clickInfo.event._def.title);
+    console.log(clickInfo.event._instance.range.start);
+  };
+
   return (
     <CalenderStyle>
       <div className="App">
         <FullCalendar
           defaultView="dayGridMonth"
-          plugins={[dayGridPlugin]}
+          plugins={[dayGridPlugin, interactionPlugin]}
           headerToolbar={{
             // start: "prev,title,title,next",
             start: "prev,title,next",
             center: "",
             end: "",
           }}
+          // monthNames={[
+          //   "1월",
+          //   "2월",
+          //   "3월",
+          //   "4월",
+          //   "5월",
+          //   "6월",
+          //   "7월",
+          //   "8월",
+          //   "9월",
+          //   "10월",
+          //   "11월",
+          //   "12월",
+          // ]}
+          buttonText={{ today: "오늘" }}
           titleFormat={{
             year: "numeric",
             month: "numeric",
+            end: "today",
           }}
+          // titleFormat={{
+          //   year: "numeric",
+          //   month: "numeric",
+          // }}
           locale={"kr"}
           height={"91.4vh"}
           // formatShortWeekday={formatShortWeekday}
-
           dayCellContent={dayCellContent}
-          formatDay={(locale, date) => {
-            date.toLocaleString("en", { day: "numeric" });
-          }}
+          // formatDay={(locale, date) => {
+          //   date.toLocaleString("en", { day: "numeric" });
+          // }}
           // titleContent={({ date, view }) => null}
           //
           fixedWeekCount={false}
           droppable={true}
+          // events={[calenderArr()]}
+          eventTextColor="black" // 이벤트 글자 색
+          eventborderColor="none" // 이벤트 글자 색
           events={[
+            { title: calenderArr[0].title, date: calenderArr[0].createdAt },
+            {
+              title: calenderArr[1].title,
+              date: "2024-06-17",
+              textColor: "#000000",
+            },
+            {
+              title: calenderArr[2].title,
+              start: "2024-06-17",
+              end: "2024-06-17",
+              textColor: "#000000",
+            },
             { title: "event 1", date: "2024-06-01" },
-            { title: "event 2", date: "2024-06-02" },
+            { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
+            {
+              title: "event 3",
+              start: "2024-06-02",
+              end: "2024-06-05",
+              // date: "2024-06-02",
+              backgroundColor: "red",
+              borderColor: "red",
+              textColor: "#000000",
+            },
+            {
+              title: "event 4",
+              start: "2024-06-10",
+              end: "2024-06-18",
+              // date: "2024-06-02",
+              backgroundColor: "#ABD5BD",
+              borderColor: "#ABD5BD",
+              textColor: "#000000",
+            },
           ]}
+          eventColor={"#F2921D"}
+          droppable={true}
+          editable={true}
+          dateClick={handleEventClick}
+          eventClick={insertModalOpen}
         />
       </div>
     </CalenderStyle>
