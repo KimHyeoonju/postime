@@ -1,42 +1,56 @@
 import styled from "@emotion/styled";
-import "../../css/nav.css";
-import { PiGearSixLight } from "react-icons/pi";
-import { VscBell } from "react-icons/vsc";
 import { BsTrash3 } from "react-icons/bs";
 import { IoIosCheckboxOutline } from "react-icons/io";
-import { MdOutlineKeyboardArrowUp } from "react-icons/md";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { MdCalendarToday } from "react-icons/md";
+import { MdCalendarToday, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { PiGearSixLight } from "react-icons/pi";
+import { VscBell } from "react-icons/vsc";
+import "../../css/nav.css";
 
 const NavStyle = styled.div`
-  position: relative;
+  @media (prefers-color-scheme: light) {
+    /* :root {
+      accent-color: blue;
+    } */
 
-  z-index: 1200;
-  flex-shrink: 0;
-  height: 100%;
-  min-width: 300px;
-  max-width: 300px;
-  width: 300px;
-  border-right: 1px solid #dddfe1;
-  background-color: #ffffff;
-  margin-left: 0;
+    position: relative;
 
-  svg {
-    font-size: 20px;
+    z-index: 1200;
+    flex-shrink: 0;
+    height: 100%;
+    min-width: 300px;
+    max-width: 300px;
+    width: 300px;
+    border-right: 1px solid #dddfe1;
+    background-color: #ffffff;
+    margin-left: 0;
+
+    svg {
+      font-size: 20px;
+    }
   }
 `;
 
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import Modal from "../Modal";
-import AlarmModal from "../../pages/home/AlarmModal";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import AlarmModal from "../modal/AlarmModal";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false); // 메뉴가 열려있는지 여부를 상태로 관리
-  const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
+  // const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
   const [calenderListArr, setCalenderListArr] = useState([]);
+
+  // 모달 보이는 상태값
+  const [isModal, setIsModal] = useState(false);
+  // 모달 실행 함수
+  const modalOk = e => {
+    if (isModal === false) {
+      setIsModal(true);
+    }
+  };
+  const modalCancel = () => {
+    setIsModal(false);
+  };
 
   const userId = 8;
   // 메뉴를 열거나 닫는 함수
@@ -84,7 +98,7 @@ const Nav = () => {
         `/api/calendar?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      // console.log(status);
+      console.log(resepons);
       if (status === "2") {
         return resepons.data;
       } else {
@@ -104,18 +118,27 @@ const Nav = () => {
     // console.log(result.resultData);
   };
 
+  // const [checkedList, setCheckedList] = useState([]);
+  // const onCheckedItem = (checked, id) => {
+  //   if (checked) {
+  //     setCheckedList(prev => [...prev, item]);
+  //   } else if (!checked) {
+  //     setCheckedList(checkedList.filter(el => el !== item));
+  //   }
+  // };
   // 좌측 메뉴의 캘린더 리스트
   useEffect(() => {
     calenderList();
     return () => {};
   }, []);
 
-  const onClickModalOn = () => {
-    setAlarmModalIsOpen(true);
-  };
+  // const onClickModalOn = () => {
+  //   setAlarmModalIsOpen(true);
+  // };
   return (
     <NavStyle>
-      <AlarmModal />
+      {isModal ? <AlarmModal modalCancel={modalCancel} /> : null}
+      {/* <ShowAlarmModal setAlarmModalIsOpen={alarmModalIsOpen} /> */}
 
       <div className="menu">
         <div className="div-menu-header">
@@ -180,10 +203,18 @@ const Nav = () => {
                       className="div-calender mycalender-list mycalender"
                       key={index}
                     >
-                      <input type="checkbox" className="calender-color" />
+                      <input
+                        type="checkbox"
+                        className="calender-color"
+                        id={item.calendarId}
+                        style={{ accentColor: `${item.color}` }}
+                        onChange={() => {
+                          // checkItemHandler();
+                        }}
+                      />
                       <div
                         className="calender-name"
-                        style={{ backgroundColor: "#555555" }}
+                        // style={{ backgroundColor: "#555555" }}
                         // style={{ color: `${item.color}` }}
                       >
                         {item.title}
@@ -241,7 +272,9 @@ const Nav = () => {
             <div className="nav-inner nav-menu-gap">
               <div
                 className="div-calender div-mycalender-title"
-                onClick={() => onClickModalOn(true)}
+                onClick={e => {
+                  modalOk(e);
+                }}
               >
                 <div className="mycalender-title">
                   <div className="nav-icon-style nav-alarm-icon">
