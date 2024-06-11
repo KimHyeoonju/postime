@@ -22,9 +22,9 @@ const UserModify = () => {
         <div className="usermodify-input-email">
           <div className="label-field">
             <label htmlFor="email">이메일</label>
-            <div className="bubble">
+            {/* <div className="bubble">
               <span>이미 존재하는 이메일입니다.</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="check-field">

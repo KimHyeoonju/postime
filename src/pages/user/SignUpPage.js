@@ -17,9 +17,42 @@ const SignUpPage = () => {
   const [userPass2, setUserPass2] = useState("");
   // 비밀번호 및 비밀번호 확인 일치 여부 플래그
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-  // 서버에서 결과가 왔는지 를 체크 합니다.
+  // 서버에서 결과가 왔는지를 체크
   const [isServer, setIsServer] = useState(false);
 
+  // 아이디 형식이 맞는지 아닌지
+  const [idCheck, setIdCheck] = useState(true);
+
+  const handleUserId = e => {
+    setUserId(e.target.value);
+  };
+  useEffect(() => {
+    chkId();
+  }, [idCheck, userId]);
+
+  // 아이디 문자열 검사
+  function chkId() {
+    var id = userId;
+    var num = id.search(/[0-9]/g);
+    var eng = id.search(/[a-z]/g);
+    var kor = id.search(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g);
+
+    if (id.length < 6 || id.length > 12) {
+      // alert("8자리 ~ 20자리 이내로 입력해주세요.");
+      setIdCheck(false);
+    } else if (id.search(/\s/) != -1) {
+      // alert("아이디는 공백 없이 입력해주세요.");
+      setIdCheck(false);
+    } else if (num < 0 || eng < 0 || kor >= 0) {
+      // 한글이 포함되면 검사 실패
+      // alert("영문, 숫자를 혼합하여 입력해주세요.");
+      setIdCheck(false);
+    } else {
+      setIdCheck(true);
+    }
+  }
+
+  // 비밀번호 항목
   // 비밀번호 형식이 맞는지 아닌지
   const [passwordCheck, setPassWordCheck] = useState(true);
 
@@ -29,6 +62,7 @@ const SignUpPage = () => {
   useEffect(() => {
     chkPW();
   }, [passwordCheck, userPass]);
+
   // 비밀번호 문자열 검사
   function chkPW() {
     var pw = userPass;
@@ -110,10 +144,61 @@ const SignUpPage = () => {
   const postUser = async ({ id, pwd, name, email }) => {
     try {
       const response = await axios.post("/api/user", { id, pwd, name, email });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error);
+      return error;
+    }
+  };
+
+  // 아이디 중복 확인 버튼
+  const idDoubleCheck = async event => {
+    event.preventDefault();
+
+    const reqData = {
+      id: userId,
+    };
+    const result = await postUserId(reqData);
+    console.log(result);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+
+      return;
+    }
+    alert("사용 가능한 아이디입니다.");
+  };
+
+  const postUserId = async ({ id }) => {
+    try {
+      const response = await axios.post("/api/user", { id });
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  // 이메일 중복 확인 버튼
+  const emailDoubleCheck = async event => {
+    event.preventDefault();
+
+    const reqData = {
+      email: userEmail,
+    };
+    const result = await postUserEmail(reqData);
+    console.log(result);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+
+      return;
+    }
+    alert("사용 가능한 아이디입니다.");
+  };
+
+  const postUserEmail = async ({ email }) => {
+    try {
+      const response = await axios.post("/api/user", { email });
+      return response.data;
+    } catch (error) {
+      return error;
     }
   };
 
@@ -151,9 +236,19 @@ const SignUpPage = () => {
               className="id"
               placeholder="(영문, 숫자 포함 6~12자)"
             />
-            <div className="result-icon"></div>
+            {idCheck ? (
+              <div className="result-icon-yes"></div>
+            ) : (
+              <div className="result-icon-no"></div>
+            )}
           </div>
-          <button type="button" className="double-check">
+          <button
+            type="button"
+            className="double-check"
+            onClick={event => {
+              idDoubleCheck(event);
+            }}
+          >
             <span>중복확인</span>
           </button>
         </div>
@@ -179,10 +274,16 @@ const SignUpPage = () => {
               className="email"
               placeholder="이메일"
             />
-            <div className="result-icon"></div>
+            <div className="result-icon-no"></div>
           </div>
 
-          <button type="button" className="double-check">
+          <button
+            type="button"
+            className="double-check"
+            onClick={event => {
+              emailDoubleCheck(event);
+            }}
+          >
             <span>중복확인</span>
           </button>
         </div>
@@ -211,7 +312,7 @@ const SignUpPage = () => {
             {passwordCheck ? (
               <div className="result-icon-yes"></div>
             ) : (
-              <div className="result-icon"></div>
+              <div className="result-icon-no"></div>
             )}
           </div>
         </div>
@@ -232,9 +333,8 @@ const SignUpPage = () => {
             {passwordMatchError ? (
               <div className="result-icon-yes"></div>
             ) : (
-              <div className="result-icon"></div>
+              <div className="result-icon-no"></div>
             )}
-            {/* <div className="result-icon"></div> */}
           </div>
         </div>
       </div>
