@@ -21,7 +21,7 @@ const SearchButtonStyle = styled.button`
 const ListIconStyle = styled.li`
   cursor: pointer;
 `;
-const Header = ({ todoListhandleButtonClick }) => {
+const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
   const moreMenu = useRef(null);
   const navigate = useNavigate();
   // const searchBt = useRef(null);
@@ -47,7 +47,8 @@ const Header = ({ todoListhandleButtonClick }) => {
 
   const searchBt = () => {
     console.log(searchText);
-    navigate("/search");
+    setSearchTextIndex(searchText);
+    //navigate("/search");
   };
 
   useEffect(() => {}, []);
