@@ -2,14 +2,15 @@
   width: 100%;
   height: 100%;
   background: #f6f7f9;
-
-  display: flex;
-  position: relative;
 }
 .write-inner {
   width: 1280px;
+
+  height: calc(100% - 80px);
   padding-top: 60px;
   padding-left: 55px;
+  display: flex;
+  position: relative;
 }
 .write-header {
   width: 100%;
@@ -45,13 +46,9 @@
 .write-header-text {
   color: #9da2b9;
 }
-.write-header-title {
-  height: 65px;
-  margin-bottom: 5px;
-}
-.write-header-title > textarea {
+.write-header-text > textarea {
   width: 1200px;
-  height: 100%;
+  height: 80px;
   border-width: 0;
   outline: 0;
   resize: none;
@@ -61,11 +58,8 @@
   font-weight: 700;
   background-color: #f6f7f9;
 }
-.write-header-title > textarea::placeholder {
+.write-header-text > textarea::placeholder {
   font-size: 42px;
-}
-.write-header-title > span {
-  font-size: 20px;
 }
 
 .write-header-dec {
@@ -133,7 +127,7 @@
 
 .write-img {
   width: 190px;
-  height: 560px;
+  height: 540px;
 
   display: flex;
   flex-direction: column;
@@ -220,26 +214,32 @@
 
 .chat-wrap {
   width: 100%;
-  height: fit-content;
+  height: calc(100%-40px);
   border-left: solid 1px #dddfe1;
-}
-.chat-inner {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
 }
 .chat-header {
   font-size: 20px;
   font-weight: 700;
   margin-top: 25px;
-  margin-left: 25px;
+  margin-left: 10px;
 }
+
+.chat-inner {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  height: calc(100% - 40px);
+
+  position: relative;
+}
+
 .chat-comment {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 780px;
+  /* justify-content: flex-start; */
+  /* justify-content: space-between; */
+  height: 100%;
   padding: 10px 0;
 
   font-size: 14px;
@@ -279,16 +279,19 @@
 }
 .chat-comment-write {
   display: flex;
-  justify-content: space-between;
-  width: 320px;
+  /* justify-content: space-between; */
+  width: 100%;
   height: 45px;
   background: #d8dae3;
   outline: solid 1px #512772;
   border-radius: 5px;
   padding: 10px;
+
+  position: absolute;
+  bottom: 0;
 }
 .chat-comment-input {
-  width: 280px;
+  width: 100%;
   background: #d8dae3;
   border-width: 0;
   outline: 0;
@@ -296,6 +299,10 @@
   overflow: hidden;
 
   font-size: 14px;
+}
+.chat-comment-input::placeholder {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .xi-location-arrow {
