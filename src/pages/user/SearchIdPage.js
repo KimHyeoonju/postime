@@ -2,23 +2,33 @@ import { useEffect, useState } from "react";
 import "../../css/userstyle.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Modal from "../../components/Modal";
+import UserModal from "../../components/UserModal";
 
 const SearchIdPage = () => {
   const navigate = useNavigate();
 
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  // 모달 추가
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [userModalMessage, setUserModalMessage] = useState("");
+  const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
 
   const searchId = async event => {
     event.preventDefault();
 
     if (userName === "") {
-      alert("성명을 입력하세요.");
+      setUserModalMessage("성명을 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      setUserModalOpen(true);
       return;
     }
 
     if (userEmail === "") {
-      alert("이메일을 입력하세요.");
+      setUserModalMessage("이메일을 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      setUserModalOpen(true);
       return;
     }
 
@@ -26,19 +36,28 @@ const SearchIdPage = () => {
       name: userName,
       email: userEmail,
     };
+
     const result = await getUser(requestData);
     console.log(result);
     if (result.statusCode !== 2) {
-      alert(result.resultMsg);
+      setUserModalMessage(result.resultMsg);
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      setUserModalOpen(true);
       return;
     }
-    alert("회원가입이 완료되었습니다.");
-    navigate("/");
+    setUserModalMessage(result.resultData);
+    setUserModalOnConfirm(() => () => {
+      setUserModalOpen(false);
+      navigate("/");
+    });
+    setUserModalOpen(true);
   };
 
   const getUser = async ({ name, email }) => {
     try {
-      const response = await axios.post("/api/user", { name, email });
+      const response = await axios.get("/api/user", {
+        params: { name, email },
+      });
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -86,6 +105,14 @@ const SearchIdPage = () => {
       <button type="button" className="user-button" onClick={searchId}>
         <span>아이디 찾기</span>
       </button>
+      {/* 모달 관련 */}
+      <UserModal
+        isOpen={userModalOpen}
+        title={"아이디 확인"}
+        message={userModalMessage}
+        onConfirm={userModalOnConfirm}
+        buttonComment={"로그인"}
+      />
     </div>
   );
 };

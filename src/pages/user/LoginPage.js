@@ -2,12 +2,15 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../css/login.css";
 import axios from "axios";
+import useModal from "../../hooks/useModal";
+import Modal from "../../components/Modal";
 
 const LoginPage = ({ setIsLogin }) => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
+  const { isModalOpen, modalMessage, openModal, closeModal } = useModal();
 
   const handleSubmit = async e => {
     // 새로고침 막기
@@ -15,9 +18,11 @@ const LoginPage = ({ setIsLogin }) => {
 
     const result = await postSignIn({ userId, userPass });
     if (result.statusCode !== 2) {
-      alert(result.resultMsg);
+      modalMessage(result.resultMsg);
+      openModal();
       return;
     }
+    // 로그인 상태로 변경
     setIsLogin(true);
     navigate("/");
   };
@@ -75,6 +80,12 @@ const LoginPage = ({ setIsLogin }) => {
         >
           <span>로그인</span>
         </button>
+        {/* 모달 관련 */}
+        <Modal
+          isOpen={isModalOpen}
+          message={modalMessage}
+          onClose={closeModal}
+        />
       </form>
     </div>
   );
