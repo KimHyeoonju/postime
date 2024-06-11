@@ -1,4 +1,4 @@
-// color system
+// color system#FFF8CC
 // primaryB 는 검정색, primaryW 는 흰색
 export const colorSystem = {
   primaryB: "#0F1015",
@@ -14,4 +14,6 @@ export const colorSystem = {
   g700: "#bbbece",
   g800: "#d8dae3",
   g900: "#f6f7f9",
+
+  newAlarmC: "#FFF8CC",
 };
