@@ -57,7 +57,7 @@ const SearchPwPage = () => {
         type="button"
         className="user-button"
         onClick={() => {
-          SearchPw();
+          // SearchPw();
         }}
       >
         <span>비밀번호 찾기</span>
