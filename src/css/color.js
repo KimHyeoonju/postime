@@ -16,4 +16,5 @@ export const colorSystem = {
   g900: "#f6f7f9",
 
   newAlarmC: "#FFF8CC",
+  MainPurple: "#512772",
 };

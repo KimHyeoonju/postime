@@ -1,4 +1,4 @@
-.modal-wrap {
+.alarm-modal-wrap {
   position: fixed;
   left: 200px;
   /* top: 0; */
@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
 }
-.modal-content {
+.alarm-modal-content {
   position: relative;
   width: 100%;
   max-width: 650px;
@@ -27,7 +27,7 @@
   /* overflow: hidden; */
 }
 
-.modal-content main {
+.alarm-modal-content main {
   /* position: absolute; */
   width: 100%;
   height: 100%;
