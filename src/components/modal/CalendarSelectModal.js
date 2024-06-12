@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { colorSystem } from "../../css/color";
 import CalendarModal from "./CalendarModal";
 import "./calendarselectmodalstyle.css";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const CalendarSelectModalStyle = styled.div`
   .calendar-select-modal-content {
@@ -25,7 +26,8 @@ const CalendarSelectModalStyle = styled.div`
 
 const CalendarSelectModal = ({
   calendarSelectModalCancel,
-  calenderUserListModalOk,
+  calenderSeleteCheck,
+  setModalType,
 }) => {
   const modalRef = useRef(null);
 
@@ -49,17 +51,38 @@ const CalendarSelectModal = ({
     };
   }, [calendarSelectModalCancel]);
 
+  const shareSelection = e => {
+    // 공유
+    setModalType(1);
+    calenderSeleteCheck(false);
+  };
+
+  const editSelection = e => {
+    // 수정
+    setModalType(2);
+    calenderSeleteCheck(false);
+  };
+
   return (
     <CalendarSelectModalStyle>
       <div ref={modalRef} className="calendar-select-modal-wrap">
         <div className="calendar-select-modal-content">
           <div
             className="calendar-select-item"
-            onClick={calenderUserListModalOk}
+            onClick={e => {
+              shareSelection(e);
+            }}
           >
             공유
           </div>
-          <div className="calendar-select-item">수정</div>
+          <div
+            className="calendar-select-item"
+            onClick={e => {
+              editSelection(e);
+            }}
+          >
+            수정
+          </div>
         </div>
       </div>
     </CalendarSelectModalStyle>
