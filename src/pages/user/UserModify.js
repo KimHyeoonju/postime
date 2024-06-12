@@ -10,7 +10,7 @@ const UserModify = () => {
   const [userNewPass2, setUserNewPass2] = useState("");
   // 비밀번호 및 비밀번호 확인 일치 여부 플래그
   const [passwordMatchError, setPasswordMatchError] = useState(false);
-  // 비밀번호 형식이 맞는지 아닌지
+  // 비밀번호 형식
   const [passwordCheck, setPassWordCheck] = useState(true);
 
   // 이메일 중복 확인 버튼
@@ -72,7 +72,7 @@ const UserModify = () => {
     chkPW();
   }, [userNewPass]);
 
-  // 패스워드가 같은지 다른지 감시
+  // 변경한 비밀번호와 비밀번호 확인이 일치하는지
   useEffect(() => {
     if (userNewPass === userNewPass2) {
       setPasswordMatchError(true);

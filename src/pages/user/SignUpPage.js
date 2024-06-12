@@ -98,7 +98,7 @@ const SignUpPage = () => {
     }
   }, [userPass, userPass2]);
 
-  // 회원가입시 처리할 함수
+  // 회원가입시 처리할 함수와 모달
   const signupMember = async event => {
     event.preventDefault();
 
