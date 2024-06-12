@@ -17,16 +17,6 @@ const CommentInput = ({ addComment }) => {
     setComment("");
   };
 
-  // 이모션으로 스타일 주면 input에 입력 안 되는 현상 있음
-
-  //   const FormStyle = styled.form`
-  //     width: 100%;
-  //   `;
-
-  //   const InputStyle = styled.div`
-  //     width: 300px;
-  //   `;
-
   return (
     <form
       className="chat-inner"
@@ -37,9 +27,9 @@ const CommentInput = ({ addComment }) => {
       <input
         type="text"
         placeholder="댓글을 작성하세요."
+        className="comment-input"
         onChange={onChange}
         value={comment}
-        style={{ width: "300px" }}
       />
     </form>
   );

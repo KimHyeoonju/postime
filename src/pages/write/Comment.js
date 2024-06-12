@@ -3,15 +3,18 @@ import CommentInput from "./CommentInput";
 import CommentView from "./CommentView";
 
 // 데모데이터
-const initState = [];
+// const initState = [];
+
+const userId = "김누구";
 
 const Comment = () => {
-  const [commentList, setCommentList] = useState(initState);
+  const [commentList, setCommentList] = useState([]);
   const addComment = chat => {
     // const newArr =  [...commentList, { id: 4, content: cm }]
     setCommentList(prev => [
       ...prev,
-      { id: commentList.length + 1, content: chat },
+      //   { id: commentList.length + 1, content: chat },
+      { id: userId, content: chat },
     ]);
     // console.log(cm, " : 이 내용을 setCommentList 에 담아야 한다.");
   };

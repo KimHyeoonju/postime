@@ -6,7 +6,7 @@
 .write-inner {
   width: 1280px;
 
-  height: calc(100% - 80px);
+  /* height: calc(100% - 80px); */
   padding-top: 60px;
   padding-left: 55px;
   display: flex;
@@ -214,7 +214,6 @@
 
 .chat-wrap {
   width: 100%;
-  height: calc(100%-40px);
   border-left: solid 1px #dddfe1;
 }
 .chat-header {
@@ -222,15 +221,27 @@
   font-weight: 700;
   margin-top: 25px;
   margin-left: 10px;
+  white-space: nowrap;
+}
+
+.chat-main {
+  margin-top: 10px;
+  width: 100%;
+  height: 85%;
+  overflow: scroll;
+  /* background: rebeccapurple; */
+
+  overflow-x: hidden;
+}
+
+.chat-main::-webkit-scrollbar {
+  display: none;
 }
 
 .chat-inner {
-  /* display: flex;
-  flex-direction: column; */
   margin: 20px;
-  /* height: calc(100% - 40px); */
-
-  /* position: relative; */
+  margin: 0 20px;
+  margin-bottom: 40px;
 }
 
 .chat-comment {
@@ -239,8 +250,8 @@
   align-items: center;
   /* justify-content: flex-start; */
   /* justify-content: space-between; */
-  height: 100%;
-  padding: 10px 0;
+  /* height: 50px; */
+  margin-left: 20px;
 
   font-size: 14px;
 }
@@ -264,7 +275,22 @@
     display: block;
   }
 }
+.comment-input {
+  width: 320px;
+  border-width: 0;
+  outline: none;
 
+  display: flex;
+  /* justify-content: space-between; */
+  height: 45px;
+  background: #d8dae3;
+  outline: solid 1px #512772;
+  border-radius: 5px;
+  padding: 10px;
+
+  position: absolute;
+  bottom: 0;
+}
 .chat-user-text {
   display: flex;
   justify-content: flex-start;
