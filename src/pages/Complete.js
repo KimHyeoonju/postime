@@ -9,6 +9,7 @@ const Complete = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [selectedBoardId, setSelectBoardId] = useState([]);
 
+  // 완료 목록 불러오기
   const getApi = async () => {
     const result = await getCompleteList();
     setCompleteList(result.resultData);
@@ -42,7 +43,7 @@ const Complete = () => {
 
   useEffect(() => {
     getApi();
-  }, [completeList]);
+  }, []);
 
   useEffect(() => {
     console.log("선택항목 : ", selectedItems);
