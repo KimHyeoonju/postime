@@ -17,4 +17,5 @@ export const colorSystem = {
 
   newAlarmC: "#FFF8CC",
   MainPurple: "#512772",
+  ModalPurple: "rgba(173, 124, 254, 0.2)",
 };
