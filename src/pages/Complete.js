@@ -2,26 +2,38 @@
 import { useEffect, useState } from "react";
 import "../../src/css/commonpage.css";
 import Button from "../components/Button";
-import { deleteCompleteList, getCompleteList } from "../apis/etc/apicomplete";
+import {
+  getCompleteList,
+  patchDeleteCompleteList,
+  patchProgressCompleteList,
+} from "../apis/etc/apicomplete";
 
 const Complete = () => {
+  // 완료된 일정 목록
   const [completeList, setCompleteList] = useState([]);
+  // 체크박스 선택된 항목
   const [selectedItems, setSelectedItems] = useState([]);
+  // 선택된 항목들의 ID를 저장
   const [selectedBoardId, setSelectBoardId] = useState([]);
+  // State 변수
+  const [state, setState] = useState(3);
 
-  // 완료 목록 불러오기
-  const getApi = async () => {
-    const result = await getCompleteList();
-    setCompleteList(result.resultData);
-    // console.log(result.resultData);
-  };
+  useEffect(() => {
+    getApi();
+  }, []);
 
-  // 완료 > 삭제 상태변경 state 2 > 3
-  const deleteApi = async () => {
-    console.log(selectedBoardId);
-    await deleteCompleteList(selectedBoardId);
-    setSelectBoardId([]);
-  };
+  // *******의존성 배열 자리에 state가 추가되야할까 아닐까*******
+  useEffect(() => {
+    console.log("선택항목 : ", selectedItems);
+
+    const boardIds = selectedItems.map(item => ({
+      boardId: item.boardId,
+      state: state,
+    }));
+    console.log(boardIds);
+    console.log(state);
+    setSelectBoardId(boardIds);
+  }, [selectedItems]);
 
   const handleCheckboxChange = (item, isChecked) => {
     console.log("item", item);
@@ -41,31 +53,64 @@ const Complete = () => {
     }
   };
 
-  useEffect(() => {
-    getApi();
-  }, []);
+  // 완료 목록 불러오기
+  //******* userid 에 따라 다른 값이 들어와야함 *******
+  const getApi = async () => {
+    const result = await getCompleteList();
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
+    setCompleteList(result.resultData);
+    // console.log(result.resultData);
+  };
 
-  useEffect(() => {
-    console.log("선택항목 : ", selectedItems);
+  // 완료 > 삭제 상태변경 state 2 > 3
+  const handleDeleteApi = async () => {
+    // 상태 코드 셋팅 (삭제 : 3)
+    setState(3);
+    // console.log(state);
+    console.log(selectedBoardId);
+    const result = await patchDeleteCompleteList(selectedBoardId);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
+    setSelectBoardId([]); // 선택된 항목 ID 초기화
+    setSelectedItems([]); // 선택된 항목 초기화
+    getApi(); // 완료 목록 갱신
+  };
 
-    const BoardIds = selectedItems.map(item => ({
-      boardId: item.boardId,
-      state: 3,
-    }));
-    console.log(BoardIds);
-    setSelectBoardId(BoardIds);
-  }, [selectedItems]);
+  // 완료 > 진행중 상태변경 state 2 > 1
+  const handleProgressApi = async () => {
+    // 상태 코드 셋팅 (복원 : 1)
+    setState(1);
+
+    const result = await patchProgressCompleteList(selectedBoardId);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
+    setSelectBoardId([]); // 선택된 항목 ID 초기화
+    setSelectedItems([]); // 선택된 항목 초기화
+    getApi(); // 완료 목록 갱신
+  };
 
   return (
     <div className="common">
       <div className="common-inner">
         <h1>완료된 일정</h1>
         <div className="common-button">
-          <Button label="복원" onClick={() => {}}></Button>
+          <Button
+            label="복원"
+            onClick={() => {
+              handleProgressApi();
+            }}
+          ></Button>
           <Button
             label="삭제"
             onClick={() => {
-              deleteApi();
+              handleDeleteApi();
             }}
           ></Button>
         </div>
@@ -92,6 +137,9 @@ const Complete = () => {
                   type="checkbox"
                   className="com-checkbox"
                   onChange={e => handleCheckboxChange(item, e.target.checked)}
+                  checked={selectedItems.some(
+                    selectedItem => selectedItem.boardId === item.boardId,
+                  )} // 체크박스 상태 설정 ***** 이해해보기 *****
                 />
               </li>
               <li className="title-area">
