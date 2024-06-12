@@ -116,7 +116,10 @@ const CalenderStyle = styled.div`
 
 const MainCalender = () => {
   const userId = 8;
+  // 캘린더 목록 리스트
   const [calenderArr, setCalenderArr] = useState([]);
+  // 캘린더 목록 체크 리스트
+  const [calenderClickArr, setCalenderClickArr] = useState([]);
   // console.log(userId);
 
   // 일 빼기
@@ -164,6 +167,8 @@ const MainCalender = () => {
     calenderDayPrint();
     // deleteTodoList();
     // calenderDayPrintaaa();
+    setCalenderClickArr(calenderArr);
+    console.log("ㄹ체크 리스트", calenderClickArr);
 
     return () => {};
   }, []);
@@ -229,7 +234,7 @@ const MainCalender = () => {
           fixedWeekCount={false}
           droppable={true}
           // events={[calenderArr()]}
-          eventTextColor="black" // 이벤트 글자 색
+          // eventTextColor="black" // 이벤트 글자 색
           eventborderColor="none" // 이벤트 글자 색
           dayMaxEvents={true}
           // events={

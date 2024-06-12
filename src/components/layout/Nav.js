@@ -30,6 +30,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import AlarmModal from "../modal/AlarmModal";
 import CalendarModal from "../modal/CalendarModal";
+import CalendarSelectModal from "../modal/CalendarSelectModal";
 
 const Nav = () => {
   // const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
@@ -47,12 +48,30 @@ const Nav = () => {
     setIsAlarmModal(false);
   };
 
-  const [isCalenderModal, setIsCalenderModal] = useState(false);
-  const calenderModalOk = e => {
-    setIsCalenderModal(!isCalenderModal);
+  const [calenderId, setCalenderId] = useState("");
+  const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
+  const calenderSelectModalOk = e => {
+    // console.log("e", e);
+    // console.log("e", e.target.id);
+    setCalenderId(e.target.id);
+    setIsCalenderSelectModal(!isCalenderSelectModal);
   };
-  const calendarModalCancel = () => {
-    setIsAlarmModal(false);
+  const calendarSelectModalCancel = () => {
+    setIsCalenderSelectModal(false);
+  };
+
+  // 캘린더 유저 리스트 모달
+  //   const [calenderId, setCalenderId] = useState("");
+  const [isCalenderUserListModal, setIsCalenderUserListModal] = useState(false);
+  const calenderUserListModalOk = () => {
+    // 캘린더명
+    // console.log("e", calenderId);
+    // setCalenderId(e.target.id);
+    setIsCalenderUserListModal(!isCalenderUserListModal);
+    setIsCalenderSelectModal(false); // 이전 모달 창 닫기
+  };
+  const calendarUserListModalCancel = () => {
+    setIsCalenderUserListModal(false);
   };
 
   const userId = 8;
@@ -84,6 +103,7 @@ const Nav = () => {
   // const navigate = useNavigate();
   // const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
+  const [alarmListArr, setAlarmListArr] = useState([]);
 
   const todoListView = () => {
     if (toggle) {
@@ -121,6 +141,28 @@ const Nav = () => {
     // console.log(result.resultData);
   };
 
+  const alarmList = async userId => {
+    try {
+      const resepons = await axios.get(`/api/notice?signed_user_id=${userId}`);
+      const status = resepons.status.toString().charAt(0);
+      const data = resepons.data.resultData.notice;
+      // console.log("?", data);
+
+      if (status === "2") {
+        if (data.length > 0) {
+          setAlarmListArr(data);
+          setIsNewAlarm(true);
+        } else {
+          setIsNewAlarm(false);
+        }
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // const [checkedList, setCheckedList] = useState([]);
   // const onCheckedItem = (checked, id) => {
   //   if (checked) {
@@ -132,6 +174,7 @@ const Nav = () => {
   // 좌측 메뉴의 캘린더 리스트
   useEffect(() => {
     calenderList();
+    alarmList(userId);
     return () => {};
   }, []);
 
@@ -140,10 +183,26 @@ const Nav = () => {
   // };
   return (
     <NavStyle>
-      {isAlarmModal ? <AlarmModal alarmModalCancel={alarmModalCancel} /> : null}
-      {isCalenderModal ? (
-        <CalendarModal calendarModalCancel={calendarModalCancel} />
+      {isAlarmModal ? (
+        <AlarmModal
+          alarmModalCancel={alarmModalCancel}
+          alarmListArr={alarmListArr}
+          isNewAlarm={isNewAlarm}
+        />
       ) : null}
+      {isCalenderSelectModal ? (
+        <CalendarSelectModal
+          calendarSelectModalCancel={calendarSelectModalCancel}
+          calenderUserListModalOk={calenderUserListModalOk}
+        />
+      ) : null}
+      {isCalenderUserListModal ? (
+        <CalendarModal
+          calenderUserListModalOk={calenderUserListModalOk}
+          calenderId={calenderId}
+        />
+      ) : null}
+
       {/* <ShowAlarmModal setAlarmModalIsOpen={alarmModalIsOpen} /> */}
 
       <div className="menu">
@@ -229,15 +288,20 @@ const Nav = () => {
                   );
                 })}
 
-                <div
-                  className="div-calender mycalender-list mycalender"
-                  onClick={
-                    calenderModalOk
-                    // console.log(e.target);
-                  }
-                >
+                <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
-                  <div className="calender-name">내 캘린더</div>
+                  <div
+                    className="calender-name"
+                    id="id1"
+                    onClick={
+                      e => {
+                        calenderSelectModalOk(e);
+                      }
+                      // console.log(e.target);
+                    }
+                  >
+                    내 캘린더
+                  </div>
                 </div>
 
                 {/* <div className="div-calender mycalender-list mycalender">
