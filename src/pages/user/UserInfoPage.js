@@ -5,6 +5,8 @@ import UserModify from "./UserModify";
 
 const UserInfoPage = () => {
   useEffect(() => {
+    // axios.get 으로 사용자의 정보를 주세요.
+
     return () => {};
   }, []);
   return (
