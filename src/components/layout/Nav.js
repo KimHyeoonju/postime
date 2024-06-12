@@ -1,11 +1,25 @@
 import styled from "@emotion/styled";
 import { BsTrash3 } from "react-icons/bs";
 import { IoIosCheckboxOutline } from "react-icons/io";
-import { MdCalendarToday, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import {
+  MdCalendarToday,
+  MdCheckBox,
+  MdCheckBoxOutlineBlank,
+  MdOutlineKeyboardArrowDown,
+} from "react-icons/md";
 import { PiGearSixLight } from "react-icons/pi";
 import { VscBell } from "react-icons/vsc";
 import { VscBellDot } from "react-icons/vsc";
 import "../../css/nav.css";
+import axios from "axios";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import AlarmModal from "../modal/AlarmModal";
+import CalendarModal from "../modal/CalendarModal";
+import CalendarSelectModal from "../modal/CalendarSelectModal";
+import DeleteCheckModal from "../modal/DeleteCheckModal";
+import CalendarModifyModal from "../modal/CalendarModifyModal";
+import { FaSquare, FaSquareCheck } from "react-icons/fa6";
 
 const NavStyle = styled.div`
   position: relative;
@@ -25,15 +39,12 @@ const NavStyle = styled.div`
   }
 `;
 
-import axios from "axios";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import AlarmModal from "../modal/AlarmModal";
-import CalendarModal from "../modal/CalendarModal";
-import CalendarSelectModal from "../modal/CalendarSelectModal";
-
 const Nav = () => {
-  // const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
+  const [calenderName, setcalenderName] = useState("");
+  const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
+  const [deleteUeserId, setDeleteUeserId] = useState("");
+  const calenderId = sessionStorage.getItem("calenderId");
+
   const [calenderListArr, setCalenderListArr] = useState([]);
   // false:알림없음, true:알림 있음
   const [isNewAlarm, setIsNewAlarm] = useState(false);
@@ -48,14 +59,11 @@ const Nav = () => {
     setIsAlarmModal(false);
   };
 
-  const [calenderId, setCalenderId] = useState("");
-  const [calenderName, setcalenderName] = useState("");
-  const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
   const calenderSelectModalOk = e => {
     // console.log("e", e);
     // console.log("e", e.target.id);
     // console.log("e", e.target.innerText);
-    setCalenderId(e.target.id);
+    sessionStorage.setItem("calenderId", e.target.id);
     setcalenderName(e.target.innerText);
     setIsCalenderSelectModal(!isCalenderSelectModal);
   };
@@ -64,7 +72,6 @@ const Nav = () => {
   };
 
   // 캘린더 유저 리스트 모달
-  //   const [calenderId, setCalenderId] = useState("");
   const [isCalenderUserListModal, setIsCalenderUserListModal] = useState(false);
   const calenderUserListModalOk = () => {
     // 캘린더명
@@ -79,10 +86,15 @@ const Nav = () => {
 
   const [modalType, setModalType] = useState(0);
   const calenderSeleteCheck = () => {
-    if (modalType === 1) calenderUserListModalOk(true);
+    if (modalType === 1) {
+      calenderUserListModalOk(true);
+      calendarSelectModalCancel();
+    }
     // 여기 수정 이제 이 모달 띄우기
-
-    // if (modalType === 2) calenderUserListModalOk(true);
+    if (modalType === 2) {
+      calendarModifyModalOk(true);
+      calendarSelectModalCancel();
+    }
   };
 
   const [userId, setUserId] = useState(8);
@@ -185,6 +197,16 @@ const Nav = () => {
   //   }
   // };
   // 좌측 메뉴의 캘린더 리스트
+
+  const [isCalendarModifyModal, setIsCalendarModifyModal] = useState(false);
+  // 알림 모달 실행 함수
+  const calendarModifyModalOk = e => {
+    setIsCalendarModifyModal(!isCalendarModifyModal);
+  };
+  const calendarModifyModalCancel = () => {
+    setIsCalendarModifyModal(false);
+  };
+
   useEffect(() => {
     calenderList();
     alarmList(userId);
@@ -217,9 +239,15 @@ const Nav = () => {
           calenderId={calenderId}
           calenderName={calenderName}
           modalType={modalType}
+          deleteUeserId={deleteUeserId}
         />
       ) : null}
-
+      {isCalendarModifyModal ? (
+        <CalendarModifyModal
+          calendarModifyModalOk={calendarModifyModalOk}
+          calendarModifyModalCancel={calendarModifyModalCancel}
+        />
+      ) : null}
       <div className="menu">
         <div className="div-menu-header">
           <h1 className="menu-header">
@@ -273,7 +301,13 @@ const Nav = () => {
                     {/* <MdOutlineKeyboardArrowUp /> */}
                     <MdOutlineKeyboardArrowDown />
                   </div>
-                  <span className="ns-font-bold-17">내 캘린더</span>
+                  <span className="ns-font-bold-17">
+                    내 캘린더
+                    {/* <FaSquare />
+                    <FaSquareCheck color="red" /> */}
+                    <MdCheckBox color="red" />
+                    <MdCheckBoxOutlineBlank color="red" />
+                  </span>
                 </h1>
               </div>
               <div className="div-calender div-mycalender-list">
@@ -292,6 +326,7 @@ const Nav = () => {
                           // checkItemHandler();
                         }}
                       />
+
                       <div
                         className="calender-name"
                         // style={{ backgroundColor: "#555555" }}
@@ -301,6 +336,7 @@ const Nav = () => {
                         name={item.title}
                         onClick={e => {
                           calenderSelectModalOk(e);
+
                           // console.log(e.target.innerText);
                         }}
                       >
@@ -310,7 +346,7 @@ const Nav = () => {
                   );
                 })}
 
-                {/* <div className="div-calender mycalender-list mycalender">
+                <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
                   <div
                     className="calender-name"
@@ -324,7 +360,7 @@ const Nav = () => {
                   >
                     내 캘린더
                   </div>
-                </div> */}
+                </div>
 
                 {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />

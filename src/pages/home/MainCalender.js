@@ -115,9 +115,9 @@ const CalenderStyle = styled.div`
 `;
 
 const MainCalender = () => {
-  const userId = 8;
-  const usere = 8;
-  const username = 8;
+  const userId = sessionStorage.getItem("userId");
+  const userName = sessionStorage.getItem("userName");
+
   // 캘린더 목록 리스트
   const [calenderArr, setCalenderArr] = useState([]);
   // 캘린더 목록 체크 리스트
