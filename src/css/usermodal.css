@@ -10,6 +10,10 @@
   justify-content: center;
   align-items: center;
 }
+
+.usermodal-icon {
+  display: inline;
+}
 .usermodal-content {
   position: relative;
   width: 100%;
@@ -42,6 +46,7 @@
 
 .usermodal-message {
   text-align: center;
+  margin: auto 30px;
 }
 
 .usermodal-message p {

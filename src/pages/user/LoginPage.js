@@ -5,7 +5,7 @@ import axios from "axios";
 import useModal from "../../hooks/useModal";
 import Modal from "../../components/Modal";
 
-const LoginPage = ({ setIsLogin }) => {
+const LoginPage = ({ setIsLogin, setSignUserId }) => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState("");
@@ -24,6 +24,9 @@ const LoginPage = ({ setIsLogin }) => {
     }
     // 로그인 상태로 변경
     setIsLogin(true);
+    setSignUserId(userId);
+    localStorage.setItem("userId", userId);
+
     navigate("/");
   };
 

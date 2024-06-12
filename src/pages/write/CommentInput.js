@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
 import React, { useState } from "react";
+import { commentInput } from "../../apis/create/create";
 
-const CommentInput = ({ addComment }) => {
+const CommentInput = ({ addComment, userComment }) => {
   // 댓글 입력 갱신
   const [comment, setComment] = useState("");
 
@@ -11,10 +11,30 @@ const CommentInput = ({ addComment }) => {
   };
 
   const handleSubmit = event => {
-    console.log(comment);
+    // console.log(comment);
     event.preventDefault();
-    addComment(comment);
-    setComment("");
+    // addComment(comment);
+    // setComment("");
+    if (comment.trim()) {
+      addComment(comment);
+      setComment("");
+    }
+  };
+
+  const userCommentInput = async event => {
+    event.preventDefault();
+
+    // 아래 데이터 api로 전송
+    // const requestData = {
+    //   boardId: 100,
+    //   signedUserId: 8,
+    //   content: "",
+    //   calendarId: 63,
+    // };
+    // const result = await commentInput(requestData);
+    // console.log(result);
+
+    const data = {};
   };
 
   return (
@@ -30,6 +50,9 @@ const CommentInput = ({ addComment }) => {
         className="comment-input"
         onChange={onChange}
         value={comment}
+        onClick={event => {
+          userCommentInput(event);
+        }}
       />
     </form>
   );

@@ -16,6 +16,7 @@ import Modify from "./write/Modify";
 import "../css/common.css";
 import { useState } from "react";
 import { colorSystem } from "../css/color";
+import UserPwPage from "./user/UserPwPage";
 
 const WrapStyle = styled.div`
   position: absolute;
@@ -64,7 +65,7 @@ const WriteRoutes = () => {
   );
 };
 
-const Index = () => {
+const Index = ({ setIsSuccess }) => {
   // 검색어 관련
   const [searchTextIndex, setSearchTextIndex] = useState("");
 
@@ -115,6 +116,7 @@ const Index = () => {
                   />
                   <Route path="/userinfo" element={<UserInfoPage />} />
                   <Route path="/usermodify" element={<UserModify />} />
+                  <Route path="/userpw" element={<UserPwPage />} />
                 </Routes>
               </SectionStyle>
             </SectionListStyle>

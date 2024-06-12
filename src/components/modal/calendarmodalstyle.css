@@ -14,19 +14,40 @@
   justify-content: center;
   align-items: center;
 }
+
+.calendar-warning-modal-wrap {
+  position: fixed;
+  /* left: 50%; */
+  /* 좌표로 수정 예정 */
+  /* top: 50%; */
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  /* max-width: 350px; */
+  /* max-height: 200px; */
+  /* min-height: 400px; */
+  /* height: auto; */
+  /* background: rgba(0, 0, 0, 0.7); */
+  z-index: 9999999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .calendar-modal-content {
   display: inline-flex;
   position: relative;
   align-items: flex-start;
   width: 100%;
   max-width: 650px;
-  min-height: 400px;
+  /* min-height: 400px; */
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
   flex-direction: column;
 }
-.calendar-modal-content header {
+
+.calendar-modal-header {
   position: absolute;
   display: flex;
   flex-direction: row;
@@ -36,38 +57,32 @@
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
+  width: 100%;
 }
-.calendar-modal-header {
-}
+
 .calendar-modal-title {
 }
 .calendar-modal-close-button {
   cursor: pointer;
 }
-.calendar-modal-content main {
-  /* position: relative;
+.calendar-modal-content-main {
   display: flex;
+  height: 100%;
+  position: relative;
   width: 451px;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   gap: 10px;
-  border-top-width: 1px;sss
+  border-top-width: 1px;
   border-top-style: dashed;
   flex-direction: column;
   padding: 15px 20px;
-
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  position: relative;
-  align-items: center;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold; */
+  width: 100%;
+  /* max-height: 260px; */
 }
 
 .main-wrap {
-  position: absolute;
+  /* position: absolute; */
+
   width: 100%;
   height: 100%;
 }
@@ -80,11 +95,67 @@
 .calendar-user-plus-div {
   display: flex;
   flex-direction: row;
-  padding: 5px 0;
+  padding: 10px 0;
   width: 100%;
   position: relative;
+  justify-content: space-between;
+}
+
+input[id="calendar-user-plus-email"] {
+  padding-left: 10px;
+  /* font-size: 10px !important; */
+  margin: 1.7px 0px;
+  border-radius: 2px;
+}
+input[id="calendar-user-plus-email"]::placeholder {
+  /* padding-left: 10px; */
+  font-size: 13px;
+  font-weight: normal;
 }
 
 .calendar-user-plus-div input {
   width: 90%;
+}
+
+.plus-icon {
+  cursor: pointer;
+}
+
+.calendar-user-list {
+  margin-bottom: 10px;
+  display: flex;
+  /* gap: 8px; */
+  flex-direction: column;
+  max-height: 190px;
+  overflow: auto;
+}
+
+.calendar-user-list-item {
+  padding: 8px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+  align-items: center;
+}
+
+.pk-user-id {
+  padding-bottom: 10px;
+}
+
+.pk-user-tag {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.user-option {
+  cursor: pointer;
+}
+
+.calendar-user-list-item:last-child {
+  border: none !important;
+  padding-bottom: 0px;
 }
