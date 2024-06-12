@@ -4,6 +4,7 @@ import "../../css/signup.css";
 import "../../css/userstyle.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import UserModal from "../../components/UserModal";
 
 const SignUpPage = () => {
   // 라우터
@@ -22,6 +23,12 @@ const SignUpPage = () => {
   // 중복 확인
   const [idChecked, setIdChecked] = useState(false);
   const [emailChecked, setEmailChecked] = useState(false);
+
+  // 모달 추가
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [userModalTitle, setUserModalTitle] = useState(false);
+  const [userModalMessage, setUserModalMessage] = useState("");
+  const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
 
   // 아이디 형식이 맞는지 아닌지
   const [idCheck, setIdCheck] = useState(true);
@@ -55,38 +62,6 @@ const SignUpPage = () => {
     }
   }
 
-  // 비밀번호 항목
-  // 비밀번호 형식이 맞는지 아닌지
-  const [passwordCheck, setPassWordCheck] = useState(true);
-
-  const handlePassWord = e => {
-    setUserPass(e.target.value);
-  };
-  useEffect(() => {
-    chkPW();
-  }, [passwordCheck, userPass]);
-
-  // 비밀번호 문자열 검사
-  function chkPW() {
-    var pw = userPass;
-    var num = pw.search(/[0-9]/g);
-    var eng = pw.search(/[a-z]/gi);
-    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-
-    if (pw.length < 8 || pw.length > 20) {
-      // alert("8자리 ~ 20자리 이내로 입력해주세요.");
-      setPassWordCheck(false);
-    } else if (pw.search(/\s/) != -1) {
-      // alert("비밀번호는 공백 없이 입력해주세요.");
-      setPassWordCheck(false);
-    } else if (num < 0 || eng < 0 || spe < 0) {
-      // alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
-      setPassWordCheck(false);
-    } else {
-      setPassWordCheck(true);
-    }
-  }
-
   // 패스워드가 같은지 다른지 감시
   useEffect(() => {
     if (userPass === userPass2) {
@@ -102,44 +77,77 @@ const SignUpPage = () => {
   const signupMember = async event => {
     event.preventDefault();
 
+    chkPW();
+    if (!passwordCheck) {
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("비밀번호 형식에 맞게 작성해 주세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      return;
+    }
+
     if (userName === "") {
-      alert("성명을 입력하세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("성명을 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     if (userId === "") {
-      alert("아이디를 입력하세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("아이디를 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     if (userEmail === "") {
-      alert("이메일을 입력하세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("이메일을 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     if (userPass === "") {
-      alert("비밀번호를 입력하세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("비밀번호를 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     if (userPass2 === "") {
-      alert("비밀번호를 확인하세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("비밀번호를 확인하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     if (userPass !== userPass2) {
-      alert("비밀번호가 일치하지 않습니다.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("비밀번호가 일치하지 않습니다.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     // 중복 확인 안 했을 때
     if (!idChecked) {
-      alert("아이디 중복 확인을 해 주세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("아이디 중복확인을 해 주세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
     if (!emailChecked) {
-      alert("이메일 중복 확인을 해 주세요.");
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("이메일 중복확인을 해 주세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
 
@@ -159,6 +167,39 @@ const SignUpPage = () => {
     alert("회원가입이 완료되었습니다.");
     navigate("/");
   };
+
+  // 비밀번호 항목
+  // 비밀번호 형식이 맞는지 아닌지
+  const [passwordCheck, setPassWordCheck] = useState(true);
+
+  const handlePassWord = e => {
+    setUserPass(e.target.value);
+  };
+  useEffect(() => {
+    chkPW();
+  }, [passwordCheck, userPass]);
+
+  // 비밀번호 문자열 검사
+  function chkPW() {
+    var pw = userPass;
+    var num = pw.search(/[0-9]/g);
+    var eng = pw.search(/[a-z]/g);
+    var engUpper = pw.search(/[A-Z]/g);
+    var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+
+    if (pw.length < 8 || pw.length > 20) {
+      // alert("8자리 ~ 20자리 이내로 입력해주세요.");
+      setPassWordCheck(false);
+    } else if (pw.search(/\s/) != -1) {
+      // alert("비밀번호는 공백 없이 입력해주세요.");
+      setPassWordCheck(false);
+    } else if (num < 0 || eng < 0 || engUpper < 0 || spe < 0) {
+      // alert("영문,숫자, 특수문자를 혼합하여 입력해주세요.");
+      setPassWordCheck(false);
+    } else {
+      setPassWordCheck(true);
+    }
+  }
 
   // 가입하기
   const postUser = async ({ id, pwd, name, email }) => {
@@ -180,11 +221,16 @@ const SignUpPage = () => {
     const result = await postUserId(reqData);
     console.log(result);
     if (result.statusCode !== 2) {
-      alert(result.resultMsg);
-
+      setUserModalTitle("확인 결과");
+      setUserModalMessage(result.resultMsg);
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      setUserModalOpen(true);
       return;
     }
-    alert("사용 가능한 아이디입니다.");
+    setUserModalTitle("확인 결과");
+    setUserModalMessage("사용 가능한 아이디입니다.");
+    setUserModalOnConfirm(() => () => setUserModalOpen(false));
+    setUserModalOpen(true);
     // 아이디 중복 확인 체크
     setIdChecked(true);
   };
@@ -210,11 +256,16 @@ const SignUpPage = () => {
     const result = await postUserEmail(reqData);
     console.log(result);
     if (result.statusCode !== 2) {
-      alert(result.resultMsg);
-
+      setUserModalTitle("확인 결과");
+      setUserModalMessage(result.resultMsg);
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      setUserModalOpen(true);
       return;
     }
-    alert("사용 가능한 이메일입니다.");
+    setUserModalTitle("확인 결과");
+    setUserModalMessage("사용 가능한 이메일입니다.");
+    setUserModalOnConfirm(() => () => setUserModalOpen(false));
+    setUserModalOpen(true);
     // 이메일 중복 확인 체크
     setEmailChecked(true);
   };
@@ -376,13 +427,13 @@ const SignUpPage = () => {
         <span>가입하기</span>
       </button>
       {/* 모달 관련 */}
-      {/* <UserModal
+      <UserModal
         isOpen={userModalOpen}
-        title={"아이디 확인"}
+        title={userModalTitle}
         message={userModalMessage}
         onConfirm={userModalOnConfirm}
-        buttonComment={"로그인"}
-      /> */}
+        buttonComment={"확인"}
+      />
     </div>
   );
 };

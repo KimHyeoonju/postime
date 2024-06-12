@@ -10,6 +10,7 @@ import Delete from "./Delete";
 import Search from "./Search";
 import UserInfoPage from "./user/UserInfoPage";
 import UserModify from "./user/UserModify";
+import UserPwPage from "./user/UserPwPage";
 import TodoList from "../components/layout/TodoList";
 import "../css/common.css";
 import "../css/header.css";
@@ -52,6 +53,10 @@ const LoginIn = () => {
                 <Route
                   path="/usermodify"
                   element={<UserModify></UserModify>}
+                ></Route>
+                <Route
+                  path="/userpw"
+                  element={<UserPwPage></UserPwPage>}
                 ></Route>
               </Routes>
             </section>

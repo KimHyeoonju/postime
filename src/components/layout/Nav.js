@@ -49,11 +49,14 @@ const Nav = () => {
   };
 
   const [calenderId, setCalenderId] = useState("");
+  const [calenderName, setcalenderName] = useState("");
   const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
   const calenderSelectModalOk = e => {
     // console.log("e", e);
     // console.log("e", e.target.id);
+    // console.log("e", e.target.innerText);
     setCalenderId(e.target.id);
+    setcalenderName(e.target.innerText);
     setIsCalenderSelectModal(!isCalenderSelectModal);
   };
   const calendarSelectModalCancel = () => {
@@ -137,7 +140,7 @@ const Nav = () => {
   const calenderList = async () => {
     const result = await getCalenderList(userId);
 
-    // setCalenderListArr(result.resultData);
+    setCalenderListArr(result.resultData);
     // console.log(result.resultData);
   };
 
@@ -200,6 +203,7 @@ const Nav = () => {
         <CalendarModal
           calenderUserListModalOk={calenderUserListModalOk}
           calenderId={calenderId}
+          calenderName={calenderName}
         />
       ) : null}
 
@@ -281,6 +285,13 @@ const Nav = () => {
                         className="calender-name"
                         // style={{ backgroundColor: "#555555" }}
                         // style={{ color: `${item.color}` }}
+
+                        id={item.calendarId}
+                        name={item.title}
+                        onClick={e => {
+                          calenderSelectModalOk(e);
+                          // console.log(e.target.innerText);
+                        }}
                       >
                         {item.title}
                       </div>
@@ -288,7 +299,7 @@ const Nav = () => {
                   );
                 })}
 
-                <div className="div-calender mycalender-list mycalender">
+                {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
                   <div
                     className="calender-name"
@@ -302,7 +313,7 @@ const Nav = () => {
                   >
                     내 캘린더
                   </div>
-                </div>
+                </div> */}
 
                 {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />

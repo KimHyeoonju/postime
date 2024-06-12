@@ -116,6 +116,8 @@ const CalenderStyle = styled.div`
 
 const MainCalender = () => {
   const userId = 8;
+  const usere = 8;
+  const username = 8;
   // 캘린더 목록 리스트
   const [calenderArr, setCalenderArr] = useState([]);
   // 캘린더 목록 체크 리스트
@@ -137,7 +139,7 @@ const MainCalender = () => {
         `/api/board/mini?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      // console.log("result", resepons);
+      // console.log("테스트1", resepons);
 
       if (status === "2") {
         return resepons.data;
@@ -168,7 +170,7 @@ const MainCalender = () => {
     // deleteTodoList();
     // calenderDayPrintaaa();
     setCalenderClickArr(calenderArr);
-    console.log("ㄹ체크 리스트", calenderClickArr);
+    console.log("체크 리스트", calenderClickArr);
 
     return () => {};
   }, []);
