@@ -8,7 +8,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
 
 function App() {
-
   const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
   // const [isLogin, setIsLogin] = useState(false); // 로그인이 되어 있지 않은 경우
   const [signUserId, setSignUserId] = useState("test1234");
