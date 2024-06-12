@@ -13,10 +13,12 @@ const CommentView = ({ commentList }) => {
   return (
     <>
       <div className="chat-header">댓글</div>
-      <div className="chat-comment">
-        {commentList.map(item => (
-          <CommentItem key={item.id} item={item} />
-        ))}
+      <div className="chat-main">
+        <div className="chat-comment">
+          {commentList.map(item => (
+            <CommentItem key={item.id} item={item} />
+          ))}
+        </div>
       </div>
     </>
   );
