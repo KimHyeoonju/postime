@@ -1,8 +1,12 @@
-const Search = () => {
+import { useState } from "react";
+
+const Search = ({ searchTextIndex }) => {
+  const [serarchList, setSearchList] = useState([]);
+
   return (
     <div className="common">
       <div className="common-inner">
-        <h1>검색결과 페이지</h1>
+        <h1>{searchTextIndex}에 해당하는 검색결과 입니다.</h1>
         <div className="common-button">
           <button className="common-button-modify">
             <span>수정</span>
@@ -26,7 +30,25 @@ const Search = () => {
           </div>
         </div>
 
-        <div className="common-list-wrap"></div>
+        <div className="common-list-wrap">
+          {serarchList.map((item, index) => (
+            <ul className="common-list" key={index}>
+              <li className="checkbox-area"></li>
+              <li className="title-area">
+                <span className="com-title">{item.title}</span>
+              </li>
+              <li className="text-area">
+                <span className="com-text">{item.content}</span>
+              </li>
+              <li className="date-area">
+                <span className="com-date">{item.dDay}</span>
+              </li>
+              <li className="calender-area">
+                <span className="com-calender">{item.calendarName}</span>
+              </li>
+            </ul>
+          ))}
+        </div>
       </div>
     </div>
   );

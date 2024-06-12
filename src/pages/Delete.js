@@ -1,64 +1,112 @@
 import { useEffect, useState } from "react";
 import "../../src/css/commonpage.css";
 import Button from "../components/Button";
-import Modal from "../components/Modal";
-import useModal from "../hooks/useModal";
-import { deleteDelList, getDelList } from "../apis/etc/apidelete";
+
+import {
+  deleteRemoveList,
+  getDeleteList,
+  patchDeleteList,
+} from "../apis/etc/apidelete";
 
 const Delete = () => {
-  const {
-    isModalOpen,
-    modalTitle,
-    modalMessage,
-    confirmAction,
-    openModal,
-    closeModal,
-  } = useModal();
+  // const {
+  //   isModalOpen,
+  //   modalTitle,
+  //   modalMessage,
+  //   confirmAction,
+  //   openModal,
+  //   closeModal,
+  // } = useModal();
 
+  // 휴지통 일정 목록
   const [deleteList, setDeleteList] = useState([]);
+  // 체크박스 선택된 항목
+  const [selectedItems, setSelectedItems] = useState([]);
+  // 선택된 항목들의 boradid, state 를 저장
+  const [selectedBoardId, setSelectBoardId] = useState([]);
+  // 선택된 항목의 boardid, calenderid를 저장
+  const [selectedCalendarId, setSelectCalendarId] = useState([]);
 
   useEffect(() => {
-    getApi();
+    getDelApi();
   }, []);
 
-  const deleteBt = () => {
-    // checkebox가 체크 됐을때 모달이 뜨도록
-    openModal({
-      title: "삭제 알람",
-      message: "정말 삭제하시겠습니까?",
-      // onConfirm: () => {
-      //   const selectedBoxes = document.querySelectorAll(
-      //     'input[type="checkbox"]:checked',
-      //   );
-      //   // console.log(selectedBoxes);
-      //   if (selectedBoxes.length > 0) {
-      //     selectedBoxes.forEach(item => {
-      //       const listItem = item.closest(".common-list");
-      //       // console.log(listItem);
-      //       listItem.remove();
-      //       // alert("선택한 항목을 휴지통으로 이동합니다.");
-      //       closeModal();
-      //     });
-      //   } else {
-      //     alert("체크박스를 선택해주세요.");
-      //   }
-      // },
-      onConfirm: () => {
-        console.log("삭제할게요");
-      },
-    });
+  useEffect(() => {
+    console.log("선택항목 : ", selectedItems);
+
+    // 선택된 항목들의 boradid, state 를 저장
+    const boardIds = selectedItems.map(item => ({
+      boardId: item.boardId,
+      state: 2,
+    }));
+    console.log(boardIds);
+    setSelectBoardId(boardIds);
+
+    // 선택된 항목의 boardid, calenderid를 저장
+    const calendarIds = selectedItems.map(item => ({
+      boardId: item.boardId,
+      calendarId: item.calendarId,
+    }));
+    console.log(calendarIds);
+    setSelectCalendarId(calendarIds);
+  }, [selectedItems]);
+
+  // input onchange 이벤트 핸들러
+  const handleCheckboxChange = (item, isChecked) => {
+    console.log("item", item);
+    console.log("isChecked", isChecked);
+    console.log("selectedItems", selectedItems);
+
+    if (isChecked) {
+      setSelectedItems(prevItems => [...prevItems, item]);
+    } else {
+      // isChecked 는 false
+      // false 인 item 이 한개
+      // item :  3
+      // selectedItems = [1,2,3,4,5]
+      setSelectedItems(prevItems =>
+        prevItems.filter(selectedItem => selectedItem.boardId !== item.boardId),
+      );
+    }
   };
 
-  const getApi = async () => {
-    const result = await getDelList();
-    // console.log(result.resultData);
+  // 삭제페이지 목록 불러오기
+  const getDelApi = async () => {
+    const result = await getDeleteList();
+    // console.log("result : ", result);
+    // console.log("resultMsg : ", result.resultMsg);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
     setDeleteList(result.resultData);
   };
 
-  // test중
-  const deleteApi = async () => {
-    const result = await deleteDelList();
-    console.log(result);
+  // state 3 > 1 복원
+  const handleRestoreApi = async () => {
+    const result = await patchDeleteList(selectedBoardId);
+    console.log(selectedBoardId);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
+    setSelectBoardId([]); // 선택된 항목 ID 초기화
+    setSelectedItems([]); // 선택된 항목 초기화
+    getDelApi(); // 완료 목록 갱신
+  };
+
+  // 영구삭제
+  const handleRemoveApi = async () => {
+    console.log("클릭클릭", selectedCalendarId);
+    const result = await deleteRemoveList(selectedCalendarId);
+    if (result.statusCode !== 2) {
+      alert(result.resultMsg);
+      return;
+    }
+
+    setSelectCalendarId([]); // 선택된 항목 ID 초기화
+    setSelectedItems([]); // 선택된 항목 초기화
+    getDelApi(); // 완료 목록 갱신
   };
 
   return (
@@ -66,17 +114,16 @@ const Delete = () => {
       <div className="common-inner">
         <h1>삭제된 일정</h1>
         <div className="common-button">
-          <Button label="복원"></Button>
           <Button
-            label="api"
+            label="복원"
             onClick={() => {
-              deleteApi();
+              handleRestoreApi();
             }}
           ></Button>
           <Button
             label="삭제"
             onClick={() => {
-              deleteBt();
+              handleRemoveApi();
             }}
           ></Button>
         </div>
@@ -100,7 +147,14 @@ const Delete = () => {
             return (
               <ul className="common-list" key={index}>
                 <li className="checkbox-area">
-                  <input type="checkbox" className="com-checkbox" />
+                  <input
+                    type="checkbox"
+                    className="com-checkbox"
+                    onChange={e => handleCheckboxChange(item, e.target.checked)}
+                    checked={selectedItems.some(
+                      selectedItem => selectedItem.boardId === item.boardId,
+                    )} // 체크박스 상태 설정
+                  />
                 </li>
                 <li className="title-area">
                   <span className="com-title">{item.title}</span>
@@ -119,13 +173,13 @@ const Delete = () => {
           })}
         </div>
         {/* 모달 관련 */}
-        <Modal
+        {/* <Modal
           isOpen={isModalOpen}
           title={modalTitle}
           message={modalMessage}
           onClose={closeModal}
           onConfirm={confirmAction}
-        />
+        /> */}
       </div>
     </div>
   );

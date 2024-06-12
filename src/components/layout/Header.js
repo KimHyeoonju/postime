@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "../../css/header.css";
 import styled from "@emotion/styled";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const SearchButtonStyle = styled.button`
   border: 0;
@@ -24,6 +25,7 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
   const moreMenu = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
+  const navigate = useNavigate();
 
   const handleMoreView = () => {
     if (toggle) {
@@ -38,7 +40,7 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
   const searchBt = () => {
     console.log(searchText);
     setSearchTextIndex(searchText);
-    //navigate("/search");
+    navigate("/search");
   };
 
   useEffect(() => {}, []);
