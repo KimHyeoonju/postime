@@ -44,6 +44,7 @@ const CalendarModal = ({
   calenderUserListModalOk,
   calenderName,
   calenderId,
+  modalType,
 }) => {
   // useRef()를 사용하여 modalRef 생성
   const modalRef = useRef(null);
@@ -236,6 +237,7 @@ const CalendarModal = ({
                 </div>
 
                 {calendarListUserArr.map((item, index) => {
+                  console.log(item.name);
                   return (
                     <div className="calendar-user-list-item" key={index}>
                       <p>{item.name}</p>

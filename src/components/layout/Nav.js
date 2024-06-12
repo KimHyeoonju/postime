@@ -36,7 +36,7 @@ const Nav = () => {
   // const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
   const [calenderListArr, setCalenderListArr] = useState([]);
   // false:알림없음, true:알림 있음
-  const [isNewAlarm, setIsNewAlarm] = useState(true);
+  const [isNewAlarm, setIsNewAlarm] = useState(false);
 
   // 모달 보이는 상태값
   const [isAlarmModal, setIsAlarmModal] = useState(false);
@@ -77,7 +77,16 @@ const Nav = () => {
     setIsCalenderUserListModal(false);
   };
 
-  const userId = 8;
+  const [modalType, setModalType] = useState(0);
+  const calenderSeleteCheck = () => {
+    if (modalType === 1) calenderUserListModalOk(true);
+    // 여기 수정 이제 이 모달 띄우기
+
+    // if (modalType === 2) calenderUserListModalOk(true);
+  };
+
+  const [userId, setUserId] = useState(8);
+
   // 메뉴를 열거나 닫는 함수
   // const toggleMenu = () => {
   //   setIsOpen(!isOpen); // isOpen 상태를 토글
@@ -149,16 +158,17 @@ const Nav = () => {
       const resepons = await axios.get(`/api/notice?signed_user_id=${userId}`);
       const status = resepons.status.toString().charAt(0);
       const data = resepons.data.resultData.notice;
-      // console.log("?", data);
 
       if (status === "2") {
-        if (data.length > 0) {
+        if (data > 0) {
           setAlarmListArr(data);
           setIsNewAlarm(true);
+          // console.log("data 있음");
         } else {
           setIsNewAlarm(false);
+          // console.log("data 없음");
         }
-        console.log("API 오류");
+        // console.log("API 오류");
       }
       console.log(resepons.data);
     } catch (error) {
@@ -184,6 +194,7 @@ const Nav = () => {
   // const onClickModalOn = () => {
   //   setAlarmModalIsOpen(true);
   // };
+
   return (
     <NavStyle>
       {isAlarmModal ? (
@@ -196,7 +207,8 @@ const Nav = () => {
       {isCalenderSelectModal ? (
         <CalendarSelectModal
           calendarSelectModalCancel={calendarSelectModalCancel}
-          calenderUserListModalOk={calenderUserListModalOk}
+          calenderSeleteCheck={calenderSeleteCheck}
+          setModalType={setModalType}
         />
       ) : null}
       {isCalenderUserListModal ? (
@@ -204,10 +216,9 @@ const Nav = () => {
           calenderUserListModalOk={calenderUserListModalOk}
           calenderId={calenderId}
           calenderName={calenderName}
+          modalType={modalType}
         />
       ) : null}
-
-      {/* <ShowAlarmModal setAlarmModalIsOpen={alarmModalIsOpen} /> */}
 
       <div className="menu">
         <div className="div-menu-header">
