@@ -64,11 +64,11 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const todoListPrint = async () => {
     const result = await getTodoList(userId);
 
-
-    setTodoListArr(result.resultData.untilNextMonthBoard);
-    setTodoTodayListArr(result.resultData.untilTodayBoard);
-    setTodoMonthListArr(result.resultData.untilThisMonthBoard);
-    setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
+    // (주석제거)
+    // setTodoListArr(result.resultData.untilNextMonthBoard);
+    // setTodoTodayListArr(result.resultData.untilTodayBoard);
+    // setTodoMonthListArr(result.resultData.untilThisMonthBoard);
+    // setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
     // console.log("캘린더 목차 확인", result.resultData);
 
     // console.log("길이", todoListArr.length);

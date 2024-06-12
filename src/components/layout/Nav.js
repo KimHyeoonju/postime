@@ -4,29 +4,24 @@ import { IoIosCheckboxOutline } from "react-icons/io";
 import { MdCalendarToday, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { PiGearSixLight } from "react-icons/pi";
 import { VscBell } from "react-icons/vsc";
+import { VscBellDot } from "react-icons/vsc";
 import "../../css/nav.css";
 
 const NavStyle = styled.div`
-  @media (prefers-color-scheme: light) {
-    /* :root {
-      accent-color: blue;
-    } */
+  position: relative;
 
-    position: relative;
+  z-index: 1200;
+  flex-shrink: 0;
+  height: 100%;
+  min-width: 300px;
+  max-width: 300px;
+  width: 300px;
+  border-right: 1px solid #dddfe1;
+  background-color: #ffffff;
+  margin-left: 0;
 
-    z-index: 1200;
-    flex-shrink: 0;
-    height: 100%;
-    min-width: 300px;
-    max-width: 300px;
-    width: 300px;
-    border-right: 1px solid #dddfe1;
-    background-color: #ffffff;
-    margin-left: 0;
-
-    svg {
-      font-size: 20px;
-    }
+  svg {
+    font-size: 20px;
   }
 `;
 
@@ -34,29 +29,37 @@ import axios from "axios";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import AlarmModal from "../modal/AlarmModal";
+import CalendarModal from "../modal/CalendarModal";
 
 const Nav = () => {
-  const [isOpen, setIsOpen] = useState(false); // 메뉴가 열려있는지 여부를 상태로 관리
   // const [alarmModalIsOpen, setAlarmModalIsOpen] = useState(false); // 알림 모달 열렸는지 닫혔는지
   const [calenderListArr, setCalenderListArr] = useState([]);
+  // false:알림없음, true:알림 있음
+  const [isNewAlarm, setIsNewAlarm] = useState(true);
 
   // 모달 보이는 상태값
-  const [isModal, setIsModal] = useState(false);
-  // 모달 실행 함수
-  const modalOk = e => {
-    if (isModal === false) {
-      setIsModal(true);
-    }
+  const [isAlarmModal, setIsAlarmModal] = useState(false);
+  // 알림 모달 실행 함수
+  const alarmModalOk = e => {
+    setIsAlarmModal(!isAlarmModal);
   };
-  const modalCancel = () => {
-    setIsModal(false);
+  const alarmModalCancel = () => {
+    setIsAlarmModal(false);
+  };
+
+  const [isCalenderModal, setIsCalenderModal] = useState(false);
+  const calenderModalOk = e => {
+    setIsCalenderModal(!isCalenderModal);
+  };
+  const calendarModalCancel = () => {
+    setIsAlarmModal(false);
   };
 
   const userId = 8;
   // 메뉴를 열거나 닫는 함수
-  const toggleMenu = () => {
-    setIsOpen(!isOpen); // isOpen 상태를 토글
-  };
+  // const toggleMenu = () => {
+  //   setIsOpen(!isOpen); // isOpen 상태를 토글
+  // };
 
   const todolistMenuBtnClick = () => {
     const todoMenuBtn = document.querySelector(".move-writepage-btn");
@@ -114,7 +117,7 @@ const Nav = () => {
   const calenderList = async () => {
     const result = await getCalenderList(userId);
 
-    setCalenderListArr(result.resultData);
+    // setCalenderListArr(result.resultData);
     // console.log(result.resultData);
   };
 
@@ -137,7 +140,10 @@ const Nav = () => {
   // };
   return (
     <NavStyle>
-      {isModal ? <AlarmModal modalCancel={modalCancel} /> : null}
+      {isAlarmModal ? <AlarmModal alarmModalCancel={alarmModalCancel} /> : null}
+      {isCalenderModal ? (
+        <CalendarModal calendarModalCancel={calendarModalCancel} />
+      ) : null}
       {/* <ShowAlarmModal setAlarmModalIsOpen={alarmModalIsOpen} /> */}
 
       <div className="menu">
@@ -223,6 +229,17 @@ const Nav = () => {
                   );
                 })}
 
+                <div
+                  className="div-calender mycalender-list mycalender"
+                  onClick={
+                    calenderModalOk
+                    // console.log(e.target);
+                  }
+                >
+                  <input type="checkbox" className="calender-color" />
+                  <div className="calender-name">내 캘린더</div>
+                </div>
+
                 {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
                   <div className="calender-name">내 캘린더</div>
@@ -273,12 +290,12 @@ const Nav = () => {
               <div
                 className="div-calender div-mycalender-title"
                 onClick={e => {
-                  modalOk(e);
+                  alarmModalOk(e);
                 }}
               >
                 <div className="mycalender-title">
                   <div className="nav-icon-style nav-alarm-icon">
-                    <VscBell />
+                    {isNewAlarm ? <VscBellDot /> : <VscBell />}
                   </div>
                   <span className="ns-font-17">알림</span>
                 </div>
