@@ -3,7 +3,7 @@ import "../../css/userstyle.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from "../../components/Modal";
-import UserModal from "../../components/UserModal";
+import UserModal from "../../components/modal/UserModal";
 
 const SearchIdPage = () => {
   const navigate = useNavigate();
@@ -14,6 +14,8 @@ const SearchIdPage = () => {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalMessage, setUserModalMessage] = useState("");
   const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
+
+  // 아이디 찾기 버튼 클릭시
 
   const searchId = async event => {
     event.preventDefault();

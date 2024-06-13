@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import "../../css/userinfo.css";
 import axios from "axios";
-import UserModal from "../../components/UserModal";
+import UserModal from "../../components/modal/UserModal";
 import { useNavigate } from "react-router-dom";
 
 const UserModify = () => {
   // 입력할 항목 변수
   const [userEmail, setUserEmail] = useState("aaa@aaa.net");
   const [userEmailActive, setUserEmailActive] = useState(true);
+  // 이메일-수정 버튼 눌러야 중복확인 가능
+  const [isModified, setIsModified] = useState(false);
+  // 이메일 중복확인
+  const [emailChecked, setEmailChecked] = useState(false);
+
   const [userPass, setUserPass] = useState("");
   const [userNewPass, setUserNewPass] = useState("");
   const [userNewPass2, setUserNewPass2] = useState("");
@@ -21,73 +26,82 @@ const UserModify = () => {
   const [userModalMessage, setUserModalMessage] = useState("");
   const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
 
-  // // 이메일 중복 확인 버튼
-  // const emailDoubleCheck = async event => {
-  //   event.preventDefault();
-  //   const reqData = {
-  //     email: userEmail,
-  //   };
-  //   const result = await postUserEmail(reqData);
-  //   console.log(result);
-  //   if (result.statusCode !== 2) {
-  //     alert(result.resultMsg);
-
-  //     return;
-  //   }
-  //   alert("사용 가능한 이메일입니다.");
-  // };
-
-  // const postUserEmail = async ({ email }) => {
-  //   try {
-  //     const response = await axios.get("/api/user/checkuser", {
-  //       params: { email },
-  //     });
-  //     return response.data;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // };
-
   // 이메일-수정 버튼
   function userEmailModify(event) {
     // 입력 가능하도록 변경
     setUserEmailActive(false);
+    setIsModified(true);
   }
 
-  // 페이지 이동 함수
-  const navigate = useNavigate();
+  // 이메일-중복확인 버튼
+  const emailDoubleCheck = async event => {
+    event.preventDefault();
 
-  // 비밀번호-수정하기 클릭시
+    // 수정 버튼 눌러야만 중복확인 가능
+    if (!isModified) {
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("수정 버튼을 눌러 이메일을 수정해 주세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      return;
+    }
+    const reqData = {
+      email: userEmail,
+    };
+    const result = await postUserEmail(reqData);
+    console.log(result);
+    if (result.statusCode !== 2) {
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage(result.resultMsg);
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+
+      return;
+    }
+    setUserModalOpen(true);
+    setUserModalTitle("경고");
+    setUserModalMessage("사용 가능한 이메일입니다.");
+    setUserModalOnConfirm(() => () => setUserModalOpen(false));
+  };
+
+  const postUserEmail = async ({ email }) => {
+    try {
+      const response = await axios.get("/api/user/checkuser", {
+        params: { email },
+      });
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  };
+
+  // 이메일-변경하기 버튼
+  const emailChange = async event => {
+    event.preventDefault();
+
+    if (!emailChecked) {
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("중복확인을 해 주세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      return;
+    }
+  };
+
+  // 비밀번호-수정 버튼 클릭
   function userPwModify() {
     const newUrl = "/userpw";
     navigate(newUrl);
   }
 
+  // 페이지 이동
+  const navigate = useNavigate();
   // 뒤로가기 버튼 클릭시 실행
+  // 회원정보 페이지로
   const modifyMember = async event => {
     event.preventDefault();
-    navigate("/");
-
-    // chkPW();
-    // if (!passwordCheck) {
-    //   setUserModalOpen(true);
-    //   setUserModalTitle("경고");
-    //   setUserModalMessage("비밀번호 형식에 맞게 작성해 주세요.");
-    //   setUserModalOnConfirm(() => () => setUserModalOpen(false));
-    //   return;
-    // }
-    // if (userNewPass !== userNewPass2) {
-    //   setUserModalOpen(true);
-    //   setUserModalTitle("경고");
-    //   setUserModalMessage("비밀번호가 일치하지 않습니다.");
-    //   setUserModalOnConfirm(() => () => setUserModalOpen(false));
-    //   return;
-    // }
+    navigate("/userinfo");
   };
-
-  // useEffect(() => {
-  //   return () => {};
-  // }, []);
 
   return (
     <div className="user-wrap">
@@ -117,17 +131,7 @@ const UserModify = () => {
             </button>
           </div>
 
-          <div className="check-field">
-            {/* <input
-              type="email"
-              id="userEmail"
-              value={userEmail}
-              onChange={event => {
-                setUserEmail(event.target.value);
-              }}
-              className="email"
-              placeholder="이메일"
-            /> */}
+          <div className="modify-check-field">
             <div className="user-content">
               <input
                 type="email"
@@ -138,9 +142,29 @@ const UserModify = () => {
                   setUserEmail(e.target.value);
                 }}
                 style={{
-                  backgroundColor: userEmailActive ? "#7f85a4" : "none",
+                  backgroundColor: userEmailActive ? "none" : "#d8dae3",
                 }}
               />
+            </div>
+            <div className="usermodify-button-field">
+              <button
+                type="button"
+                className="double-check"
+                onClick={event => {
+                  emailDoubleCheck(event);
+                }}
+              >
+                <span>중복확인</span>
+              </button>
+              <button
+                type="button"
+                className="change-button"
+                onClick={event => {
+                  emailChange(event);
+                }}
+              >
+                <span>변경하기</span>
+              </button>
             </div>
           </div>
         </div>

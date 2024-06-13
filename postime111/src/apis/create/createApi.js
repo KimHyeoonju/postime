@@ -12,9 +12,10 @@ export const create = async data => {
 export const commentInput = async data => {
   try {
     const response = await axios.post("/api/board/comment", {
-      boardId: 100,
+      boardId: 165,
       signedUserId: 8,
-      content: "",
+      // content: `${data.content}`,
+      content: "댓글 보냅니다.",
       calendarId: 63,
     });
     return response;

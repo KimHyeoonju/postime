@@ -40,7 +40,11 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
   const searchBt = () => {
     console.log(searchText);
     setSearchTextIndex(searchText);
+    setSearchText("");
     navigate("/search");
+  };
+  const moveUserInfo = () => {
+    navigate("/userinfo");
   };
 
   useEffect(() => {}, []);
@@ -83,7 +87,9 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
           ></ListIconStyle>
         </ul>
         <div className="header-more" ref={moreMenu}>
-          <div className="header-my">마이페이지</div>
+          <div className="header-my" onClick={moveUserInfo}>
+            마이페이지
+          </div>
           <div className="header-logout">로그아웃</div>
         </div>
       </div>

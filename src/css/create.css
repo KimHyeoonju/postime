@@ -41,6 +41,7 @@
 .write-button-primary:hover {
   background-color: #512772;
   color: #f6f7f9;
+  cursor: pointer;
 }
 
 .write-header-text {
@@ -185,9 +186,15 @@
 .img-upload:hover {
   background-color: #512772;
   color: #f6f7f9;
+  cursor: pointer;
 }
 .img-upload-button {
   display: none;
+}
+
+.img-contain-wrap {
+  position: relative;
+  /* display: flex; */
 }
 
 .img-delete {
@@ -195,8 +202,9 @@
   top: 5px;
   right: 5px;
 
-  color: #512772;
+  color: #fff;
   z-index: 100001;
+  cursor: pointer;
 }
 
 .xi-file-image {
@@ -248,10 +256,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: flex-start; */
-  /* justify-content: space-between; */
-  /* height: 50px; */
   margin-left: 20px;
+  white-space: pre-wrap;
 
   font-size: 14px;
 }
@@ -260,8 +266,6 @@
   justify-content: space-between;
   align-items: center;
   width: 320px;
-  height: 40px;
-
   padding: 10px 15px;
   margin: 0 auto;
   margin-top: 10px;
@@ -270,10 +274,9 @@
   border-radius: 10px 10px 10px 0;
   border: solid 1px #512772;
 }
-.chat-comment-inner:hover {
-  .xi-minus-circle-o {
-    display: block;
-  }
+
+.chat-comment-inner:hover .comment-icon {
+  display: block;
 }
 .comment-input {
   width: 320px;
@@ -281,7 +284,6 @@
   outline: none;
 
   display: flex;
-  /* justify-content: space-between; */
   height: 45px;
   background: #d8dae3;
   outline: solid 1px #512772;
@@ -294,15 +296,25 @@
 .chat-user-text {
   display: flex;
   justify-content: flex-start;
-  gap: 30px;
+  flex-grow: 1;
+  gap: 10px;
+  margin-right: 5px;
 }
 .chat-user {
   font-weight: 500;
+  white-space: nowrap;
 }
-.xi-minus-circle-o {
-  color: #512772;
-  display: none;
+.user-comment {
+  white-space: pre-wrap;
+  word-wrap: break-word; /* 긴 단어가 요소 너비를 초과할 때 줄바꿈을 허용 */
 }
+
+.comment-icon {
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0; /* 아이콘이 공간을 차지하지 않도록 함 */
+}
+
 .chat-comment-write {
   display: flex;
   /* justify-content: space-between; */

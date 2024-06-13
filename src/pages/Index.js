@@ -65,14 +65,17 @@ const WriteRoutes = () => {
   );
 };
 
-const Index = ({ setIsSuccess }) => {
-  // 캘린더 아이디 관련
+
+const Index = ({ signUserId, setIsLogin }) => {
+
+    // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
   useEffect(() => {
     // console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
 
+  
   // 검색어 관련
   const [searchTextIndex, setSearchTextIndex] = useState("");
 
@@ -124,9 +127,15 @@ const Index = ({ setIsSuccess }) => {
                     path="/search"
                     element={<Search searchTextIndex={searchTextIndex} />}
                   />
-                  <Route path="/userinfo" element={<UserInfoPage />} />
+                  <Route
+                    path="/userinfo"
+                    element={<UserInfoPage signUserId={signUserId} />}
+                  />
                   <Route path="/usermodify" element={<UserModify />} />
-                  <Route path="/userpw" element={<UserPwPage />} />
+                  <Route
+                    path="/userpw"
+                    element={<UserPwPage signUserId={signUserId} />}
+                  />
                 </Routes>
               </SectionStyle>
             </SectionListStyle>

@@ -3,13 +3,6 @@ import CommentItem from "./CommentItem";
 const CommentView = ({ commentList, onRemove }) => {
   useEffect(() => {}, []);
 
-  // const onInsert = () => {
-  //   const chat = {
-  //     id: nextId.current,
-  //     text,
-  //   };
-  // };
-
   return (
     <>
       <div className="chat-header">댓글</div>
@@ -17,7 +10,14 @@ const CommentView = ({ commentList, onRemove }) => {
         <div className="chat-comment">
           {commentList.map(item => (
             <>
-              <CommentItem key={item.index} item={item} onRemove={onRemove} />
+              <CommentItem
+                key={item.commentId}
+                item={item}
+                onRemove={onRemove}
+                onClick={() => {
+                  // userCommentInput(item);
+                }}
+              />
             </>
           ))}
         </div>

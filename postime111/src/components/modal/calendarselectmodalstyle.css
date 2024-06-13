@@ -1,0 +1,33 @@
+.calendar-select-modal-wrap {
+  position: fixed;
+  left: 250px;
+  /* 좌표로 수정 예정 */
+  top: 320px;
+  width: 100%;
+  max-width: 100px;
+  /* max-height: 200px; */
+  /* min-height: 400px; */
+
+  /* height: auto; */
+  /* background: rgba(0, 0, 0, 0.7); */
+  z-index: 999999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.calendar-select-modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  /* min-height: 150px; */
+  /* height: auto; */
+  background-color: #fff;
+  border-radius: 3px;
+  /* overflow: hidden; */
+}
+
+.calendar-select-item {
+  font-size: 14px;
+  padding: 10px 15px;
+  cursor: pointer;
+}

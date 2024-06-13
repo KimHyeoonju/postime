@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Button from "./Button";
 
 const ModalWrapStyle = styled.div`
   position: fixed;
@@ -40,9 +41,6 @@ const ModalFooterStyle = styled.div`
   width: 100%;
   height: 60px;
   text-align: center;
-  .closeBt {
-    margin-right: 50px;
-  }
 `;
 
 const Modal = ({ isOpen, title, message, onClose, onConfirm }) => {
@@ -58,12 +56,10 @@ const Modal = ({ isOpen, title, message, onClose, onConfirm }) => {
           <p>{message}</p>
         </ModalMainStyle>
         <ModalFooterStyle>
-          <button className="closeBt" onClick={onClose}>
-            취소
-          </button>
-          <button className="confirmBt" onClick={onConfirm}>
-            확인
-          </button>
+          <Button onClick={onConfirm} label="확인" />
+          <Button onClick={onClose} label="취소" />
+          {/* <button onClick={onClose}>취소</button>
+          <button onClick={onConfirm}>확인</button> */}
         </ModalFooterStyle>
       </ModalInnerStyle>
     </ModalWrapStyle>
