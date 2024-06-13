@@ -114,8 +114,9 @@ const CalenderStyle = styled.div`
   }
 `;
 
-const MainCalender = () => {
-  const userId = sessionStorage.getItem("userId");
+const MainCalender = ({ nowCalendarId }) => {
+  // console.log("카렌더: ", nowCalendarId);
+  const userId = sessionStorage.getItem("userCode");
   const userName = sessionStorage.getItem("userName");
 
   // 캘린더 목록 리스트
@@ -132,14 +133,14 @@ const MainCalender = () => {
     };
   };
 
+  // 캘린더에 보여줄 일정들을 get
   const getCalender = async userId => {
-    // console.log(userId);
     try {
       const resepons = await axios.get(
         `/api/board/mini?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      // console.log("테스트1", resepons);
+      console.log("테스트1", resepons);
 
       if (status === "2") {
         return resepons.data;
@@ -149,28 +150,41 @@ const MainCalender = () => {
       console.log(resepons.data);
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   };
 
+  useEffect(() => {
+    // 필터링을 하는 함수를 실행시킨다.
+    console.log("========== 칼렌더 랜더링 하자: ", nowCalendarId);
+    remove({
+      filterCalendarId: nowCalendarId,
+      calenderClickArr: calenderClickArr,
+    });
+  }, [nowCalendarId]);
+
   const calenderDayPrint = async () => {
     const result = await getCalender(userId);
+    setCalenderArr(result.resultData);
+    setCalenderClickArr(result.resultData);
+  };
 
-    console.log("result", result.resultData.res);
-
-    setCalenderArr(result.resultData.res);
-    // console.log("타이틀 : ", result.resultData.title);
-    // console.log(result.resultData.untilNextMonthBoard);
-    // console.log("체크", todoListArr[1].dDay);
-    // checkDay();
+  const remove = ({ filterCalendarId, calenderClickArr }) => {
+    // console.log("id", filterCalendarId);
+    console.log("calenderClickArr", calenderClickArr);
+    const newName = calenderClickArr.filter(
+      item => item.calendarId !== filterCalendarId,
+    );
+    setCalenderClickArr(newName);
+    console.log("newName  ", newName);
   };
 
   useEffect(() => {
     calenderDayPrint();
+
     // deleteTodoList();
     // calenderDayPrintaaa();
-    setCalenderClickArr(calenderArr);
-    console.log("체크 리스트", calenderClickArr);
+    // setCalenderClickArr(calenderArr);
+    // console.log("체크 리스트", calenderClickArr);
 
     return () => {};
   }, []);
@@ -192,15 +206,56 @@ const MainCalender = () => {
   };
 
   const array = [];
-  const [isCalender, setIsCalender] = useState("");
-  calenderArr.map((item, index) =>
-    array.push({
-      title: item.title,
-      start: item.start,
-      end: item.end,
-      backgroundColor: item.backgroundColor,
-    }),
-  );
+  // const [isCalender, setIsCalender] = useState("");
+
+  useEffect(() => {
+    // 필터링을 하는 함수를 실행시킨다.
+    // console.log("==========", nowCalendarId);
+    // remove({
+    //   filterCalendarId: nowCalendarId,
+    //   calenderClickArr: calenderClickArr,
+    // });
+    calenderClickArr.map((item, index) =>
+      array.push({
+        title: item.title,
+        start: item.start,
+        end: item.end,
+        backgroundColor: item.backgroundColor,
+      }),
+    );
+  }, [calenderClickArr]);
+
+  // const dayPrint = () => {
+  // calenderClickArr.map((item, index) =>
+  //   array.push({
+  //     title: item.title,
+  //     start: item.start,
+  //     end: item.end,
+  //     backgroundColor: item.backgroundColor,
+  //   }),
+  // );
+  // };
+
+  // const [isCheckEvent, setIsCheckEvent] = useState(false);
+  // const calenderCheckEvent = async calendarId => {
+  // 클릭한 캘린더 아이디 세션에 저장
+  // console.log(calendarId);
+  // sessionStorage.setItem("calendarId", calendarId);
+  // const calendarCode = sessionStorage.getItem("calendarId");
+  // console.log("세션 값 확인 : ", calendarCode);
+
+  // setCalendarCheckedList([...calendarCheckedList, { calendarId }]);
+  // remove({ calendarId });
+  // };
+
+  // const [calenderListArr, setCalenderListArr] = useState([]);
+  // const remove = ({ calendarId }) => {
+  // const newName = calenderListArr.filter(
+  // item => item.calendarId !== calendarId,
+  // );
+  // setCalendarCheckedList(newName);
+  // console.log("뭐지?", newName);
+  // };
 
   return (
     <CalenderStyle>
@@ -239,6 +294,7 @@ const MainCalender = () => {
           // eventTextColor="black" // 이벤트 글자 색
           eventborderColor="none" // 이벤트 글자 색
           dayMaxEvents={true}
+          aspectRatio={1.35}
           // events={
           //   [
           // { title: calenderArr[0].title, date: calenderArr[0].createdAt },
@@ -275,11 +331,34 @@ const MainCalender = () => {
           // },
           //   ]
           // }
+
           events={array}
+          // events={[
+          //   { title: "event 1", date: "2024-06-01" },
+          //   { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
+          //   {
+          //     title: "event 3",
+          //     start: "2024-06-02",
+          //     end: "2024-06-05",
+          //     // date: "2024-06-02",
+          //     backgroundColor: "red",
+          //     borderColor: "red",
+          //     textColor: "#000000",
+          //   },
+          //   {
+          //     title: "event 4",
+          //     start: "2024-06-10",
+          //     end: "2024-06-18",
+          //     // date: "2024-06-02",
+          //     backgroundColor: "#ABD5BD",
+          //     borderColor: "#ABD5BD",
+          //     textColor: "#000000",
+          //   },
+          // ]}
           eventColor={"#F2921D"}
           // droppable={true}
           editable={true}
-          dateClick={handleEventClick}
+          // dateClick={handleEventClick}
           eventClick={insertModalOpen}
         />
       </div>

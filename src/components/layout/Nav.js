@@ -39,11 +39,20 @@ const NavStyle = styled.div`
   }
 `;
 
-const Nav = () => {
+const Nav = ({ setNowCalendarId }) => {
   const [calenderName, setcalenderName] = useState("");
   const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
+
   const [deleteUeserId, setDeleteUeserId] = useState("");
-  const calenderId = sessionStorage.getItem("calenderId");
+  const [calendarId, setCalendarId] = useState(1);
+  // const calenderId = sessionStorage.getItem("calenderId");
+
+  // const calendarId = sessionStorage.getItem("calendarId");
+  // console.log("세션 있나?", calendarId);
+
+  // 체크 박스 상태
+  // const [isCheck, setIsCheck] = useState(false);
+  const [isCheck, setIsCheck] = useState(true);
 
   const [calenderListArr, setCalenderListArr] = useState([]);
   // false:알림없음, true:알림 있음
@@ -60,12 +69,12 @@ const Nav = () => {
   };
 
   const calenderSelectModalOk = e => {
-    // console.log("e", e);
+    setIsCalenderSelectModal(!isCalenderSelectModal);
+    // console.log("e");
     // console.log("e", e.target.id);
     // console.log("e", e.target.innerText);
-    sessionStorage.setItem("calenderId", e.target.id);
+    sessionStorage.setItem("calendarId", e.target.id);
     setcalenderName(e.target.innerText);
-    setIsCalenderSelectModal(!isCalenderSelectModal);
   };
   const calendarSelectModalCancel = () => {
     setIsCalenderSelectModal(false);
@@ -145,7 +154,7 @@ const Nav = () => {
         `/api/calendar?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      console.log(resepons);
+      // console.log("sp", resepons.data.resultData);
       if (status === "2") {
         return resepons.data;
       } else {
@@ -158,12 +167,54 @@ const Nav = () => {
     }
   };
 
+  // 체크된 캘린더 배열(여기)
+  const [calendarCheckedList, setCalendarCheckedList] = useState([]);
+  // 캘린더 리스트를 가져온다.
   const calenderList = async () => {
     const result = await getCalenderList(userId);
 
     setCalenderListArr(result.resultData);
-    // console.log(result.resultData);
+
+    // calenderListArr.map((item, index) => {
+    // setUuuu([
+    //   `${calenderListArr[index].calendarId}`,
+    //   `${calenderListArr[index].title}`,
+    //   `${ checked: true }`,
+    // ]);
+    // });
+    // for (let i = 0; i < calenderListArr.length; i++) {
+    //   calendarCheckedList.push({
+    //     calendarId:
+    //     title:
+    //     checked:
+    //   });
+    // }
   };
+
+  const [isCheckEvent, setIsCheckEvent] = useState(false);
+  const calenderCheckEvent = async calendarId => {
+    // 클릭한 캘린더 아이디 세션에 저장
+    // console.log(calendarId);
+    sessionStorage.setItem("calendarId", calendarId);
+    const calendarCode = sessionStorage.getItem("calendarId");
+    // console.log("세션 값 확인 : ", calendarCode);
+
+    // setCalendarCheckedList([...calendarCheckedList, { calendarId }]);
+    remove({ calendarId });
+  };
+
+  // const [calenderListArr, setCalenderListArr] = useState([]);
+  const remove = ({ calendarId }) => {
+    const newName = calenderListArr.filter(
+      item => item.calendarId !== calendarId,
+    );
+    // setCalendarCheckedList(newName);
+    // console.log("뭐지?", newName);
+  };
+
+  // console.log("빠졌나?:", calenderListArr);
+
+  // console.log("calendarCheckedList 체크 : ", calendarCheckedList);
 
   const alarmList = async userId => {
     try {
@@ -217,6 +268,31 @@ const Nav = () => {
   //   setAlarmModalIsOpen(true);
   // };
 
+  // 캘리더 목록 체크 여부
+  // const [isChecked, setIsChecked] = useState(false);
+  // const checkedItemHandler = (value, isChecked) => {
+  //   if (isChecked) {
+  //     setCalendarCheckedList(prev => [...prev, value]);
+
+  //     return;
+  //   }
+
+  //   if (!isChecked && calendarCheckedList.includes(value)) {
+  //     setCalendarCheckedList(
+  //       calendarCheckedList.filter(item => item !== value),
+  //     );
+
+  //     return;
+  //   }
+
+  //   return;
+  // };
+
+  // const checkHandler = (e, value) => {
+  //   setIsChecked(!isChecked);
+  //   checkedItemHandler(value, e.target.checked);
+  // };
+
   return (
     <NavStyle>
       {isAlarmModal ? (
@@ -236,7 +312,7 @@ const Nav = () => {
       {isCalenderUserListModal ? (
         <CalendarModal
           calenderUserListModalOk={calenderUserListModalOk}
-          calenderId={calenderId}
+          calenderId={calendarId}
           calenderName={calenderName}
           modalType={modalType}
           deleteUeserId={deleteUeserId}
@@ -305,8 +381,6 @@ const Nav = () => {
                     내 캘린더
                     {/* <FaSquare />
                     <FaSquareCheck color="red" /> */}
-                    <MdCheckBox color="red" />
-                    <MdCheckBoxOutlineBlank color="red" />
                   </span>
                 </h1>
               </div>
@@ -317,15 +391,34 @@ const Nav = () => {
                       className="div-calender mycalender-list mycalender"
                       key={index}
                     >
-                      <input
+                      {isCheck ? (
+                        <MdCheckBox
+                          className="calender-color"
+                          id={item.calendarId}
+                          color={item.color}
+                          onClick={e => {
+                            setNowCalendarId(item.calendarId);
+                            console.log("item", item.calendarId);
+
+                            calenderCheckEvent(item.calendarId);
+                          }}
+                        />
+                      ) : (
+                        <MdCheckBoxOutlineBlank
+                          className="calender-color"
+                          id={item.calendarId}
+                          color={item.color}
+                          onClick={e => {}}
+                        />
+                      )}
+
+                      {/* <input
                         type="checkbox"
-                        className="calender-color"
-                        id={item.calendarId}
                         style={{ accentColor: `${item.color}` }}
                         onChange={() => {
-                          // checkItemHandler();
+                          checkItemHandler();
                         }}
-                      />
+                      /> */}
 
                       <div
                         className="calender-name"
@@ -346,7 +439,8 @@ const Nav = () => {
                   );
                 })}
 
-                <div className="div-calender mycalender-list mycalender">
+                {/* 서버 꺼졌을 때 */}
+                {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
                   <div
                     className="calender-name"
@@ -360,7 +454,7 @@ const Nav = () => {
                   >
                     내 캘린더
                   </div>
-                </div>
+                </div> */}
 
                 {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />

@@ -144,6 +144,10 @@ input[id="calendar-user-plus-email"]::placeholder {
   align-items: center;
 }
 
+.calendar-color-palette {
+  padding-top: 15px;
+  /* padding-bottom: 0px; */
+}
 .pk-user-id {
   padding-bottom: 10px;
 }
@@ -188,4 +192,25 @@ input[id="calendar-user-plus-email"]::placeholder {
   border: 1px solid;
   font-weight: 500;
   cursor: pointer;
+}
+
+.calendar-color-palette {
+  padding: 0px;
+  padding-top: 3px;
+}
+
+.modify-btn-div {
+  gap: 10px;
+}
+
+.modify-button {
+  max-width: 50px;
+  display: flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 0px;
+  margin-top: 0px;
+  font-size: 13px;
+  box-sizing: border-box;
 }

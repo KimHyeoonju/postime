@@ -3,6 +3,8 @@ import React from "react";
 import "./calendarmodalstyle.css";
 import { IoIosClose, IoMdClose } from "react-icons/io";
 import { colorSystem } from "../../css/color";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
+import { RiCheckboxBlankFill, RiCheckboxFill } from "react-icons/ri";
 
 const CalendarModigyModalStyle = styled.div`
   .calendar-modal-content {
@@ -33,15 +35,19 @@ const CalendarModigyModalStyle = styled.div`
   .calendar-user-list-item {
     border-bottom: 1px solid ${colorSystem.g800};
   }
+
+  .modify-button:hover {
+    height: 27px;
+  }
 `;
 
 const CalendarModifyModal = ({
   calendarModifyModalOk,
   calendarModifyModalCancel,
 }) => {
-  const userId = sessionStorage.getItem("userId");
+  const userId = sessionStorage.getItem("userCode");
   // 캘린더명 입력 > 캘린더명 수정
-
+  // console.log("네?", userId);
   return (
     <CalendarModigyModalStyle>
       {/* {isDeleteCheckModal ? (
@@ -71,17 +77,18 @@ const CalendarModifyModal = ({
               <div>
                 <h2 className="calendar-modal-content-title">캘린더명</h2>
               </div>
-              <div className="calendar-user-plus-div">
+              <div className="calendar-user-plus-div modify-btn-div">
                 <input
                   id="calendar-user-plus-email"
                   onChange={e => {
                     // setUserEmail(e.target.value);
                     console.log("입력 확인", e.target.value);
                   }}
-                  placeholder="{title}"
+                  // 여기는 나중에 수정
+                  placeholder={sessionStorage.getItem("calendarId")}
                 ></input>
                 <div
-                  className="plus-icon"
+                  className="modify-button"
                   onClick={e => {
                     // calendarUserPlus({ userEmail, calenderId });
                   }}
@@ -90,11 +97,11 @@ const CalendarModifyModal = ({
                   {/* <FaSquarePlus IoIosClose size="28" color="#4F546E" /> */}
                 </div>
               </div>
-              <div className="calendar-user-list">
-                <div className="calendar-user-list-item pk-user-id">
+              <div className="calendar-user-list calendar-color-palette">
+                {/* <div className="calendar-user-list-item pk-user-id">
                   <p>{userId}</p>
                   <p className="user-option pk-user-option">캘린더 소유자</p>
-                </div>
+                </div> */}
 
                 {/* {calendarListUserArr.map((item, index) => {
               console.log(item.name);
@@ -119,16 +126,33 @@ const CalendarModifyModal = ({
 
                 {/* map */}
 
-                <div className="calendar-user-list-item">
-                  <p>멤버명</p>
-                  <p
+                <div className="calendar-user-list-item calendar-color-palette">
+                  {/* <p
                     className="user-option"
                     onClick={e => {
                       //   showDeleteCheckModal(e);
                     }}
-                  >
-                    <IoIosClose />
-                  </p>
+                  > */}
+                  <RiCheckboxBlankFill color="#ABD5BD" size={30} />
+                  <RiCheckboxBlankFill color="#FF6B6B" size={30} />
+                  <RiCheckboxBlankFill color="#F06595" size={30} />
+                  <RiCheckboxBlankFill color="#CC5DE8" size={30} />
+                  <RiCheckboxBlankFill color="#845EF7" size={30} />
+                  <RiCheckboxBlankFill color="#339AF0" size={30} />
+                  <RiCheckboxBlankFill color="#51CF66" size={30} />
+                  <RiCheckboxBlankFill color="#FCC419" size={30} />
+                  <RiCheckboxBlankFill color="#FF922B" size={30} />
+                  <br />
+                  {/* <RiCheckboxFill color="#ABD5BD" />
+                    <RiCheckboxFill color="#FF6B6B" />
+                    <RiCheckboxFill color="#F06595" />
+                    <RiCheckboxFill color="#CC5DE8" />
+                    <RiCheckboxFill color="#845EF7" />
+                    <RiCheckboxFill color="#339AF0" />
+                    <RiCheckboxFill color="#51CF66" />
+                    <RiCheckboxFill color="#FCC419" />
+                    <RiCheckboxFill color="#FF922B" /> */}
+                  {/* </p> */}
                 </div>
               </div>
             </div>

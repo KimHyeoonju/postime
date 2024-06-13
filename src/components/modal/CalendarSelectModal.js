@@ -53,14 +53,14 @@ const CalendarSelectModal = ({
 
   const shareSelection = e => {
     // 공유
-    setModalType(1);
     calenderSeleteCheck(false);
+    setModalType(1);
   };
 
   const editSelection = e => {
     // 수정
-    setModalType(2);
     calenderSeleteCheck(false);
+    setModalType(2);
   };
 
   return (

@@ -12,7 +12,7 @@ sessionStorage.setItem("isDeleteCheckModal", false);
 function App() {
   // 원래는 getItem
   // const userName = sessionStorage.setItem("userId", "test1234");
-  // const userId = sessionStorage.setItem("userCode", 8);
+  const userId = sessionStorage.setItem("userCode", 8);
   // const setIsLogin = sessionStorage.setItem("setIsLogin", true);
   // const userEmail = sessionStorage.setItem("userEmail", "userId");
 
