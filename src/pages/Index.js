@@ -65,7 +65,7 @@ const WriteRoutes = () => {
   );
 };
 
-const Index = ({ setIsSuccess }) => {
+const Index = ({ signUserId, setIsLogin }) => {
   // 검색어 관련
   const [searchTextIndex, setSearchTextIndex] = useState("");
 
@@ -114,9 +114,15 @@ const Index = ({ setIsSuccess }) => {
                     path="/search"
                     element={<Search searchTextIndex={searchTextIndex} />}
                   />
-                  <Route path="/userinfo" element={<UserInfoPage />} />
+                  <Route
+                    path="/userinfo"
+                    element={<UserInfoPage signUserId={signUserId} />}
+                  />
                   <Route path="/usermodify" element={<UserModify />} />
-                  <Route path="/userpw" element={<UserPwPage />} />
+                  <Route
+                    path="/userpw"
+                    element={<UserPwPage signUserId={signUserId} />}
+                  />
                 </Routes>
               </SectionStyle>
             </SectionListStyle>

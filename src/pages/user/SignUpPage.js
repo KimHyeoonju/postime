@@ -4,7 +4,7 @@ import "../../css/signup.css";
 import "../../css/userstyle.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import UserModal from "../../components/UserModal";
+import UserModal from "../../components/modal/UserModal";
 
 const SignUpPage = () => {
   // 라우터
@@ -32,6 +32,9 @@ const SignUpPage = () => {
 
   // 아이디 형식이 맞는지 아닌지
   const [idCheck, setIdCheck] = useState(true);
+
+  // 이메일 중복확인 성공시
+  const [emailCheck, setEmailCheck] = useState(true);
 
   const handleUserId = e => {
     setUserId(e.target.value);
@@ -77,15 +80,6 @@ const SignUpPage = () => {
   const signupMember = async event => {
     event.preventDefault();
 
-    chkPW();
-    if (!passwordCheck) {
-      setUserModalOpen(true);
-      setUserModalTitle("경고");
-      setUserModalMessage("비밀번호 형식에 맞게 작성해 주세요.");
-      setUserModalOnConfirm(() => () => setUserModalOpen(false));
-      return;
-    }
-
     if (userName === "") {
       setUserModalOpen(true);
       setUserModalTitle("경고");
@@ -106,6 +100,14 @@ const SignUpPage = () => {
       setUserModalOpen(true);
       setUserModalTitle("경고");
       setUserModalMessage("이메일을 입력하세요.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      return;
+    }
+    chkPW();
+    if (!passwordCheck) {
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("비밀번호 형식에 맞게 작성해 주세요.");
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
@@ -255,19 +257,20 @@ const SignUpPage = () => {
     };
     const result = await postUserEmail(reqData);
     console.log(result);
-    if (result.statusCode !== 2) {
+    if (result.statusCode === 2) {
+      setUserModalTitle("확인 결과");
+      setUserModalMessage("사용 가능한 이메일입니다.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      setUserModalOpen(true);
+      // 이메일 중복 확인 체크
+      setEmailChecked(true);
+    }
+    if (result.statusCode === 4) {
       setUserModalTitle("확인 결과");
       setUserModalMessage(result.resultMsg);
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
       setUserModalOpen(true);
-      return;
     }
-    setUserModalTitle("확인 결과");
-    setUserModalMessage("사용 가능한 이메일입니다.");
-    setUserModalOnConfirm(() => () => setUserModalOpen(false));
-    setUserModalOpen(true);
-    // 이메일 중복 확인 체크
-    setEmailChecked(true);
   };
 
   const postUserEmail = async ({ email }) => {
@@ -280,6 +283,12 @@ const SignUpPage = () => {
       return error;
     }
   };
+
+  // // 이메일 중복 확인 성공시
+  // useEffect(() => {
+  //   chkEmail();
+  // }, [emailCheck, userEmail]);
+  // function chkEmail() {}
 
   return (
     <div className="user-wrap">
@@ -353,7 +362,11 @@ const SignUpPage = () => {
               className="email"
               placeholder="이메일"
             />
-            <div className="result-icon-no"></div>
+            {emailChecked ? (
+              <div className="result-icon-yes"></div>
+            ) : (
+              <div className="result-icon-no"></div>
+            )}
           </div>
 
           <button
