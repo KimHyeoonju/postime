@@ -124,11 +124,11 @@ const CalendarModal = ({
   //   delectCalendarUser(userId, calenderId, deleteUeserId);
   // };
 
-  // 수정
-  //   const deleteUserButton = ({ deleteUeserId }) => {
-  //     deleteUeserId(deleteUeserId);
-  //     showDeleteCheckModal(false);
-  //   };
+  // 수정;
+  // const deleteUserButton = ({ deleteUeserId }) => {
+  //   deleteUeserId(deleteUeserId);
+  //   showDeleteCheckModal(false);
+  // };
 
   const [isDeleteCheckModal, setIsDeleteCheckModal] = useState(false);
   const showDeleteCheckModal = async e => {
@@ -187,7 +187,7 @@ const CalendarModal = ({
                     calendarUserPlus({ userEmail, calenderId });
                   }}
                 >
-                  <FaSquarePlus IoIosClose size="28" color="#4F546E" />
+                  <FaSquarePlus size="28" color="#4F546E" />
                 </div>
               </div>
               <div className="calendar-user-list">
@@ -196,7 +196,7 @@ const CalendarModal = ({
                   <p className="user-option pk-user-option">캘린더 소유자</p>
                 </div>
 
-                {/* {calendarListUserArr.map((item, index) => {
+                {calendarListUserArr.map((item, index) => {
                   console.log(item.name);
                   return (
                     <div className="calendar-user-list-item" key={index}>
@@ -215,7 +215,7 @@ const CalendarModal = ({
                       </p>
                     </div>
                   );
-                })} */}
+                })}
 
                 {/* map */}
 

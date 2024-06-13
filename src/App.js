@@ -10,6 +10,11 @@ import Index from "./pages/Index";
 sessionStorage.setItem("isDeleteCheckModal", false);
 
 function App() {
+  // 원래는 getItem
+  // const userName = sessionStorage.setItem("userId", "test1234");
+  //const userId = sessionStorage.setItem("userCode", 8);
+  // const setIsLogin = sessionStorage.setItem("setIsLogin", true);
+  // const userEmail = sessionStorage.setItem("userEmail", "userId");
 
   const signUserId = sessionStorage.getItem("userId");
   // const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우

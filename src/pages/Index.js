@@ -14,7 +14,7 @@ import UserModify from "./user/UserModify";
 import Detail from "./write/Detail";
 import Modify from "./write/Modify";
 import "../css/common.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { colorSystem } from "../css/color";
 import UserPwPage from "./user/UserPwPage";
 
@@ -65,7 +65,17 @@ const WriteRoutes = () => {
   );
 };
 
+
 const Index = ({ signUserId, setIsLogin }) => {
+
+    // 캘린더 아이디 관련
+  const [nowCalendarId, setNowCalendarId] = useState(null);
+
+  useEffect(() => {
+    // console.log("nowCalendarId : ", nowCalendarId);
+  }, [nowCalendarId]);
+
+  
   // 검색어 관련
   const [searchTextIndex, setSearchTextIndex] = useState("");
 
@@ -81,7 +91,7 @@ const Index = ({ signUserId, setIsLogin }) => {
     <>
       <div>
         <WrapStyle>
-          <Nav />
+          <Nav setNowCalendarId={setNowCalendarId} />
           <MainStyle>
             <header>
               <Header
@@ -101,7 +111,10 @@ const Index = ({ signUserId, setIsLogin }) => {
               </SectionStyle>
               <SectionStyle>
                 <Routes>
-                  <Route path="/" element={<MainCalender />} />
+                  <Route
+                    path="/"
+                    element={<MainCalender nowCalendarId={nowCalendarId} />}
+                  />
                   <Route
                     path="/write/*"
                     element={<WriteRoutes />}

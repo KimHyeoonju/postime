@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { colorSystem } from "../../css/color";
 import "./calendarmodalstyle.css";
+import axios from "axios";
 
 const DeleteCheckModalStyle = styled.div`
   position: absolute;
@@ -60,7 +61,8 @@ const DeleteCheckModalStyle = styled.div`
 // const DeleteCheckModal = ({ showDeleteCheckModal, deleteUeserId }) => {
 const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
-  const userId = sessionStorage.getItem("userId");
+  const [userId, setUserId] = useState(8);
+  // const userId = sessionStorage.getItem("userId");
   const calendarId = sessionStorage.getItem("calendarId");
   const [deleteUeserId, setDeleteUeserId] = useState(1);
 
@@ -83,7 +85,7 @@ const DeleteCheckModal = ({ showDeleteCheckModal }) => {
     if (!deleteCheck) {
       // const result = deleteListUser(userId, calendarId, deleteUeserId);
 
-      //   deleteListUser(userId, calendarId, deleteUeserId);
+      deleteListUser(userId, calendarId, deleteUeserId);
       console.log("1", userId);
       console.log("2", calendarId);
       console.log("3", deleteUeserId);
@@ -93,30 +95,29 @@ const DeleteCheckModal = ({ showDeleteCheckModal }) => {
 
   // 수정 예정
   const deleteListUser = async (userId, calenderId, deleteUeserId) => {
-    // console.log(userId);
-    // console.log(calenderId);
-    // console.log(deleteUeserId);
-    // try {
-    //   const resepons = await axios.delete("/api/calendar/member", {
-    //     // signedUserId:
-    //     userId,
-    //     // calendarId:
-    //     calenderId,
-    //     // userId:
-    //     deleteUeserId,
-    //   });
-    //   console.log(resepons);
-    //   const status = resepons.status.toString().charAt(0);
-    //   if (status === "2") {
-    //     return resepons.data.resultData;
-    //   } else {
-    //     console.log("API 오류");
-    //   }
-    //   console.log(resepons.data);
-    // } catch (error) {
-    //   console.log(error);
-    //   // alert(error);
-    // }
+    console.log("01", userId);
+    console.log("02", calenderId);
+    console.log("03", deleteUeserId);
+    try {
+      const resepons = await axios.delete("/api/calendar/member", {
+        data: {
+          signedUserId: userId,
+          calendarId: calenderId,
+          userId: deleteUeserId,
+        },
+      });
+      console.log(resepons);
+      const status = resepons.status.toString().charAt(0);
+      if (status === "2") {
+        return resepons.data.resultData;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
   };
 
   return (
