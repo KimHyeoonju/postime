@@ -1,12 +1,13 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import "./calendarmodalstyle.css";
 import { IoIosClose, IoMdClose } from "react-icons/io";
 import { colorSystem } from "../../css/color";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { RiCheckboxBlankFill, RiCheckboxFill } from "react-icons/ri";
+import axios from "axios";
 
-const CalendarModigyModalStyle = styled.div`
+const CalendarModifyModalStyle = styled.div`
   .calendar-modal-content {
     border: 1px solid ${colorSystem.g500};
   }
@@ -44,30 +45,99 @@ const CalendarModigyModalStyle = styled.div`
   .modify-button:hover {
     height: 27px;
   }
+
+  .calendar-color-palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px; /* 체크박스 간격 조정 */
+    flex-direction: row; /* 체크박스를 가로로 배열 */
+    justify-content: space-between; /* 양쪽 끝에 자리가 남지 않도록 설정 */
+  }
 `;
 
 const CalendarModifyModal = ({
-  calendarModifyModalOk,
+  // calendarId,
   calendarModifyModalCancel,
+  // defaultColor,
 }) => {
-  const userId = sessionStorage.getItem("userCode");
-  // 캘린더명 입력 > 캘린더명 수정
-  // console.log("네?", userId);
-  return (
-    <CalendarModigyModalStyle>
-      {/* {isDeleteCheckModal ? (
-        <DeleteCheckModal
-          showDeleteCheckModalCancel={showDeleteCheckModalCancel}
-          showDeleteCheckModal={showDeleteCheckModal}
-          deleteUeserId={deleteUeserId}
-        />
-      ) : null} */}
+  // 아래를 비활성화
+  // calendarModifyModalCancel : 모달 창을 닫기 위한 값
+  const [calendarId, setCalendarId] = useState(1); // 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
+  const [defaultColor, setDefaultColor] = useState("#845EF7"); // 기존 캘린더의 색. 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
+  const [newCalendarColor, setNewCalendarColor] = useState("#845EF7"); // 새로운 또는 유지되는 서버에 보낼 캘린더의 색. 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
+  // const [newCalendarName, setNewCalendarName] = useState();
 
+  // 아래를 활성화
+  const [newCalendarName, setNewCalendarName] = useState(calendarId);
+  const [selectedColor, setSelectedColor] = useState(defaultColor);
+
+  const handleCheckboxChange = color => {
+    setSelectedColor(color);
+  };
+
+  const getCalenderList = async userId => {
+    // console.log(userId);
+    try {
+      const resepons = await axios.get(
+        `/api/calendar?signed_user_id=${userId}`,
+      );
+      const status = resepons.status.toString().charAt(0);
+      // console.log("sp", resepons.data.resultData);
+      if (status === "2") {
+        return resepons.data;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  };
+
+  // (수정하기)
+  const handleModifyButtonClick = async ({
+    calendarId,
+    newCalendarName,
+    selectedColor,
+  }) => {
+    // 데이터를 서버로 보내는 로직
+    try {
+      const resepons = await axios.put(`/api/calendar`, {
+        calendarId: calendarId,
+        title: newCalendarName,
+        color: selectedColor,
+      });
+      const status = resepons.status.toString().charAt(0);
+      if (status === "2") {
+        return resepons.data;
+      } else {
+        console.log("API 오류");
+      }
+      console.log(resepons.data);
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  };
+
+  const renderCheckbox = color => (
+    <div onClick={() => handleCheckboxChange(color)}>
+      {selectedColor === color ? (
+        <RiCheckboxFill color={color} size={30} />
+      ) : (
+        <RiCheckboxBlankFill color={color} size={30} />
+      )}
+    </div>
+  );
+
+  return (
+    <CalendarModifyModalStyle>
       <div className="calendar-modal-wrap">
         <div className="calendar-modal-content">
           <div className="calendar-modal-header">
             <div>
-              <h1 className="calendar-modal-title">calenderId 캘린더 수정</h1>
+              <h1 className="calendar-modal-title">{calendarId} 캘린더 수정</h1>
             </div>
             <div
               className="calendar-modal-close-button"
@@ -85,86 +155,32 @@ const CalendarModifyModal = ({
               <div className="calendar-user-plus-div modify-btn-div">
                 <input
                   id="calendar-user-plus-email"
-                  onChange={e => {
-                    // setUserEmail(e.target.value);
-                    console.log("입력 확인", e.target.value);
-                  }}
-                  // 여기는 나중에 수정
-                  placeholder={sessionStorage.getItem("calendarId")}
-                ></input>
+                  value={newCalendarName}
+                  onChange={e => setNewCalendarName(e.target.value)}
+                />
                 <div
                   className="modify-button"
-                  onClick={e => {
-                    // calendarUserPlus({ userEmail, calenderId });
-                  }}
+                  onClick={handleModifyButtonClick}
                 >
                   수정
-                  {/* <FaSquarePlus IoIosClose size="28" color="#4F546E" /> */}
                 </div>
               </div>
               <div className="calendar-user-list calendar-color-palette">
-                {/* <div className="calendar-user-list-item pk-user-id">
-                  <p>{userId}</p>
-                  <p className="user-option pk-user-option">캘린더 소유자</p>
-                </div> */}
-
-                {/* {calendarListUserArr.map((item, index) => {
-              console.log(item.name);
-              return (
-                <div className="calendar-user-list-item" key={index}>
-                  <p>{item.name}</p>
-                  <p
-                    className="user-option"
-                    onClick={
-                      e => {
-                        showDeleteCheckModal(item.userId);
-                      }
-
-                      // getdelectUserId(`${item.userId}`);
-                    }
-                  >
-                    <IoIosClose />
-                  </p>
-                </div>
-              );
-            })} */}
-
-                {/* map */}
-
-                <div className="calendar-user-list-item calendar-color-palette">
-                  {/* <p
-                    className="user-option"
-                    onClick={e => {
-                      //   showDeleteCheckModal(e);
-                    }}
-                  > */}
-                  <RiCheckboxBlankFill color="#ABD5BD" size={30} />
-                  <RiCheckboxBlankFill color="#FF6B6B" size={30} />
-                  <RiCheckboxBlankFill color="#F06595" size={30} />
-                  <RiCheckboxBlankFill color="#CC5DE8" size={30} />
-                  <RiCheckboxBlankFill color="#845EF7" size={30} />
-                  <RiCheckboxBlankFill color="#339AF0" size={30} />
-                  <RiCheckboxBlankFill color="#51CF66" size={30} />
-                  <RiCheckboxBlankFill color="#FCC419" size={30} />
-                  <RiCheckboxBlankFill color="#FF922B" size={30} />
-                  <br />
-                  {/* <RiCheckboxFill color="#ABD5BD" />
-                    <RiCheckboxFill color="#FF6B6B" />
-                    <RiCheckboxFill color="#F06595" />
-                    <RiCheckboxFill color="#CC5DE8" />
-                    <RiCheckboxFill color="#845EF7" />
-                    <RiCheckboxFill color="#339AF0" />
-                    <RiCheckboxFill color="#51CF66" />
-                    <RiCheckboxFill color="#FCC419" />
-                    <RiCheckboxFill color="#FF922B" /> */}
-                  {/* </p> */}
-                </div>
+                {renderCheckbox("#ABD5BD")}
+                {renderCheckbox("#FF6B6B")}
+                {renderCheckbox("#F06595")}
+                {renderCheckbox("#CC5DE8")}
+                {renderCheckbox("#845EF7")}
+                {renderCheckbox("#339AF0")}
+                {renderCheckbox("#51CF66")}
+                {renderCheckbox("#FCC419")}
+                {renderCheckbox("#FF922B")}
               </div>
             </div>
           </div>
         </div>
       </div>
-    </CalendarModigyModalStyle>
+    </CalendarModifyModalStyle>
   );
 };
 
