@@ -7,15 +7,23 @@ import SignUpPage from "./pages/user/SignUpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
 
+sessionStorage.setItem("isDeleteCheckModal", false);
+
 function App() {
-  // const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
-  const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있지 않은 경우
+  // 원래는 getItem
+  // const userName = sessionStorage.setItem("userId", "test1234");
+  // const userId = sessionStorage.setItem("userCode", 8);
+  // const setIsLogin = sessionStorage.setItem("setIsLogin", true);
+  // const userEmail = sessionStorage.setItem("userEmail", "userId");
+
+  const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
+  // const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있지 않은 경우
   const [signUserId, setSignUserId] = useState("test1234");
 
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index signUserId={signUserId} setIsLogin={setIsLogin} />
+        <Index />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>
