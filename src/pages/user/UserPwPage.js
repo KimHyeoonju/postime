@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../../css/userinfo.css";
 import axios from "axios";
-import UserModal from "../../components/UserModal";
+import UserModal from "../../components/modal/UserModal";
 import { useNavigate } from "react-router-dom";
 
 const UserPwPage = () => {
@@ -101,7 +101,7 @@ const UserPwPage = () => {
         <h1>비밀번호 변경</h1>
       </div>
       <div className="userpwmodify-input">
-        <div className="usermodify-input-pw">
+        {/* <div className="usermodify-input-pw">
           <label htmlFor="pwnow">현재 비밀번호</label>
           <div className="check-field">
             <input
@@ -111,9 +111,8 @@ const UserPwPage = () => {
               onChange={event => setUserPass(event.target.value)}
               placeholder="현재 비밀번호 입력"
             />
-            {/* <div className="result-icon"></div> */}
           </div>
-        </div>
+        </div> */}
 
         <div className="usermodify-input-pwchange">
           <label htmlFor="pw">새 비밀번호</label>

@@ -68,7 +68,7 @@
   padding-left: 10px;
   box-sizing: border-box;
   font-size: 17px;
-  color: #393d50;
+  color: #7f85a4;
 }
 
 .user-content {
@@ -105,6 +105,12 @@ userpwmodify-input ::placeholder,
   display: inline-block;
 }
 
+.usermodify-button-field {
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
 /* 버튼 영역 */
 .user-button {
   width: 260px;
@@ -129,12 +135,15 @@ userpwmodify-input ::placeholder,
   transition: background-color 0.2s;
   cursor: pointer;
 }
+
+.change-button:hover span,
 .modify-button:hover span,
 .double-check:hover span,
 .user-button button:hover span {
   color: #512772;
 }
 
+.change-button,
 .modify-button,
 .double-check {
   width: 80px;
@@ -148,7 +157,11 @@ userpwmodify-input ::placeholder,
 .double-check {
   margin-right: 65px;
 }
+.modify-check-field .double-check {
+  margin-right: 0px;
+}
 
+.change-button span,
 .modify-button span,
 .double-check span {
   font-size: 14px;
@@ -156,6 +169,7 @@ userpwmodify-input ::placeholder,
   color: #f6f7f9;
 }
 
+.change-button:hover,
 .modify-button:hover,
 .double-check:hover {
   background-color: #f6f7f9;

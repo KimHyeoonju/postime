@@ -2,46 +2,55 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../css/login.css";
 import axios from "axios";
-import useModal from "../../hooks/useModal";
-import Modal from "../../components/Modal";
+import { postSignIn } from "../../apis/user/apiuser";
+import UserModal from "../../components/UserModal";
 
-const LoginPage = ({ setIsLogin, setSignUserId }) => {
+const LoginPage = ({ setIsLogin }) => {
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState("");
-  const [userPass, setUserPass] = useState("");
-  const { isModalOpen, modalMessage, openModal, closeModal } = useModal();
+  const [userId, setUserId] = useState("mybirth811");
+  const [userPass, setUserPass] = useState("Tngus1234^^");
+  // 모달 추가
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [userModalTitle, setUserModalTitle] = useState(false);
+  const [userModalMessage, setUserModalMessage] = useState("");
+  const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
 
   const handleSubmit = async e => {
     // 새로고침 막기
     e.preventDefault();
 
+    // 로그인 API
     const result = await postSignIn({ userId, userPass });
+    // console.log(result);
     if (result.statusCode !== 2) {
-      modalMessage(result.resultMsg);
-      openModal();
+      setUserModalMessage(result.resultMsg);
+      setUserModalOpen(true);
       return;
     }
     // 로그인 상태로 변경
     setIsLogin(true);
-    setSignUserId(userId);
-    localStorage.setItem("userId", userId);
+
+    // 로컬 스토리지에 저장
+    sessionStorage.setItem("userId", userId);
+    // const getUserId = localStorage.getItem("userId");
+
+    // var userArray = [
+    //   {
+    //     userId: userId,
+    //   },
+    // ];
+
+    // // sessionStorage에 객체 배열 저장
+    // sessionStorage.setItem("userArray", JSON.stringify(userArray));
+
+    // // sessionStorage에서 객체 배열 가져오기
+    // var storedUserArray = JSON.parse(sessionStorage.getItem("userArray"));
+
+    // // 가져온 객체 배열 사용 예시
+    // console.log(storedUserArray);
 
     navigate("/");
-  };
-
-  // 로그인 API
-  const postSignIn = async ({ userId, userPass }) => {
-    try {
-      const response = await axios.post("/api/user/sign-in", {
-        id: userId,
-        pwd: userPass,
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      return error;
-    }
   };
 
   return (
@@ -53,6 +62,7 @@ const LoginPage = ({ setIsLogin, setSignUserId }) => {
             type="text"
             className="id"
             placeholder="아이디"
+            value={userId}
             onChange={e => setUserId(e.target.value)}
           />
           <br />
@@ -60,6 +70,7 @@ const LoginPage = ({ setIsLogin, setSignUserId }) => {
             type="password"
             className="pw"
             placeholder="비밀번호"
+            value={userPass}
             onChange={e => setUserPass(e.target.value)}
           />
         </div>
@@ -84,10 +95,12 @@ const LoginPage = ({ setIsLogin, setSignUserId }) => {
           <span>로그인</span>
         </button>
         {/* 모달 관련 */}
-        <Modal
-          isOpen={isModalOpen}
-          message={modalMessage}
-          onClose={closeModal}
+        <UserModal
+          isOpen={userModalOpen}
+          title={"로그인 실패"}
+          message={userModalMessage}
+          onConfirm={userModalOnConfirm}
+          buttonComment={"확인"}
         />
       </form>
     </div>
