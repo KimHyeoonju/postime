@@ -36,6 +36,11 @@ const CalendarModigyModalStyle = styled.div`
     border-bottom: 1px solid ${colorSystem.g800};
   }
 
+  .modify-button {
+    height: 27px;
+    margin-top: 0px;
+  }
+
   .modify-button:hover {
     height: 27px;
   }

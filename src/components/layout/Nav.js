@@ -44,7 +44,7 @@ const Nav = ({ setNowCalendarId }) => {
   const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
 
   const [deleteUeserId, setDeleteUeserId] = useState("");
-  const [calendarId, setCalendarId] = useState(1);
+  const [calendarId, setCalendarId] = useState(null);
   // const calenderId = sessionStorage.getItem("calenderId");
 
   // const calendarId = sessionStorage.getItem("calendarId");
@@ -194,13 +194,14 @@ const Nav = ({ setNowCalendarId }) => {
   const [isCheckEvent, setIsCheckEvent] = useState(false);
   const calenderCheckEvent = async calendarId => {
     // 클릭한 캘린더 아이디 세션에 저장
-    // console.log(calendarId);
-    sessionStorage.setItem("calendarId", calendarId);
-    const calendarCode = sessionStorage.getItem("calendarId");
+    setCalendarId(calendarId);
+    console.log("제발", calendarId);
+    // sessionStorage.setItem("calendarId", calendarId);
+    // const calendarCode = sessionStorage.getItem("calendarId");
     // console.log("세션 값 확인 : ", calendarCode);
 
     // setCalendarCheckedList([...calendarCheckedList, { calendarId }]);
-    remove({ calendarId });
+    // remove({ calendarId });
   };
 
   // const [calenderListArr, setCalenderListArr] = useState([]);

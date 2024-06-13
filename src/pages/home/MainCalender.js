@@ -116,7 +116,8 @@ const CalenderStyle = styled.div`
 
 const MainCalender = ({ nowCalendarId }) => {
   // console.log("카렌더: ", nowCalendarId);
-  const userId = sessionStorage.getItem("userCode");
+  // const userId = sessionStorage.getItem("userCode");
+  const userId = 8;
   const userName = sessionStorage.getItem("userName");
 
   // 캘린더 목록 리스트
@@ -150,28 +151,100 @@ const MainCalender = ({ nowCalendarId }) => {
       console.log(resepons.data);
     } catch (error) {
       console.log(error);
+      // alert(error);
     }
   };
 
+  const [calendarIdCheck, setCalendarIdCheck] = useState(false);
   useEffect(() => {
     // 필터링을 하는 함수를 실행시킨다.
-    console.log("========== 칼렌더 랜더링 하자: ", nowCalendarId);
+    // console.log("========== 칼렌더 랜더링 하자: ", nowCalendarId);
+
+    // calenderClickArr.map((item, index) => {
+    //   if (item.calendarId === nowCalendarId) {
+    //     setCalendarIdCheck(true);
+    //     // console.log(calendarIdCheck);
+    //   }
+    //   if (item.calendarId === nowCalendarId) {
+    //     setCalendarIdCheck(false);
+    //     // console.log(calendarIdCheck);
+    //   }
+    // });
+
+    // if (calendarIdCheck) {
+
     remove({
       filterCalendarId: nowCalendarId,
-      calenderClickArr: calenderClickArr,
+      calenderArr: calenderClickArr,
     });
+
+    console.log("들어왔나요?");
+    // }
+
+    // console.log("확인 ", { calenderArr });
   }, [nowCalendarId]);
+
+  // useEffect(() => {
+  //   // 필터링을 하는 함수를 실행시킨다.
+  //   console.log("========== 칼렌더 랜더링 하자: ", nowCalendarId);
+  //   remove({ filterCalendarId: nowCalendarId, calenderArr: calenderArr });
+  //   // console.log("확인 ", { calenderArr });
+  // }, [nowCalendarId]);
 
   const calenderDayPrint = async () => {
     const result = await getCalender(userId);
     setCalenderArr(result.resultData);
+    // console.log("result", calenderArr);
     setCalenderClickArr(result.resultData);
+    // console.log("result", calenderArr);
+    // console.log("타이틀 : ", result.resultData);
+    // qewtq(calenderArr);
+    // console.log("들어왔는지 확인 : ", asfg);
+    // console.log(result.resultData.untilNextMonthBoard);
+    // console.log("체크", todoListArr[1].dDay);
+    // checkDay();
+    // const filterCalendarId = sessionStorage.getItem("calendarId");
+    // const filterCalendarId = nowCalendarId;
+    // remove(filterCalendarId, calenderArr);
+
+    //   setCalendarCheckedList(newName);
+    // };
+
+    // console.log("id", filterCalendarId);
+    // console.log("calenderArr", calenderArr);
+
+    // calenderArr.map((item, index) => {
+    //   if (item.calendarId == filterCalendarId) {
+    //     ("");
+    //   }
+    //   console.log("정답");
+    //   console.log("item.calendarId", item.calendarId);
+    // });
+
+    // const newName = calenderArr.filter(
+    //   item => item.calendarId !== filterCalendarId,
+    //   console.log("확인중"),
+    // );
+    // setCalenderArr(newName);
+    // console.log("newName  ", newName);
+    // remove({ filterCalendarId, calenderArr });
   };
 
-  const remove = ({ filterCalendarId, calenderClickArr }) => {
+  const remove = ({ filterCalendarId, calenderArr }) => {
     // console.log("id", filterCalendarId);
-    console.log("calenderClickArr", calenderClickArr);
-    const newName = calenderClickArr.filter(
+    // console.log("calenderArr", calenderArr);
+    const newName = calenderArr.filter(
+      item => item.calendarId !== filterCalendarId,
+    );
+
+    setCalenderClickArr(newName);
+    console.log("newName  ", newName);
+  };
+
+  const addC = ({ filterCalendarId, calenderArr }) => {
+    console.log("id", filterCalendarId);
+    console.log("calenderArr", calenderArr);
+    const newName = calenderArr.filter(
       item => item.calendarId !== filterCalendarId,
     );
     setCalenderClickArr(newName);
@@ -180,12 +253,14 @@ const MainCalender = ({ nowCalendarId }) => {
 
   useEffect(() => {
     calenderDayPrint();
+    // console("확인", calenderArr);
+    // console.log("ㅁㄴㅇ", sessionStorage.getItem("calendarId"));
+    // dayPrint();
 
     // deleteTodoList();
     // calenderDayPrintaaa();
     // setCalenderClickArr(calenderArr);
     // console.log("체크 리스트", calenderClickArr);
-
     return () => {};
   }, []);
 
@@ -206,34 +281,18 @@ const MainCalender = ({ nowCalendarId }) => {
   };
 
   const array = [];
-  // const [isCalender, setIsCalender] = useState("");
-
-  useEffect(() => {
-    // 필터링을 하는 함수를 실행시킨다.
-    // console.log("==========", nowCalendarId);
-    // remove({
-    //   filterCalendarId: nowCalendarId,
-    //   calenderClickArr: calenderClickArr,
-    // });
-    calenderClickArr.map((item, index) =>
-      array.push({
-        title: item.title,
-        start: item.start,
-        end: item.end,
-        backgroundColor: item.backgroundColor,
-      }),
-    );
-  }, [calenderClickArr]);
+  // const [array, setArray] = useState();
+  const [isCalender, setIsCalender] = useState("");
 
   // const dayPrint = () => {
-  // calenderClickArr.map((item, index) =>
-  //   array.push({
-  //     title: item.title,
-  //     start: item.start,
-  //     end: item.end,
-  //     backgroundColor: item.backgroundColor,
-  //   }),
-  // );
+  calenderClickArr.map((item, index) =>
+    array.push({
+      title: item.title,
+      start: item.start,
+      end: item.end,
+      backgroundColor: item.backgroundColor,
+    }),
+  );
   // };
 
   // const [isCheckEvent, setIsCheckEvent] = useState(false);
@@ -256,6 +315,10 @@ const MainCalender = ({ nowCalendarId }) => {
   // setCalendarCheckedList(newName);
   // console.log("뭐지?", newName);
   // };
+
+  // console.log("빠졌나?:", calenderListArr);
+
+  // console.log("calendarCheckedList 체크 : ", calendarCheckedList);
 
   return (
     <CalenderStyle>
