@@ -34,8 +34,8 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
   // useRef()를 사용하여 modalRef 생성
   const modalRef = useRef(null);
 
-  // console.log(isNewAlarm);
-  // console.log(alarmListArr);
+  console.log("?", isNewAlarm);
+  console.log("!", alarmListArr);
   useEffect(() => {
     // 이벤트 핸들러 함수
     const handler = event => {

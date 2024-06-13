@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-labels */
 import { useEffect, useState } from "react";
 import "../../src/css/commonpage.css";
 import Button from "../components/Button";
@@ -115,6 +114,7 @@ const Complete = () => {
           ></Button>
         </div>
         <div className="common-menu">
+          <div className="com-sizebox"></div>
           <div className="cmt">
             <span>일정 명</span>
           </div>

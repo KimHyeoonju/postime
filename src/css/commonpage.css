@@ -57,12 +57,22 @@
   margin-bottom: 2px;
   background-color: #7f85a4;
 }
+.com-sizebox {
+  width: 50px;
+}
 .cmt {
-  margin-left: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 300px;
+}
+.cmt span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 .cmtxt {
   display: flex;
@@ -70,11 +80,27 @@
   justify-content: center;
   width: 700px;
 }
+.cmtxt span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
 .cmdate {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 150px;
+}
+.cmdate span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
 }
 .cmcalender {
   display: flex;
@@ -82,7 +108,14 @@
   justify-content: center;
   width: 150px;
 }
-
+.cmcalender span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
 /* 일정목록 */
 .common-list {
   width: 100%;
@@ -103,6 +136,35 @@
   justify-content: center;
   width: 50px;
 }
+
+.state-area {
+  display: flex;
+  align-items: center;
+}
+.com-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 20px;
+  border-radius: 10px;
+  background-color: #d8dae3;
+}
+.stateone {
+  font-size: 14px;
+  text-align: center;
+}
+.statetwo {
+  font-size: 14px;
+  text-align: center;
+  color: green;
+}
+.statethree {
+  font-size: 14px;
+  text-align: center;
+  color: red;
+}
+
 .com-checkbox {
   visibility: hidden;
 }

@@ -40,6 +40,7 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
   const searchBt = () => {
     console.log(searchText);
     setSearchTextIndex(searchText);
+    setSearchText("");
     navigate("/search");
   };
   const moveUserInfo = () => {

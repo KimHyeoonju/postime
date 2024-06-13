@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const getSearchList = async SearchWorld => {
+export const getSearchList = async (searchTextIndex, id) => {
   try {
     const response = await axios.get(
-      `api/board/search?signed_user_id=8&search_word=${SearchWorld}`,
+      `api/board/search?signed_user_id=${id}&search_word=${searchTextIndex}`,
     );
     const status = response.status.toString().charAt(0);
     // console.log("resopnse : ", response);

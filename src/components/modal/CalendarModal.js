@@ -44,13 +44,16 @@ const CalendarModal = ({
   calenderUserListModalOk,
   calenderName,
   calenderId,
+  deleteUeserId,
 }) => {
+  const userId = sessionStorage.getItem("userId");
+  const calendarId = sessionStorage.getItem("calendarId");
+
   // useRef()를 사용하여 modalRef 생성
   const modalRef = useRef(null);
   // 캘린더 공유 유저 리스트 배열
   const [calendarListUserArr, setCalendarListUserArr] = useState([]);
   const [userEmail, setUserEmail] = useState("asdqwe@naver.com");
-  const [userId, setUserId] = useState(8);
   const [calendarModalType, setCalendarModalType] = useState(1);
   // 1: 삭제시 체크 모달
 
@@ -86,23 +89,6 @@ const CalendarModal = ({
 
   useEffect(() => {
     calenderUserList();
-    // 이벤트 핸들러 함수
-    const handler = event => {
-      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        calenderUserListModalOk(false);
-      }
-    };
-
-    // 이벤트 핸들러 등록
-    document.addEventListener("mousedown", handler);
-    // document.addEventListener('touchstart', handler); // 모바일 대응
-
-    return () => {
-      // 이벤트 핸들러 해제
-      document.removeEventListener("mousedown", handler);
-      // document.removeEventListener('touchstart', handler); // 모바일 대응
-    };
   }, [calenderUserListModalOk]);
 
   const calendarUserPlus = async ({ userEmail, calenderId }) => {
@@ -138,58 +124,33 @@ const CalendarModal = ({
   //   delectCalendarUser(userId, calenderId, deleteUeserId);
   // };
 
-  // 수정 예정
-  const delectCalendarUser = async ({ userId, calenderId, deleteUeserId }) => {
-    // console.log(userId);
-    // console.log(calenderId);
-    // console.log(deleteUeserId);
-    try {
-      const resepons = await axios.delete("/api/calendar/member", {
-        // signedUserId:
-        userId,
-        // calendarId:
-        calenderId,
-        // userId:
-        deleteUeserId,
-      });
-      console.log(resepons);
-      const status = resepons.status.toString().charAt(0);
-      if (status === "2") {
-        return resepons.data.resultData;
-      } else {
-        console.log("API 오류");
-      }
-      console.log(resepons.data);
-    } catch (error) {
-      console.log(error);
-      // alert(error);
-    }
-  };
+  // 수정
+  //   const deleteUserButton = ({ deleteUeserId }) => {
+  //     deleteUeserId(deleteUeserId);
+  //     showDeleteCheckModal(false);
+  //   };
 
-  // 캘린더 유저 리스트 모달
-  //   const [calenderId, setCalenderId] = useState("");
   const [isDeleteCheckModal, setIsDeleteCheckModal] = useState(false);
-  const showDeleteCheckModal = deleteUeserId => {
+  const showDeleteCheckModal = async e => {
     setIsDeleteCheckModal(!isDeleteCheckModal);
     // 캘린더명
-    // console.log("eeee", deleteUeserId);
     // setCalenderId(e.target.id);
     // setIsDeleteCheckModal(false); // 이전 모달 창 닫기
   };
-  const showDeleteCheckModalCancel = () => {
+  const showDeleteCheckModalCancel = e => {
     setIsDeleteCheckModal(false);
   };
 
   return (
     <CalendarModalStyle>
-      {/* 나중에 밖으로 빼기 : 이유 : 눌렀을 때 꺼짐 */}
       {isDeleteCheckModal ? (
         <DeleteCheckModal
           showDeleteCheckModalCancel={showDeleteCheckModalCancel}
-          isDeleteCheckModal={isDeleteCheckModal}
-          calendarModalType={calendarModalType}
+          showDeleteCheckModal={showDeleteCheckModal}
+          deleteUeserId={deleteUeserId}
         />
       ) : null}
+
       <div ref={modalRef} className="calendar-modal-wrap">
         <div className="calendar-modal-content">
           <div className="calendar-modal-header">
@@ -235,7 +196,8 @@ const CalendarModal = ({
                   <p className="user-option pk-user-option">캘린더 소유자</p>
                 </div>
 
-                {calendarListUserArr.map((item, index) => {
+                {/* {calendarListUserArr.map((item, index) => {
+                  console.log(item.name);
                   return (
                     <div className="calendar-user-list-item" key={index}>
                       <p>{item.name}</p>
@@ -253,16 +215,16 @@ const CalendarModal = ({
                       </p>
                     </div>
                   );
-                })}
+                })} */}
 
                 {/* map */}
-                {/* 
+
                 <div className="calendar-user-list-item">
                   <p>멤버명</p>
                   <p
                     className="user-option"
                     onClick={e => {
-                      delectCalendarUser();
+                      showDeleteCheckModal(e);
                     }}
                   >
                     <IoIosClose />
@@ -273,8 +235,7 @@ const CalendarModal = ({
                   <p>
                     <IoIosClose />
                   </p>
-                </div> 
-                */}
+                </div>
               </div>
             </div>
           </div>
