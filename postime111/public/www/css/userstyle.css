@@ -1,0 +1,132 @@
+/* signup,  searchid, searchpw에서 사용 중입니다 */
+
+@charset "utf-8";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap"); */
+
+* {
+  box-sizing: border-box;
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.user-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 100px;
+}
+
+.user-title-line {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  border-bottom: 5px solid #512772;
+  display: inline-block;
+  padding: 0 45px;
+}
+
+.user-title-line h1 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.search-input {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.user-wrap label {
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  color: #0f1015;
+  margin: 10px 0;
+}
+
+.label-field label {
+  display: inline-block;
+}
+
+.check-field input,
+input {
+  width: 400px;
+  height: 40px;
+  background: #d8dae3;
+  border-radius: 10px;
+  padding-left: 10px;
+  box-sizing: border-box;
+  font-size: 17px;
+  color: #393d50;
+}
+
+::placeholder {
+  font-size: 17px;
+  font-weight: bold;
+  color: #7f85a4;
+}
+
+button {
+  width: 260px;
+  height: 40px;
+  background: #512772;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  margin: 60px auto 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button span {
+  color: #ffffff;
+  font-size: 20px;
+}
+
+button:hover {
+  background-color: #f6f7f9;
+  border-color: #512772;
+  border-style: solid;
+  border-width: 2px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+button:hover span {
+  color: #512772;
+}
+
+.send-code,
+.double-check {
+  width: 80px;
+  height: 35px;
+  border-style: solid;
+  border-width: 2px;
+  margin-top: 10px;
+  margin-right: 65px;
+  float: right;
+}
+.send-code {
+  margin-right: 0;
+}
+
+.send-code span,
+.double-check span {
+  font-size: 14px;
+  /* font-weight: bold; */
+  color: #f6f7f9;
+}
+
+/* (V)/(X) 아이콘 영역 */
+.check-field {
+  display: flex;
+  align-items: center;
+}
+
+.result-icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  margin-left: 25px;
+  background: url(../image/icon-user-x.png);
+}

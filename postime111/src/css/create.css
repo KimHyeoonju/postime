@@ -256,8 +256,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* justify-content: flex-start; */
+  /* justify-content: space-between; */
+  /* height: 50px; */
   margin-left: 20px;
-  white-space: pre-wrap;
 
   font-size: 14px;
 }
@@ -266,6 +268,8 @@
   justify-content: space-between;
   align-items: center;
   width: 320px;
+  height: 40px;
+
   padding: 10px 15px;
   margin: 0 auto;
   margin-top: 10px;
@@ -274,9 +278,10 @@
   border-radius: 10px 10px 10px 0;
   border: solid 1px #512772;
 }
-
-.chat-comment-inner:hover .comment-icon {
-  display: block;
+.chat-comment-inner:hover {
+  .xi-minus-circle-o {
+    display: block;
+  }
 }
 .comment-input {
   width: 320px;
@@ -284,6 +289,7 @@
   outline: none;
 
   display: flex;
+  /* justify-content: space-between; */
   height: 45px;
   background: #d8dae3;
   outline: solid 1px #512772;
@@ -296,25 +302,15 @@
 .chat-user-text {
   display: flex;
   justify-content: flex-start;
-  flex-grow: 1;
-  gap: 10px;
-  margin-right: 5px;
+  gap: 30px;
 }
 .chat-user {
   font-weight: 500;
-  white-space: nowrap;
 }
-.user-comment {
-  white-space: pre-wrap;
-  word-wrap: break-word; /* 긴 단어가 요소 너비를 초과할 때 줄바꿈을 허용 */
+.xi-minus-circle-o {
+  color: #512772;
+  display: none;
 }
-
-.comment-icon {
-  font-size: 16px;
-  cursor: pointer;
-  flex-shrink: 0; /* 아이콘이 공간을 차지하지 않도록 함 */
-}
-
 .chat-comment-write {
   display: flex;
   /* justify-content: space-between; */

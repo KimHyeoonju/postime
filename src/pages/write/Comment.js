@@ -1,39 +1,42 @@
 import { useEffect, useState } from "react";
+import { getComment, postCommentInput } from "../../apis/create/createApi";
 import CommentInput from "./CommentInput";
 import CommentView from "./CommentView";
 
-// 데모데이터
-// const initState = [];
-
 const Comment = () => {
+  // 전체 댓글 목록
   const [commentList, setCommentList] = useState([]);
 
-  const userId = "김누구";
-  const id = 1; //pk값
-
-  const addComment = chat => {
-    // 이전 코드
-    // const newArr =  [...commentList, { id: 4, content: cm }]
-    const newArr = [
-      ...commentList,
-      {
-        name: userId,
-        content: chat,
-        p: commentList.length + 1,
-      },
-    ];
-    setCommentList(newArr);
-    // setCommentList(prev => [
-    //   ...prev,
-    //   //   { id: commentList.length + 1, content: chat },
-    //   { id: userId, content: chat },
-    // ]);
-    // console.log(cm, " : 이 내용을 setCommentList 에 담아야 한다.");
+  const allComments = async () => {
+    const result = await getComment(165);
+    setCommentList(result.data.resultData);
   };
+
+  useEffect(() => {
+    // 전체 목록 부르기
+    allComments();
+  }, []);
+
+  // const userId = "김누구";
+  // const id = 1; //pk값
+
+  // 댓글 추가
+  const addComment = async chat => {
+    const sendData = {
+      boardId: 165,
+      signedUserId: 8,
+      content: chat,
+      calendarId: 63,
+    };
+    const result = await postCommentInput(sendData);
+    allComments();
+  };
+
+  // 댓글 삭제
 
   const removeComment = commentId => {
     const updatedComments = commentList.filter(
-      comment => comment.p !== commentId,
+      comment => comment.commentId !== commentId,
     );
     setCommentList(updatedComments);
   };
