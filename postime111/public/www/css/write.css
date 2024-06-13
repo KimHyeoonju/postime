@@ -2,15 +2,15 @@
   width: 100%;
   height: 100%;
   background: #f6f7f9;
+
+  display: flex;
+  position: relative;
 }
 .write-inner {
   width: 1280px;
-
-  /* height: calc(100% - 80px); */
+  height: 100%;
   padding-top: 60px;
   padding-left: 55px;
-  display: flex;
-  position: relative;
 }
 .write-header {
   width: 100%;
@@ -41,15 +41,18 @@
 .write-button-primary:hover {
   background-color: #512772;
   color: #f6f7f9;
-  cursor: pointer;
 }
 
 .write-header-text {
   color: #9da2b9;
 }
-.write-header-text > textarea {
+.write-header-title {
+  height: 65px;
+  margin-bottom: 70px;
+}
+.write-header-title > textarea {
   width: 1200px;
-  height: 80px;
+  height: 100%;
   border-width: 0;
   outline: 0;
   resize: none;
@@ -58,9 +61,11 @@
   font-size: 42px;
   font-weight: 700;
   background-color: #f6f7f9;
+
+  margin-bottom: 10px;
 }
-.write-header-text > textarea::placeholder {
-  font-size: 42px;
+.write-header-title > span {
+  font-size: 20px;
 }
 
 .write-header-dec {
@@ -70,28 +75,9 @@
 
   font-size: 17px;
   font-weight: 300;
-  color: #9da2b9;
 }
-.write-header-dec > span {
-  display: flex;
-  gap: 10px;
-  font-size: 20px;
-  margin-bottom: 15px;
-}
-
-.write-header-info {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.write-header-icon {
-  display: flex;
-  gap: 10px;
-}
-
-.write-tags {
-  border-width: 0;
-  margin-left: 15px;
+.write-header-dec > i {
+  font-size: 18px;
 }
 
 .write-main {
@@ -128,83 +114,43 @@
 
 .write-img {
   width: 190px;
-  height: 540px;
+  height: 560px;
 
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  position: relative;
   margin-top: 15px;
+  margin-right: 15px;
 
-  /* background-color: #fff; */
-}
-
-.write-img-warp {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: 60px;
+  background-color: #fff;
+  overflow: auto;
   -ms-overflow-style: none;
 }
-.write-img-warp::-webkit-scrollbar {
+.write-img::-webkit-scrollbar {
   display: none;
 }
-
 .write-img-inner {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
-  justify-content: center;
-  margin-top: 10px;
-}
+  align-items: center;
 
+  padding-top: 15px;
+}
 .write-img-contain {
+  position: relative;
   width: 160px;
   height: 120px;
   background: #9da2b9;
-  position: relative;
 
-  object-fit: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.img-upload {
-  width: 70%;
-  height: 40px;
-  border: solid 1px #512772;
-  border-radius: 50px;
-  /* font-size: 14px;
-  font-weight: 700;
-  color: #512772; */
-
-  text-align: center;
-  position: absolute;
-  bottom: 10px;
-  z-index: 100001;
-}
-.img-upload:hover {
-  background-color: #512772;
-  color: #f6f7f9;
-  cursor: pointer;
-}
-.img-upload-button {
-  display: none;
-}
-
-.img-contain-wrap {
-  position: relative;
-  /* display: flex; */
-}
-
-.img-delete {
+.xi-close {
   position: absolute;
   top: 5px;
   right: 5px;
 
-  color: #fff;
-  z-index: 100001;
-  cursor: pointer;
+  color: #d8dae3;
 }
 
 .xi-file-image {
@@ -212,6 +158,20 @@
   color: #d8dae3b3;
 }
 
+.img-upload {
+  position: absolute;
+  bottom: -50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100001;
+
+  width: 40px;
+  height: 40px;
+  background: #4f546e;
+  border-radius: 50px;
+}
 .write-img-contain-button:hover {
   background: #512772;
 }
@@ -222,42 +182,27 @@
 
 .chat-wrap {
   width: 100%;
+  height: fit-content;
   border-left: solid 1px #dddfe1;
+}
+.chat-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .chat-header {
   font-size: 20px;
   font-weight: 700;
   margin-top: 25px;
-  margin-left: 10px;
-  white-space: nowrap;
+  margin-left: 25px;
 }
-
-.chat-main {
-  margin-top: 10px;
-  width: 100%;
-  height: 85%;
-  overflow: scroll;
-  /* background: rebeccapurple; */
-
-  overflow-x: hidden;
-}
-
-.chat-main::-webkit-scrollbar {
-  display: none;
-}
-
-.chat-inner {
-  margin: 20px;
-  margin: 0 20px;
-  margin-bottom: 40px;
-}
-
 .chat-comment {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 20px;
-  white-space: pre-wrap;
+  justify-content: space-between;
+  height: 780px;
+  padding: 10px 0;
 
   font-size: 14px;
 }
@@ -265,71 +210,47 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 320px;
+  /* width: 320px; */
+  height: 40px;
+
   padding: 10px 15px;
-  margin: 0 auto;
-  margin-top: 10px;
+  /* margin: 0 auto; */
+  /* margin-top: 10px; */
 
   background: #fff;
   border-radius: 10px 10px 10px 0;
   border: solid 1px #512772;
 }
-
-.chat-comment-inner:hover .comment-icon {
-  display: block;
+.chat-comment-inner:hover {
+  .xi-minus-circle-o {
+    display: block;
+  }
 }
-.comment-input {
-  width: 320px;
-  border-width: 0;
-  outline: none;
 
-  display: flex;
-  height: 45px;
-  background: #d8dae3;
-  outline: solid 1px #512772;
-  border-radius: 5px;
-  padding: 10px;
-
-  position: absolute;
-  bottom: 0;
-}
 .chat-user-text {
   display: flex;
   justify-content: flex-start;
-  flex-grow: 1;
-  gap: 10px;
-  margin-right: 5px;
+  gap: 30px;
 }
 .chat-user {
   font-weight: 500;
-  white-space: nowrap;
 }
-.user-comment {
-  white-space: pre-wrap;
-  word-wrap: break-word; /* 긴 단어가 요소 너비를 초과할 때 줄바꿈을 허용 */
+.xi-minus-circle-o {
+  color: #512772;
+  display: none;
 }
-
-.comment-icon {
-  font-size: 16px;
-  cursor: pointer;
-  flex-shrink: 0; /* 아이콘이 공간을 차지하지 않도록 함 */
-}
-
 .chat-comment-write {
   display: flex;
-  /* justify-content: space-between; */
-  width: 100%;
+  justify-content: space-between;
+  width: 320px;
   height: 45px;
   background: #d8dae3;
   outline: solid 1px #512772;
   border-radius: 5px;
   padding: 10px;
-
-  position: absolute;
-  bottom: 0;
 }
 .chat-comment-input {
-  width: 100%;
+  width: 280px;
   background: #d8dae3;
   border-width: 0;
   outline: 0;
@@ -337,10 +258,6 @@
   overflow: hidden;
 
   font-size: 14px;
-}
-.chat-comment-input::placeholder {
-  font-size: 14px;
-  font-weight: 500;
 }
 
 .xi-location-arrow {

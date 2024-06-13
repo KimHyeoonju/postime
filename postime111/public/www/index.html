@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+    />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <!-- nav 담당자 :  -->
+    <link rel="stylesheet" href="./css/nav.css" />
+    <!-- header 담당자 : 박성호 -->
+    <link rel="stylesheet" href="./css/header.css" />
+    <title>POSTIME</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <!-- menu 담당자 : 김현주 -->
+      <nav>
+        <div class="menu">
+          <!-- nav.js 들어오는 곳 -->
+          <div class="div-menu-header">
+            <h1 class="menu-header">
+              <a href="index.html">
+                <div class="postime-logo"></div>
+                <span class="blind">POSTIME</span>
+              </a>
+            </h1>
+          </div>
+
+          <div class="move-writepage-btn-area-wrap">
+            <div class="move-writepage-btn-area">
+              <span class="move-writepage">
+                <button type="button" class="move-writepage-btn">
+                  <!-- <div class="writepage-btn-icon"></div> -->
+                  <span class="ns-font-bold-17" onclick="todolistMenuBtnClick()"
+                    >일정 등록</span
+                  >
+                </button>
+              </span>
+            </div>
+          </div>
+
+          <div class="nav-all-calender-wrap">
+            <div class="nav-all-calender">
+              <!-- 리액트에서 수정 -->
+              <div>
+                <i class="xi-home-o icon-30"></i>
+              </div>
+              <span class="ns-font-bold-17 all-calender-icon">전체 일정</span>
+            </div>
+          </div>
+
+          <div class="nav-content">
+            <div class="nav-wrap">
+              <div class="nav-inner">
+                <div class="div-calender div-mycalender-title">
+                  <h1 class="mycalender-title">
+                    <div
+                      class="mycalender-btn"
+                      onclick="calenderListBtnClick()"
+                    >
+                      <!-- 추후 여닫는 아이콘 추가 -->
+                    </div>
+                    <span class="ns-font-bold-17">내 캘린더</span>
+                  </h1>
+                </div>
+                <div class="div-calender div-mycalender-list">
+                  <div class="div-calender mycalender-list mycalender">
+                    <!-- <div class="calender-color"> -->
+                    <input type="checkbox" class="calender-color" />
+                    <!-- </div> -->
+                    <div class="calender-name">내 캘린더</div>
+                  </div>
+                  <div class="div-calender mycalender-list a-team-calender">
+                    <!-- <div class="calender-color"></div> -->
+                    <input type="checkbox" class="calender-color" />
+                    <div class="calender-name">A팀 캘린더</div>
+                  </div>
+                  <div class="div-calender mycalender-list b-team-calender">
+                    <!-- <div class="calender-color"></div> -->
+                    <input type="checkbox" class="calender-color" />
+                    <div class="calender-name">B팀 캘린더</div>
+                  </div>
+                </div>
+              </div>
+              <!-- 리액트에서 수정 -->
+              <!-- <i class="xi-home-o icon-35">전체 일정</i> -->
+            </div>
+          </div>
+
+          <div class="nav-content">
+            <div class="nav-wrap">
+              <div class="nav-inner nav-menu-gap">
+                <div class="div-calender div-mycalender-title">
+                  <div class="mycalender-title">
+                    <div class="nav-icon-style nav-complete-icon">
+                      <!-- 추후 아이콘 추가 -->
+                    </div>
+                    <span class="ns-font-17">완료</span>
+                  </div>
+                </div>
+                <div class="div-calender div-mycalender-title">
+                  <div class="mycalender-title">
+                    <div class="nav-icon-style nav-delete-icon">
+                      <!-- 추후 아이콘 추가 -->
+                    </div>
+                    <span class="ns-font-17">휴지통</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-content">
+            <div class="nav-wrap">
+              <div class="nav-inner nav-menu-gap">
+                <div class="div-calender div-mycalender-title">
+                  <div class="mycalender-title">
+                    <div class="nav-icon-style nav-alarm-icon">
+                      <!-- 추후 아이콘 추가 -->
+                    </div>
+                    <span class="ns-font-17">알림</span>
+                  </div>
+                </div>
+                <div class="div-calender div-mycalender-title">
+                  <div class="mycalender-title">
+                    <div class="nav-icon-style nav-support-icon">
+                      <!-- 추후 아이콘 추가 -->
+                    </div>
+                    <span class="ns-font-17">고객지원</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <main>
+        <div>
+          <header>
+            <!-- header 담당자 : 박성호 -->
+          </header>
+        </div>
+        <div>
+          <section>
+            <!-- main-calender 담당자 : 김현주 -->
+            <!-- <div class="main-calender">캘린더</div> -->
+            <div class="text"></div>
+          </section>
+          <section>
+            <!-- todo-list 담당자 : 김현주 -->
+            <!-- 애니메이션은 React 에서 추가 예정 -->
+            <div class="todo-list-menu-wrap todolistOff"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
+
+<!-- todolist 담당자 : 김현주 -->
+<link rel="stylesheet" href="./css/todolist.css" />
+<!-- menu 담당자 : 김현주 -->
+<!-- <script src="./js/nav.js"></script> -->
+<!-- todolistMenuBtnClick 담당자 : 김현주 -->
+<script src="./js/calenderListBtnClick.js"></script>
+<!-- header 담당자 : 박성호 -->
+<script src="./js/header.js"></script>
+<script src="./js/headersearch.js"></script>
+<!-- todolist 담당자 : 김현주 -->
+
+<script src="./js/todolist.js"></script>
+<!-- todolistMenuBtnClick 담당자 : 김현주 -->
+<script src="./js/todolistMenuBtnClick.js"></script>

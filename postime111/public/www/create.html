@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css"
+    />
+    <!-- nav 담당자 : 김현주 -->
+    <link rel="stylesheet" href="./css/nav.css" />
+    <!-- header 담당자 : 박성호 -->
+    <link rel="stylesheet" href="./css/header.css" />
+    <!-- main write 담당자 : 김수민 -->
+    <link rel="stylesheet" href="./css/write.css" />
+
+    <title>POSTIME</title>
+  </head>
+  <body>
+    <div class="wrap">
+      <nav>
+        <!-- menu 담당자 : 김현주 -->
+        <div class="menu"></div>
+      </nav>
+      <main>
+        <div>
+          <header>
+            <!-- header 담당자 : 박성호 -->
+            <div class="header"></div>
+          </header>
+        </div>
+        <div>
+          <section>
+            <!-- main write create 담당자 : 김수민 -->
+            <div class="write-wrap">
+              <!-- 메인 좌측 -->
+              <div class="write-inner">
+                <!-- 글쓰기 상단 제목부 -->
+                <div class="write-header">
+                  <div class="write-button">
+                    <button class="write-button-primary">
+                      <span>수정</span>
+                    </button>
+                    <button class="write-button-primary">
+                      <span>삭제</span>
+                    </button>
+                  </div>
+                  <div class="write-header-text">
+                    <div class="write-header-title">
+                      <textarea
+                        id="write-header-title"
+                        type="text"
+                        placeholder="제목 없음"
+                        maxlength="25"
+                      ></textarea>
+                      <span><i class="xi-bookmark"></i> 내 캘린더</span>
+                    </div>
+                    <div class="write-header-dec">
+                      <span
+                        ><i class="xi-calendar"></i> 2024.06.03 -
+                        2024.06.07</span
+                      >
+                      <span><i class="xi-tag"></i> #태그</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- 글쓰기 본문 -->
+                <div class="write-main">
+                  <div class="write-main-text">
+                    <textarea
+                      type="text"
+                      placeholder="내용을 입력하세요."
+                    ></textarea>
+                  </div>
+                  <!-- 이미지 업로드 부분 -->
+                  <div class="write-img">
+                    <div class="write-img-inner">
+                      <div class="img-upload">
+                        <input
+                          type="file"
+                          class="img-upload-button"
+                          accept="image/*"
+                          required
+                          multiple
+                          style="display: none"
+                        />
+                        <i class="xi-plus"></i>
+                      </div>
+                      <div class="write-img-contain" id="write-img-show">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                      <div class="write-img-contain">
+                        <i class="xi-close"></i>
+                        <i class="xi-file-image xi-2x"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 메인 우측 댓글 -->
+              <div class="chat-wrap">
+                <div class="chat-inner">
+                  <div class="chat-header">
+                    <h2>댓글</h2>
+                  </div>
+                  <div class="chat-comment">
+                    <div class="chat-comment-inner">
+                      <div class="chat-user-text">
+                        <div class="chat-user">수민</div>
+                        <div class="user-comment">부탁드립니다.</div>
+                      </div>
+                      <i class="xi-minus-circle-o xi-2x"></i>
+                    </div>
+                    <div class="chat-comment-write">
+                      <input
+                        type="text"
+                        placeholder="댓글을 작성하세요."
+                        class="chat-comment-input"
+                      />
+                      <i class="xi-location-arrow xi-2x"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <!-- <section> -->
+          <!-- todo-list 담당자 : 김현주 -->
+          <!-- <div class="todo-list-menu-wrap"></div> -->
+          <!-- </section> -->
+        </div>
+      </main>
+      <!-- aside 태그 삭제 -->
+    </div>
+  </body>
+</html>
+
+<!-- header 담당자 : 박성호 -->
+<script src="./js/header.js"></script>
+<!-- menu 담당자 : 김현주 -->
+<script src="./js/menu.js"></script>
+<!-- main write 담당자 : 김수민 -->
+<script src="./js/write.js"></script>
