@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/user/LoginPage";
 import SearchIdPage from "./pages/user/SearchIdPage";
 import SearchPwPage from "./pages/user/SearchPwPage";
+import UserNewPwPage from "./pages/user/UserNewPwPage";
 import SignUpPage from "./pages/user/SignUpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
@@ -37,16 +38,21 @@ function App() {
   //   }),
   // );
   useEffect(() => {
-    const userInfoFromStorage = JSON.parse(sessionStorage.getItem("userInfo"));
+    const userInfoFromStorage = sessionStorage.getItem("userId");
     if (userInfoFromStorage) {
-      setUserInfo(userInfoFromStorage);
+      setUserInfo({
+        userId: userInfoFromStorage.userId,
+        userEmail: userInfoFromStorage.userEmail,
+        userName: userInfoFromStorage.userName,
+      });
       setIsLogin(true); // 로그인 상태 설정
     }
   }, []);
+
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index userInfo={userInfo} />
+        <Index isLogin={isLogin} userInfo={userInfo} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>
@@ -58,6 +64,7 @@ function App() {
           />
           <Route path="/searchid" element={<SearchIdPage />} />
           <Route path="/searchpw" element={<SearchPwPage />} />
+          <Route path="/usernewpw" element={<UserNewPwPage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>

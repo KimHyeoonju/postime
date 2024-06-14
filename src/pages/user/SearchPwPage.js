@@ -10,11 +10,13 @@ const SearchPwPage = () => {
   const [userId, setUserId] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [sendChecked, setSendChecked] = useState(false);
+  const [code, setCode] = useState("");
   // 모달 추가
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalTitle, setUserModalTitle] = useState("");
   const [userModalMessage, setUserModalMessage] = useState("");
   const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
+  const [servCode, setServCode] = useState("");
   // 코드 발송 버튼
   const sendCode = async event => {
     event.preventDefault();
@@ -31,12 +33,14 @@ const SearchPwPage = () => {
       setUserModalOpen(true);
       return;
     }
-    setUserModalMessage(result.resultData);
+    setUserModalTitle("코드 발송 완료");
+    setUserModalMessage("작성된 이메일로 발송된 코드를 입력해 주세요.");
     setUserModalOnConfirm(() => () => {
       setUserModalOpen(false);
-      navigate("/");
     });
     setUserModalOpen(true);
+    setSendChecked(true);
+    setServCode(result.resultData.code);
   };
 
   const searchPw = async event => {
@@ -66,14 +70,25 @@ const SearchPwPage = () => {
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
+    console.log("입력 코드" + code);
+    console.log("받은 코드" + servCode);
+    if (servCode === code) {
+      navigate("/usernewpw");
+    } else {
+      setUserModalOpen(true);
+      setUserModalTitle("경고");
+      setUserModalMessage("코드가 틀렸습니다.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+    }
   };
-
   const getUser = async ({ id, email }) => {
     try {
       const response = await axios.get("/api/user/resetpwd", {
         params: { id, email },
       });
+
       console.log(response.data);
+
       return response.data;
     } catch (error) {
       console.log(error);
@@ -133,6 +148,8 @@ const SearchPwPage = () => {
           <input
             type="text"
             className="code"
+            value={code}
+            onChange={event => setCode(event.target.value)}
             placeholder="이메일로 전송받은 코드 8자리 입력"
           />
         </div>
@@ -146,7 +163,7 @@ const SearchPwPage = () => {
         title={userModalTitle}
         message={userModalMessage}
         onConfirm={userModalOnConfirm}
-        buttonComment={"로그인"}
+        buttonComment={"확인"}
       />
     </div>
   );
