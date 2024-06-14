@@ -10,11 +10,10 @@ import Index from "./pages/Index";
 sessionStorage.setItem("isDeleteCheckModal", false);
 
 function App() {
-  // 원래는 getItem
-  // const userName = sessionStorage.setItem("userId", "test1234");
-  //const userId = sessionStorage.setItem("userCode", 8);
-  // const setIsLogin = sessionStorage.setItem("setIsLogin", true);
-  // const userEmail = sessionStorage.setItem("userEmail", "userId");
+  // 원래는 getItem()
+  // sessionStorage.setItem("userCode", 8);
+  // sessionStorage.setItem("setIsLogin", true);
+  // sessionStorage.setItem("userEmail", "userId");
 
   // const signUserId = sessionStorage.getItem("userId, userEmail, userName");
   const userId = sessionStorage.getItem("userId");
@@ -29,6 +28,7 @@ function App() {
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
   // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
   const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
     console.log("나의 정보: ", userInfo);

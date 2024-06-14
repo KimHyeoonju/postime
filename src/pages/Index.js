@@ -71,7 +71,7 @@ const Index = ({ signUserId, setIsLogin, userInfo }) => {
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
   useEffect(() => {
-    // console.log("nowCalendarId : ", nowCalendarId);
+    console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
 
   // 검색어 관련
