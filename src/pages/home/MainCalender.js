@@ -11,7 +11,6 @@ const CalenderStyle = styled.div`
   position: relative;
   width: 100%;
   height: calc(100vh - 80px);
-  /* padding: 10px 20px 0px 20px; */
 
   .App {
     position: absolute;
@@ -21,22 +20,15 @@ const CalenderStyle = styled.div`
   }
 
   /* 캘린더의 헤더 영역 */
-  // toolbar container
-  // headerToolbar
   .fc .fc-toolbar.fc-header-toolbar {
     margin: 0;
     padding: 0 40px;
-    /* background-color: #356eff; */
     height: 12%;
-    /* font-family: "Noto Sans KR"; */
     font-weight: bold;
     color: ${colorSystem.g900};
-    /* font-size: 20px; */
-    /* line-height: 100%; */
   }
 
-  /* 캘린더의 헤더 영역 */
-  // toolbar 버튼(수정)
+  /* 캘린더의 헤더 영역 : toolbar 버튼  */
   .fc .fc-button-primary {
     background-color: ${colorSystem.g500};
     border: none;
@@ -114,34 +106,34 @@ const CalenderStyle = styled.div`
   }
 `;
 
-const MainCalender = ({ nowCalendarId }) => {
-  // console.log("카렌더: ", nowCalendarId);
-  const userId = sessionStorage.getItem("userCode");
-  const userName = sessionStorage.getItem("userName");
+const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
+  /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
+  const array = [];
+  /** const userId = sessionStorage.getItem("userCode"); */
+  /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
+  const userId = 8;
 
-  // 캘린더 목록 리스트
+  /** 캘린더 목록 리스트 (axios로 get한 값) */
   const [calenderArr, setCalenderArr] = useState([]);
-  // 캘린더 목록 체크 리스트
+  /** 캘린더 목록 리스트 (FullCalendar에 출력할 값) */
   const [calenderClickArr, setCalenderClickArr] = useState([]);
-  // console.log(userId);
+  /** 캘린더 리스트의 캘린더의 활성화/비활성화 여부 체크 */
+  const [activeCalendars, setActiveCalendars] = useState([]);
 
-  // 일 빼기
-  // 일자의 날짜 출력 포맷 변경하기
+  /** 일 빼기 : 일자의 날짜 출력 포맷 변경하기 */
   const dayCellContent = dateInfo => {
     return {
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
 
-  // 캘린더에 보여줄 일정들을 get
+  /** 캘린더에 보여줄 일정들을 axios로 get */
   const getCalender = async userId => {
     try {
       const resepons = await axios.get(
         `/api/board/mini?signed_user_id=${userId}`,
       );
       const status = resepons.status.toString().charAt(0);
-      console.log("테스트1", resepons);
-
       if (status === "2") {
         return resepons.data;
       } else {
@@ -153,51 +145,83 @@ const MainCalender = ({ nowCalendarId }) => {
     }
   };
 
+  // 메뉴에서 캘린더 체크 선택할 때마다 동작
+  // FullCalendar에 출력될 배열을 필터링을 하는 함수 실행
   useEffect(() => {
-    // 필터링을 하는 함수를 실행시킨다.
-    console.log("========== 칼렌더 랜더링 하자: ", nowCalendarId);
+    // 체크 박스가 해제 되었을 때 실행
     remove({
       filterCalendarId: nowCalendarId,
-      calenderClickArr: calenderClickArr,
+      calenderArr: calenderClickArr,
     });
+
+    // 현재 선택한 캘린더의 체크박스가 변경될 때마다 재실행
   }, [nowCalendarId]);
 
+  /** 캘린더에 보여줄 값과 캘린더 리스트 get 하기 위한 함수 */
   const calenderDayPrint = async () => {
     const result = await getCalender(userId);
     setCalenderArr(result.resultData);
     setCalenderClickArr(result.resultData);
   };
 
-  const remove = ({ filterCalendarId, calenderClickArr }) => {
-    // console.log("id", filterCalendarId);
-    console.log("calenderClickArr", calenderClickArr);
-    const newName = calenderClickArr.filter(
+  /** 메뉴에서 체크 박스 해제시 실행 되는 함수.
+   * 체크 해제된 캘린더Id의 일정들을 FullCalendar 출력에서 제외 */
+  const remove = ({ filterCalendarId, calenderArr }) => {
+    const newName = calenderArr.filter(
       item => item.calendarId !== filterCalendarId,
     );
     setCalenderClickArr(newName);
-    console.log("newName  ", newName);
   };
 
   useEffect(() => {
+    // activeCalendars가 변경될 때마다 캘린더를 필터링하고 업데이트
+    const filteredCalendars = calenderArr.filter(item =>
+      activeCalendars.includes(item.calendarId),
+    );
+    setCalenderClickArr(filteredCalendars);
+  }, [activeCalendars, calenderArr]);
+
+  // 확인
+  // 다시 배열에 값 추가?
+  useEffect(() => {
+    // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
+    const filteredCalendars = calenderArr.filter(item =>
+      checkedCalendars.includes(item.calendarId),
+    );
+    setCalenderClickArr(filteredCalendars);
+  }, [checkedCalendars, calenderArr]);
+
+  /** 체크박스 클릭 핸들러 */
+  const handleCheckboxClick = calendarId => {
+    // 활성화된 캘린더인지 확인
+    const isActive = activeCalendars.includes(calendarId);
+
+    // 현재 체크박스의 상태에 따라 activeCalendars 업데이트
+    if (isActive) {
+      setActiveCalendars(prev => prev.filter(id => id !== calendarId));
+    } else {
+      setActiveCalendars(prev => [...prev, calendarId]);
+    }
+  };
+
+  // 처음 화면이 렌더링 되었을 때 캘린더에 보여줄 값과 캘린더 리스트 get
+  useEffect(() => {
     calenderDayPrint();
-
-    // deleteTodoList();
-    // calenderDayPrintaaa();
-    // setCalenderClickArr(calenderArr);
-    // console.log("체크 리스트", calenderClickArr);
-
     return () => {};
   }, []);
 
+  // 수정 예정
+  /** 캘린더의 일정 클릭시 이벤트 */
   const handleEventClick = clickInfo => {
     console.log(clickInfo);
-
     const event = clickInfo.event;
     const mouseX = clickInfo.jsEvent.clientX;
     const mouseY = clickInfo.jsEvent.clientY - 90;
     this.setState({ selectedEvent: event, mouseX, mouseY });
   };
 
+  // 수정 예정
+  /** 캘린더의 일정 클릭시 이벤트 */
   const insertModalOpen = clickInfo => {
     // alert(clickInfo);
     console.log(clickInfo);
@@ -205,57 +229,16 @@ const MainCalender = ({ nowCalendarId }) => {
     console.log(clickInfo.event._instance.range.start);
   };
 
-  const array = [];
-  // const [isCalender, setIsCalender] = useState("");
 
-  // useEffect(() => {
-  //   // 필터링을 하는 함수를 실행시킨다.
-  //   // console.log("==========", nowCalendarId);
-  //   // remove({
-  //   //   filterCalendarId: nowCalendarId,
-  //   //   calenderClickArr: calenderClickArr,
-  //   // });
-  //   calenderClickArr.map((item, index) =>
-  //     array.push({
-  //       title: item.title,
-  //       start: item.start,
-  //       end: item.end,
-  //       backgroundColor: item.backgroundColor,
-  //     }),
-  //   );
-  // }, [calenderClickArr]);
-
-  // const dayPrint = () => {
-  // calenderClickArr.map((item, index) =>
-  //   array.push({
-  //     title: item.title,
-  //     start: item.start,
-  //     end: item.end,
-  //     backgroundColor: item.backgroundColor,
-  //   }),
-  // );
-  // };
-
-  // const [isCheckEvent, setIsCheckEvent] = useState(false);
-  // const calenderCheckEvent = async calendarId => {
-  // 클릭한 캘린더 아이디 세션에 저장
-  // console.log(calendarId);
-  // sessionStorage.setItem("calendarId", calendarId);
-  // const calendarCode = sessionStorage.getItem("calendarId");
-  // console.log("세션 값 확인 : ", calendarCode);
-
-  // setCalendarCheckedList([...calendarCheckedList, { calendarId }]);
-  // remove({ calendarId });
-  // };
-
-  // const [calenderListArr, setCalenderListArr] = useState([]);
-  // const remove = ({ calendarId }) => {
-  // const newName = calenderListArr.filter(
-  // item => item.calendarId !== calendarId,
-  // );
-  // setCalendarCheckedList(newName);
-  // console.log("뭐지?", newName);
-  // };
+  /** 이벤트 배열 생성 */
+  calenderClickArr.map((item, index) =>
+    array.push({
+      title: item.title,
+      start: item.start,
+      end: item.end,
+      backgroundColor: item.backgroundColor,
+    }),
+  );
 
   return (
     <CalenderStyle>
@@ -264,7 +247,6 @@ const MainCalender = ({ nowCalendarId }) => {
           defaultView="dayGridMonth"
           plugins={[dayGridPlugin, interactionPlugin]}
           headerToolbar={{
-            // start: "prev,title,title,next",
             start: "prev,title,next",
             center: "",
             end: "today",
@@ -274,10 +256,6 @@ const MainCalender = ({ nowCalendarId }) => {
           //   year: "numeric",
           //   month: "numeric",
           //   end: "today",
-          // }}
-          // titleFormat={{
-          //   year: "numeric",
-          //   month: "numeric",
           // }}
           locale={"kr"}
           height={"91.4vh"}
@@ -290,75 +268,37 @@ const MainCalender = ({ nowCalendarId }) => {
           //
           fixedWeekCount={false}
           droppable={true}
-          // events={[calenderArr()]}
-          // eventTextColor="black" // 이벤트 글자 색
           eventborderColor="none" // 이벤트 글자 색
           dayMaxEvents={true}
           aspectRatio={1.35}
-          // events={
-          //   [
-          // { title: calenderArr[0].title, date: calenderArr[0].createdAt },
-          // {
-          //   title: calenderArr[1].title,
-          //   date: "2024-06-17",
-          //   textColor: "#000000",
-          // },
-          // {
-          //   title: calenderArr[2].title,
-          //   start: "2024-06-17",
-          //   end: "2024-06-17",
-          //   textColor: "#000000",
-          // },
-          // { title: "event 1", date: "2024-06-01" },
-          // { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
-          // {
-          //   title: "event 3",
-          //   start: "2024-06-02",
-          //   end: "2024-06-05",
-          //   // date: "2024-06-02",
-          //   backgroundColor: "red",
-          //   borderColor: "red",
-          //   textColor: "#000000",
-          // },
-          // {
-          //   title: "event 4",
-          //   start: "2024-06-10",
-          //   end: "2024-06-18",
-          //   // date: "2024-06-02",
-          //   backgroundColor: "#ABD5BD",
-          //   borderColor: "#ABD5BD",
-          //   textColor: "#000000",
-          // },
-          //   ]
-          // }
-
-          events={array}
-          // events={[
-          //   { title: "event 1", date: "2024-06-01" },
-          //   { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
-          //   {
-          //     title: "event 3",
-          //     start: "2024-06-02",
-          //     end: "2024-06-05",
-          //     // date: "2024-06-02",
-          //     backgroundColor: "red",
-          //     borderColor: "red",
-          //     textColor: "#000000",
-          //   },
-          //   {
-          //     title: "event 4",
-          //     start: "2024-06-10",
-          //     end: "2024-06-18",
-          //     // date: "2024-06-02",
-          //     backgroundColor: "#ABD5BD",
-          //     borderColor: "#ABD5BD",
-          //     textColor: "#000000",
-          //   },
-          // ]}
+          // events={array}
+          // 아래는 서버가 죽었을 때 이용할 코드
+          events={[
+            { title: "event 1", date: "2024-06-01" },
+            { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
+            {
+              title: "event 3",
+              start: "2024-06-02",
+              end: "2024-06-05",
+              // date: "2024-06-02",
+              backgroundColor: "red",
+              borderColor: "red",
+              textColor: "#000000",
+            },
+            {
+              title: "event 4",
+              start: "2024-06-10",
+              end: "2024-06-18",
+              // date: "2024-06-02",
+              backgroundColor: "#ABD5BD",
+              borderColor: "#ABD5BD",
+              textColor: "#000000",
+            },
+          ]}
           eventColor={"#F2921D"}
           // droppable={true}
-          editable={true}
           // dateClick={handleEventClick}
+          editable={true}
           eventClick={insertModalOpen}
         />
       </div>
