@@ -16,7 +16,7 @@ const SearchPwPage = () => {
   const [userModalMessage, setUserModalMessage] = useState("");
   const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
   // 코드 발송 버튼
-  const sendCode = async () => {
+  const sendCode = async event => {
     event.preventDefault();
     const requestData = {
       id: userId,

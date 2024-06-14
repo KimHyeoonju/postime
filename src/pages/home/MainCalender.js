@@ -208,22 +208,22 @@ const MainCalender = ({ nowCalendarId }) => {
   const array = [];
   // const [isCalender, setIsCalender] = useState("");
 
-  useEffect(() => {
-    // 필터링을 하는 함수를 실행시킨다.
-    // console.log("==========", nowCalendarId);
-    // remove({
-    //   filterCalendarId: nowCalendarId,
-    //   calenderClickArr: calenderClickArr,
-    // });
-    calenderClickArr.map((item, index) =>
-      array.push({
-        title: item.title,
-        start: item.start,
-        end: item.end,
-        backgroundColor: item.backgroundColor,
-      }),
-    );
-  }, [calenderClickArr]);
+  // useEffect(() => {
+  //   // 필터링을 하는 함수를 실행시킨다.
+  //   // console.log("==========", nowCalendarId);
+  //   // remove({
+  //   //   filterCalendarId: nowCalendarId,
+  //   //   calenderClickArr: calenderClickArr,
+  //   // });
+  //   calenderClickArr.map((item, index) =>
+  //     array.push({
+  //       title: item.title,
+  //       start: item.start,
+  //       end: item.end,
+  //       backgroundColor: item.backgroundColor,
+  //     }),
+  //   );
+  // }, [calenderClickArr]);
 
   // const dayPrint = () => {
   // calenderClickArr.map((item, index) =>
