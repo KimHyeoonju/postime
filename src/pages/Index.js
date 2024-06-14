@@ -64,8 +64,10 @@ const WriteRoutes = () => {
   );
 };
 
+
 const Index = ({ signUserId, setIsLogin, userInfo }) => {
   console.log(userInfo);
+
   // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
