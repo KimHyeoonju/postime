@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import "../../css/userinfo.css";
 import axios from "axios";
-import UserModal from "../../components/UserModal";
+import UserModal from "../../components/modal/UserModal";
 import { useNavigate } from "react-router-dom";
 
-const UserPwPage = () => {
+// 로그인 안 된 상태
+// 로그인 페이지 -> 비밀번호 찾기 페이지 -> (코드 입력 후) 비밀번호 재설정 페이지입니다
+const UserNewPwPage = () => {
   const [userPass, setUserPass] = useState("");
   const [userNewPass, setUserNewPass] = useState("");
   const [userNewPass2, setUserNewPass2] = useState("");
@@ -50,7 +52,7 @@ const UserPwPage = () => {
     chkPW();
   }, [userNewPass, userNewPass2]);
 
-  // 변경한 비밀번호와 비밀번호 확인이 일치하는지
+  // 새 비밀번호와 비밀번호 확인이 일치하는지
   useEffect(() => {
     if (userNewPass === userNewPass2) {
       setPasswordMatchError(true);
@@ -67,16 +69,6 @@ const UserPwPage = () => {
 
     chkPW();
 
-    if (userPass === userNewPass) {
-      setUserModalOpen(true);
-      setUserModalTitle("경고");
-      setUserModalMessage(
-        "현재 비밀번호와 새 비밀번호가 같습니다. 다른 비밀번호를 입력해 주세요.",
-      );
-      setUserModalOnConfirm(() => () => setUserModalOpen(false));
-      return;
-    }
-
     if (!passwordCheck) {
       setUserModalOpen(true);
       setUserModalTitle("경고");
@@ -91,30 +83,23 @@ const UserPwPage = () => {
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
-    alert("비밀번호 변경이 완료되었습니다.");
-    navigate("/");
+
+    // 모달이 안 뜸. navigate를 주석처리 하면 모달이 뜨는데 클릭이 안된다
+    setUserModalOpen(true);
+    setUserModalTitle("알림");
+    setUserModalMessage("비밀번호 변경이 완료되었습니다.");
+    setUserModalOnConfirm(() => {
+      setUserModalOpen(false);
+      navigate("/");
+    });
   };
 
   return (
     <div className="user-wrap">
       <div className="user-title-line">
-        <h1>비밀번호 변경</h1>
+        <h1>비밀번호 재설정</h1>
       </div>
       <div className="userpwmodify-input">
-        <div className="usermodify-input-pw">
-          <label htmlFor="pwnow">현재 비밀번호</label>
-          <div className="check-field">
-            <input
-              type="password"
-              value={userPass}
-              className="pwnow"
-              onChange={event => setUserPass(event.target.value)}
-              placeholder="현재 비밀번호 입력"
-            />
-            {/* <div className="result-icon"></div> */}
-          </div>
-        </div>
-
         <div className="usermodify-input-pwchange">
           <label htmlFor="pw">새 비밀번호</label>
           <div className="check-field">
@@ -158,7 +143,7 @@ const UserPwPage = () => {
           modifyPw(event);
         }}
       >
-        <span>수정하기</span>
+        <span>설정하기</span>
       </button>
       {/* 모달 관련 */}
       <UserModal
@@ -172,4 +157,4 @@ const UserPwPage = () => {
   );
 };
 
-export default UserPwPage;
+export default UserNewPwPage;

@@ -57,13 +57,14 @@ const CalendarModifyModalStyle = styled.div`
 
 const CalendarModifyModal = ({
   selectCalenderColor,
-  setSelectCalenderColor,
+  // setSelectCalenderColor,
   selectCalenderName,
-  setSelectCalenderName,
+  // setSelectCalenderName,
   selectCalenderId,
-  calendarModifyModalOk,
+  // calendarModifyModalOk,
   calendarModifyModalCancel,
   handleCheckboxChange,
+  setCheckCalendarColorChange,
 }) => {
   // console.log("color : ", selectCalenderColor);
   // console.log("name : ", selectCalenderName);
@@ -122,6 +123,7 @@ const CalendarModifyModal = ({
     if (res) {
       console.log("Id", selectCalenderId);
       handleCheckboxChange(selectCalenderId);
+      setCheckCalendarColorChange(selectCalenderId);
     }
   };
 

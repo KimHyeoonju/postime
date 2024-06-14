@@ -63,6 +63,7 @@ const DeleteCheckModal = ({
   deleteUeserId,
   selectCalenderId,
   showDeleteCheckModalCancel,
+  getCalenderUserList,
 }) => {
   // const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
@@ -95,8 +96,14 @@ const DeleteCheckModal = ({
 
     if (!deleteCheck) {
       // const result = deleteListUser(userId, calendarId, deleteUeserId);
-      deleteListUser({ userId, selectCalenderId, deleteUeserId });
+      const res = deleteListUser({ userId, selectCalenderId, deleteUeserId });
+
+      if (res) {
+        getCalenderUserList(selectCalenderId);
+        showDeleteCheckModalCancel();
+      }
     }
+
     showDeleteCheckModal(false);
   };
 
@@ -119,8 +126,8 @@ const DeleteCheckModal = ({
       });
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
-        console.log("유저 성공적으로 삭제");
-        return resepons.data.resultData;
+        console.log("유저 성공적으로 삭제 : ", resepons);
+        return true;
       } else {
         console.log("API 오류");
       }

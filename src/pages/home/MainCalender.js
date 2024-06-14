@@ -6,6 +6,9 @@ import { colorSystem } from "../../css/color.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import interactionPlugin from "@fullcalendar/interaction";
+import { createImmediatelyInvokedFunctionExpression } from "typescript";
+import { Navigate, useNavigate } from "react-router-dom";
+import detailPageMove from "../../apis/home/detailPageMove";
 
 const CalenderStyle = styled.div`
   position: relative;
@@ -106,7 +109,14 @@ const CalenderStyle = styled.div`
   }
 `;
 
-const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
+const MainCalender = ({
+  nowCalendarId,
+  checkedCalendars,
+  checkCalendarColorChange,
+  checkedCalendarIds,
+}) => {
+  // const navigate = useNavigate();
+
   /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
   const array = [];
   /** const userId = sessionStorage.getItem("userCode"); */
@@ -164,7 +174,7 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
   }, [nowCalendarId]);
 
   /** 캘린더에 보여줄 값과 캘린더 리스트 get 하기 위한 함수 */
-  const calenderDayPrint = async () => {
+  const firstCalenderDayPrint = async () => {
     const result = await getCalender(userId);
     setCalenderArr(result.resultData);
     setCalenderClickArr(result.resultData);
@@ -196,13 +206,14 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
 
   // 확인
   // 다시 배열에 값 추가?
-  // useEffect(() => {
-  //   // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
-  //   const filteredCalendars = calenderArr.filter(item =>
-  //     checkedCalendars.includes(item.calendarId),
-  //   );
-  //   setCalenderClickArr(filteredCalendars);
-  // }, [checkedCalendars, calenderArr]);
+  useEffect(() => {
+    // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
+    const aaa = calenderArr.filter(item =>
+      checkedCalendarIds.includes(item.calendarId),
+    );
+    setCalenderClickArr(aaa);
+    console.log("갱신확인 : ", aaa);
+  }, [checkedCalendarIds]);
 
   /** 체크박스 클릭 핸들러 */
   const handleCheckboxClick = calendarId => {
@@ -219,9 +230,12 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
 
   // 처음 화면이 렌더링 되었을 때 캘린더에 보여줄 값과 캘린더 리스트 get
   useEffect(() => {
-    calenderDayPrint();
+    firstCalenderDayPrint();
     return () => {};
   }, []);
+
+  // 갱신
+  // const calenderDayPrint = CalenderDayPrint => {};
 
   // 수정 예정
   /** 캘린더의 일정 클릭시 이벤트 */
@@ -233,26 +247,33 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
     this.setState({ selectedEvent: event, mouseX, mouseY });
   };
 
-  // 수정 예정
-  /** 캘린더의 일정 클릭시 이벤트 */
+  /** 캘린더의 일정 클릭시 상세페이지로 이동 및 boardId 전달 */
   const insertModalOpen = clickInfo => {
-    // alert(clickInfo);
+    const clickBoardId = clickInfo.event.id;
+    // detailPageMove(clickBoardId);
     console.log(clickInfo);
-    console.log(clickInfo.event._def.title);
-    console.log(clickInfo.event._instance.range.start);
+    console.log(
+      "일정 클릭 했을 때 boardId 들어오는지 체크: ",
+      clickInfo.event.id,
+    );
+    // navigate("/write/create", {
+    //   state: {
+    //     boardId: clickBoardId,
+    //   },
+    // });
   };
-
 
   /** 이벤트 배열 생성 */
   calenderClickArr.map((item, index) =>
     array.push({
+      id: item.boardId,
       title: item.title,
       start: item.start,
       end: item.end,
       backgroundColor: item.backgroundColor,
     }),
   );
-  // console.log("calenderClickArr : ", calenderClickArr);
+  console.log("boardId 들어갔는지 바로 확인 : ", array);
 
   return (
     <CalenderStyle>
