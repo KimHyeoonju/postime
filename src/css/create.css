@@ -5,20 +5,19 @@
 }
 .write-inner {
   width: 1280px;
-
-  /* height: calc(100% - 80px); */
   padding-top: 60px;
   padding-left: 55px;
   display: flex;
-  position: relative;
+  /* position: relative; */
+}
+.write-header-title {
+  width: 95%;
 }
 .write-header {
-  width: 100%;
+  position: relative;
+  width: 95%;
   height: 250px;
   border-bottom: solid 1px #dddfe1;
-
-  /* display: flex;
-  justify-content: space-between; */
 }
 
 .write-button {
@@ -48,7 +47,7 @@
   color: #9da2b9;
 }
 .write-header-text > textarea {
-  width: 1200px;
+  width: 100%;
   height: 80px;
   border-width: 0;
   outline: 0;
@@ -102,7 +101,7 @@
   justify-content: space-between;
 }
 .write-main-text {
-  width: 1000px;
+  width: 100%;
   height: 100%;
   padding-top: 18px;
   padding-left: 10px;
@@ -216,13 +215,13 @@
   background: #512772;
 }
 
-.xi-plus {
-  color: #f6f7f9;
-}
-
 .chat-wrap {
-  width: 100%;
+  width: 400px;
   border-left: solid 1px #dddfe1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
 }
 .chat-header {
   font-size: 20px;
@@ -233,7 +232,7 @@
 }
 
 .chat-main {
-  margin-top: 10px;
+  margin-top: 25px;
   width: 100%;
   height: 85%;
   overflow: scroll;
@@ -246,19 +245,12 @@
   display: none;
 }
 
-.chat-inner {
-  margin: 20px;
-  margin: 0 20px;
-  margin-bottom: 40px;
-}
-
 .chat-comment {
   display: flex;
+  gap: 15px;
   flex-direction: column;
   align-items: center;
-  margin-left: 20px;
   white-space: pre-wrap;
-
   font-size: 14px;
 }
 .chat-comment-inner {
@@ -268,7 +260,6 @@
   width: 320px;
   padding: 10px 15px;
   margin: 0 auto;
-  margin-top: 10px;
 
   background: #fff;
   border-radius: 10px 10px 10px 0;
@@ -290,8 +281,7 @@
   border-radius: 5px;
   padding: 10px;
 
-  position: absolute;
-  bottom: 0;
+  margin: 0 auto;
 }
 .chat-user-text {
   display: flex;
