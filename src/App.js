@@ -7,34 +7,27 @@ import UserNewPwPage from "./pages/user/UserNewPwPage";
 import SignUpPage from "./pages/user/SignUpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
-
-sessionStorage.setItem("isDeleteCheckModal", false);
-
 function App() {
   // 원래는 getItem()
   // sessionStorage.setItem("userCode", 8);
   // sessionStorage.setItem("setIsLogin", true);
   // sessionStorage.setItem("userEmail", "userId");
-
   // const signUserId = sessionStorage.getItem("userId, userEmail, userName");
   const userId = sessionStorage.getItem("userId");
   const userEmail = sessionStorage.getItem("userEmail");
   const userName = sessionStorage.getItem("userName");
-
   const [userInfo, setUserInfo] = useState({
     userId: userId,
     userEmail: userEmail,
     userName: userName,
   });
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
-  // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
-  const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
-
+  const [isLogin, setIsLogin] = useState(false); /// 로그인이 되어 있는 경우
+  // const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
     console.log("나의 정보: ", userInfo);
   }, [userInfo]);
-
   // 로그인 했을 때 로그인 상태 유지하기
   // sessionStorage.setItem(
   //   "userInfo",
@@ -76,7 +69,6 @@ function App() {
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       )}
-
       {/* 잘못된 경로 */}
       {/* <Routes> */}
       {/* <Route path="*" element={<NotFoundPage />} /> */}
@@ -84,5 +76,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

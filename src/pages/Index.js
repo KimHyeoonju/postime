@@ -64,8 +64,10 @@ const WriteRoutes = () => {
   );
 };
 
+
 // 회원정보 페이지 성명/이메일
 const resultData = { name: "userName", email: "userEmail" };
+
 
 const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
   console.log(userInfo);
