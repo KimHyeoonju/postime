@@ -64,9 +64,12 @@ const WriteRoutes = () => {
   );
 };
 
+// 회원정보 페이지 성명/이메일
+const resultData = { name: "userName", email: "userEmail" };
 
-const Index = ({ signUserId, setIsLogin, userInfo }) => {
+const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
   console.log(userInfo);
+  console.log("isLogin", isLogin);
 
   // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
@@ -128,15 +131,24 @@ const Index = ({ signUserId, setIsLogin, userInfo }) => {
                   />
                   <Route
                     path="/userinfo"
-                    element={<UserInfoPage signUserId={signUserId} />}
+                    element={
+                      <UserInfoPage
+                        signUserId={signUserId}
+                        userInfo={resultData}
+                      />
+                    }
                   />
                   <Route
                     path="/usermodify"
-                    element={<UserModify signUserId={signUserId} />}
+                    element={
+                      <UserModify signUserId={signUserId} userInfo={userInfo} />
+                    }
                   />
                   <Route
                     path="/userpw"
-                    element={<UserPwPage signUserId={signUserId} />}
+                    element={
+                      <UserPwPage signUserId={signUserId} userInfo={userInfo} />
+                    }
                   />
                 </Routes>
               </SectionStyle>
