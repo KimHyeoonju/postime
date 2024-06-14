@@ -10,6 +10,7 @@ import "@yaireo/tagify/dist/tagify.css";
 
 import "../../css/create.css";
 import Comment from "./Comment";
+import Mulitifile from "./Mulitifile";
 
 const Create = () => {
   const input = useRef(null);
@@ -119,7 +120,21 @@ const Create = () => {
                 </span>
                 <div className="write-header-info">
                   <div className="write-header-icon">
-                    <FaRegCalendar /> 2024.06.03 - 2024.06.07
+                    <FaRegCalendar />
+                    <label htmlFor="startday">시작일</label>
+                    <input
+                      type="date"
+                      id="startday"
+                      value={startDay}
+                      onChange={e => setStartDay(e.target.value)}
+                    />
+                    <label htmlFor="dday">종료일</label>
+                    <input
+                      type="date"
+                      id="dday"
+                      value={dDay}
+                      onChange={e => setDDay(e.target.value)}
+                    />
                   </div>
                   <input
                     name="tags"
@@ -142,49 +157,7 @@ const Create = () => {
               ></textarea>
             </div>
             {/* 이미지 업로드 부분 */}
-            <div className="write-img">
-              <div className="write-img-warp">
-                <div className="write-img-inner">
-                  <button
-                    className="img-upload"
-                    onClick={fileUpload}
-                    type="button"
-                  >
-                    <label htmlFor="input-file" onChange={handleImgUpload}>
-                      <span>이미지 업로드</span>
-                      <input
-                        type="file"
-                        className="img-upload-button"
-                        accept="image/*"
-                        required
-                        multiple
-                      />
-                    </label>
-                  </button>
-
-                  <div>
-                    {/* 저장해둔 이미지들을 순회하면서 화면에 이미지 출력 */}
-                    {imgFile.map((image, id) => (
-                      <div key={id} className="img-contain-wrap">
-                        {/* <IoMdClose
-                        onClick={() => handleDeleteImage(id)}
-                        className="img-delete"
-                      /> */}
-                        <AiFillCloseSquare
-                          className="img-delete"
-                          onClick={() => handleDeleteImage(id)}
-                        />
-                        <img
-                          src={image}
-                          alt={`${image}-${id}`}
-                          className="write-img-contain"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Mulitifile />
           </div>
         </form>
         <div className="chat-wrap">
