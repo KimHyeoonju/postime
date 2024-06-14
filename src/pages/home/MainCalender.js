@@ -129,6 +129,7 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
 
   /** 캘린더에 보여줄 일정들을 axios로 get */
   const getCalender = async userId => {
+    // console.log("유저 아이디 확인 : ", userId);
     try {
       const resepons = await axios.get(
         `/api/board/mini?signed_user_id=${userId}`,
@@ -154,6 +155,11 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
       calenderArr: calenderClickArr,
     });
 
+    // reAdd({
+    //   filterCalendarId: nowCalendarId,
+    //   calenderArr: calenderArr,
+    // });
+
     // 현재 선택한 캘린더의 체크박스가 변경될 때마다 재실행
   }, [nowCalendarId]);
 
@@ -173,23 +179,30 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
     setCalenderClickArr(newName);
   };
 
-  useEffect(() => {
-    // activeCalendars가 변경될 때마다 캘린더를 필터링하고 업데이트
-    const filteredCalendars = calenderArr.filter(item =>
-      activeCalendars.includes(item.calendarId),
-    );
-    setCalenderClickArr(filteredCalendars);
-  }, [activeCalendars, calenderArr]);
+  // const reAdd = ({ filterCalendarId, calenderArr }) => {
+  //   const newName = calenderArr.filter(item =>
+  //     activeCalendars.includes(item.calendarId),
+  //   );
+  //   setCalenderClickArr(newName);
+  // };
+
+  // useEffect(() => {
+  //   // activeCalendars가 변경될 때마다 캘린더를 필터링하고 업데이트
+  //   const filteredCalendars = calenderArr.filter(item =>
+  //     activeCalendars.includes(item.calendarId),
+  //   );
+  //   setCalenderClickArr(filteredCalendars);
+  // }, [activeCalendars, calenderArr]);
 
   // 확인
   // 다시 배열에 값 추가?
-  useEffect(() => {
-    // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
-    const filteredCalendars = calenderArr.filter(item =>
-      checkedCalendars.includes(item.calendarId),
-    );
-    setCalenderClickArr(filteredCalendars);
-  }, [checkedCalendars, calenderArr]);
+  // useEffect(() => {
+  //   // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
+  //   const filteredCalendars = calenderArr.filter(item =>
+  //     checkedCalendars.includes(item.calendarId),
+  //   );
+  //   setCalenderClickArr(filteredCalendars);
+  // }, [checkedCalendars, calenderArr]);
 
   /** 체크박스 클릭 핸들러 */
   const handleCheckboxClick = calendarId => {
@@ -239,6 +252,7 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
       backgroundColor: item.backgroundColor,
     }),
   );
+  // console.log("calenderClickArr : ", calenderClickArr);
 
   return (
     <CalenderStyle>
@@ -271,30 +285,30 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
           eventborderColor="none" // 이벤트 글자 색
           dayMaxEvents={true}
           aspectRatio={1.35}
-          // events={array}
+          events={array}
           // 아래는 서버가 죽었을 때 이용할 코드
-          events={[
-            { title: "event 1", date: "2024-06-01" },
-            { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
-            {
-              title: "event 3",
-              start: "2024-06-02",
-              end: "2024-06-05",
-              // date: "2024-06-02",
-              backgroundColor: "red",
-              borderColor: "red",
-              textColor: "#000000",
-            },
-            {
-              title: "event 4",
-              start: "2024-06-10",
-              end: "2024-06-18",
-              // date: "2024-06-02",
-              backgroundColor: "#ABD5BD",
-              borderColor: "#ABD5BD",
-              textColor: "#000000",
-            },
-          ]}
+          // events={[
+          //   { title: "event 1", date: "2024-06-01" },
+          //   { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
+          //   {
+          //     title: "event 3",
+          //     start: "2024-06-02",
+          //     end: "2024-06-05",
+          //     // date: "2024-06-02",
+          //     backgroundColor: "red",
+          //     borderColor: "red",
+          //     textColor: "#000000",
+          //   },
+          //   {
+          //     title: "event 4",
+          //     start: "2024-06-10",
+          //     end: "2024-06-18",
+          //     // date: "2024-06-02",
+          //     backgroundColor: "#ABD5BD",
+          //     borderColor: "#ABD5BD",
+          //     textColor: "#000000",
+          //   },
+          // ]}
           eventColor={"#F2921D"}
           // droppable={true}
           // dateClick={handleEventClick}
