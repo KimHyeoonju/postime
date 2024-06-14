@@ -242,6 +242,7 @@ const MainCalender = ({ nowCalendarId, checkedCalendars }) => {
     console.log(clickInfo.event._instance.range.start);
   };
 
+
   /** 이벤트 배열 생성 */
   calenderClickArr.map((item, index) =>
     array.push({

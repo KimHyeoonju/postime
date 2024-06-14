@@ -43,8 +43,16 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
     setSearchText("");
     navigate("/search");
   };
+
   const moveUserInfo = () => {
     navigate("/userinfo");
+  };
+  const handleLogout = () => {
+    // 세션 스토리지 비우기
+    sessionStorage.clear();
+    navigate("/");
+
+    window.location.reload();
   };
 
   useEffect(() => {}, []);
@@ -90,7 +98,9 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
           <div className="header-my" onClick={moveUserInfo}>
             마이페이지
           </div>
-          <div className="header-logout">로그아웃</div>
+          <div className="header-logout" onClick={handleLogout}>
+            로그아웃
+          </div>
         </div>
       </div>
     </div>

@@ -91,8 +91,13 @@ const UserPwPage = () => {
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
     }
-    alert("비밀번호 변경이 완료되었습니다.");
-    navigate("/");
+    setUserModalTitle("알림");
+    setUserModalMessage("비밀번호 변경이 완료되었습니다.");
+    setUserModalOnConfirm(() => {
+      setUserModalOpen(false);
+      navigate("/");
+    });
+    setUserModalOpen(true);
   };
 
   return (

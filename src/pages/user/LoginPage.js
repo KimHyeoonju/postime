@@ -5,7 +5,7 @@ import axios from "axios";
 import { postSignIn } from "../../apis/user/apiuser";
 import UserModal from "../../components/UserModal";
 
-const LoginPage = ({ setIsLogin }) => {
+const LoginPage = ({ setIsLogin, setUserInfo }) => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState("mybirth811");
@@ -22,33 +22,35 @@ const LoginPage = ({ setIsLogin }) => {
 
     // 로그인 API
     const result = await postSignIn({ userId, userPass });
-    // console.log(result);
+    console.log(result);
     if (result.statusCode !== 2) {
       setUserModalMessage(result.resultMsg);
       setUserModalOpen(true);
       return;
     }
+    setUserInfo(result.resultData);
+
     // 로그인 상태로 변경
     setIsLogin(true);
 
     // 로컬 스토리지에 저장
-    sessionStorage.setItem("userId", userId);
-    // const getUserId = localStorage.getItem("userId");
-
-    // var userArray = [
-    //   {
-    //     userId: userId,
-    //   },
-    // ];
-
-    // // sessionStorage에 객체 배열 저장
-    // sessionStorage.setItem("userArray", JSON.stringify(userArray));
-
-    // // sessionStorage에서 객체 배열 가져오기
-    // var storedUserArray = JSON.parse(sessionStorage.getItem("userArray"));
-
-    // // 가져온 객체 배열 사용 예시
-    // console.log(storedUserArray);
+    // sessionStorage.setItem("userId", userId);
+    // sessionStorage.setItem(
+    //   "memberInfo",
+    //   JSON.stringify({
+    //     userId: "userId",
+    //     Name: "userName",
+    //     email: "userEmail",
+    //   }),
+    // );
+    sessionStorage.setItem(
+      "memberInfo",
+      JSON.stringify({
+        userId: userId,
+        Name: result.resultData.name,
+        email: result.resultData.email,
+      }),
+    );
 
     navigate("/");
   };
