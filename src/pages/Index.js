@@ -65,17 +65,14 @@ const WriteRoutes = () => {
   );
 };
 
-
 const Index = ({ signUserId, setIsLogin }) => {
-
-    // 캘린더 아이디 관련
+  // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
   useEffect(() => {
     // console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
 
-  
   // 검색어 관련
   const [searchTextIndex, setSearchTextIndex] = useState("");
 
