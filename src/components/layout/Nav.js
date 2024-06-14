@@ -8,6 +8,7 @@ import {
   MdCheckBox,
   MdCheckBoxOutlineBlank,
   MdOutlineKeyboardArrowDown,
+  MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
 import { PiGearSixLight } from "react-icons/pi";
 import { VscBell, VscBellDot } from "react-icons/vsc";
@@ -42,8 +43,6 @@ const Nav = ({ setNowCalendarId }) => {
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
   const [userId, setUserId] = useState(8);
 
-  /** 삭제할 유저 ID */
-  const [deleteUeserId, setDeleteUeserId] = useState("");
   /** calendarId 저장 */
   const [calendarId, setCalendarId] = useState(null);
   /** 캘린더 리스트 배열 */
@@ -69,7 +68,6 @@ const Nav = ({ setNowCalendarId }) => {
   // 수정!!!!!!
   // 체크 박스 상태
   const [isCheck, setIsCheck] = useState(true);
-  const [calenderName, setcalenderName] = useState("");
 
   /** 알림 리스트 배열 */
   const [alarmListArr, setAlarmListArr] = useState([]);
@@ -111,10 +109,12 @@ const Nav = ({ setNowCalendarId }) => {
   const calenderSelectModalOk = e => {
     setIsCalenderSelectModal(!isCalenderSelectModal);
     // console.log("e");
-    // console.log("e", e.target.id);
-    // console.log("e", e.target.innerText);
-    sessionStorage.setItem("calendarId", e.target.id);
-    setcalenderName(e.target.innerText);
+    // console.log("캘린더ID : ", e.target.id);
+    // console.log("캘린더색 : ", e.target.title);
+    // console.log("캘린더명 : ", e.target.outerText);
+    setSelectCalenderId(e.target.id);
+    setSelectCalenderColor(e.target.title);
+    setSelectCalenderName(e.target.outerText);
   };
   /** 캘린더 공유, 수정 모달 닫기 함수 */
   const calendarSelectModalCancel = () => {
@@ -152,6 +152,7 @@ const Nav = ({ setNowCalendarId }) => {
   const calenderCheckEvent = async calendarId => {
     // 클릭한 캘린더ID 저장(전달)
     setCalendarId(calendarId);
+    // setNowCalendarId(calendarId);
   };
 
   /** 캘린더 수정 모달 활성화/비활성화 여부  */
@@ -164,40 +165,71 @@ const Nav = ({ setNowCalendarId }) => {
   const calendarModifyModalCancel = () => {
     setIsCalendarModifyModal(false);
   };
+  /** 캘린더 리스트에 선택한 캘린더의 캘린더ID, 캘린더컬러, 캘린더명 */
+  const [selectCalenderId, setSelectCalenderId] = useState();
+  const [selectCalenderColor, setSelectCalenderColor] = useState();
+  const [selectCalenderName, setSelectCalenderName] = useState();
 
   const [checkedCalendars, setCheckedCalendars] = useState([]);
+
+  /** 내 캘린더 목록 열지 말지 */
+  const [myCalendarListSwitch, setMyCalendarListSwitch] = useState(true);
+  /** 내 캘린더 목록 열고 닫는 로직 */
+  const myCalendarListSwitchOk = () => {
+    setMyCalendarListSwitch(!myCalendarListSwitch);
+  };
+
+  /** 캘린더 수정 완료될때마다 캘린더 리스트 갱신 */
+  useEffect(() => {
+    calenderList();
+  }, [checkedCalendars]);
+
   const [newCheckedCalendars, setNewCheckedCalendars] = useState([]);
   /** 체크된 캘린더들 */
   // 체크박스 클릭에 대한 처리 함수
   const handleCheckboxChange = calendarId => {
     // 체크된 캘린더 ID 배열 복사
     const newCheckedCalendars = [...checkedCalendars];
-    // 클릭된 캘린더 ID의 인덱스 확인
-    const index = checkedCalendars.indexOf(calendarId);
-    // 클릭된 캘린더가 이미 체크된 경우 제거, 아닌 경우 추가
-    if (index === -1) {
-      newCheckedCalendars.push(calendarId);
-    } else {
+
+    // 클릭된 캘린더 ID가 이미 체크되어 있는지 확인
+    const index = newCheckedCalendars.indexOf(calendarId);
+
+    // 클릭된 캘린더가 이미 체크되어 있는 경우, 클릭한 캘린더를 제거하여 비활성화 상태로 변경
+    if (index !== -1) {
       newCheckedCalendars.splice(index, 1);
+    } else {
+      // 클릭된 캘린더가 체크되어 있지 않은 경우, 클릭한 캘린더를 추가하여 활성화 상태로 변경
+      newCheckedCalendars.push(calendarId);
     }
+
     // 새로운 체크된 캘린더 ID 배열로 상태 업데이트
     setCheckedCalendars(newCheckedCalendars);
+
+    /** 체크박스를 클릭한 캘린더 ID 추출  */
+    setNowCalendarId(calendarId);
+
     // 이제 풀 캘린더 컴포넌트로 해당 캘린더의 ID 목록을 전달할 수 있습니다.
   };
 
-  // // 체크된 캘린더 배열(여기)
-  // const [calendarCheckedList, setCalendarCheckedList] = useState([]);
-  // // 캘린더 리스트를 가져온다.
-  // const calenderList = async () => {
-  //   const result = await getCalenderList(userId);
+  /** 캘린더 리스트를 다시 가져온다.  */
+  const calenderList = async () => {
+    const result = await getCalenderList(userId);
+    setCalenderListArr(result.resultData);
+  };
 
-  //   setCalenderListArr(result.resultData);
-  // };
+  /**최초 렌더링 : 캘린더 리스트를 가져온다. */
+  const firstCalenderList = async () => {
+    const result = await getCalenderList(userId);
+    setCalenderListArr(result.resultData);
+    // 모든 캘린더의 ID를 checkedCalendars 배열에 추가하여 모든 체크박스가 선택된 상태로 설정
+    const allCalendarIds = result.resultData.map(item => item.calendarId);
+    setCheckedCalendars(allCalendarIds);
+  };
 
   // 최초 렌더링
   useEffect(() => {
     // 캘린더 리스트 출력
-    // calenderList();
+    firstCalenderList();
     // 알림 리스트 (추후 넣는 값 수정)
     alarmList(userId);
     return () => {};
@@ -222,16 +254,24 @@ const Nav = ({ setNowCalendarId }) => {
       {isCalenderUserListModal ? (
         <CalendarModal
           calenderUserListModalOk={calenderUserListModalOk}
-          calenderId={calendarId}
-          calenderName={calenderName}
+          selectCalenderId={selectCalenderId}
+          selectCalenderName={selectCalenderName}
           modalType={modalType}
-          deleteUeserId={deleteUeserId}
+
+          // setDeleteUeserId={setDeleteUeserId}
+          // deleteUeserId={deleteUeserId}
         />
       ) : null}
       {isCalendarModifyModal ? (
         <CalendarModifyModal
+          selectCalenderColor={selectCalenderColor}
+          setSelectCalenderColor={setSelectCalenderColor}
+          selectCalenderName={selectCalenderName}
+          setSelectCalenderName={setSelectCalenderName}
+          selectCalenderId={selectCalenderId}
           calendarModifyModalOk={calendarModifyModalOk}
           calendarModifyModalCancel={calendarModifyModalCancel}
+          handleCheckboxChange={handleCheckboxChange}
         />
       ) : null}
       <div className="menu">
@@ -277,81 +317,165 @@ const Nav = ({ setNowCalendarId }) => {
         <div className="nav-content">
           <div className="nav-wrap">
             <div className="nav-inner">
-              <div className="div-calender div-mycalender-title">
+              <div
+                className="div-calender div-mycalender-title"
+                onClick={e => {
+                  myCalendarListSwitchOk();
+                }}
+              >
                 <h1 className="mycalender-title">
                   <div
                     className="mycalender-btn"
                     // onclick="calenderListBtnClick()"
                   >
+                    {myCalendarListSwitch ? (
+                      <MdOutlineKeyboardArrowDown />
+                    ) : (
+                      <MdOutlineKeyboardArrowUp />
+                    )}
                     {/* <MdOutlineKeyboardArrowUp /> */}
-                    <MdOutlineKeyboardArrowDown />
+                    {/* <MdOutlineKeyboardArrowDown /> */}
                   </div>
                   <span className="ns-font-bold-17">내 캘린더</span>
                 </h1>
               </div>
-              <div className="div-calender div-mycalender-list">
-                {calenderListArr.map((item, index) => {
-                  return (
-                    <div
-                      className="div-calender mycalender-list mycalender"
-                      key={index}
-                    >
-                      {isCheck ? (
-                        <FaSquareCheck
-                          className="calender-color"
-                          id={item.calendarId}
-                          color={item.color}
-                          onClick={() => handleCheckboxChange(item.calendarId)}
-                        />
-                      ) : (
-                        <FaSquare
-                          className="calender-color"
-                          id={item.calendarId}
-                          color={item.color}
-                          onClick={() => handleCheckboxChange(item.calendarId)}
-                        />
-                      )}
-
-                      {/* {isCheck ? (
-                        <MdCheckBox
-                          className="calender-color"
-                          id={item.calendarId}
-                          color={item.color}
-                          onClick={e => {
-                            setNowCalendarId(item.calendarId);
-                            console.log("item", item.calendarId);
-
-                            calenderCheckEvent(item.calendarId);
-                          }}
-                        />
-                      ) : (
-                        <MdCheckBoxOutlineBlank
-                          className="calender-color"
-                          id={item.calendarId}
-                          color={item.color}
-                          onClick={e => {}}
-                        />
-                      )} */}
-
+              {myCalendarListSwitch ? (
+                <div>
+                  <div className="div-calender div-mycalender-list">
+                    {calenderListArr.map((item, index) => (
                       <div
-                        className="calender-name"
-                        // style={{ backgroundColor: "#555555" }}
-                        // style={{ color: `${item.color}` }}
-
-                        id={item.calendarId}
-                        name={item.title}
-                        onClick={e => {
-                          calenderSelectModalOk(e);
-                        }}
+                        className="div-calender mycalender-list mycalender"
+                        key={index}
                       >
-                        {item.title}
+                        {checkedCalendars.includes(item.calendarId) ? (
+                          <FaSquareCheck
+                            className="calender-color"
+                            color={item.color}
+                            onClick={() =>
+                              handleCheckboxChange(item.calendarId)
+                            }
+                          />
+                        ) : (
+                          <FaSquare
+                            className="calender-color"
+                            color={item.color}
+                            onClick={() =>
+                              handleCheckboxChange(item.calendarId)
+                            }
+                          />
+                        )}
+                        <div
+                          className="calender-name"
+                          id={item.calendarId}
+                          title={item.color}
+                          onClick={e => {
+                            calenderSelectModalOk(e);
+                            // calenderSelectModalOk(item.calendarId);
+                            // console.log("Item:", item.calendarId);
+                            // console.log("e:", e);
+                          }}
+                        >
+                          {item.title}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    ))}
 
-                {/* 서버 꺼졌을 때 */}
-                <div className="div-calender mycalender-list mycalender">
+                    {/* 서버 꺼졌을 때 */}
+                    {/* <div className="div-calender mycalender-list mycalender">
+                {checkedCalendars.includes("id1") ? (
+                  <FaSquareCheck
+                    className="calender-color"
+                    color="blue"
+                    onClick={() => handleCheckboxChange("id1")}
+                  />
+                ) : (
+                  <FaSquare
+                    className="calender-color"
+                    color="red"
+                    onClick={() => handleCheckboxChange("id1")}
+                  />
+                )}
+                <div
+                  className="calender-name"
+                  id="id1"
+                  onClick={() => calenderSelectModalOk("id1")}
+                >
+                  내 캘린더
+                </div>
+              </div> */}
+
+                    {/* <FaSquare color="red" /> */}
+                    {/* <div className="div-calender mycalender-list mycalender">
+                <FaSquareCheck color="blue" />
+                <div
+                  className="calender-name"
+                  id="id1"
+                  onClick={
+                    e => {
+                      calenderSelectModalOk(e);
+                    }
+                  }
+                >
+                  내 캘린더
+                </div>
+              </div> */}
+                    {/* <div className="div-calender mycalender-list mycalender">
+                <input type="checkbox" className="calender-color" />
+                <div className="calender-name">내 캘린더</div>
+              </div>
+              <div className="div-calender mycalender-list a-team-calender">
+                <input type="checkbox" className="calender-color" />
+                <div className="calender-name">A팀 캘린더</div>
+              </div>
+              <div className="div-calender mycalender-list b-team-calender">
+                <input type="checkbox" className="calender-color" />
+                <div className="calender-name">B팀 캘린더</div>
+              </div> */}
+                  </div>
+                </div>
+              ) : (
+                <div className="div-mycalender-list-none">
+                  <div className="div-calender div-mycalender-list">
+                    {calenderListArr.map((item, index) => (
+                      <div
+                        className="div-calender mycalender-list mycalender"
+                        key={index}
+                      >
+                        {checkedCalendars.includes(item.calendarId) ? (
+                          <FaSquareCheck
+                            className="calender-color"
+                            color={item.color}
+                            onClick={() =>
+                              handleCheckboxChange(item.calendarId)
+                            }
+                          />
+                        ) : (
+                          <FaSquare
+                            className="calender-color"
+                            color={item.color}
+                            onClick={() =>
+                              handleCheckboxChange(item.calendarId)
+                            }
+                          />
+                        )}
+                        <div
+                          className="calender-name"
+                          id={item.calendarId}
+                          title={item.color}
+                          onClick={e => {
+                            calenderSelectModalOk(e);
+                            // calenderSelectModalOk(item.calendarId);
+                            // console.log("Item:", item.calendarId);
+                            console.log("e:", e);
+                          }}
+                        >
+                          {item.title}
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* 서버 꺼졌을 때 */}
+                    {/* <div className="div-calender mycalender-list mycalender">
                   {checkedCalendars.includes("id1") ? (
                     <FaSquareCheck
                       className="calender-color"
@@ -372,10 +496,10 @@ const Nav = ({ setNowCalendarId }) => {
                   >
                     내 캘린더
                   </div>
-                </div>
+                </div> */}
 
-                {/* <FaSquare color="red" /> */}
-                {/* <div className="div-calender mycalender-list mycalender">
+                    {/* <FaSquare color="red" /> */}
+                    {/* <div className="div-calender mycalender-list mycalender">
                   <FaSquareCheck color="blue" />
                   <div
                     className="calender-name"
@@ -389,7 +513,7 @@ const Nav = ({ setNowCalendarId }) => {
                     내 캘린더
                   </div>
                 </div> */}
-                {/* <div className="div-calender mycalender-list mycalender">
+                    {/* <div className="div-calender mycalender-list mycalender">
                   <input type="checkbox" className="calender-color" />
                   <div className="calender-name">내 캘린더</div>
                 </div>
@@ -401,7 +525,9 @@ const Nav = ({ setNowCalendarId }) => {
                   <input type="checkbox" className="calender-color" />
                   <div className="calender-name">B팀 캘린더</div>
                 </div> */}
-              </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -56,22 +56,34 @@ const CalendarModifyModalStyle = styled.div`
 `;
 
 const CalendarModifyModal = ({
-  // calendarId,
+  selectCalenderColor,
+  setSelectCalenderColor,
+  selectCalenderName,
+  setSelectCalenderName,
+  selectCalenderId,
+  calendarModifyModalOk,
   calendarModifyModalCancel,
-  // defaultColor,
+  handleCheckboxChange,
 }) => {
+  // console.log("color : ", selectCalenderColor);
+  // console.log("name : ", selectCalenderName);
+  // console.log("id : ", selectCalenderId);
+
   // 아래를 비활성화
   // calendarModifyModalCancel : 모달 창을 닫기 위한 값
-  const [calendarId, setCalendarId] = useState(1); // 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
-  const [defaultColor, setDefaultColor] = useState("#845EF7"); // 기존 캘린더의 색. 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
-  const [newCalendarColor, setNewCalendarColor] = useState("#845EF7"); // 새로운 또는 유지되는 서버에 보낼 캘린더의 색. 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
+  // const [calendarId, setCalendarId] = useState(1); // 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
+  // const [defaultColor, setDefaultColor] = useState("#845EF7"); // 기존 캘린더의 색. 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
+  // const [newCalendarColor, setNewCalendarColor] = useState("#845EF7"); // 새로운 또는 유지되는 서버에 보낼 캘린더의 색. 서버 연결을 할 수 없을 때 : 디폴트 값(나중에 삭제 또는 주석처리)
   // const [newCalendarName, setNewCalendarName] = useState();
 
   // 아래를 활성화
-  const [newCalendarName, setNewCalendarName] = useState(calendarId);
-  const [selectedColor, setSelectedColor] = useState(defaultColor);
+  /** 기존 캘린더 이름, 새로 작성한 캘린더 이름 */
+  const [newCalendarName, setNewCalendarName] = useState(selectCalenderName);
+  // const [selectedColor, setSelectedColor] = useState(defaultColor);
+  /** 기존 캘린더 색, 새로 작성한 캘린더 색  */
+  const [selectedColor, setSelectedColor] = useState(selectCalenderColor);
 
-  const handleCheckboxChange = color => {
+  const modifyCheckboxChange = color => {
     setSelectedColor(color);
   };
 
@@ -95,34 +107,53 @@ const CalendarModifyModal = ({
     }
   };
 
-  // (수정하기)
+  /** 캘린더 정보 수정 내용 데이터를 서버로 보내는 로직 */
   const handleModifyButtonClick = async ({
-    calendarId,
+    selectCalenderId,
     newCalendarName,
     selectedColor,
   }) => {
-    // 데이터를 서버로 보내는 로직
+    const res = handleModifyEvent({
+      selectCalenderId,
+      newCalendarName,
+      selectedColor,
+    });
+
+    if (res) {
+      console.log("Id", selectCalenderId);
+      handleCheckboxChange(selectCalenderId);
+    }
+  };
+
+  const handleModifyEvent = async ({
+    selectCalenderId,
+    newCalendarName,
+    selectedColor,
+  }) => {
+    console.log("전달 캘린더ID : ", selectCalenderId);
+    console.log("전달 캘린더Name : ", newCalendarName);
+    console.log("전달 캘린더Color : ", selectedColor);
     try {
       const resepons = await axios.put(`/api/calendar`, {
-        calendarId: calendarId,
+        calendarId: selectCalenderId,
         title: newCalendarName,
         color: selectedColor,
       });
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
-        return resepons.data;
+        console.log("캘린더 정보 수정 성공");
+        return true;
       } else {
         console.log("API 오류");
       }
       console.log(resepons.data);
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   };
 
   const renderCheckbox = color => (
-    <div onClick={() => handleCheckboxChange(color)}>
+    <div onClick={() => modifyCheckboxChange(color)}>
       {selectedColor === color ? (
         <RiCheckboxFill color={color} size={30} />
       ) : (
@@ -137,7 +168,9 @@ const CalendarModifyModal = ({
         <div className="calendar-modal-content">
           <div className="calendar-modal-header">
             <div>
-              <h1 className="calendar-modal-title">{calendarId} 캘린더 수정</h1>
+              <h1 className="calendar-modal-title">
+                {selectCalenderId} 캘린더 수정
+              </h1>
             </div>
             <div
               className="calendar-modal-close-button"
@@ -160,7 +193,13 @@ const CalendarModifyModal = ({
                 />
                 <div
                   className="modify-button"
-                  onClick={handleModifyButtonClick}
+                  onClick={e => {
+                    handleModifyButtonClick({
+                      selectCalenderId,
+                      newCalendarName,
+                      selectedColor,
+                    });
+                  }}
                 >
                   수정
                 </div>

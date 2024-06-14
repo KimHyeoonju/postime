@@ -17,8 +17,8 @@ function App() {
   // const userEmail = sessionStorage.setItem("userEmail", "userId");
 
   const signUserId = sessionStorage.getItem("userId");
-  const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
-  // const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+  // const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
+  const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
   // const [signUserId, setSignUserId] = useState(null);
   console.log("나의 정보: ", signUserId);
 
