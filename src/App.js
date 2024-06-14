@@ -10,28 +10,60 @@ import Index from "./pages/Index";
 sessionStorage.setItem("isDeleteCheckModal", false);
 
 function App() {
-  // 원래는 getItem
-  // const userName = sessionStorage.setItem("userId", "test1234");
-  //const userId = sessionStorage.setItem("userCode", 8);
-  // const setIsLogin = sessionStorage.setItem("setIsLogin", true);
-  // const userEmail = sessionStorage.setItem("userEmail", "userId");
+  // 원래는 getItem()
+  // sessionStorage.setItem("userCode", 8);
+  // sessionStorage.setItem("setIsLogin", true);
+  // sessionStorage.setItem("userEmail", "userId");
 
-  const signUserId = sessionStorage.getItem("userId");
-  const [isLogin, setIsLogin] = useState(true); // 로그인이 되어 있는 경우
-  // const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+  // const signUserId = sessionStorage.getItem("userId, userEmail, userName");
+  const userId = sessionStorage.getItem("userId");
+  const userEmail = sessionStorage.getItem("userEmail");
+  const userName = sessionStorage.getItem("userName");
+
+  const [userInfo, setUserInfo] = useState({
+    userId: userId,
+    userEmail: userEmail,
+    userName: userName,
+  });
+  // const [userInfo, setUserInfo] = useState(null); // {user, ...}
+  // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
+  const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+
   // const [signUserId, setSignUserId] = useState(null);
-  console.log("나의 정보: ", signUserId);
+  useEffect(() => {
+    console.log("나의 정보: ", userInfo);
+  }, [userInfo]);
 
-  useEffect(() => {}, [signUserId]);
+  // 로그인 했을 때 로그인 상태 유지하기
+  // sessionStorage.setItem(
+  //   "userInfo",
+  //   JSON.stringify({
+  //     userId: "myUserId",
+  //     userName: "myUserName",
+  //     userEmail: "myUserEmail",
+  //   }),
+  // );
+  useEffect(() => {
+    const userInfoFromStorage = JSON.parse(sessionStorage.getItem("userInfo"));
+    if (userInfoFromStorage) {
+      setUserInfo(userInfoFromStorage);
+      setIsLogin(true); // 로그인 상태 설정
+    }
+  }, []);
 
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index />
+        <Index userInfo={userInfo} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>
-          <Route path="/" element={<LoginPage setIsLogin={setIsLogin} />} />
+          <Route
+            path="/"
+            element={
+              <LoginPage setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
+            }
+          />
           <Route path="/searchid" element={<SearchIdPage />} />
           <Route path="/searchpw" element={<SearchPwPage />} />
           <Route path="/signup" element={<SignUpPage />} />

@@ -65,8 +65,9 @@ const WriteRoutes = () => {
   );
 };
 
-const Index = ({ signUserId, setIsLogin }) => {
-  /** 캘린더 리스트에서 체크박스를 클릭한 캘린더ID */
+const Index = ({ signUserId, setIsLogin, userInfo }) => {
+  console.log(userInfo);
+  // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
   useEffect(() => {
@@ -128,7 +129,10 @@ const Index = ({ signUserId, setIsLogin }) => {
                     path="/userinfo"
                     element={<UserInfoPage signUserId={signUserId} />}
                   />
-                  <Route path="/usermodify" element={<UserModify />} />
+                  <Route
+                    path="/usermodify"
+                    element={<UserModify signUserId={signUserId} />}
+                  />
                   <Route
                     path="/userpw"
                     element={<UserPwPage signUserId={signUserId} />}
