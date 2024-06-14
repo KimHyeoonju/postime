@@ -66,7 +66,7 @@ const WriteRoutes = () => {
 };
 
 const Index = ({ signUserId, setIsLogin }) => {
-  // 캘린더 아이디 관련
+  /** 캘린더 리스트에서 체크박스를 클릭한 캘린더ID */
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
   useEffect(() => {
