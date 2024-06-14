@@ -10,8 +10,18 @@ import "@yaireo/tagify/dist/tagify.css";
 
 import "../../css/create.css";
 import Comment from "./Comment";
+import { useLocation } from "react-router-dom";
 
 const Create = () => {
+  // 1. useLocation 훅 취득
+  const location = useLocation();
+
+  // 2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
+  // const state = location.state as { boardId }; // 이 형태는 지금 못 씀.
+  // const boardId = state.boardId;
+  const boardId = location.state.boardId;
+  console.log("boardId : ", boardId);
+
   const input = useRef(null);
   const tagify = useRef(null);
 

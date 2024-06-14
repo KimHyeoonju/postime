@@ -45,7 +45,11 @@ const CalendarModal = ({
   selectCalenderId,
   selectCalenderName,
 }) => {
-  const userId = sessionStorage.getItem("userId");
+  const userId = 8;
+  const userName = "김현주";
+
+  // const userId = sessionStorage.getItem("memberInfo.Name");
+  // const userName = sessionStorage.getItem("Name");
   const calendarId = sessionStorage.getItem("calendarId");
 
   // useRef()를 사용하여 modalRef 생성
@@ -111,7 +115,7 @@ const CalendarModal = ({
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
         console.log("유저 추가 성공 : ", resepons);
-        return resepons.data;
+        return true;
       } else {
         console.log("API 오류");
       }
@@ -160,6 +164,7 @@ const CalendarModal = ({
           showDeleteCheckModal={showDeleteCheckModal}
           deleteUeserId={deleteUeserId}
           selectCalenderId={selectCalenderId}
+          getCalenderUserList={getCalenderUserList}
         />
       ) : null}
 
@@ -208,7 +213,7 @@ const CalendarModal = ({
               <div className="calendar-user-list">
                 <div className="calendar-user-list-item pk-user-id">
                   {/* 세션에서 받아오는 걸로 수정 */}
-                  <p>{userId}</p>
+                  <p>{userName}</p>
                   <p className="user-option pk-user-option">캘린더 소유자</p>
                 </div>
 

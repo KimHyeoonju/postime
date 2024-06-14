@@ -7,6 +7,7 @@ import UserNewPwPage from "./pages/user/UserNewPwPage";
 import SignUpPage from "./pages/user/SignUpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
+
 function App() {
   // 원래는 getItem()
   // sessionStorage.setItem("userCode", 8);
@@ -22,8 +23,10 @@ function App() {
     userName: userName,
   });
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
+
   const [isLogin, setIsLogin] = useState(false); /// 로그인이 되어 있는 경우
   // const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
     console.log("나의 정보: ", userInfo);
