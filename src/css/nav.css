@@ -204,6 +204,10 @@
   display: none;
 }
 
+.div-mycalender-list-none {
+  display: none;
+}
+
 * {
   font-family: "Noto Sans KR" !important;
 }

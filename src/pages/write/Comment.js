@@ -8,7 +8,7 @@ const Comment = () => {
   const [commentList, setCommentList] = useState([]);
 
   const allComments = async () => {
-    const result = await getComment(165);
+    const result = await getComment(100);
     setCommentList(result.data.resultData);
   };
 
@@ -23,7 +23,7 @@ const Comment = () => {
   // 댓글 추가
   const addComment = async chat => {
     const sendData = {
-      boardId: 165,
+      boardId: 100,
       signedUserId: 8,
       content: chat,
       calendarId: 63,

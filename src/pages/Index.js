@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import styled from "@emotion/styled";
 import { Route, Routes } from "react-router-dom";
 import Header from "../components/layout/Header";
@@ -65,12 +64,15 @@ const WriteRoutes = () => {
   );
 };
 
-const Index = ({ signUserId, setIsLogin }) => {
+
+const Index = ({ signUserId, setIsLogin, userInfo }) => {
+  console.log(userInfo);
+
   // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
 
   useEffect(() => {
-    // console.log("nowCalendarId : ", nowCalendarId);
+    console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
 
   // 검색어 관련
@@ -128,7 +130,10 @@ const Index = ({ signUserId, setIsLogin }) => {
                     path="/userinfo"
                     element={<UserInfoPage signUserId={signUserId} />}
                   />
-                  <Route path="/usermodify" element={<UserModify />} />
+                  <Route
+                    path="/usermodify"
+                    element={<UserModify signUserId={signUserId} />}
+                  />
                   <Route
                     path="/userpw"
                     element={<UserPwPage signUserId={signUserId} />}

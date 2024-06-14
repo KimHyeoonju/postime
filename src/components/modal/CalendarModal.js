@@ -42,9 +42,8 @@ const CalendarModalStyle = styled.div`
 // setCalenderId, setModalType
 const CalendarModal = ({
   calenderUserListModalOk,
-  calenderName,
-  calenderId,
-  deleteUeserId,
+  selectCalenderId,
+  selectCalenderName,
 }) => {
   const userId = sessionStorage.getItem("userId");
   const calendarId = sessionStorage.getItem("calendarId");
@@ -53,23 +52,22 @@ const CalendarModal = ({
   const modalRef = useRef(null);
   // 캘린더 공유 유저 리스트 배열
   const [calendarListUserArr, setCalendarListUserArr] = useState([]);
-  const [userEmail, setUserEmail] = useState("asdqwe@naver.com");
+  // const [userEmail, setUserEmail] = useState("asdqwe@naver.com");
+  const [userEmail, setUserEmail] = useState();
   const [calendarModalType, setCalendarModalType] = useState(1);
-  // 1: 삭제시 체크 모달
 
-  // asdqwe@naver.com
-  // console.log("유저캘린더", calenderId);
+  /** 삭제할 유저 ID */
+  const [deleteUeserId, setDeleteUeserId] = useState("");
 
-  // const [calenderId, setCalenderId] = useState(61);
-
-  const getCalenderUserList = async calenderId => {
+  const getCalenderUserList = async selectCalenderId => {
     try {
       const resepons = await axios.get(
-        `/api/calendar/member?calendar_id=${calenderId}`,
+        `/api/calendar/member?calendar_id=${selectCalenderId}`,
       );
       const status = resepons.status.toString().charAt(0);
       // console.log("유저리스트", resepons.data.resultData);
       if (status === "2") {
+        console.log("유저 리스트 정상 GET");
         return resepons.data.resultData;
       } else {
         console.log("API 오류");
@@ -81,27 +79,38 @@ const CalendarModal = ({
     }
   };
 
-  const calenderUserList = async () => {
-    const result = await getCalenderUserList(calenderId);
-    console.log("유저 리스트 출력", result);
+  // 공유 멤버 리스트 갱신처리
+  // useEffect(() => {}, []);
+
+  // const calenderUserList = async selectCalenderId => {
+  //   const result = await getCalenderUserList(selectCalenderId);
+  //   // console.log("유저 리스트 출력", result);
+  //   setCalendarListUserArr(result);
+  // };
+
+  /** 최초 렌더링 시, 공유 멤버 리스트 GET */
+  const firstCalenderUserList = async selectCalenderId => {
+    const result = await getCalenderUserList(selectCalenderId);
+    // console.log("유저 리스트 출력", result);
     setCalendarListUserArr(result);
   };
 
+  /** 최초 렌더링 */
   useEffect(() => {
-    calenderUserList();
+    firstCalenderUserList(selectCalenderId);
   }, [calenderUserListModalOk]);
 
-  const calendarUserPlus = async ({ userEmail, calenderId }) => {
-    // console.log("입력된 이메일", userEmail);
-    // console.log("캘린더 ID", calenderId);
+  const calendarUserPlus = async ({ userEmail, selectCalenderId }) => {
+    console.log("입력된 이메일 : ", userEmail);
+    console.log("캘린더 ID : ", selectCalenderId);
     try {
       const resepons = await axios.post("/api/calendar/plus", {
-        calendarId: calenderId,
+        calendarId: selectCalenderId,
         userEmail: userEmail,
       });
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
-        console.log("유저 추가 성공");
+        console.log("유저 추가 성공 : ", resepons);
         return resepons.data;
       } else {
         console.log("API 오류");
@@ -132,6 +141,8 @@ const CalendarModal = ({
 
   const [isDeleteCheckModal, setIsDeleteCheckModal] = useState(false);
   const showDeleteCheckModal = async e => {
+    console.log("삭제할 유저 ID : ", e);
+    setDeleteUeserId(e);
     setIsDeleteCheckModal(!isDeleteCheckModal);
     // 캘린더명
     // setCalenderId(e.target.id);
@@ -148,6 +159,7 @@ const CalendarModal = ({
           showDeleteCheckModalCancel={showDeleteCheckModalCancel}
           showDeleteCheckModal={showDeleteCheckModal}
           deleteUeserId={deleteUeserId}
+          selectCalenderId={selectCalenderId}
         />
       ) : null}
 
@@ -155,7 +167,10 @@ const CalendarModal = ({
         <div className="calendar-modal-content">
           <div className="calendar-modal-header">
             <div>
-              <h1 className="calendar-modal-title">calenderId 캘린더 참여자</h1>
+              {/* <h1 className="calendar-modal-title">calenderId 캘린더 참여자</h1> */}
+              <h1 className="calendar-modal-title">
+                {selectCalenderName} 캘린더 참여자
+              </h1>
             </div>
             <div
               className="calendar-modal-close-button"
@@ -173,18 +188,18 @@ const CalendarModal = ({
               <div className="calendar-user-plus-div">
                 <input
                   id="calendar-user-plus-email"
-                  value={userEmail}
+                  // value={userEmail}
                   onChange={e => {
-                    // setUserEmail(e);
                     setUserEmail(e.target.value);
-                    console.log("입력 확인확인", e.target.value);
+                    // console.log("입력 확인확인", e.target.value);
                   }}
                   placeholder="email@gmail.com"
                 ></input>
                 <div
                   className="plus-icon"
                   onClick={e => {
-                    calendarUserPlus({ userEmail, calenderId });
+                    // console.log({ selectCalenderId });
+                    calendarUserPlus({ userEmail, selectCalenderId });
                   }}
                 >
                   <FaSquarePlus size="28" color="#4F546E" />
@@ -192,6 +207,7 @@ const CalendarModal = ({
               </div>
               <div className="calendar-user-list">
                 <div className="calendar-user-list-item pk-user-id">
+                  {/* 세션에서 받아오는 걸로 수정 */}
                   <p>{userId}</p>
                   <p className="user-option pk-user-option">캘린더 소유자</p>
                 </div>
@@ -219,7 +235,7 @@ const CalendarModal = ({
 
                 {/* map */}
 
-                <div className="calendar-user-list-item">
+                {/* <div className="calendar-user-list-item">
                   <p>멤버명</p>
                   <p
                     className="user-option"
@@ -235,7 +251,7 @@ const CalendarModal = ({
                   <p>
                     <IoIosClose />
                   </p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

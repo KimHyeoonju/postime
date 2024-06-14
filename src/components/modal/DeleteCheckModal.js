@@ -58,13 +58,17 @@ const DeleteCheckModalStyle = styled.div`
   }
 `;
 
-// const DeleteCheckModal = ({ showDeleteCheckModal, deleteUeserId }) => {
-const DeleteCheckModal = ({ showDeleteCheckModal }) => {
+const DeleteCheckModal = ({
+  showDeleteCheckModal,
+  deleteUeserId,
+  selectCalenderId,
+  showDeleteCheckModalCancel,
+}) => {
+  // const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
-  const [userId, setUserId] = useState(8);
+  const [userId, setUserId] = useState(8); // 나중에 아래의 세션으로 변경하기
   // const userId = sessionStorage.getItem("userId");
-  const calendarId = sessionStorage.getItem("calendarId");
-  const [deleteUeserId, setDeleteUeserId] = useState(1);
+  // const [deleteUeserId, setDeleteUeserId] = useState(1);
 
   // 캘린더에서 유저 삭제 취소 버튼 : 모달 닫음.
   const cancelDeleteCalendarUser = e => {
@@ -72,43 +76,50 @@ const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   };
 
   // 캘린더에서 유저 삭제 확인 버튼
-  const delectCalendarUser = async e => {
+  const delectCalendarUser = async ({
+    userId,
+    selectCalenderId,
+    deleteUeserId,
+  }) => {
     setDeleteCheck(!deleteCheck);
-    setDeleteUeserId(2);
-    const a = await deleteUeser();
+    // setDeleteUeserId(2);
+    // console.log("userId 확인 : ", userId);
+    // console.log("selectCalenderId 확인 : ", selectCalenderId);
+    // console.log("deleteUeserId 확인 : ", deleteUeserId);
+    deleteUeser({ userId, selectCalenderId, deleteUeserId });
   };
 
-  const deleteUeser = () => {
+  const deleteUeser = ({ userId, selectCalenderId, deleteUeserId }) => {
     console.log(deleteCheck);
     console.log(deleteUeserId);
 
     if (!deleteCheck) {
       // const result = deleteListUser(userId, calendarId, deleteUeserId);
-
-      deleteListUser(userId, calendarId, deleteUeserId);
-      console.log("1", userId);
-      console.log("2", calendarId);
-      console.log("3", deleteUeserId);
+      deleteListUser({ userId, selectCalenderId, deleteUeserId });
     }
     showDeleteCheckModal(false);
   };
 
   // 수정 예정
-  const deleteListUser = async (userId, calenderId, deleteUeserId) => {
-    console.log("01", userId);
-    console.log("02", calenderId);
-    console.log("03", deleteUeserId);
+  const deleteListUser = async ({
+    userId,
+    selectCalenderId,
+    deleteUeserId,
+  }) => {
+    // console.log("01", userId);
+    // console.log("02", selectCalenderId);
+    // console.log("03", deleteUeserId);
     try {
       const resepons = await axios.delete("/api/calendar/member", {
         data: {
           signedUserId: userId,
-          calendarId: calenderId,
+          calendarId: selectCalenderId,
           userId: deleteUeserId,
         },
       });
-      console.log(resepons);
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
+        console.log("유저 성공적으로 삭제");
         return resepons.data.resultData;
       } else {
         console.log("API 오류");
@@ -144,7 +155,16 @@ const DeleteCheckModal = ({ showDeleteCheckModal }) => {
                 >
                   취소
                 </button>
-                <button type="button" onClick={delectCalendarUser}>
+                <button
+                  type="button"
+                  onClick={e => {
+                    delectCalendarUser({
+                      userId,
+                      selectCalenderId,
+                      deleteUeserId,
+                    });
+                  }}
+                >
                   제거
                 </button>
               </div>
