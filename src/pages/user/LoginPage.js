@@ -9,7 +9,7 @@ const LoginPage = ({ setIsLogin, setUserInfo }) => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState("mybirth811");
-  const [userPass, setUserPass] = useState("Tngus1234^^");
+  const [userPass, setUserPass] = useState("Test!@#$1234");
   // 모달 추가
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalTitle, setUserModalTitle] = useState(false);

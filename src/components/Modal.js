@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Button from "./Button";
+import { useEffect } from "react";
 
 const ModalWrapStyle = styled.div`
   position: fixed;
@@ -43,8 +44,17 @@ const ModalFooterStyle = styled.div`
   text-align: center;
 `;
 
-const Modal = ({ isOpen, title, message, onClose, onConfirm }) => {
+const Modal = ({
+  isOpen,
+  title,
+  message,
+  onClose,
+  onConfirm,
+  stateList,
+  onProgress,
+}) => {
   if (!isOpen) return null;
+  // console.log("stateList", stateList);
 
   return (
     <ModalWrapStyle>
@@ -56,8 +66,28 @@ const Modal = ({ isOpen, title, message, onClose, onConfirm }) => {
           <p>{message}</p>
         </ModalMainStyle>
         <ModalFooterStyle>
-          <Button onClick={onConfirm} label="확인" />
-          <Button onClick={onClose} label="취소" />
+          {stateList === 1 ? (
+            <>
+              <Button onClick={onConfirm} label="상세페이지" />
+              <Button onClick={onClose} label="취소" />
+            </>
+          ) : stateList === 2 ? (
+            <>
+              <Button onClick={onProgress} label="복원" />
+              <Button onClick={onClose} label="취소" />
+            </>
+          ) : stateList === 3 ? (
+            <>
+              <Button onClick={onProgress} label="복원" />
+              <Button onClick={onClose} label="취소" />
+            </>
+          ) : (
+            <>
+              <Button onClick={onConfirm} label="확인" />
+              <Button onClick={onClose} label="취소" />
+            </>
+          )}
+
           {/* <button onClick={onClose}>취소</button>
           <button onClick={onConfirm}>확인</button> */}
         </ModalFooterStyle>
