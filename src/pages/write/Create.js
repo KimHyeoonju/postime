@@ -19,34 +19,9 @@ const Create = () => {
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
+  const [startDay, setStartDay] = useState();
+  const [dDay, setDDay] = useState();
   const [createWrite, setCreateWrite] = useState("");
-  const [createDate, setCreateDate] = useState();
-
-  // const createPost = async event => {
-  //   event.preventDefault();
-
-  //   try {
-  //     const response = await axios.post("/api/board", {
-  //       calendarId: "calendarId",
-  //       signedUserId: "signedUserId",
-  //       title: "title",
-  //       content: "content",
-  //       startDay: "startDay",
-  //       deadLine: "deadLine",
-  //       existTag: [1, 2],
-  //       notExistTag: [
-  //         {
-  //           calendarId: "calendarId",
-  //           title: "tag1",
-  //           color: 1,
-  //         },
-  //       ],
-  //       dDay: "dDay",
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
@@ -139,6 +114,7 @@ const Create = () => {
 
               <div className="write-header-dec">
                 <span>
+                  {/* 캘린더 아이디의 이름이 출력되어야 하나? */}
                   <IoBookmarkSharp /> 내 캘린더
                 </span>
                 <div className="write-header-info">
