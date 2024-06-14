@@ -64,16 +64,28 @@ const WriteRoutes = () => {
   );
 };
 
-
 const Index = ({ signUserId, setIsLogin, userInfo }) => {
   console.log(userInfo);
 
   // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
+  // 체크박스가 활성화 되어 있는 캘린더ID 리스트
+  const [checkedCalendarIds, setcheckedCalendarIds] = useState([]);
+  // 캘린더 색 갱신을 출력하기 위한 값
+  // const [checkCalendarColorChange, setCheckCalendarColorChange] =
+  //   useState(null);
 
   useEffect(() => {
     console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
+
+  useEffect(() => {
+    console.log("checkedCalendarIds : ", checkedCalendarIds);
+  }, [checkedCalendarIds]);
+
+  // useEffect(() => {
+  //   console.log("checkCalendarColorChange : ", checkCalendarColorChange);
+  // }, [checkCalendarColorChange]);
 
   // 검색어 관련
   const [searchTextIndex, setSearchTextIndex] = useState("");
@@ -90,7 +102,11 @@ const Index = ({ signUserId, setIsLogin, userInfo }) => {
     <>
       <div>
         <WrapStyle>
-          <Nav setNowCalendarId={setNowCalendarId} />
+          <Nav
+            setNowCalendarId={setNowCalendarId}
+            // setCheckCalendarColorChange={setCheckCalendarColorChange}
+            setcheckedCalendarIds={setcheckedCalendarIds}
+          />
           <MainStyle>
             <header>
               <Header
@@ -112,7 +128,13 @@ const Index = ({ signUserId, setIsLogin, userInfo }) => {
                 <Routes>
                   <Route
                     path="/"
-                    element={<MainCalender nowCalendarId={nowCalendarId} />}
+                    element={
+                      <MainCalender
+                        nowCalendarId={nowCalendarId}
+                        checkedCalendarIds={checkedCalendarIds}
+                        // checkCalendarColorChange={checkCalendarColorChange}
+                      />
+                    }
                   />
                   <Route
                     path="/write/*"

@@ -39,7 +39,11 @@ const NavStyle = styled.div`
   }
 `;
 
-const Nav = ({ setNowCalendarId }) => {
+const Nav = ({
+  setNowCalendarId,
+  setCheckCalendarColorChange,
+  setcheckedCalendarIds,
+}) => {
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
   const [userId, setUserId] = useState(8);
 
@@ -185,6 +189,7 @@ const Nav = ({ setNowCalendarId }) => {
   }, [checkedCalendars]);
 
   const [newCheckedCalendars, setNewCheckedCalendars] = useState([]);
+
   /** 체크된 캘린더들 */
   // 체크박스 클릭에 대한 처리 함수
   const handleCheckboxChange = calendarId => {
@@ -207,6 +212,9 @@ const Nav = ({ setNowCalendarId }) => {
 
     /** 체크박스를 클릭한 캘린더 ID 추출  */
     setNowCalendarId(calendarId);
+
+    // 체크 되어 있는 캘린더들의 배열을 전달
+    setcheckedCalendarIds(newCheckedCalendars);
 
     // 이제 풀 캘린더 컴포넌트로 해당 캘린더의 ID 목록을 전달할 수 있습니다.
   };
@@ -234,6 +242,11 @@ const Nav = ({ setNowCalendarId }) => {
     alarmList(userId);
     return () => {};
   }, []);
+
+  // 체크된 캘린더의 ID만을 가진 배열 생성!!!!
+  const checkedCalendar = checkedCalendars.filter(calendarId =>
+    checkedCalendars.includes(calendarId),
+  );
 
   return (
     <NavStyle>
@@ -272,6 +285,7 @@ const Nav = ({ setNowCalendarId }) => {
           calendarModifyModalOk={calendarModifyModalOk}
           calendarModifyModalCancel={calendarModifyModalCancel}
           handleCheckboxChange={handleCheckboxChange}
+          setCheckCalendarColorChange={setCheckCalendarColorChange}
         />
       ) : null}
       <div className="menu">
