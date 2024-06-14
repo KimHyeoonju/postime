@@ -8,12 +8,14 @@ const Search = ({ searchTextIndex }) => {
   // console.log("Search : ", searchTextIndex);
   // map 돌릴 검색결과 배열 담을곳
   const [serarchList, setSearchList] = useState([]);
+  const [stateList, setSateList] = useState([]);
   // 모달창 커스텀훅
   const {
     isModalOpen,
     modalTitle,
     modalMessage,
     confirmAction,
+    progressAction,
     openModal,
     closeModal,
   } = useModal();
@@ -34,27 +36,33 @@ const Search = ({ searchTextIndex }) => {
     setSearchList(result.resultData);
   };
 
-  const handleDetailPage = (boardId, state) => {
+  const handleDetailPage = state => {
+    setSateList(state);
     // console.log(boardId, state);
     if (state === 1) {
-      // console.log("상세페이지 모달창 등장");
+      // console.log("상세페이지 모달창");
       openModal({
         title: "진행중인 일정 클릭 안내",
         message:
           "일정 상세페이지로 이동하시겠습니까? 일단은 완료페이지로갑니다",
         onConfirm: () => {
-          closeModal();
-          navigate(`/complete`);
-          // 상세페이지이동 예시 navigate(`/complete/${boardId}`);
+          console.log("state1 진행중 확인버튼");
         },
       });
-    }
-    if (state === 2) {
+    } else if (state === 2) {
       openModal({
         title: "완료일정 클릭 안내",
         message: "복원 누르세요 근데 아직 복원버튼이 없으니깐 확인눌러주세요",
-        onConfirm: () => {
-          console.log("state2완료 확인버튼");
+        onProgress: () => {
+          console.log("progress 2>1");
+        },
+      });
+    } else if (state === 3) {
+      openModal({
+        title: "삭제일정 클릭 안내",
+        message: "복원 누르세요 근데 아직 복원버튼이 없으니깐 확인눌러주세요",
+        onProgress: () => {
+          console.log("progress 3>1");
         },
       });
     }
@@ -88,7 +96,7 @@ const Search = ({ searchTextIndex }) => {
               className="common-list"
               key={index}
               onClick={() => {
-                handleDetailPage(item, item.boardId, item.state);
+                handleDetailPage(item.state);
               }}
             >
               <li className="checkbox-area">
@@ -147,6 +155,8 @@ const Search = ({ searchTextIndex }) => {
           message={modalMessage}
           onClose={closeModal}
           onConfirm={confirmAction}
+          onProgress={progressAction}
+          stateList={stateList}
         />
       </div>
     </div>

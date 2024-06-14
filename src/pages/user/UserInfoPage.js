@@ -27,11 +27,12 @@ const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
   //   signUserId.userEmail,
   // );
   const [user, setUser] = useState({
-    userId: signUserId?.userId,
-    userName: signUserId?.userName,
-    userEmail: signUserId?.userEmail,
+    userId: signUserId?.userId || "",
+    userName: signUserId?.userName || "",
+    userEmail: signUserId?.userEmail || "",
   });
   const [userPass, setUserPass] = useState("");
+
   // 모달 추가
   const [userPwModalOpen, setUserPwModalOpen] = useState(true);
   const [userPwModalMessage, setUserPwModalMessage] = useState("");
@@ -48,7 +49,8 @@ const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
 
   const handleConfirm = () => {
     const reqData = {
-      userId: user.userId,
+      // userId: user.userId,
+      userId: 72,
       pwd: userPwModalInput,
     };
     // postCheckPw(reqData);

@@ -9,7 +9,7 @@ const LoginPage = ({ setIsLogin, setUserInfo }) => {
   const navigate = useNavigate();
 
   const [userId, setUserId] = useState("mybirth811");
-  const [userPass, setUserPass] = useState("Tngus1234^^");
+  const [userPass, setUserPass] = useState("Test!@#$1234");
   // 모달 추가
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalTitle, setUserModalTitle] = useState(false);
@@ -26,6 +26,7 @@ const LoginPage = ({ setIsLogin, setUserInfo }) => {
     if (result.statusCode !== 2) {
       setUserModalMessage(result.resultMsg);
       setUserModalOpen(true);
+      // setUserInfo({});
       return;
     }
     setUserInfo(result.resultData);
@@ -43,14 +44,24 @@ const LoginPage = ({ setIsLogin, setUserInfo }) => {
     //     email: "userEmail",
     //   }),
     // );
-    sessionStorage.setItem(
-      "memberInfo",
-      JSON.stringify({
-        userId: userId,
-        Name: result.resultData.name,
-        email: result.resultData.email,
-      }),
-    );
+    // 원래 하던거 (배열로)
+    // sessionStorage.setItem(
+    //   "memberInfo",
+    //   JSON.stringify({
+    //     userId: userId,
+    //     Name: result.resultData.name,
+    //     email: result.resultData.email,
+    //   }),
+    // );
+    // 따로 담은 거
+    // 항목별로 따로 변수 저장
+    // const userId = result.resultData.userId;
+    // const name = result.resultData.name;
+    // const email = result.resultData.email;
+
+    sessionStorage.setItem("userId", result.resultData.userId);
+    sessionStorage.setItem("Name", result.resultData.name);
+    sessionStorage.setItem("email", result.resultData.email);
 
     navigate("/");
   };
