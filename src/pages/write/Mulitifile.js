@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiFillCloseSquare } from "react-icons/ai";
 
-const Mulitifile = () => {
+const Mulitifile = ({ sendFiles, setSendFiles }) => {
   // 파일 선택 태그
   const fileBt = useRef(null);
   useEffect(() => {}, []);
 
   // File 객체를 관리
-  const [sendFiles, setSendFiles] = useState([]);
+
   // 이미지 미리보기 URL 관리
   const [previewFiles, setPreviewFiles] = useState([]);
 
