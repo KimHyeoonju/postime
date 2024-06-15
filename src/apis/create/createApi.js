@@ -1,8 +1,22 @@
 import axios from "axios";
 
-export const create = async data => {
+export const sendCreateAllData = async data => {
   try {
-    const response = await axios.post("/api/board", data);
+    const header = { headers: { "Content-Type": "multipart/form-data" } };
+    const response = await axios.post("/api/board", data, header);
+    // console.log(response);
+    // console.log(data);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteAllData = async data => {
+  try {
+    // const header = { headers: { "Content-Type": "multipart/form-data" } };
+    const response = await axios.delete("/api/board", { data: data });
+    // console.log(response);
     return response;
   } catch (error) {
     console.log(error);

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { AiFillCloseSquare } from "react-icons/ai";
 import { FaRegCalendar } from "react-icons/fa6";
 import { IoBookmarkSharp } from "react-icons/io5";
+import { SiStagetimer } from "react-icons/si";
 
 // import { create } from "../../apis/create";
 
@@ -12,29 +12,61 @@ import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
-import { useLocation } from "react-router-dom";
+import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
 
+const calendarId = 61;
+const boardId = 145;
 
 const Create = () => {
-  // 1. useLocation 훅 취득
-  const location = useLocation();
+  // // 모달관련
+  // const [modalTitle, setModalTitle] = useState(false);
+  // const [modalText, setModalText] = useState(false);
+  // const [modalBtOk, setModalBtOk] = useState(false);
+  // const [modalBtCancel, setModalBtCancel] = useState(false);
 
-  // 2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
-  // const state = location.state as { boardId }; // 이 형태는 지금 못 씀.
-  // const boardId = state.boardId;
-  const boardId = location.state.boardId;
-  console.log("boardId : ", boardId);
+  // // 모달 보이는 상태값
+  // const [isModal, setIsModal] = useState(false);
 
-  const input = useRef(null);
-  const tagify = useRef(null);
+  // const handleModalSubmit = e => {
+  //   e.preventDefault();
+  //   // 모달 활성화
+  //   setIsModal(true);
+  // };
 
-  const [imgFile, setImgFile] = useState([]);
+  // // 모달 실행 함수
+  // const modalOk = () => {
+  //   setIsModal(false);
+  //   if (isSuccess) {
+  //     navigate("/");
+  //   }
+  // };
+
+  // // 1. useLocation 훅 취득
+  // const location = useLocation();
+
+  // // 2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
+  // // const state = location.state as { boardId }; // 이 형태는 지금 못 씀.
+  // // const boardId = state.boardId;
+  // const boardId = location.state.boardId;
+  // console.log("boardId : ", boardId);
+
+  // 태그 관련
+  // const input = useRef(null);
+  // const tagify = useRef(null);
+
+  // 보드 관련
+  // const [boards, setBoards] = useState([
+  //   { calendarId: 61, boardId: 145 },
+  //   { calendarId: 61, boardId: 145 },
+  // ]);
 
   // 글쓰기 관련
-  const [createTitle, setCreateTitle] = useState("");
-  const [startDay, setStartDay] = useState();
-  const [dDay, setDDay] = useState();
-  const [createWrite, setCreateWrite] = useState("");
+  const [createTitle, setCreateTitle] = useState("제목입니당");
+  const [startDay, setStartDay] = useState("2024-06-01");
+  const [dDay, setDDay] = useState("2024-06-13");
+  const [deadline, setDeadline] = useState("12:00:00");
+  const [createWrite, setCreateWrite] = useState("내용입니당");
+  const [sendFiles, setSendFiles] = useState([]);
 
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
@@ -43,16 +75,6 @@ const Create = () => {
 
   const handleWriteChange = event => {
     setCreateWrite(event.target.value);
-  };
-
-  const fileUpload = () => {
-    const imgUploadBt = document.querySelector(".img-upload-button");
-    imgUploadBt.click();
-  };
-
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = id => {
-    setImgFile(imgFile.filter((_, index) => index !== id));
   };
 
   useEffect(() => {
@@ -70,50 +92,106 @@ const Create = () => {
     };
   }, []);
 
-  const handleImgUpload = event => {
-    const imgList = event.target.files;
-    let imageUrlList = [...imgFile];
+  // 보드 전송
+  const boardSubmit = e => {
+    e.preventDefault();
+    // 각 항목 체크하기 생략
+    // 1 번 전송데이터 포맷 만들기
+    const formData = new FormData();
 
-    for (let i = 0; i < imgList.length; i++) {
-      const currentImgUrl = URL.createObjectURL(imgList[i]);
-      imageUrlList.push(currentImgUrl);
-    }
+    // {
+    //   "calendarId": 63,
+    //   "signedUserId": 8,
+    //   "title": "test55",
+    //   "content": "content",
+    //   "startDay": "2024-06-01",
+    //   "deadLine": "12:00:00",
+    //   "notExistTag": [
+    //     {
+    //       "calendarId": 63,
+    //       "title": "test",
+    //       "color": 1
+    //     }
+    //   ],
+    //   "dDay": "2024-06-13"
+    // }
 
-    if (imageUrlList.length > 10) {
-      imageUrlList = imageUrlList.slice(0, 10);
-    }
-
-    setImgFile(imageUrlList);
+    // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
+    const infoData = JSON.stringify({
+      calendarId: 63,
+      signedUserId: 8,
+      title: createTitle,
+      startDay: startDay,
+      content: createWrite,
+      deadLine: deadline,
+      // notExistTag: [{ calendarId: 63, title: createTitle, color: 1 }],
+      dDay: dDay,
+    });
+    // 3 번 Blob 바이너리 데이터 만들기
+    const dto = new Blob([infoData], { type: "application/json" });
+    // 4 번 form-data 에 키에 값으로 추가하기
+    formData.append("p", dto);
+    console.log(formData);
+    // sendFiles.forEach(item => {
+    //   // 5 번 이미지 파일 추가하기
+    //   formData.append("files", item);
+    // });
+    // 6 번 axios 로 전달
+    sendCreateAllData(formData);
   };
 
-  useEffect(() => {
-    tagify.current = new Tagify(input.current);
+  // 보드 삭제
+  const boardDeleteSubmit = async e => {
+    e.preventDefault();
+    try {
+      const data = [{ calendarId, boardId }];
+      await deleteAllData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    tagify.current.on("add", () => {
-      console.log(tagify.current.value);
-    });
+  // useEffect(() => {
+  //   tagify.current = new Tagify(input.current);
 
-    return () => {
-      if (tagify.current) {
-        tagify.current.destroy();
-      }
-    };
-  }, []);
+  //   tagify.current.on("add", () => {
+  //     console.log(tagify.current.value);
+  //   });
+
+  //   return () => {
+  //     if (tagify.current) {
+  //       tagify.current.destroy();
+  //     }
+  //   };
+  // }, []);
 
   return (
     <div className="write-wrap">
       <div className="write-inner">
-        <form className="write-header-title">
+        <div className="write-header-title">
           {/* 글쓰기 상단 제목부 */}
           <div className="write-header">
             <div className="write-button">
-              <button className="write-button-primary">
-                <span>저장</span>
-              </button>
-              <button className="write-button-primary">
-                <span>삭제</span>
-              </button>
+              <form onSubmit={boardSubmit}>
+                <button
+                  className="write-button-primary"
+                  type="submit"
+                  // onClick={e => boardSubmit(e)}
+                >
+                  <span>저장</span>
+                </button>
+              </form>
+              <form onSubmit={boardDeleteSubmit}>
+                <button
+                  className="write-button-primary"
+                  type="submit"
+                  // onClick={e => boardDeleteSubmit(e)}
+                >
+                  <span>삭제</span>
+                </button>
+              </form>
             </div>
+
             <div className="write-header-text">
               <textarea
                 id="write-header-title"
@@ -148,12 +226,22 @@ const Create = () => {
                       onChange={e => setDDay(e.target.value)}
                     />
                   </div>
-                  <input
-                    name="tags"
-                    className="write-tags"
-                    placeholder="태그를 입력하세요"
-                    ref={input}
-                  ></input>
+                  <div className="timer">
+                    <SiStagetimer />
+                    <label htmlFor="deadline">마감일</label>
+                    <input
+                      type="time"
+                      id="deadline"
+                      value={deadline}
+                      onChange={e => setDeadline(e.target.value)}
+                    />
+                  </div>
+                  {/* <input
+                      name="tags"
+                      className="write-tags"
+                      placeholder="태그를 입력하세요"
+                      ref={input}
+                    ></input> */}
                 </div>
               </div>
             </div>
@@ -169,9 +257,9 @@ const Create = () => {
               ></textarea>
             </div>
             {/* 이미지 업로드 부분 */}
-            <Mulitifile />
+            <Mulitifile setSendFiles={setSendFiles} sendFiles={sendFiles} />
           </div>
-        </form>
+        </div>
         <div className="chat-wrap">
           <Comment />
         </div>
