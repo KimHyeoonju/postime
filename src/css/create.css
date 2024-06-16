@@ -3,25 +3,33 @@
   height: 100%;
   background: #f6f7f9;
 }
+
+/* 수정했습니다. */
 .write-inner {
-  width: 1280px;
-  padding-top: 60px;
+  /* width: 1280px; */
+  width: 100%;
+  /* padding-top: 60px; */
   padding-left: 55px;
   display: flex;
   /* position: relative; */
+  height: 100%;
 }
+
+/* 수정했습니다. */
 .write-header-title {
-  width: 95%;
+  min-width: 570px;
+  width: 100%;
 }
 .write-header {
   position: relative;
   width: 95%;
-  height: 250px;
+  /* height: 250px; */
   border-bottom: solid 1px #dddfe1;
 }
 
 .write-button {
-  margin-top: -40px;
+  /* 수정했습니다. */
+  padding-top: 30px;
   display: flex;
   justify-content: flex-end;
   gap: 20px;
@@ -71,11 +79,13 @@
   font-weight: 300;
   color: #9da2b9;
 }
+
+/* 수정했습니다. */
 .write-header-dec > span {
   display: flex;
   gap: 10px;
   font-size: 20px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .write-header-info {
@@ -116,11 +126,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: #888888; /* 달력 아이콘 색상 변경 */
 }
 
+/* 수정했습니다. */
 .timer {
   display: flex;
   gap: 10px;
   align-items: center;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 /* .write-tags {
@@ -131,7 +142,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .write-main {
   width: 100%;
-  height: 580px;
+  /* height: 580px; */
 
   display: flex;
   justify-content: space-between;
@@ -253,11 +264,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
 }
 
+/* 수정했습니다. */
 /* 글쓰기 관련 */
 .chat-wrap {
-  width: 400px;
+  /* width: 400px; */
   border-left: solid 1px #dddfe1;
-  position: absolute;
+  /* position: absolute; */
   right: 0;
   top: 0;
   height: 100%;
@@ -265,7 +277,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .chat-header {
   font-size: 20px;
   font-weight: 700;
-  margin-top: 25px;
+  /* 수정했습니다. */
+  /* margin-top: 25px; */
+  padding-top: 25px;
   margin-left: 10px;
   white-space: nowrap;
 }
@@ -307,6 +321,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .chat-comment-inner:hover .comment-icon {
   display: block;
+}
+.chat-inner {
+  padding: 0px 20px;
 }
 .comment-input {
   width: 320px;

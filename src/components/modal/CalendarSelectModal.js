@@ -6,6 +6,7 @@ import "./calendarselectmodalstyle.css";
 import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const CalendarSelectModalStyle = styled.div`
+  z-index: 9999999;
   .calendar-select-modal-content {
     border: 1px solid ${colorSystem.g800};
   }
@@ -24,15 +25,10 @@ const CalendarSelectModalStyle = styled.div`
   }
 `;
 
-const CalendarSelectModal = ({
-  calendarSelectModalCancel,
-  calenderSeleteCheck,
-  setModalType,
-}) => {
+const CalendarSelectModal = ({ calendarSelectModalCancel, setModalType }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    // 이벤트 핸들러 함수
     const handler = event => {
       // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -40,26 +36,29 @@ const CalendarSelectModal = ({
       }
     };
 
-    // 이벤트 핸들러 등록
+    const handleResize = () => {
+      calendarSelectModalCancel(false);
+    };
+
     document.addEventListener("mousedown", handler);
     // document.addEventListener('touchstart', handler); // 모바일 대응
+    window.addEventListener("resize", handleResize);
 
     return () => {
       // 이벤트 핸들러 해제
       document.removeEventListener("mousedown", handler);
       // document.removeEventListener('touchstart', handler); // 모바일 대응
+      window.removeEventListener("resize", handleResize);
     };
   }, [calendarSelectModalCancel]);
 
   const shareSelection = e => {
     // 공유
-    calenderSeleteCheck(false);
     setModalType(1);
   };
 
   const editSelection = e => {
     // 수정
-    calenderSeleteCheck(false);
     setModalType(2);
   };
 

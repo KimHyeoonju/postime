@@ -175,9 +175,10 @@ const MainCalender = ({
 
   /** 캘린더에 보여줄 값과 캘린더 리스트 get 하기 위한 함수 */
   const firstCalenderDayPrint = async () => {
-    const result = await getCalender(userId);
-    setCalenderArr(result.resultData);
-    setCalenderClickArr(result.resultData);
+    // 서버 연결 시
+    // const result = await getCalender(userId);
+    // setCalenderArr(result.resultData);
+    // setCalenderClickArr(result.resultData);
   };
 
   /** 메뉴에서 체크 박스 해제시 실행 되는 함수.
@@ -186,7 +187,7 @@ const MainCalender = ({
     const newName = calenderArr.filter(
       item => item.calendarId !== filterCalendarId,
     );
-    setCalenderClickArr(newName);
+    // setCalenderClickArr(newName);
   };
 
   // const reAdd = ({ filterCalendarId, calenderArr }) => {
@@ -211,7 +212,7 @@ const MainCalender = ({
     const aaa = calenderArr.filter(item =>
       checkedCalendarIds.includes(item.calendarId),
     );
-    setCalenderClickArr(aaa);
+    // setCalenderClickArr(aaa);
     console.log("갱신확인 : ", aaa);
   }, [checkedCalendarIds]);
 

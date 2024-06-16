@@ -260,8 +260,11 @@ const Create = () => {
             <Mulitifile setSendFiles={setSendFiles} sendFiles={sendFiles} />
           </div>
         </div>
-        <div className="chat-wrap">
-          <Comment />
+        {/*  수정했습니다. */}
+        <div>
+          <div className="chat-wrap">
+            <Comment />
+          </div>
         </div>
       </div>
     </div>
