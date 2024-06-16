@@ -9,7 +9,7 @@ import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
-import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
+import { deleteAllData, modifyAllData } from "../../apis/create/createApi";
 
 const calendarId = 61;
 const boardId = 145;
@@ -29,6 +29,7 @@ const Modify = () => {
 
   const handleWriteChange = event => {
     setCreateWrite(event.target.value);
+    console.log(createWrite);
   };
 
   useEffect(() => {
@@ -46,28 +47,36 @@ const Modify = () => {
     };
   }, []);
 
-  // 보드 전송
+  // 보드 생성
   const boardSubmit = e => {
     e.preventDefault();
     const formData = new FormData();
 
+    // "{
+    //   ""boardId"": 1,
+    //   ""title"": ""제목"",
+    //   ""content"": ""내용"",
+    //   ""startDay"": ""2024-04-11"",
+    //   ""deadLine"": ""12:30:00"",
+    //   ""dDay"": ""2024-04-12""
+    // }"
+
     const infoData = JSON.stringify({
       boardId: 100,
-      signedUserId: 8,
-      calendarId: 63,
       title: createTitle,
       startDay: startDay,
       dDay: dDay,
       content: createWrite,
       deadline: deadline,
-      // color: 1,
     });
+
     const dto = new Blob([infoData], { type: "application/json" });
     formData.append("p", dto);
     sendFiles.forEach(item => {
       formData.append("files", item);
     });
-    sendCreateAllData(formData);
+    console.log(formData);
+    modifyAllData(formData);
   };
 
   // 보드 삭제

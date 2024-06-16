@@ -42,7 +42,7 @@ const Detail = () => {
           {/* 글쓰기 상단 제목부 */}
           <div className="write-header">
             <div className="write-button">
-              <NavLink to="/write/modify">
+              <NavLink to={"/write/modify/" + boardId}>
                 <button className="write-button-primary">
                   <span>수정</span>
                 </button>
