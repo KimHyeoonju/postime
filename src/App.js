@@ -43,8 +43,8 @@ function App() {
         userEmail: userInfoFromStorage.userEmail,
         userName: userInfoFromStorage.userName,
       });
-      setIsLogin(false); // 로그인 상태 설정
-      // setIsLogin(true); // 로그인 상태 설정
+      // setIsLogin(false); // 로그인 상태 설정
+      setIsLogin(true); // 로그인 상태 설정
     }
   }, []);
 

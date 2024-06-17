@@ -1,6 +1,7 @@
 import "./userpwmodal.css";
 const UserPwModal = ({
   isOpen,
+  close,
   message,
   userPwInput,
   error,
@@ -13,6 +14,9 @@ const UserPwModal = ({
   return (
     <div className="userpwmodal-wrap">
       <div className="userpwmodal-content">
+        <button className="userpwmodal-close" onClick={close}>
+          <p>닫기</p>
+        </button>
         <div className="userpwmodal-message">
           <p>{message}</p>
           <div className="userpwmodal-error">

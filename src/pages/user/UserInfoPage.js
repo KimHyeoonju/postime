@@ -1,31 +1,13 @@
 import { useEffect, useState } from "react";
 import "../../css/userinfo.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserPwModal from "../../components/modal/UserPwModal";
 import { postCheckPw } from "../../apis/user/apiuser";
 import axios from "axios";
 
 const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
-  // console.log("가지고 온거: ", signUserId);
-  // const [userInfo, setUserInfo] = useState(
-  //   { name: "", email: "" },
-  //   // null,
-  // );
-  // useEffect(() => {
-  //   // 세션 스토리지에서 정보를 가져옵니다.
-  //   const storedUserInfo = sessionStorage.getItem("userInfo");
+  console.log("회원정보에 불러온 내 자료: ", userInfo);
 
-  //   // 가져온 정보가 있다면 상태에 설정합니다.
-  //   if (storedUserInfo) {
-  //     setUserInfo(JSON.parse(storedUserInfo));
-  //   }
-  // }, []);
-
-  // const [userId, setUserId] = useState(
-  //   signUserId.userId,
-  //   signUserId.userName,
-  //   signUserId.userEmail,
-  // );
   const [user, setUser] = useState({
     userId: signUserId?.userId || "",
     userName: signUserId?.userName || "",
@@ -35,27 +17,39 @@ const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
 
   // 모달 추가
   const [userPwModalOpen, setUserPwModalOpen] = useState(true);
+  // const [userModalClose, setUserModalClose] = useState(false);
   const [userPwModalMessage, setUserPwModalMessage] = useState("");
-  const [userPwModalInput, setUserPwModalInput] = useState("");
+  const [userPwModalInput, setUserPwModalInput] = useState("Test!@#$1234");
   const [userPwModalOnConfirm, setUserPwModalOnConfirm] = useState(
     () => () => {},
   );
   const [userPwModalError, setUserPwModalError] = useState("");
+
+  const navigate = useNavigate();
 
   const handlePwInputChange = e => {
     // 비밀번호 입력값
     setUserPwModalInput(e.target.value);
   };
 
+  // const userModalClose = () => {
+  //   setUserPwModalOpen(false); // 모달을 닫음
+  //   navigate("/"); // "/" 경로로 페이지 이동
+  // };
+
   const handleConfirm = () => {
     const reqData = {
-      // userId: user.userId,
-      userId: 72,
+      // userId: 72,
+      userId: userInfo.userId,
       pwd: userPwModalInput,
     };
-    // postCheckPw(reqData);
     // 모달 확인 버튼 클릭시
     postCheckPwRun(reqData);
+  };
+
+  const userModalClose = () => {
+    setUserPwModalOpen(false);
+    navigate("/");
   };
 
   // 비밀번호 확인
@@ -134,6 +128,7 @@ const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
       {/* 모달 관련 */}
       <UserPwModal
         isOpen={userPwModalOpen}
+        close={userModalClose}
         message={
           <>
             소중한 개인 정보 보호를 위해

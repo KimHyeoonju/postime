@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { getResetPwd } from "../../apis/user/apiuser";
 import UserModal from "../../components/modal/UserModal";
 
-const SearchPwPage = () => {
+const SearchPwPage = ({ userInfo }) => {
+  console.log("회원정보수정의 내 자료: ", userInfo);
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [userId, setUserId] = useState("mybirth811");
+  const [userEmail, setUserEmail] = useState("tngus@naver.com");
   const [sendChecked, setSendChecked] = useState(false);
   const [code, setCode] = useState("");
   // 모달 추가
@@ -17,6 +18,7 @@ const SearchPwPage = () => {
   const [userModalMessage, setUserModalMessage] = useState("");
   const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
   const [servCode, setServCode] = useState("");
+
   // 코드 발송 버튼
   const sendCode = async event => {
     event.preventDefault();
@@ -73,7 +75,7 @@ const SearchPwPage = () => {
     console.log("입력 코드" + code);
     console.log("받은 코드" + servCode);
     if (servCode === code) {
-      navigate("/usernewpw");
+      navigate("/usernewpw", { state: { userId } });
     } else {
       setUserModalOpen(true);
       setUserModalTitle("경고");
