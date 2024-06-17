@@ -114,6 +114,7 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
           <MainStyle>
             <header>
               <Header
+                userInfo={userInfo}
                 todoListhandleButtonClick={todoListhandleButtonClick}
                 setSearchTextIndex={setSearchTextIndex}
               />

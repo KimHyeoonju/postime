@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSearchList } from "../apis/etc/apisearch";
+import { getSearchList, patchCompleteSearchList } from "../apis/etc/apisearch";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
@@ -8,7 +8,10 @@ const Search = ({ searchTextIndex }) => {
   // console.log("Search : ", searchTextIndex);
   // map 돌릴 검색결과 배열 담을곳
   const [serarchList, setSearchList] = useState([]);
+  // Madal 컴포넌트에 보낼 state
   const [stateList, setSateList] = useState([]);
+  // api 용 변수
+
   // 모달창 커스텀훅
   const {
     isModalOpen,
@@ -36,7 +39,11 @@ const Search = ({ searchTextIndex }) => {
     setSearchList(result.resultData);
   };
 
-  const handleDetailPage = state => {
+  const handleDetailPage = (state, boardId) => {
+    console.log(state, boardId);
+    const changeStateOneArr = [{ boardId: boardId, state: 1 }];
+    const changeStateTwoArr = [{ boardId: boardId, state: 2 }];
+    const changeStateThreeArr = [{ boardId: boardId, state: 3 }];
     setSateList(state);
     // console.log(boardId, state);
     if (state === 1) {
@@ -45,8 +52,14 @@ const Search = ({ searchTextIndex }) => {
         title: "진행중인 일정 클릭 안내",
         message:
           "일정 상세페이지로 이동하시겠습니까? 일단은 완료페이지로갑니다",
-        onConfirm: () => {
-          console.log("state1 진행중 확인버튼");
+        onProgress: async () => {
+          // console.log("progress 1 > 2");
+          try {
+            await patchCompleteSearchList(changeStateTwoArr);
+            closeModal();
+          } catch (error) {
+            console.log(error);
+          }
         },
       });
     } else if (state === 2) {
@@ -96,23 +109,23 @@ const Search = ({ searchTextIndex }) => {
               className="common-list"
               key={index}
               onClick={() => {
-                handleDetailPage(item.state);
+                handleDetailPage(item.state, item.boardId);
               }}
             >
               <li className="checkbox-area">
                 {/* {item.state === 1 ? (
-                  <div className="com-state">
-                    <p className="stateone">진행중</p>
-                  </div>
-                ) : item.state === 2 ? (
-                  <div className="com-state">
-                    <p className="statetwo">완료</p>
-                  </div>
-                ) : item.state === 3 ? (
-                  <div className="com-state">
-                    <p className="statethree">삭제</p>
-                  </div>
-                ) : null} */}
+                    <div className="com-state">
+                      <p className="stateone">진행중</p>
+                    </div>
+                  ) : item.state === 2 ? (
+                    <div className="com-state">
+                      <p className="statetwo">완료</p>
+                    </div>
+                  ) : item.state === 3 ? (
+                    <div className="com-state">
+                      <p className="statethree">삭제</p>
+                    </div>
+                  ) : null} */}
               </li>
 
               <li className="title-area">
