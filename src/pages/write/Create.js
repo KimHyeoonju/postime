@@ -13,33 +13,34 @@ import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
 import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
+import Modal from "../../components/Modal";
 
 const calendarId = 61;
 const boardId = 145;
 
 const Create = () => {
-  // // 모달관련
-  // const [modalTitle, setModalTitle] = useState(false);
-  // const [modalText, setModalText] = useState(false);
-  // const [modalBtOk, setModalBtOk] = useState(false);
-  // const [modalBtCancel, setModalBtCancel] = useState(false);
+  // 모달관련
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalText, setModalText] = useState("");
+  const [modalBtOk, setModalBtOk] = useState(false);
+  const [modalBtCancel, setModalBtCancel] = useState(false);
 
-  // // 모달 보이는 상태값
-  // const [isModal, setIsModal] = useState(false);
+  // 모달 보이는 상태값
+  const [isModal, setIsModal] = useState(false);
 
-  // const handleModalSubmit = e => {
-  //   e.preventDefault();
-  //   // 모달 활성화
-  //   setIsModal(true);
-  // };
+  const handleModalSubmit = e => {
+    e.preventDefault();
+    // 모달 활성화
+    setIsModal(true);
+  };
 
-  // // 모달 실행 함수
-  // const modalOk = () => {
-  //   setIsModal(false);
-  //   if (isSuccess) {
-  //     navigate("/");
-  //   }
-  // };
+  // 모달 실행 함수
+  const modalOk = () => {
+    setIsModal(false);
+    if (isModal) {
+      // navigate("/");
+    }
+  };
 
   // // 1. useLocation 훅 취득
   // const location = useLocation();
@@ -144,11 +145,25 @@ const Create = () => {
   const boardDeleteSubmit = async e => {
     e.preventDefault();
     try {
-      const data = [{ calendarId, boardId }];
-      await deleteAllData(data);
+      // await deleteAllData(data);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    const data = [{ calendarId, boardId }];
+    setIsModal(true);
+    setModalTitle("!!!경고!!!");
+    setModalText("진짜 정말 리얼 진심 삭제 하시겠습니까?");
+    setModalBtOk(true);
+    setModalBtCancel(true);
+    setIsModal(true);
+    console.log(modalTitle, modalText);
+    console.log(isModal);
+    return;
   };
 
   // useEffect(() => {
@@ -167,6 +182,18 @@ const Create = () => {
 
   return (
     <div className="write-wrap">
+      {isModal ? (
+        <Modal
+          title={modalTitle}
+          message={modalText}
+          // modalOk={modalOk}
+          // modalCancel={modalCancel}
+          onConfirm={modalBtOk}
+          onClose={modalBtCancel}
+          stateList={0}
+          isOpen={isModal}
+        />
+      ) : null}
       <div className="write-inner">
         <div className="write-header-title">
           {/* 글쓰기 상단 제목부 */}
@@ -181,7 +208,7 @@ const Create = () => {
                   <span>저장</span>
                 </button>
               </form>
-              <form onSubmit={boardDeleteSubmit}>
+              <form onSubmit={handleSubmit}>
                 <button
                   className="write-button-primary"
                   type="submit"

@@ -11,6 +11,16 @@ export const sendCreateAllData = async data => {
     console.log(error);
   }
 };
+export const modifyAllData = async data => {
+  try {
+    const header = { headers: { "Content-Type": "multipart/form-data" } };
+    const response = await axios.post("/api/board", data, header);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const deleteAllData = async data => {
   try {
