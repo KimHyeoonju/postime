@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import Button from "./Button";
-import { useEffect } from "react";
 
 const ModalWrapStyle = styled.div`
   position: fixed;
@@ -68,17 +67,17 @@ const Modal = ({
         <ModalFooterStyle>
           {stateList === 1 ? (
             <>
-              <Button onClick={onConfirm} label="상세페이지" />
+              <Button onClick={onProgress} label="복원1" />
               <Button onClick={onClose} label="취소" />
             </>
           ) : stateList === 2 ? (
             <>
-              <Button onClick={onProgress} label="복원" />
+              <Button onClick={onProgress} label="복원2" />
               <Button onClick={onClose} label="취소" />
             </>
           ) : stateList === 3 ? (
             <>
-              <Button onClick={onProgress} label="복원" />
+              <Button onClick={onProgress} label="복원3" />
               <Button onClick={onClose} label="취소" />
             </>
           ) : (

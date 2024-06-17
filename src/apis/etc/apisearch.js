@@ -16,3 +16,18 @@ export const getSearchList = async (searchTextIndex, id) => {
     console.log(error);
   }
 };
+
+// patch  state 1 > 2
+export const patchCompleteSearchList = async apiArr => {
+  try {
+    const response = await axios.patch(`/api/board/state`, apiArr);
+    const status = response.status.toString().charAt(0);
+    if (status === "2") {
+      return response.data;
+    } else {
+      alert("API 오류발생 status 확인해주세요");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
