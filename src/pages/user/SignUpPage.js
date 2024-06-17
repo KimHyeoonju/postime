@@ -166,8 +166,12 @@ const SignUpPage = () => {
 
       return;
     }
-    alert("회원가입이 완료되었습니다.");
-    navigate("/");
+    setUserModalOpen(true);
+    setUserModalTitle("알림");
+    setUserModalMessage("회원가입이 완료되었습니다.");
+    setUserModalOnConfirm(() => () => {
+      setUserModalOpen(false), navigate("/");
+    });
   };
 
   // 비밀번호 항목

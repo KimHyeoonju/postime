@@ -4,7 +4,8 @@ import axios from "axios";
 import UserModal from "../../components/modal/UserModal";
 import { useNavigate } from "react-router-dom";
 
-const UserModify = () => {
+const UserModify = ({ signUserId, userInfo }) => {
+  console.log("회원정보수정의 내 자료: ", userInfo);
   // 입력할 항목 변수
   const [userEmail, setUserEmail] = useState("aaa@aaa.net");
   const [userEmailActive, setUserEmailActive] = useState(true);
@@ -13,6 +14,11 @@ const UserModify = () => {
   // 이메일 중복확인
   const [emailChecked, setEmailChecked] = useState(false);
 
+  const [user, setUser] = useState({
+    userId: signUserId?.userId || "",
+    userName: signUserId?.userName || "",
+    userEmail: signUserId?.userEmail || "",
+  });
   const [userPass, setUserPass] = useState("");
   const [userNewPass, setUserNewPass] = useState("");
   const [userNewPass2, setUserNewPass2] = useState("");
@@ -103,6 +109,23 @@ const UserModify = () => {
     navigate("/userinfo");
   };
 
+  useEffect(() => {
+    // axios.get 으로 사용자의 정보를 주세요.
+    const postUser = async ({ userId, pwd }) => {
+      try {
+        const response = await axios.put("/api/user", { userId, pwd });
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const sendData = {
+      userId: user.userId,
+      pwd: userPass,
+    };
+    postUser(sendData);
+  }, [user.userId, userPass]);
+
   return (
     <div className="user-wrap">
       <div className="user-title-line">
@@ -113,7 +136,7 @@ const UserModify = () => {
         <div className="usermodify-input-name">
           <label htmlFor="name">성명</label>
           <div className="user-content">
-            <span>성명</span>
+            <span>{userInfo?.name}</span>
           </div>
         </div>
 
