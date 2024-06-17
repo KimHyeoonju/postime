@@ -3,20 +3,16 @@ import { FaRegCalendar } from "react-icons/fa6";
 import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
 
-// import { create } from "../../apis/create";
-
-import Tagify from "@yaireo/tagify";
-import "@yaireo/tagify/dist/tagify.css";
-
 import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
 import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
+import { useNavigate } from "react-router-dom";
 
 const calendarId = 61;
-const boardId = 145;
+const boardId = boardId;
 
 const Create = () => {
   // 모달관련
@@ -28,19 +24,21 @@ const Create = () => {
   // 모달 보이는 상태값
   const [isModal, setIsModal] = useState(false);
 
-  const handleModalSubmit = e => {
-    e.preventDefault();
-    // 모달 활성화
-    setIsModal(true);
-  };
+  const naviagte = useNavigate();
 
-  // 모달 실행 함수
-  const modalOk = () => {
-    setIsModal(false);
-    if (isModal) {
-      // navigate("/");
-    }
-  };
+  // const handleModalSubmit = e => {
+  //   e.preventDefault();
+  //   // 모달 활성화
+  //   setIsModal(true);
+  // };
+
+  // // 모달 실행 함수
+  // const modalOk = () => {
+  //   setIsModal(false);
+  //   if (isModal) {
+  //     // navigate("/");
+  //   }
+  // };
 
   // // 1. useLocation 훅 취득
   // const location = useLocation();
@@ -50,16 +48,6 @@ const Create = () => {
   // // const boardId = state.boardId;
   // const boardId = location.state.boardId;
   // console.log("boardId : ", boardId);
-
-  // 태그 관련
-  // const input = useRef(null);
-  // const tagify = useRef(null);
-
-  // 보드 관련
-  // const [boards, setBoards] = useState([
-  //   { calendarId: 61, boardId: 145 },
-  //   { calendarId: 61, boardId: 145 },
-  // ]);
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("제목입니당");
@@ -94,7 +82,7 @@ const Create = () => {
   }, []);
 
   // 보드 전송
-  const boardSubmit = e => {
+  const boardSubmit = async e => {
     e.preventDefault();
     // 각 항목 체크하기 생략
     // 1 번 전송데이터 포맷 만들기
@@ -102,7 +90,7 @@ const Create = () => {
 
     // {
     //   "calendarId": 63,
-    //   "signedUserId": 8,
+    //   "signedUserId": ,
     //   "title": "test55",
     //   "content": "content",
     //   "startDay": "2024-06-01",
@@ -119,13 +107,12 @@ const Create = () => {
 
     // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
     const infoData = JSON.stringify({
-      calendarId: 63,
-      signedUserId: 8,
+      calendarId: calendarId,
+      signedUserId: 72,
       title: createTitle,
       startDay: startDay,
       content: createWrite,
       deadLine: deadline,
-      // notExistTag: [{ calendarId: 63, title: createTitle, color: 1 }],
       dDay: dDay,
     });
     // 3 번 Blob 바이너리 데이터 만들기
@@ -138,20 +125,31 @@ const Create = () => {
     //   formData.append("files", item);
     // });
     // 6 번 axios 로 전달
-    sendCreateAllData(formData);
-  };
-
-  // 보드 삭제
-  const boardDeleteSubmit = async e => {
-    e.preventDefault();
     try {
-      // await deleteAllData(data);
+      await sendCreateAllData(formData);
+      naviagte("/");
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleSubmit = async e => {
+  // 보드 휴지통으로
+  const boardDeleteSubmit = async e => {
+    e.preventDefault();
+    const data = [
+      {
+        boardId: boardId,
+        state: 3,
+      },
+    ];
+    try {
+      await deleteAllData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleModalSubmit = async e => {
     e.preventDefault();
 
     const data = [{ calendarId, boardId }];
@@ -208,11 +206,11 @@ const Create = () => {
                   <span>저장</span>
                 </button>
               </form>
-              <form onSubmit={handleSubmit}>
+              <form>
                 <button
                   className="write-button-primary"
                   type="submit"
-                  // onClick={e => boardDeleteSubmit(e)}
+                  onClick={e => boardDeleteSubmit(e)}
                 >
                   <span>삭제</span>
                 </button>
