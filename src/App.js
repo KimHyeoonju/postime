@@ -19,8 +19,8 @@ function App() {
   });
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
 
-  const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
-  // const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+  // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
+  const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
 
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
@@ -43,8 +43,8 @@ function App() {
         userEmail: userInfoFromStorage.userEmail,
         userName: userInfoFromStorage.userName,
       });
-      setIsLogin(false); // 로그인 상태 설정
-      // setIsLogin(true); // 로그인 상태 설정
+      // setIsLogin(false); // 로그인 상태 설정
+      setIsLogin(true); // 로그인 상태 설정
     }
   }, []);
 

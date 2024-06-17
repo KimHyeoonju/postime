@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 import "../../css/userinfo.css";
 import axios from "axios";
 import UserModal from "../../components/modal/UserModal";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // 로그인 안 된 상태
 // 로그인 페이지 -> 비밀번호 찾기 페이지 -> (코드 입력 후) 비밀번호 재설정 페이지입니다
-const UserNewPwPage = () => {
-  const [userPass, setUserPass] = useState("");
+const UserNewPwPage = ({ userInfo }) => {
+  const { state } = useLocation();
+  const { userId } = state;
+  console.log("불러온 내 자료: ", userInfo);
   const [userNewPass, setUserNewPass] = useState("");
   const [userNewPass2, setUserNewPass2] = useState("");
   // 비밀번호 및 비밀번호 확인 일치 여부 플래그
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   // 비밀번호 형식
   const [passwordCheck, setPassWordCheck] = useState(true);
+
   // 모달 추가
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalTitle, setUserModalTitle] = useState(false);
@@ -25,7 +28,7 @@ const UserNewPwPage = () => {
   };
   useEffect(() => {
     chkPW();
-  }, [passwordCheck, userPass]);
+  }, [passwordCheck, userNewPass]);
 
   // 비밀번호 문자열 검사
   function chkPW() {
@@ -84,14 +87,43 @@ const UserNewPwPage = () => {
       return;
     }
 
-    // 모달이 안 뜸. navigate를 주석처리 하면 모달이 뜨는데 클릭이 안된다
-    setUserModalOpen(true);
-    setUserModalTitle("알림");
-    setUserModalMessage("비밀번호 변경이 완료되었습니다.");
-    setUserModalOnConfirm(() => {
-      setUserModalOpen(false);
-      navigate("/");
-    });
+    // useEffect(() => {
+    //   // axios.get 으로 사용자의 정보를 주세요.
+    //   const postUser = async ({ userId, pwd }) => {
+    //     try {
+    //       const response = await axios.put("/api/user", { userId, pwd });
+    //       console.log(response.data);
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   };
+    //   const sendData = {
+    //     userId: user.userId,
+    //     pwd: userNewPass,
+    //   };
+    //   postUser(sendData);
+    // }, [user.userId, userNewPass]);
+
+    try {
+      const apiUrl = "/api/user";
+      const postData = {
+        userId: userInfo?.userId, // userInfo로부터 userId 전달
+        newPw: userNewPass, // 사용자 입력 새 비밀번호
+      };
+
+      const response = await axios.patch(apiUrl, postData);
+      console.log(response.data);
+
+      // 변경 성공
+      setUserModalOpen(true);
+      setUserModalTitle("알림");
+      setUserModalMessage("비밀번호 변경이 완료되었습니다.");
+      setUserModalOnConfirm(() => () => {
+        setUserModalOpen(false), navigate("/");
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

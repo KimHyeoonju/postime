@@ -11,6 +11,29 @@
   align-items: center;
 }
 
+.userpwmodal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-color: #512772;
+  background: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.userpwmodal-close p {
+  color: #512772;
+}
+
+.userpwmodal-close:hover {
+  transition: background-color 0.2s;
+  background: #512772;
+}
+.userpwmodal-close:hover p {
+  color: #ffffff;
+}
+
 .userpwmodal-content {
   position: relative;
   width: 100%;
