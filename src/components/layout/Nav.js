@@ -69,9 +69,9 @@ const Nav = ({
     }
   };
 
-  // 수정!!!!!!
+  // 삭제?
   // 체크 박스 상태
-  const [isCheck, setIsCheck] = useState(true);
+  // const [isCheck, setIsCheck] = useState(true);
 
   /** 알림 리스트 배열 */
   const [alarmListArr, setAlarmListArr] = useState([]);
@@ -116,10 +116,10 @@ const Nav = ({
     // console.log("캘린더ID : ", e.target.id);
     // console.log("캘린더색 : ", e.target.title);
     // console.log("캘린더명 : ", e.target.outerText);
-    // setSelectCalenderId(e.target.id);
-    // setSelectCalenderColor(e.target.title);
-    // setSelectCalenderName(e.target.outerText);
-    // calendarSelectModalCancel();
+    setSelectCalenderId(e.target.id);
+    setSelectCalenderColor(e.target.title);
+    setSelectCalenderName(e.target.outerText);
+    calendarSelectModalCancel();
   };
   /** 캘린더 공유, 수정 모달 닫기 함수 */
   const calendarSelectModalCancel = () => {
@@ -148,7 +148,7 @@ const Nav = ({
   const calenderUserListModalOk = () => {
     setIsCalenderUserListModal(!isCalenderUserListModal);
     setModalType(1);
-    // calendarSelectModalCancel();
+    calendarSelectModalCancel();
 
     // setIsCalenderSelectModal(false); // 이전 모달 창 닫기
   };
@@ -163,7 +163,7 @@ const Nav = ({
     // 클릭한 캘린더ID 저장(전달)
     setCalendarId(calendarId);
 
-    // setNowCalendarId(calendarId);
+    setNowCalendarId(calendarId);
   };
 
   /** 캘린더 수정 모달 활성화/비활성화 여부  */
@@ -233,17 +233,17 @@ const Nav = ({
 
   /** 캘린더 리스트를 다시 가져온다.  */
   const calenderList = async () => {
-    // const result = await getCalenderList(userId);
-    // setCalenderListArr(result.resultData);
+    const result = await getCalenderList(userId);
+    setCalenderListArr(result.resultData);
   };
 
   /**최초 렌더링 : 캘린더 리스트를 가져온다. */
   const firstCalenderList = async () => {
-    // const result = await getCalenderList(userId);
-    // setCalenderListArr(result.resultData);
+    const result = await getCalenderList(userId);
+    setCalenderListArr(result.resultData);
     // 모든 캘린더의 ID를 checkedCalendars 배열에 추가하여 모든 체크박스가 선택된 상태로 설정
-    // const allCalendarIds = result.resultData.map(item => item.calendarId);
-    // setCheckedCalendars(allCalendarIds);
+    const allCalendarIds = result.resultData.map(item => item.calendarId);
+    setCheckedCalendars(allCalendarIds);
   };
 
   // 최초 렌더링
@@ -281,7 +281,6 @@ const Nav = ({
           selectCalenderId={selectCalenderId}
           selectCalenderName={selectCalenderName}
           modalType={modalType}
-
           // setDeleteUeserId={setDeleteUeserId}
           // deleteUeserId={deleteUeserId}
         />
@@ -396,7 +395,7 @@ const Nav = ({
                           title={item.color}
                           onClick={e => {
                             calenderSelectModalOk(e);
-                            // calenderSelectModalOk(item.calendarId);
+                            calenderSelectModalOk(item.calendarId);
                             // console.log("Item:", item.calendarId);
                             // console.log("e:", e);
                           }}
@@ -407,7 +406,7 @@ const Nav = ({
                     ))}
 
                     {/* 서버 꺼졌을 때 */}
-                    <div className="div-calender mycalender-list mycalender">
+                    {/* <div className="div-calender mycalender-list mycalender">
                       {checkedCalendars.includes("id1") ? (
                         <FaSquareCheck
                           className="calender-color"
@@ -428,7 +427,7 @@ const Nav = ({
                       >
                         내 캘린더
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* <FaSquare color="red" /> */}
                     {/* <div className="div-calender mycalender-list mycalender">
@@ -463,7 +462,7 @@ const Nav = ({
                 <div className="div-mycalender-list-none">
                   <div className="div-calender div-mycalender-list">
                     {/* 서버 연결 시 */}
-                    {/* {calenderListArr.map((item, index) => (
+                    {calenderListArr.map((item, index) => (
                       <div
                         className="div-calender mycalender-list mycalender"
                         key={index}
@@ -491,7 +490,7 @@ const Nav = ({
                           title={item.color}
                           onClick={e => {
                             calenderSelectModalOk(e);
-                            // calenderSelectModalOk(item.calendarId);
+                            calenderSelectModalOk(item.calendarId);
                             // console.log("Item:", item.calendarId);
                             console.log("e:", e);
                           }}
@@ -499,10 +498,10 @@ const Nav = ({
                           {item.title}
                         </div>
                       </div>
-                    ))} */}
+                    ))}
 
                     {/* 서버 꺼졌을 때 */}
-                    <div className="div-calender mycalender-list mycalender">
+                    {/* <div className="div-calender mycalender-list mycalender">
                       {checkedCalendars.includes("id1") ? (
                         <FaSquareCheck
                           className="calender-color"
@@ -523,7 +522,7 @@ const Nav = ({
                       >
                         내 캘린더
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* <FaSquare color="red" /> */}
                     {/* <div className="div-calender mycalender-list mycalender">
