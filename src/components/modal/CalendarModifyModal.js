@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./calendarmodalstyle.css";
 import { IoIosClose, IoMdClose } from "react-icons/io";
 import { colorSystem } from "../../css/color";
@@ -84,6 +84,8 @@ const CalendarModifyModal = ({
   /** 기존 캘린더 색, 새로 작성한 캘린더 색  */
   const [selectedColor, setSelectedColor] = useState(selectCalenderColor);
 
+  const modalRef = useRef(null);
+
   const modifyCheckboxChange = color => {
     setSelectedColor(color);
   };
@@ -164,9 +166,27 @@ const CalendarModifyModal = ({
     </div>
   );
 
+  useEffect(() => {
+    const handler = event => {
+      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        calendarModifyModalCancel(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+    // document.addEventListener('touchstart', handler); // 모바일 대응
+
+    return () => {
+      // 이벤트 핸들러 해제
+      document.removeEventListener("mousedown", handler);
+      // document.removeEventListener('touchstart', handler); // 모바일 대응
+    };
+  }, [calendarModifyModalCancel]);
+
   return (
     <CalendarModifyModalStyle>
-      <div className="calendar-modal-wrap">
+      <div ref={modalRef} className="calendar-modal-wrap">
         <div className="calendar-modal-content">
           <div className="calendar-modal-header">
             <div>

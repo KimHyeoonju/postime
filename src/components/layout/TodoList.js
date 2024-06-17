@@ -63,17 +63,17 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
 
   const [todoListArr, setTodoListArr] = useState([]);
   const todoListPrint = async () => {
-    const result = await getTodoList(userId);
+    // const result = await getTodoList(userId);
 
     // (주석제거)
-    setTodoListArr(result.resultData.untilNextMonthBoard);
-    setTodoTodayListArr(result.resultData.untilTodayBoard);
-    setTodoMonthListArr(result.resultData.untilThisMonthBoard);
-    setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
+    // setTodoListArr(result.resultData.untilNextMonthBoard);
+    // setTodoTodayListArr(result.resultData.untilTodayBoard);
+    // setTodoMonthListArr(result.resultData.untilThisMonthBoard);
+    // setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
     // console.log("캘린더 목차 확인", result.resultData);
 
     // console.log("길이", todoListArr.length);
-    console.log(result.resultData.untilNextMonthBoard);
+    // console.log(result.resultData.untilNextMonthBoard);
     // console.log("체크", todoListArr[1].dDay);
     checkDay();
   };
