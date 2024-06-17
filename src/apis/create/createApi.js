@@ -22,10 +22,10 @@ export const modifyAllData = async data => {
   }
 };
 
+// 휴지통으로 보내기
 export const deleteAllData = async data => {
   try {
-    // const header = { headers: { "Content-Type": "multipart/form-data" } };
-    const response = await axios.delete("/api/board", { data: data });
+    const response = await axios.patch("/api/board/state", data);
     // console.log(response);
     return response;
   } catch (error) {
