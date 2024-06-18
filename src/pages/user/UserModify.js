@@ -94,7 +94,8 @@ const UserModify = ({ signUserId, userInfo }) => {
     }
 
     const reqData = {
-      userId: signUserId.userId, // 사용자 ID 혹은 필요한 경우 수정
+      userId: userInfo.userId,
+      pwd: userPass,
       email: userEmail,
     };
 

@@ -104,11 +104,12 @@ const Search = ({ searchTextIndex }) => {
   };
 
   return (
-
     <SearchStyle>
       <div className="common">
         <div className="common-inner">
-          <h1  className="common-title">{`' ${searchTextIndex} '`} 에 해당하는 검색결과 입니다.</h1>
+          <h1 className="common-title">
+            {`' ${searchTextIndex} '`} 에 해당하는 검색결과 입니다.
+          </h1>
           <div className="common-button"></div>
           <div className="common-menu">
             <div className="com-sizebox"></div>
@@ -126,18 +127,17 @@ const Search = ({ searchTextIndex }) => {
               <span>캘린더 명</span>
             </div>
 
-
-          <div className="common-list-wrap">
-            {serarchList.map((item, index) => (
-              <ul
-                className="common-list"
-                key={index}
-                onClick={() => {
-                  handleDetailPage(item.state, item.boardId);
-                }}
-              >
-                <li className="checkbox-area">
-                  {/* {item.state === 1 ? (
+            <div className="common-list-wrap">
+              {serarchList.map((item, index) => (
+                <ul
+                  className="common-list"
+                  key={index}
+                  onClick={() => {
+                    handleDetailPage(item.state, item.boardId);
+                  }}
+                >
+                  <li className="checkbox-area">
+                    {/* {item.state === 1 ? (
                     <div className="com-state">
                       <p className="stateone">진행중</p>
                     </div>
@@ -150,52 +150,52 @@ const Search = ({ searchTextIndex }) => {
                       <p className="statethree">삭제</p>
                     </div>
                   ) : null} */}
-                </li>
+                  </li>
 
-                <li className="title-area">
-                  <span className="com-title">{item.title}</span>
-                </li>
+                  <li className="title-area">
+                    <span className="com-title">{item.title}</span>
+                  </li>
 
-                <li className="state-area">
-                  {item.state === 1 ? (
-                    <div className="com-state">
-                      <p className="stateone">진행중</p>
-                    </div>
-                  ) : item.state === 2 ? (
-                    <div className="com-state">
-                      <p className="statetwo">완료</p>
-                    </div>
-                  ) : item.state === 3 ? (
-                    <div className="com-state">
-                      <p className="statethree">삭제</p>
-                    </div>
-                  ) : null}
-                </li>
+                  <li className="state-area">
+                    {item.state === 1 ? (
+                      <div className="com-state">
+                        <p className="stateone">진행중</p>
+                      </div>
+                    ) : item.state === 2 ? (
+                      <div className="com-state">
+                        <p className="statetwo">완료</p>
+                      </div>
+                    ) : item.state === 3 ? (
+                      <div className="com-state">
+                        <p className="statethree">삭제</p>
+                      </div>
+                    ) : null}
+                  </li>
 
-                <li className="text-area">
-                  <span className="com-text">{item.content}</span>
-                </li>
-                <li className="date-area">
-                  <span className="com-date">{item.dDay}</span>
-                </li>
-                <li className="calender-area">
-                  <span className="com-calender">{item.calendarName}</span>
-                </li>
-              </ul>
-            ))}
+                  <li className="text-area">
+                    <span className="com-text">{item.content}</span>
+                  </li>
+                  <li className="date-area">
+                    <span className="com-date">{item.dDay}</span>
+                  </li>
+                  <li className="calender-area">
+                    <span className="com-calender">{item.calendarName}</span>
+                  </li>
+                </ul>
+              ))}
+            </div>
+
+            {/* 모달 관련 */}
+            <Modal
+              isOpen={isModalOpen}
+              title={modalTitle}
+              message={modalMessage}
+              onClose={closeModal}
+              onConfirm={confirmAction}
+              onDetail={movePageAction}
+              stateList={stateList}
+            />
           </div>
-
-        {/* 모달 관련 */}
-        <Modal
-          isOpen={isModalOpen}
-          title={modalTitle}
-          message={modalMessage}
-          onClose={closeModal}
-          onConfirm={confirmAction}
-          onDetail={movePageAction}
-          stateList={stateList}
-        />
-
         </div>
       </div>
     </SearchStyle>
