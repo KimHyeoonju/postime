@@ -16,6 +16,7 @@ import {
   getAllData,
   patchCompleteSearchList,
 } from "../../apis/create/createApi";
+
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Detail = ({ boardId }) => {
@@ -35,27 +36,31 @@ const Detail = ({ boardId }) => {
   const [sendFiles, setSendFiles] = useState([]);
   // const [boardData, setBoardData] = useState(null);
 
+  const { boardId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await getAllData(boardId);
-        const result = response.data.respnseData.result;
+        console.log(response);
 
-        console.log(response.data);
+        const result = response.data.resultData;
+
         setCreateTitle(result.title);
         setStartDay(result.startDay);
         setDDay(result.dDay);
         setDeadline(result.deadLine);
         setCreateWrite(result.content);
-        // setSendFiles(response.data.files);
+        setSendFiles(response.data.files);
       } catch (error) {
         console.log(error);
       }
     };
-    getData();
-  }, []);
+    if (boardId) {
+      getData();
+    }
+  }, [boardId]);
 
   // 보드 휴지통으로
   // const boardDeleteSubmit = async e => {

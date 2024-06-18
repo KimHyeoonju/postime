@@ -13,11 +13,11 @@ import { deleteAllData, modifyAllData } from "../../apis/create/createApi";
 
 const Modify = ({ calendarId, boardId }) => {
   // 글쓰기 관련
-  const [createTitle, setCreateTitle] = useState("제목입니당");
-  const [startDay, setStartDay] = useState("2024-06-01");
-  const [dDay, setDDay] = useState("2024-06-13");
+  const [createTitle, setCreateTitle] = useState("");
+  const [startDay, setStartDay] = useState("");
+  const [dDay, setDDay] = useState("");
   const [deadline, setDeadline] = useState();
-  const [createWrite, setCreateWrite] = useState("내용입니당");
+  const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
 
   const handleTitleChange = event => {

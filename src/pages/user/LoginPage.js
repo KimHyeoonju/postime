@@ -60,7 +60,7 @@ const LoginPage = ({ setIsLogin, setUserInfo }) => {
     // const email = result.resultData.email;
 
     sessionStorage.setItem("userId", result.resultData.userId);
-    sessionStorage.setItem("Name", result.resultData.name);
+    sessionStorage.setItem("name", result.resultData.name);
     sessionStorage.setItem("email", result.resultData.email);
 
     navigate("/");
