@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegCalendar } from "react-icons/fa6";
 import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
@@ -9,27 +9,65 @@ import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
-import { deleteAllData } from "../../apis/create/createApi";
-import { NavLink } from "react-router-dom";
+const calendarId = 1;
 
-const calendarId = 61;
-const boardId = 145;
+import {
+  deleteAllData,
+  getAllData,
+  patchCompleteSearchList,
+} from "../../apis/create/createApi";
+import { NavLink, useNavigate } from "react-router-dom";
 
-const Detail = () => {
+const Detail = ({ boardId }) => {
   // 글쓰기 관련
-  const [createTitle, setCreateTitle] = useState("제목입니당");
-  const [startDay, setStartDay] = useState("2024-06-01");
-  const [dDay, setDDay] = useState("2024-06-13");
+  const [createTitle, setCreateTitle] = useState("");
+  const [startDay, setStartDay] = useState("");
+  const [dDay, setDDay] = useState("");
   const [deadline, setDeadline] = useState();
-  const [createWrite, setCreateWrite] = useState("내용입니당");
+  const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
+  // const [boardData, setBoardData] = useState(null);
 
-  // 보드 삭제
-  const boardDeleteSubmit = async e => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getAllData(boardId);
+        const result = response.data.respnseData.result;
+
+        console.log(response.data);
+        setCreateTitle(result.title);
+        setStartDay(result.startDay);
+        setDDay(result.dDay);
+        setDeadline(result.deadLine);
+        setCreateWrite(result.content);
+        // setSendFiles(response.data.files);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+
+  // 보드 휴지통으로
+  // const boardDeleteSubmit = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = [{ calendarId, boardId }];
+  //     await deleteAllData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // 보드 완료
+  const boardComplete = async e => {
     e.preventDefault();
     try {
-      const data = [{ calendarId, boardId }];
-      await deleteAllData(data);
+      const data = [{ boardId }];
+      await patchCompleteSearchList(data);
+      navigate("/complete");
     } catch (error) {
       console.log(error);
     }
@@ -47,9 +85,13 @@ const Detail = () => {
                   <span>수정</span>
                 </button>
               </NavLink>
-              <form onSubmit={boardDeleteSubmit}>
-                <button className="write-button-primary" type="submit">
-                  <span>삭제</span>
+              <form>
+                <button
+                  className="write-button-primary"
+                  type="submit"
+                  onClick={e => boardComplete(e)}
+                >
+                  <span>완료</span>
                 </button>
               </form>
             </div>

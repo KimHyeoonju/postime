@@ -3,12 +3,12 @@ import { getComment, postCommentInput } from "../../apis/create/createApi";
 import CommentInput from "./CommentInput";
 import CommentView from "./CommentView";
 
-const Comment = () => {
+const Comment = ({ boardId, signUserId }) => {
   // 전체 댓글 목록
   const [commentList, setCommentList] = useState([]);
 
   const allComments = async () => {
-    const result = await getComment(100);
+    const result = await getComment(boardId);
     setCommentList(result.data.resultData);
   };
 
@@ -23,10 +23,10 @@ const Comment = () => {
   // 댓글 추가
   const addComment = async chat => {
     const sendData = {
-      boardId: 100,
-      signedUserId: 8,
+      boardId: boardId,
+      signedUserId: signUserId,
       content: chat,
-      calendarId: 63,
+      calendarId: 1,
     };
     const result = await postCommentInput(sendData);
     allComments();

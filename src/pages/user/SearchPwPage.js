@@ -75,7 +75,7 @@ const SearchPwPage = ({ userInfo }) => {
     console.log("입력 코드" + code);
     console.log("받은 코드" + servCode);
     if (servCode === code) {
-      navigate("/usernewpw", { state: { userId } });
+      navigate("/usernewpw");
     } else {
       setUserModalOpen(true);
       setUserModalTitle("경고");
@@ -97,9 +97,6 @@ const SearchPwPage = ({ userInfo }) => {
     }
   };
 
-  useEffect(() => {
-    return () => {};
-  }, []);
   return (
     <div className="user-wrap">
       <div className="user-title-line">

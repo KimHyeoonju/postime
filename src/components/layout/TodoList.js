@@ -5,6 +5,10 @@ import { colorSystem } from "../../css/color";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import {
+  patchCompleteList,
+  patchDeleteCompleteList,
+} from "../../apis/etc/apicomplete";
 
 const TodoListMenu = styled.div`
   &.todolistOff {
@@ -63,14 +67,14 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
 
   const [todoListArr, setTodoListArr] = useState([]);
   const todoListPrint = async () => {
-    // const result = await getTodoList(userId);
+    const result = await getTodoList(userId);
 
     // (주석제거)
-    // setTodoListArr(result.resultData.untilNextMonthBoard);
-    // setTodoTodayListArr(result.resultData.untilTodayBoard);
-    // setTodoMonthListArr(result.resultData.untilThisMonthBoard);
-    // setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
-    // console.log("캘린더 목차 확인", result.resultData);
+    setTodoListArr(result.resultData.untilNextMonthBoard);
+    setTodoTodayListArr(result.resultData.untilTodayBoard);
+    setTodoMonthListArr(result.resultData.untilThisMonthBoard);
+    setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
+    console.log("캘린더 목차 확인", result.resultData);
 
     // console.log("길이", todoListArr.length);
     // console.log(result.resultData.untilNextMonthBoard);
@@ -78,28 +82,38 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
     checkDay();
   };
 
-  // 수정 바람
-  const deleteTodoList = async (boardId, calendarId) => {
-    // console.log(userId);
-    try {
-      const resepons = await axios.delete(`/api/board`);
-      const status = resepons.status.toString().charAt(0);
-      console.log(status);
-      if (status === "2") {
-        return resepons.data;
-      } else {
-        console.log("API 오류");
-      }
-      console.log(resepons.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // 수정 바람(삭제 예정)
+  // const deleteTodoList = async (boardId, calendarId) => {
+  //   // console.log(userId);
+  //   try {
+  //     const resepons = await axios.delete(`/api/board`);
+  //     const status = resepons.status.toString().charAt(0);
+  //     console.log(status);
+  //     if (status === "2") {
+  //       return resepons.data;
+  //     } else {
+  //       console.log("API 오류");
+  //     }
+  //     console.log(resepons.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     todoListPrint();
     return () => {};
   }, []);
+
+  // TodoList 닫았을 때 : 체크한 일정 완료 처리 & 갱신
+  useEffect(() => {
+    if (toggle === false) {
+      console.log("TodoList가 닫혔을 때 체크된 항목들을 완료 처리");
+      handleRestoreApi();
+      todoListPrint();
+    }
+    return () => {};
+  }, [toggle]);
 
   const handleClickOutside = e => {
     // 투두 리스트가 열려있는 상태에서만 실행합니다.
@@ -111,6 +125,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
       if (isOutsideTodoList && isOutsideTodoListWrap) {
         // setToggle 함수를 사용하여 상태를 업데이트합니다.
         setToggle(false);
+
         // onTodoListToggle(false);
       }
     }
@@ -127,6 +142,72 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
     const endDay = moment(dDay).format("M월 D일");
     // console.log("check", endDay);
     return <span>{endDay}</span>;
+  };
+
+  // 아래는 체크에 따른
+
+  // 체크박스 선택된 항목
+  const [selectedItems, setSelectedItems] = useState([]);
+  // const changeStateTwoArr = [{ boardId: boardId, state: 2 }];
+  // const [boardId, setBoardId] = useState(null);
+
+  // 선택된 항목들의 boradid, state 를 저장
+  const [selectedBoardId, setSelectBoardId] = useState([]);
+  // 선택된 항목의 boardid, calenderid를 저장
+  const [selectedCalendarId, setSelectCalendarId] = useState([]);
+
+  useEffect(() => {
+    console.log("선택항목 : ", selectedItems);
+
+    // 선택된 항목들의 boradid, state 를 저장
+    const boardIds = selectedItems.map(item => ({
+      boardId: item.boardId,
+      state: 2,
+    }));
+    console.log("boardIds : ", boardIds);
+    setSelectBoardId(boardIds);
+    console.log("selectedBoardId : ", boardIds);
+
+    // 선택된 항목의 boardid, calenderid를 저장
+    // const calendarIds = selectedItems.map(item => ({
+    //   boardId: item.boardId,
+    //   calendarId: item.calendarId,
+    // }));
+    // console.log(calendarIds);
+    // setSelectCalendarId(calendarIds);
+  }, [selectedItems]);
+
+  // input onchange 이벤트 핸들러
+  const handleCheckboxChange = (item, isChecked) => {
+    console.log("item : ", item);
+    console.log("isChecked : ", isChecked);
+    console.log("selectedItems : ", selectedItems);
+
+    if (isChecked) {
+      setSelectedItems(prevItems => [...prevItems, item]);
+    } else {
+      // isChecked 는 false
+      // false 인 item 이 한개
+      // item :  3
+      // selectedItems = [1,2,3,4,5]
+      setSelectedItems(prevItems =>
+        prevItems.filter(selectedItem => selectedItem.boardId !== item.boardId),
+      );
+    }
+  };
+
+  // state 1 > 2 완료 처리
+  const handleRestoreApi = async () => {
+    const result = await patchCompleteList(selectedBoardId);
+    console.log("result : ", selectedBoardId);
+    console.log("result2: ", result);
+    // if (result.statusCode !== 2) {
+    //   alert(result.resultMsg);
+    //   return;
+    // }
+    setSelectBoardId([]); // 선택된 항목 ID 초기화
+    setSelectedItems([]); // 선택된 항목 초기화
+    // getDelApi(); // 완료 목록 갱신
   };
 
   return (
@@ -162,7 +243,19 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       style={{ borderLeft: "7px solid #666666" }}
                       key={index}
                     >
-                      <input type="checkbox" className="todo-checkbox" />
+                      <input
+                        type="checkbox"
+                        className="todo-checkbox"
+                        onClick={() => {
+                          selectedItems.some(
+                            selectedItem =>
+                              selectedItems.boardId === item.boardId,
+                          );
+                        }}
+                        onChange={e =>
+                          handleCheckboxChange(item, e.target.checked)
+                        }
+                      />
                       <div className="todo-info-wrap">
                         <div className="todo-info">
                           {/* 태그가 없을 때, 있을 때 처리 */}
@@ -197,7 +290,19 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       style={{ borderLeft: "7px solid #666666" }}
                       key={index}
                     >
-                      <input type="checkbox" className="todo-checkbox" />
+                      <input
+                        type="checkbox"
+                        className="todo-checkbox"
+                        onClick={() => {
+                          selectedItems.some(
+                            selectedItem =>
+                              selectedItems.boardId === item.boardId,
+                          );
+                        }}
+                        onChange={e =>
+                          handleCheckboxChange(item, e.target.checked)
+                        }
+                      />
                       <div className="todo-info-wrap">
                         <div className="todo-info">
                           {/* 태그가 없을 때, 있을 때 처리 */}
@@ -273,8 +378,15 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                         type="checkbox"
                         className="todo-checkbox"
                         onClick={() => {
-                          deleteTodoList();
+                          selectedItems.some(
+                            selectedItem =>
+                              selectedItems.boardId === item.boardId,
+                          );
                         }}
+                        onChange={e =>
+                          handleCheckboxChange(item, e.target.checked)
+                        }
+                        // checked={} // 체크박스 상태 설정
                       />
                       <div className="todo-info-wrap">
                         <div className="todo-info">

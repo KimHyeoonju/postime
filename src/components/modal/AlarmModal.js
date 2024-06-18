@@ -34,7 +34,6 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-    // 이벤트 핸들러 함수
     const handler = event => {
       // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
       if (modalRef.current && !modalRef.current.contains(event.target)) {
@@ -46,13 +45,11 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
       alarmModalCancel(false);
     };
 
-    // 이벤트 핸들러 등록
     document.addEventListener("mousedown", handler);
     // document.addEventListener('touchstart', handler); // 모바일 대응
     window.addEventListener("resize", handleResize);
 
     return () => {
-      // 이벤트 핸들러 해제
       document.removeEventListener("mousedown", handler);
       // document.removeEventListener('touchstart', handler); // 모바일 대응
       window.removeEventListener("resize", handleResize);
@@ -64,7 +61,7 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
       <div ref={modalRef} className="alarm-modal-wrap">
         <div className="alarm-modal-content">
           <main>
-            {/* {isNewAlarm ? (
+            {isNewAlarm ? (
               alarmListArr.map((item, index) => {
                 return (
                   <div className="alarm-item" key={index}>
@@ -78,12 +75,12 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
               <div className="alarm-item-none">
                 <div className="alarm-none-msg">새로운 알림이 없습니다.</div>
               </div>
-            )} */}
+            )}
 
-            <div className="alarm-item">
+            {/* <div className="alarm-item">
               <span className="alarm-contents">새로운 댓글이 추가됨</span>
               <span className="alarm-time">06/30 18:14</span>
-            </div>
+            </div> */}
             {/* <div className="alarm-item">
               <span className="alarm-contents">새로운 일정이 추가됨</span>
               <span className="alarm-time">06/30 18:14</span>

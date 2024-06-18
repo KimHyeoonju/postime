@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const UserModify = ({ signUserId, userInfo }) => {
   console.log("회원정보수정의 내 자료: ", userInfo);
   // 입력할 항목 변수
-  const [userEmail, setUserEmail] = useState("aaa@aaa.net");
+  const [userEmail, setUserEmail] = useState(userInfo?.email || "");
   const [userEmailActive, setUserEmailActive] = useState(true);
   // 이메일-수정 버튼 눌러야 중복확인 가능
   const [isModified, setIsModified] = useState(false);
@@ -20,12 +20,11 @@ const UserModify = ({ signUserId, userInfo }) => {
     userEmail: signUserId?.userEmail || "",
   });
   const [userPass, setUserPass] = useState("");
-  const [userNewPass, setUserNewPass] = useState("");
-  const [userNewPass2, setUserNewPass2] = useState("");
-  // 비밀번호 및 비밀번호 확인 일치 여부 플래그
-  const [passwordMatchError, setPasswordMatchError] = useState(false);
-  // 비밀번호 형식
-  const [passwordCheck, setPassWordCheck] = useState(true);
+
+  // // 비밀번호 및 비밀번호 확인 일치 여부 플래그
+  // const [passwordMatchError, setPasswordMatchError] = useState(false);
+  // // 비밀번호 형식
+  // const [passwordCheck, setPassWordCheck] = useState(true);
   // 모달 추가
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalTitle, setUserModalTitle] = useState(false);
@@ -61,13 +60,14 @@ const UserModify = ({ signUserId, userInfo }) => {
       setUserModalTitle("경고");
       setUserModalMessage(result.resultMsg);
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
-
+      setEmailChecked(false);
       return;
     }
     setUserModalOpen(true);
     setUserModalTitle("경고");
     setUserModalMessage("사용 가능한 이메일입니다.");
     setUserModalOnConfirm(() => () => setUserModalOpen(false));
+    setEmailChecked(true);
   };
 
   const postUserEmail = async ({ email }) => {
@@ -91,6 +91,28 @@ const UserModify = ({ signUserId, userInfo }) => {
       setUserModalMessage("중복확인을 해 주세요.");
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
       return;
+    }
+
+    const reqData = {
+      userId: signUserId.userId, // 사용자 ID 혹은 필요한 경우 수정
+      email: userEmail,
+    };
+
+    try {
+      const response = await axios.put("/api/user", reqData);
+      console.log(response.data);
+      setUserModalOpen(true);
+      setUserModalTitle("알림");
+      setUserModalMessage("이메일이 성공적으로 변경되었습니다.");
+      setUserModalOnConfirm(() => () => {
+        setUserModalOpen(false);
+      });
+    } catch (error) {
+      setUserModalOpen(true);
+      setUserModalTitle("오류");
+      setUserModalMessage("이메일 변경 중 오류가 발생했습니다.");
+      setUserModalOnConfirm(() => () => setUserModalOpen(false));
+      console.error("이메일 변경 오류:", error);
     }
   };
 
@@ -158,7 +180,7 @@ const UserModify = ({ signUserId, userInfo }) => {
             <div className="user-content">
               <input
                 type="email"
-                placeholder="이메일"
+                placeholder={userInfo?.email}
                 value={userEmail}
                 readOnly={userEmailActive}
                 onChange={e => {
