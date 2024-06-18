@@ -9,19 +9,23 @@ const SearchButtonStyle = styled.button`
   background-color: transparent;
 
   > svg {
-    margin-left: 10px;
+    margin-top: 10px;
     width: 24px;
     height: 24px;
     cursor: pointer;
     &:hover {
-      border: 1px solid #7f85a4;
+      border: 1px solid #000;
     }
   }
 `;
 const ListIconStyle = styled.li`
   cursor: pointer;
 `;
-const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
+const Header = ({
+  userInfo,
+  todoListhandleButtonClick,
+  setSearchTextIndex,
+}) => {
   const moreMenu = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
@@ -62,7 +66,7 @@ const Header = ({ todoListhandleButtonClick, setSearchTextIndex }) => {
       <div className="header-inner">
         <ul className="header-list">
           <li className="header-user-name">
-            username
+            {userInfo.name} 님
             <SearchButtonStyle
               onClick={() => {
                 handleMoreView();
