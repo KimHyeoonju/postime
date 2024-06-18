@@ -4,6 +4,8 @@ import axios from "axios";
 import UserModal from "../../components/modal/UserModal";
 import { useNavigate } from "react-router-dom";
 
+// 로그인 상태
+// 회원정보 -> 회원정보 수정 페이지 -> 비밀번호 변경 페이지입니다
 const UserPwPage = ({ signUserId, userInfo }) => {
   console.log("회원정보 비번 변경 페이지의 내 자료: ", userInfo);
   const [userPass, setUserPass] = useState("");
@@ -101,13 +103,6 @@ const UserPwPage = ({ signUserId, userInfo }) => {
       return;
     }
 
-    //   setUserModalOpen(true);
-    //   setUserModalTitle("알림");
-    //   setUserModalMessage("비밀번호 변경이 완료되었습니다.");
-    //   setUserModalOnConfirm(() => () => {
-    //     setUserModalOpen(false), navigate("/usermodify");
-    //   });
-    // };
     try {
       await changePw();
       setUserModalOpen(true);
@@ -138,24 +133,16 @@ const UserPwPage = ({ signUserId, userInfo }) => {
     postUser(sendData);
   }, [user.userId, userPass]);
 
-  // const changePw = () => {
-  //   const rqData = `/api/user`;
-  //   getResetPwd(rqData);
-  // };
-
-  // const getResetPwd = async data => {
-  //   try {
-  //     const response = await axios.patch(data);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   const changePw = async () => {
+    // console.log("changePwchangePw : ", userInfo);
+    // console.log("changePwchangePw : ", userInfo.userId);
+    // {userId: 72, newPw: "Tngus1234^^"}
+    // {userId: 3, newPw: "Ckdgusdlqkqh@@3"}
     try {
-      const response = await axios.patch("/api/user/password", {
-        userId: user.userId,
-        newPassword: userNewPass,
+      console.log("add " + userNewPass);
+      const response = await axios.patch("/api/user", {
+        userId: userInfo.userId,
+        newPw: userNewPass,
       });
       console.log("비밀번호 변경 완료:", response.data);
       // 비밀번호 변경 완료 메시지 등의 처리
@@ -164,23 +151,6 @@ const UserPwPage = ({ signUserId, userInfo }) => {
       // 실패 시 처리
     }
   };
-
-  useEffect(() => {
-    // axios.get 으로 사용자의 정보를 주세요.
-    const postUser = async ({ userId, pwd }) => {
-      try {
-        const response = await axios.put("/api/user", { userId, pwd });
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const sendData = {
-      userId: user.userId,
-      pwd: userPass,
-    };
-    postUser(sendData);
-  }, [user.userId, userPass]);
 
   return (
     <div className="user-wrap">

@@ -6,12 +6,31 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // 로그인 안 된 상태
 // 로그인 페이지 -> 비밀번호 찾기 페이지 -> (코드 입력 후) 비밀번호 재설정 페이지입니다
-const UserNewPwPage = ({ userInfo }) => {
-  const { state } = useLocation();
-  const { userId } = state;
-  console.log("불러온 내 자료: ", userInfo);
+const UserNewPwPage = ({ signUserId, userInfo }) => {
+  console.log("불러온 내 자료: ", userInfo.userId);
   const [userNewPass, setUserNewPass] = useState("");
+  const [userId, setUserId] = useState("");
   const [userNewPass2, setUserNewPass2] = useState("");
+  const [user, setUser] = useState({
+    userId: userInfo?.userId || "",
+    // userName: signUserId?.userName || "",
+    // userEmail: signUserId?.userEmail || "",
+  });
+  // const location = useLocation();
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   // location.state에서 userId 가져오기
+  //   if (
+  //     location.state &&
+  //     location.state.resultData &&
+  //     location.state.resultData.userId
+  //   ) {
+  //     setUserId(location.state.resultData.userId);
+  //   } else {
+  //     console.error("이전 페이지에서 userId를 찾을 수 없습니다.");
+  //   }
+  // }, [location.state]);
+
   // 비밀번호 및 비밀번호 확인 일치 여부 플래그
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   // 비밀번호 형식
@@ -87,34 +106,8 @@ const UserNewPwPage = ({ userInfo }) => {
       return;
     }
 
-    // useEffect(() => {
-    //   // axios.get 으로 사용자의 정보를 주세요.
-    //   const postUser = async ({ userId, pwd }) => {
-    //     try {
-    //       const response = await axios.put("/api/user", { userId, pwd });
-    //       console.log(response.data);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    //   const sendData = {
-    //     userId: user.userId,
-    //     pwd: userNewPass,
-    //   };
-    //   postUser(sendData);
-    // }, [user.userId, userNewPass]);
-
     try {
-      const apiUrl = "/api/user";
-      const postData = {
-        userId: userInfo?.userId, // userInfo로부터 userId 전달
-        newPw: userNewPass, // 사용자 입력 새 비밀번호
-      };
-
-      const response = await axios.patch(apiUrl, postData);
-      console.log(response.data);
-
-      // 변경 성공
+      await changePw();
       setUserModalOpen(true);
       setUserModalTitle("알림");
       setUserModalMessage("비밀번호 변경이 완료되었습니다.");
@@ -122,7 +115,43 @@ const UserNewPwPage = ({ userInfo }) => {
         setUserModalOpen(false), navigate("/");
       });
     } catch (error) {
-      console.log(error);
+      console.error("비밀번호 변경 오류:", error);
+    }
+  };
+
+  useEffect(() => {
+    // axios.get 으로 사용자의 정보를 주세요.
+    const postUser = async ({ userId, pwd }) => {
+      try {
+        const response = await axios.put("/api/user", { userId, pwd });
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const sendData = {
+      userId: user.userId,
+      pwd: userNewPass,
+    };
+    postUser(sendData);
+  }, [user.userId, userNewPass]);
+
+  const changePw = async () => {
+    // console.log("changePwchangePw : ", userInfo);
+    // console.log("changePwchangePw : ", userInfo.userId);
+    // {userId: 72, newPw: "Tngus1234^^"}
+    // {userId: 3, newPw: "Ckdgusdlqkqh@@3"}
+    try {
+      console.log("add " + userNewPass);
+      const response = await axios.patch("/api/user", {
+        userId: userInfo.userId,
+        newPw: userNewPass,
+      });
+      console.log("비밀번호 변경 완료:", response.data);
+      // 비밀번호 변경 완료 메시지 등의 처리
+    } catch (error) {
+      console.error("비밀번호 변경 실패:", error);
+      // 실패 시 처리
     }
   };
 
