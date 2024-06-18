@@ -14,6 +14,7 @@ function App() {
   const userId = sessionStorage.getItem("userId");
   const userEmail = sessionStorage.getItem("email");
   const userName = sessionStorage.getItem("name");
+  
   const [userInfo, setUserInfo] = useState({
     userId: userId,
     email: userEmail,
@@ -44,6 +45,7 @@ function App() {
       //   userEmail: userInfoFromStorage.userEmail,
       //   userName: userInfoFromStorage.userName,
       // });
+
       // setIsLogin(false); // 로그인 상태 설정
       setIsLogin(true); // 로그인 상태 설정
     }
@@ -51,7 +53,7 @@ function App() {
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index isLogin={isLogin} userInfo={userInfo} />
+        <Index userInfo={userInfo} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>

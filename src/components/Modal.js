@@ -55,8 +55,8 @@ const Modal = ({
   message,
   onClose,
   onConfirm,
-  stateList,
   onDetail,
+  stateList,
 }) => {
   if (!isOpen) return null;
   // console.log("stateList", stateList);
