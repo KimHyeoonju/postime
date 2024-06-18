@@ -7,26 +7,22 @@ import UserNewPwPage from "./pages/user/UserNewPwPage";
 import SignUpPage from "./pages/user/SignUpPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
-
 function App() {
   // sessionStorage.setItem("userId", result.resultData.userId);
   // sessionStorage.setItem("Name", result.resultData.name);
   // sessionStorage.setItem("email", result.resultData.email);
-
   const userId = sessionStorage.getItem("userId");
   const userEmail = sessionStorage.getItem("email");
-  const userName = sessionStorage.getItem("Name");
-
+  const userName = sessionStorage.getItem("name");
   const [userInfo, setUserInfo] = useState({
     userId: userId,
-    userEmail: userEmail,
-    userName: userName,
+    email: userEmail,
+    name: userName,
   });
+  const [rememberId, setRememberId] = useState("");
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
-
   // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
   const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
-
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
     console.log("나의 정보: ", userInfo);
@@ -43,17 +39,15 @@ function App() {
   useEffect(() => {
     const userInfoFromStorage = sessionStorage.getItem("userId");
     if (userInfoFromStorage) {
-      setUserInfo({
-        userId: userInfoFromStorage.userId,
-        userEmail: userInfoFromStorage.userEmail,
-        userName: userInfoFromStorage.userName,
-      });
-
+      // setUserInfo({
+      //   userId: userInfoFromStorage.userId,
+      //   userEmail: userInfoFromStorage.userEmail,
+      //   userName: userInfoFromStorage.userName,
+      // });
       // setIsLogin(false); // 로그인 상태 설정
       setIsLogin(true); // 로그인 상태 설정
     }
   }, []);
-
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
@@ -70,11 +64,15 @@ function App() {
           <Route path="/searchid" element={<SearchIdPage />} />
           <Route
             path="/searchpw"
-            element={<SearchPwPage userInfo={userInfo} />}
+            element={
+              <SearchPwPage userInfo={userInfo} setRememberId={setRememberId} />
+            }
           />
           <Route
             path="/usernewpw"
-            element={<UserNewPwPage userInfo={userInfo} />}
+            element={
+              <UserNewPwPage userInfo={userInfo} rememberId={rememberId} />
+            }
           />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/*" element={<NotFoundPage />} />

@@ -35,6 +35,8 @@ const Detail = ({ boardId }) => {
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
 
+
+  // const { boardId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
