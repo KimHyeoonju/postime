@@ -39,7 +39,6 @@ const Header = ({
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
 
-
   useEffect(() => {
     const handleKeyUp = e => {
       if (e.key === "Enter") {

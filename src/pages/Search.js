@@ -131,6 +131,7 @@ const Search = ({ searchTextIndex }) => {
             >
               <li className="checkbox-area">
                 {/* {item.state === 1 ? (
+
                     <div className="com-state">
                       <p className="stateone">진행중</p>
                     </div>
@@ -143,6 +144,7 @@ const Search = ({ searchTextIndex }) => {
                       <p className="statethree">삭제</p>
                     </div>
                   ) : null} */}
+
               </li>
 
               <li className="title-area">

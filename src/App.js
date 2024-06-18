@@ -9,9 +9,14 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
 
 function App() {
+  // sessionStorage.setItem("userId", result.resultData.userId);
+  // sessionStorage.setItem("Name", result.resultData.name);
+  // sessionStorage.setItem("email", result.resultData.email);
+
   const userId = sessionStorage.getItem("userId");
-  const userEmail = sessionStorage.getItem("userEmail");
-  const userName = sessionStorage.getItem("userName");
+  const userEmail = sessionStorage.getItem("email");
+  const userName = sessionStorage.getItem("Name");
+
   const [userInfo, setUserInfo] = useState({
     userId: userId,
     userEmail: userEmail,
