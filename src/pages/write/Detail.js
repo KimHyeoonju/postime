@@ -25,7 +25,8 @@ const Detail = ({ boardId }) => {
 
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
   // const boardId = location.state.boardId;
-  // console.log("boardId : ", boardId);
+  const calendarId = location.state.calendarId;
+  console.log("calendarId : ", calendarId);
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
@@ -36,7 +37,7 @@ const Detail = ({ boardId }) => {
   const [sendFiles, setSendFiles] = useState([]);
   // const [boardData, setBoardData] = useState(null);
 
-  const { boardId } = useParams();
+  // const { boardId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -122,6 +122,7 @@ const MainCalender = ({
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
   // const userId = 8;
   const userId = sessionStorage.getItem("userId");
+  console.log("테스트 유저명 : ", userId);
   // const userId = sessionStorage.getItem("userId");
 
   /** 캘린더 목록 리스트 (axios로 get한 값) */
@@ -137,6 +138,8 @@ const MainCalender = ({
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
+
+  console.log("calenderArr : ", calenderArr);
 
   /** 캘린더에 보여줄 일정들을 axios로 get */
   const getCalender = async userId => {
@@ -240,16 +243,11 @@ const MainCalender = ({
   /** 캘린더의 일정 클릭시 상세페이지로 이동 및 boardId 전달 */
   const insertModalOpen = clickInfo => {
     const clickBoardId = clickInfo.event.id;
-    // console.log("일정 클릭 했을 때 boardId 들어오는지 체크");
-    // console.log(clickInfo);
-    // console.log(clickBoardId);
-    // console.log(
-    //   "일정 클릭 했을 때 boardId 들어오는지 체크: ",
-    //   clickInfo.event.id,
-    // );
+    const clickCalendarId = clickInfo.event._def.extendedProps.calendarId;
     navigate("/write/detail", {
       state: {
         boardId: clickBoardId,
+        calendarId: clickCalendarId,
       },
     });
   };
@@ -261,6 +259,7 @@ const MainCalender = ({
       title: item.title,
       start: item.start,
       end: item.end,
+      calendarId: item.calendarId,
       backgroundColor: item.backgroundColor,
     }),
   );

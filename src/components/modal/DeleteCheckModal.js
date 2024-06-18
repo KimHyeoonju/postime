@@ -68,8 +68,8 @@ const DeleteCheckModal = ({
 }) => {
   // const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
-  const [userId, setUserId] = useState(8); // 나중에 아래의 세션으로 변경하기
-  // const userId = sessionStorage.getItem("userId");
+  // const [userId, setUserId] = useState(8); // 나중에 아래의 세션으로 변경하기
+  const userId = sessionStorage.getItem("userId");
   // const [deleteUeserId, setDeleteUeserId] = useState(1);
 
   // 캘린더에서 유저 삭제 취소 버튼 : 모달 닫음.
