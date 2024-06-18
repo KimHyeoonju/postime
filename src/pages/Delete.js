@@ -7,6 +7,7 @@ import {
   getDeleteList,
   patchDeleteList,
 } from "../apis/etc/apidelete";
+import DeleteModal from "../components/DeleteModal";
 
 const Delete = () => {
   // const {
@@ -27,10 +28,18 @@ const Delete = () => {
   // 선택된 항목의 boardid, calenderid를 저장 (영구삭제)
   const [selectedCalendarId, setSelectCalendarId] = useState([]);
 
+  // 모달창 전달 변수
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalText, setModalText] = useState("");
+  // 모달 보이는 상태값
+  const [isModal, setIsModal] = useState(false);
+
+  // load 시 목록 불러오기
   useEffect(() => {
     getDelApi();
   }, []);
 
+  // 선택된 항목들의 데이터 를 저장
   useEffect(() => {
     console.log("선택항목 : ", selectedItems);
 
@@ -95,18 +104,35 @@ const Delete = () => {
     getDelApi(); // 완료 목록 갱신
   };
 
-  // 영구삭제
-  const handleRemoveApi = async () => {
-    console.log("클릭클릭", selectedCalendarId);
+  // 모달창 확인 버튼 실행함수
+  // 확인 시 영구삭제 Api 실행
+  const modalOk = async () => {
     const result = await deleteRemoveList(selectedCalendarId);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
       return;
     }
-
+    setIsModal(false);
     setSelectCalendarId([]); // 선택된 항목 ID 초기화
     setSelectedItems([]); // 선택된 항목 초기화
     getDelApi(); // 완료 목록 갱신
+  };
+
+  // 모달창 취소 버튼 실행함수
+  const modalCancel = () => {
+    setIsModal(false);
+    setSelectCalendarId([]); // 선택된 항목 ID 초기화
+    setSelectedItems([]); // 선택된 항목 초기화
+  };
+
+  // 영구삭제 모달창 핸들ㄹ러
+  const handleRemoveApi = () => {
+    console.log("삭제클릭", selectedCalendarId);
+    setIsModal(true);
+    setModalTitle("영구삭제 안내");
+    setModalText(
+      "선택한 일정을 완전히 삭제하시겠습니까? 영구삭제 시  일정을 다시 불러올 수 없게 됩니다.",
+    );
   };
 
   return (
@@ -174,13 +200,14 @@ const Delete = () => {
           })}
         </div>
         {/* 모달 관련 */}
-        {/* <Modal
-          isOpen={isModalOpen}
-          title={modalTitle}
-          message={modalMessage}
-          onClose={closeModal}
-          onConfirm={confirmAction}
-        /> */}
+        {isModal ? (
+          <DeleteModal
+            title={modalTitle}
+            text={modalText}
+            modalOk={modalOk}
+            modalCancel={modalCancel}
+          />
+        ) : null}
       </div>
     </div>
   );

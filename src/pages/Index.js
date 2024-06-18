@@ -69,8 +69,12 @@ const resultData = { name: "userName", email: "userEmail" };
 
 const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
   console.log(userInfo);
-  console.log("isLogin", isLogin);
 
+  const [rememberPass, setRememberUserPass] = useState("");
+
+  useEffect(() => {
+    console.log("INDEX.js rememberPass : ", rememberPass);
+  }, [rememberPass]);
   // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
   // 체크박스가 활성화 되어 있는 캘린더ID 리스트
@@ -159,13 +163,18 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
                       <UserInfoPage
                         signUserId={signUserId}
                         userInfo={userInfo}
+                        setRememberUserPass={setRememberUserPass}
                       />
                     }
                   />
                   <Route
                     path="/usermodify"
                     element={
-                      <UserModify signUserId={signUserId} userInfo={userInfo} />
+                      <UserModify
+                        signUserId={signUserId}
+                        userInfo={userInfo}
+                        rememberPass={rememberPass}
+                      />
                     }
                   />
                   <Route

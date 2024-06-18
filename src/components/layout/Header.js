@@ -51,7 +51,6 @@ const Header = ({
     };
   }, []);
 
-
   // 로그아웃, 마이페이지 활성화/비활성화
   const handleMoreView = () => {
     if (toggle) {
@@ -90,7 +89,7 @@ const Header = ({
       <div className="header-inner">
         <ul className="header-list">
           <li className="header-user-name">
-            {/* {userInfo?.userName} 님 */}
+            {userInfo?.name} 님
             <SearchButtonStyle
               onClick={() => {
                 handleMoreView();

@@ -2,19 +2,17 @@ import { RiChatDeleteLine } from "react-icons/ri";
 import { removeCommentInput } from "../../apis/create/createApi";
 
 const CommentItem = ({ item, onRemove }) => {
-  console.log(item);
   const handleDelete = async () => {
     try {
-      await removeCommentInput(item.commentId);
+      await removeCommentInput(
+        item.commentId,
+        sessionStorage.getItem("userId"),
+      );
       onRemove(item.commentId);
     } catch (error) {
       console.log(error);
     }
   };
-
-  // const handleDelete = item => {
-  //   console.log(item);
-  // };
 
   return (
     <div className="chat-comment-inner">

@@ -2,13 +2,22 @@ import { useEffect, useState } from "react";
 import { getComment, postCommentInput } from "../../apis/create/createApi";
 import CommentInput from "./CommentInput";
 import CommentView from "./CommentView";
+import { useLocation } from "react-router-dom";
 
-const Comment = ({ boardId, signUserId }) => {
+const Comment = () => {
+  // 1. useLocation 훅 취득
+  const location = useLocation();
+  //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
+  const boardIdA = location.state.boardId;
+  const calendarId = location.state.calendarId;
+  const userId = sessionStorage.getItem("userId");
+  console.log("boardIdA : ", boardIdA);
+
   // 전체 댓글 목록
   const [commentList, setCommentList] = useState([]);
 
   const allComments = async () => {
-    const result = await getComment(boardId);
+    const result = await getComment(boardIdA);
     setCommentList(result.data.resultData);
   };
 
@@ -23,10 +32,10 @@ const Comment = ({ boardId, signUserId }) => {
   // 댓글 추가
   const addComment = async chat => {
     const sendData = {
-      boardId: boardId,
-      signedUserId: signUserId,
+      boardId: boardIdA,
+      signedUserId: userId,
       content: chat,
-      calendarId: 1,
+      calendarId: calendarId,
     };
     const result = await postCommentInput(sendData);
     allComments();

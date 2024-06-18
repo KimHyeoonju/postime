@@ -21,10 +21,10 @@ export const modifyAllData = async data => {
     console.log(error);
   }
 };
-export const getAllData = async boardId => {
+export const getAllData = async boardIdA => {
   try {
     const header = { headers: { "Content-Type": "multipart/form-data" } };
-    const response = await axios.get(`/api/board?board_id=${boardId}`, header);
+    const response = await axios.get(`/api/board?board_id=${boardIdA}`, header);
     console.log(response);
     return response;
   } catch (error) {
@@ -33,11 +33,15 @@ export const getAllData = async boardId => {
 };
 
 // 휴지통으로 보내기
-export const deleteAllData = async data => {
+export const deleteAllData = async apiArr => {
   try {
-    const response = await axios.patch("/api/board/state", data);
-    // console.log(response);
-    return response;
+    const response = await axios.patch(`/api/board/state`, apiArr);
+    const status = response.status.toString().charAt(0);
+    if (status === "2") {
+      return response.data;
+    } else {
+      alert("API 오류발생 status 확인해주세요");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -77,10 +81,10 @@ export const postCommentInput = async data => {
   }
 };
 
-export const removeCommentInput = async (commentId, userId) => {
+export const removeCommentInput = async (commentId, signedUserId) => {
   try {
     const response = await axios.delete(
-      `/api/board/comment?comment_id=${commentId}&signed_user_id=${userId}`,
+      `/api/board/comment?comment_id=${commentId}&signed_user_id=${signedUserId}`,
     );
     console.log("삭제중?", response.data);
     return response;

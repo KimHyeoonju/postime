@@ -9,19 +9,16 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { createImmediatelyInvokedFunctionExpression } from "typescript";
 import { Navigate, useNavigate } from "react-router-dom";
 import detailPageMove from "../../apis/home/detailPageMove";
-
 const CalenderStyle = styled.div`
   position: relative;
   width: 100%;
   height: calc(100vh - 80px);
-
   .App {
     position: absolute;
     width: 100%;
     bottom: 0;
     /* height: 100%; */
   }
-
   /* 캘린더의 헤더 영역 */
   .fc .fc-toolbar.fc-header-toolbar {
     margin: 0;
@@ -30,7 +27,6 @@ const CalenderStyle = styled.div`
     font-weight: bold;
     color: ${colorSystem.g900};
   }
-
   /* 캘린더의 헤더 영역 : toolbar 버튼  */
   .fc .fc-button-primary {
     background-color: ${colorSystem.g500};
@@ -40,26 +36,22 @@ const CalenderStyle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     span {
       font-weight: 500;
       font-size: 30px;
       margin: 3px 1px;
     }
-
     :hover {
       background-color: ${colorSystem.g500};
     }
   }
-
   .fc-toolbar-chunk .fc-toolbar-title {
     display: flex;
     height: auto;
-    /* background-color: #356eff; */
+    /* background-color: #356EFF; */
     /* word-break: keep-all; */
     color: ${colorSystem.g300};
   }
-
   // 요일 부분(수정)
   .fc-theme-standard th {
     height: 32px;
@@ -75,25 +67,21 @@ const CalenderStyle = styled.div`
     line-height: 19px;
     color: ${colorSystem.primaryB};
   }
-
   // 오늘 날짜 배경색(수정)
   .fc .fc-daygrid-day.fc-day-today {
     background-color: #fff8bd;
     color: #356eff;
   }
-
   // 날짜별 그리드
   .fc .fc-daygrid-day-frame {
     /* padding: 10px; */
   }
-
   // 날짜별 그리드 안 속 글자 정렬  : 왼쪽 정렬
   .fc .fc-daygrid-day-top {
     flex-direction: row;
     margin-bottom: 3px;
     padding: 10px 10px 0 10px;
   }
-
   // 각 이벤트 요소
   /* .fc-event {
     cursor: pointer;
@@ -103,12 +91,10 @@ const CalenderStyle = styled.div`
     font-weight: 500;
     font-size: 14px;
   } */
-
   .fc-event {
     border: none;
   }
 `;
-
 const MainCalender = ({
   nowCalendarId,
   checkedCalendars,
@@ -116,7 +102,6 @@ const MainCalender = ({
   checkedCalendarIds,
 }) => {
   const navigate = useNavigate();
-
   /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
   const array = [];
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
@@ -124,20 +109,19 @@ const MainCalender = ({
   const userId = sessionStorage.getItem("userId");
   console.log("테스트 유저명 : ", userId);
   // const userId = sessionStorage.getItem("userId");
-
   /** 캘린더 목록 리스트 (axios로 get한 값) */
   const [calenderArr, setCalenderArr] = useState([]);
   /** 캘린더 목록 리스트 (FullCalendar에 출력할 값) */
   const [calenderClickArr, setCalenderClickArr] = useState([]);
   /** 캘린더 리스트의 캘린더의 활성화/비활성화 여부 체크 */
   const [activeCalendars, setActiveCalendars] = useState([]);
-
   /** 일 빼기 : 일자의 날짜 출력 포맷 변경하기 */
   const dayCellContent = dateInfo => {
     return {
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
+
 
   console.log("calenderArr : ", calenderArr);
 
@@ -159,9 +143,7 @@ const MainCalender = ({
       console.log(error);
     }
   };
-
   // console.log("캘린더 전체 일정 : ", calenderArr);
-
   // 메뉴에서 캘린더 체크 선택할 때마다 동작
   // FullCalendar에 출력될 배열을 필터링을 하는 함수 실행
   useEffect(() => {
@@ -170,22 +152,18 @@ const MainCalender = ({
       filterCalendarId: nowCalendarId,
       calenderArr: calenderClickArr,
     });
-
     // reAdd({
     //   filterCalendarId: nowCalendarId,
     //   calenderArr: calenderArr,
     // });
-
     // 현재 선택한 캘린더의 체크박스가 변경될 때마다 재실행
   }, [nowCalendarId]);
-
   /** 캘린더에 보여줄 값과 캘린더 리스트 get 하기 위한 함수 */
   const firstCalenderDayPrint = async () => {
     const result = await getCalender(userId);
     setCalenderArr(result.resultData);
     setCalenderClickArr(result.resultData);
   };
-
   /** 메뉴에서 체크 박스 해제시 실행 되는 함수.
    * 체크 해제된 캘린더Id의 일정들을 FullCalendar 출력에서 제외 */
   const remove = ({ filterCalendarId, calenderArr }) => {
@@ -194,14 +172,12 @@ const MainCalender = ({
     );
     setCalenderClickArr(newName);
   };
-
   // const reAdd = ({ filterCalendarId, calenderArr }) => {
   //   const newName = calenderArr.filter(item =>
   //     activeCalendars.includes(item.calendarId),
   //   );
   //   setCalenderClickArr(newName);
   // };
-
   // useEffect(() => {
   //   // activeCalendars가 변경될 때마다 캘린더를 필터링하고 업데이트
   //   const filteredCalendars = calenderArr.filter(item =>
@@ -209,7 +185,6 @@ const MainCalender = ({
   //   );
   //   setCalenderClickArr(filteredCalendars);
   // }, [activeCalendars, calenderArr]);
-
   // 확인
   // 다시 배열에 값 추가?
   useEffect(() => {
@@ -220,12 +195,10 @@ const MainCalender = ({
     setCalenderClickArr(aaa);
     console.log("갱신확인 : ", aaa);
   }, [checkedCalendarIds]);
-
   /** 체크박스 클릭 핸들러 */
   const handleCheckboxClick = calendarId => {
     // 활성화된 캘린더인지 확인
     const isActive = activeCalendars.includes(calendarId);
-
     // 현재 체크박스의 상태에 따라 activeCalendars 업데이트
     if (isActive) {
       setActiveCalendars(prev => prev.filter(id => id !== calendarId));
@@ -233,17 +206,24 @@ const MainCalender = ({
       setActiveCalendars(prev => [...prev, calendarId]);
     }
   };
-
   // 처음 화면이 렌더링 되었을 때 캘린더에 보여줄 값과 캘린더 리스트 get
   useEffect(() => {
     firstCalenderDayPrint();
     return () => {};
   }, []);
-
   /** 캘린더의 일정 클릭시 상세페이지로 이동 및 boardId 전달 */
   const insertModalOpen = clickInfo => {
     const clickBoardId = clickInfo.event.id;
     const clickCalendarId = clickInfo.event._def.extendedProps.calendarId;
+
+    // console.log("일정 클릭 했을 때 boardId, calendarId 들어오는지 체크");
+    // console.log(clickInfo);
+    // console.log(clickBoardId);
+    // console.log(
+    //   "일정 클릭 했을 때 boardId 들어오는지 체크: ",
+    //   clickInfo.event.id,
+    // );
+
     navigate("/write/detail", {
       state: {
         boardId: clickBoardId,
@@ -251,7 +231,6 @@ const MainCalender = ({
       },
     });
   };
-
   /** 이벤트 배열 생성 */
   calenderClickArr.map((item, index) =>
     array.push({
@@ -264,7 +243,6 @@ const MainCalender = ({
     }),
   );
   console.log("boardId 들어갔는지 바로 확인 : ", array);
-
   return (
     <CalenderStyle>
       <div className="App">
@@ -330,5 +308,4 @@ const MainCalender = ({
     </CalenderStyle>
   );
 };
-
 export default MainCalender;

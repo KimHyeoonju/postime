@@ -11,10 +11,9 @@ import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
 
-const calendarId = 1;
-// const boardId = 100;
+const Create = ({ boardId, signUserId, calendarId }) => {
+  const userId = sessionStorage.getItem("userId");
 
-const Create = ({ boardId }) => {
   // 모달관련
   const [modalTitle, setModalTitle] = useState("");
   const [modalText, setModalText] = useState("");
@@ -39,15 +38,6 @@ const Create = ({ boardId }) => {
       // navigate("/");
     }
   };
-
-  // // 1. useLocation 훅 취득
-  // const location = useLocation();
-
-  // // 2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
-  // // const state = location.state as { boardId }; // 이 형태는 지금 못 씀.
-  // // const boardId = state.boardId;
-  // const boardId = location.state.boardId;
-  // console.log("boardId : ", boardId);
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
@@ -97,7 +87,7 @@ const Create = ({ boardId }) => {
     // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
     const infoData = JSON.stringify({
       calendarId: calendarId,
-      signedUserId: 72,
+      signedUserId: userId,
       title: createTitle,
       startDay: startDay,
       content: createWrite,
@@ -277,7 +267,7 @@ const Create = ({ boardId }) => {
         {/*  수정했습니다. */}
         <div>
           <div className="chat-wrap">
-            <Comment />
+            <Comment boardId={boardId} signUserId={signUserId} />
           </div>
         </div>
       </div>
