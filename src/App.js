@@ -26,8 +26,8 @@ function App() {
   const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
-    console.log("나의 정보: ", userInfo);
-  }, [userInfo]);
+    console.log("나의 정보: ", rememberId);
+  }, [rememberId]);
   // 로그인 했을 때 로그인 상태 유지하기
   // sessionStorage.setItem(
   //   "userInfo",
