@@ -15,6 +15,7 @@ import {
   modifyAllData,
 } from "../../apis/create/createApi";
 import { useLocation, useNavigate } from "react-router-dom";
+import ModifyMulitifile from "./ModifyMulitifile";
 
 const Modify = () => {
   // 1. useLocation 훅 취득
@@ -22,12 +23,13 @@ const Modify = () => {
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
   const boardId = location.state.boardId;
   const calendarId = location.state.calendarId;
+  const userId = sessionStorage.getItem("userId");
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
   const [dDay, setDDay] = useState("");
-  const [deadline, setDeadline] = useState();
+  const [deadLine, setDeadLine] = useState();
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
 
@@ -44,7 +46,7 @@ const Modify = () => {
         setCreateTitle(result.title);
         setStartDay(result.startDay);
         setDDay(result.dDay);
-        setDeadline(result.deadLine);
+        setDeadLine(result.deadLine);
         setCreateWrite(result.content);
         setSendFiles(response.data.files);
       } catch (error) {
@@ -56,17 +58,23 @@ const Modify = () => {
     }
   }, [boardId]);
 
-  // 보드 저장
-  // const boardComplete = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = [{ boardId: boardIdA, state: 2 }];
-  //     await patchCompleteSearchList(data);
-  //     navigate("/complete");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  // 보드 정보 업데이트
+  const boardSubmit = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    const infoData = JSON.stringify({
+      boardId: boardId,
+    });
+
+    const dto = new Blob([infoData], { type: "application/json" });
+    formData.append("p", dto);
+    sendFiles.forEach(item => {
+      formData.append("files", item);
+    });
+    console.log(formData);
+    modifyAllData(formData);
+  };
 
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
@@ -91,29 +99,6 @@ const Modify = () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
-
-  // 보드 생성
-  const boardSubmit = e => {
-    e.preventDefault();
-    const formData = new FormData();
-
-    const infoData = JSON.stringify({
-      boardId: 100,
-      title: createTitle,
-      startDay: startDay,
-      dDay: dDay,
-      content: createWrite,
-      deadline: deadline,
-    });
-
-    const dto = new Blob([infoData], { type: "application/json" });
-    formData.append("p", dto);
-    sendFiles.forEach(item => {
-      formData.append("files", item);
-    });
-    console.log(formData);
-    modifyAllData(formData);
-  };
 
   // 보드 휴지통으로
   const boardDeleteSubmit = async e => {
@@ -185,8 +170,8 @@ const Modify = () => {
                     <input
                       type="time"
                       id="deadline"
-                      value={deadline}
-                      onChange={e => setDeadline(e.target.value)}
+                      value={deadLine}
+                      onChange={e => setDeadLine(e.target.value)}
                     />
                   </div>
                 </div>
@@ -204,11 +189,17 @@ const Modify = () => {
               ></textarea>
             </div>
             {/* 이미지 업로드 부분 */}
-            <Mulitifile setSendFiles={setSendFiles} sendFiles={sendFiles} />
+            <ModifyMulitifile
+              setSendFiles={setSendFiles}
+              sendFiles={sendFiles}
+            />
           </div>
         </div>
-        <div className="chat-wrap">
-          <Comment />
+        {/*  수정했습니다. */}
+        <div>
+          <div className="chat-wrap">
+            <Comment boardId={boardId} signUserId={userId} />
+          </div>
         </div>
       </div>
     </div>

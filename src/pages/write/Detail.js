@@ -26,7 +26,9 @@ const Detail = ({ boardId }) => {
 
   const boardIdA = location.state.boardId;
   const calendarId = location.state.calendarId;
-  console.log("boardIdA : ", boardIdA);
+
+  const userId = sessionStorage.getItem("userId");
+
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
@@ -177,8 +179,11 @@ const Detail = ({ boardId }) => {
             <Mulitifile sendFiles={sendFiles} readOnly />
           </div>
         </div>
-        <div className="chat-wrap">
-          <Comment />
+        {/*  수정했습니다. */}
+        <div>
+          <div className="chat-wrap">
+            <Comment boardId={boardId} signUserId={userId} />
+          </div>
         </div>
       </div>
     </div>
