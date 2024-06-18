@@ -46,7 +46,7 @@ const DeleteCheckModalStyle = styled.div`
     border-bottom: 1px solid ${colorSystem.g800};
   }
 
-  .calendar-button-box button:first-child {
+  .calendar-button-box button:first-of-type {
     background-color: ${colorSystem.g900};
     border-color: ${colorSystem.MainPurple};
     color: ${colorSystem.primaryB};
@@ -64,6 +64,7 @@ const DeleteCheckModal = ({
   selectCalenderId,
   showDeleteCheckModalCancel,
   getCalenderUserList,
+  setUserListUpdate,
 }) => {
   // const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
@@ -84,9 +85,9 @@ const DeleteCheckModal = ({
   }) => {
     setDeleteCheck(!deleteCheck);
     // setDeleteUeserId(2);
-    // console.log("userId 확인 : ", userId);
-    // console.log("selectCalenderId 확인 : ", selectCalenderId);
-    // console.log("deleteUeserId 확인 : ", deleteUeserId);
+    console.log("userId 확인 : ", userId);
+    console.log("selectCalenderId 확인 : ", selectCalenderId);
+    console.log("deleteUeserId 확인 : ", deleteUeserId);
     deleteUeser({ userId, selectCalenderId, deleteUeserId });
   };
 
@@ -126,8 +127,8 @@ const DeleteCheckModal = ({
       });
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
-        console.log("유저 성공적으로 삭제 : ", resepons);
-        return true;
+        // console.log("유저 성공적으로 삭제 : ", resepons);
+        return setUserListUpdate(true);
       } else {
         console.log("API 오류");
       }

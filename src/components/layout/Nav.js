@@ -18,7 +18,7 @@ import AlarmModal from "../modal/AlarmModal";
 import CalendarModal from "../modal/CalendarModal";
 import CalendarModifyModal from "../modal/CalendarModifyModal";
 import CalendarSelectModal from "../modal/CalendarSelectModal";
-import { FaSquare, FaSquareCheck } from "react-icons/fa6";
+import { FaPlus, FaSquare, FaSquareCheck } from "react-icons/fa6";
 import { RiCheckboxFill } from "react-icons/ri";
 import { CalendarContext } from "../../apis/home/CalendarContext";
 
@@ -112,14 +112,14 @@ const Nav = ({
   /** 캘린더 공유, 수정 모달 관련 */
   const calenderSelectModalOk = e => {
     setIsCalenderSelectModal(!isCalenderSelectModal);
-    // console.log("e");
+    // console.log("e : ", e);
     // console.log("캘린더ID : ", e.target.id);
     // console.log("캘린더색 : ", e.target.title);
     // console.log("캘린더명 : ", e.target.outerText);
     setSelectCalenderId(e.target.id);
     setSelectCalenderColor(e.target.title);
     setSelectCalenderName(e.target.outerText);
-    calendarSelectModalCancel();
+    // calendarSelectModalCancel();
   };
   /** 캘린더 공유, 수정 모달 닫기 함수 */
   const calendarSelectModalCancel = () => {
@@ -174,7 +174,7 @@ const Nav = ({
     calendarSelectModalCancel();
 
     // setIsCalenderSelectModal(false); // 이전 모달 창 닫기
-    setModalType(2);
+    setModalType(0);
   };
   /** 캘린더 수정 모달 닫기 기능  */
   const calendarModifyModalCancel = () => {
@@ -361,7 +361,10 @@ const Nav = ({
                     {/* <MdOutlineKeyboardArrowUp /> */}
                     {/* <MdOutlineKeyboardArrowDown /> */}
                   </div>
-                  <span className="ns-font-bold-17">내 캘린더</span>
+                  <span className="ns-font-bold-17">
+                    내 캘린더
+                    <FaPlus />
+                  </span>
                 </h1>
               </div>
               {myCalendarListSwitch ? (
@@ -395,7 +398,7 @@ const Nav = ({
                           title={item.color}
                           onClick={e => {
                             calenderSelectModalOk(e);
-                            calenderSelectModalOk(item.calendarId);
+                            // calenderSelectModalOk(item.calendarId);
                             // console.log("Item:", item.calendarId);
                             // console.log("e:", e);
                           }}
@@ -490,9 +493,9 @@ const Nav = ({
                           title={item.color}
                           onClick={e => {
                             calenderSelectModalOk(e);
-                            calenderSelectModalOk(item.calendarId);
+                            // calenderSelectModalOk(item.calendarId);
                             // console.log("Item:", item.calendarId);
-                            console.log("e:", e);
+                            // console.log("e:", e);
                           }}
                         >
                           {item.title}
