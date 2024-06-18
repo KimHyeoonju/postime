@@ -11,10 +11,10 @@ import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
 
-const calendarId = 61;
-const boardId = boardId;
+const calendarId = 1;
+// const boardId = 100;
 
-const Create = () => {
+const Create = ({ boardId }) => {
   // 모달관련
   const [modalTitle, setModalTitle] = useState("");
   const [modalText, setModalText] = useState("");
@@ -26,19 +26,19 @@ const Create = () => {
 
   const naviagte = useNavigate();
 
-  // const handleModalSubmit = e => {
-  //   e.preventDefault();
-  //   // 모달 활성화
-  //   setIsModal(true);
-  // };
+  const handleModalSubmit = e => {
+    e.preventDefault();
+    // 모달 활성화
+    setIsModal(true);
+  };
 
-  // // 모달 실행 함수
-  // const modalOk = () => {
-  //   setIsModal(false);
-  //   if (isModal) {
-  //     // navigate("/");
-  //   }
-  // };
+  // 모달 실행 함수
+  const modalOk = () => {
+    setIsModal(false);
+    if (isModal) {
+      // navigate("/");
+    }
+  };
 
   // // 1. useLocation 훅 취득
   // const location = useLocation();
@@ -50,11 +50,11 @@ const Create = () => {
   // console.log("boardId : ", boardId);
 
   // 글쓰기 관련
-  const [createTitle, setCreateTitle] = useState("제목입니당");
-  const [startDay, setStartDay] = useState("2024-06-01");
-  const [dDay, setDDay] = useState("2024-06-13");
-  const [deadline, setDeadline] = useState("12:00:00");
-  const [createWrite, setCreateWrite] = useState("내용입니당");
+  const [createTitle, setCreateTitle] = useState("");
+  const [startDay, setStartDay] = useState("");
+  const [dDay, setDDay] = useState("");
+  const [deadline, setDeadline] = useState("00:00:00");
+  const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
 
   const handleTitleChange = event => {
@@ -81,29 +81,18 @@ const Create = () => {
     };
   }, []);
 
+  const handleTimeChange = e => {
+    const timeValue = e.target.value;
+    const timeWithSeconds = `${timeValue}:00`;
+    setDeadline(timeWithSeconds);
+  };
+
   // 보드 전송
   const boardSubmit = async e => {
     e.preventDefault();
     // 각 항목 체크하기 생략
     // 1 번 전송데이터 포맷 만들기
     const formData = new FormData();
-
-    // {
-    //   "calendarId": 63,
-    //   "signedUserId": ,
-    //   "title": "test55",
-    //   "content": "content",
-    //   "startDay": "2024-06-01",
-    //   "deadLine": "12:00:00",
-    //   "notExistTag": [
-    //     {
-    //       "calendarId": 63,
-    //       "title": "test",
-    //       "color": 1
-    //     }
-    //   ],
-    //   "dDay": "2024-06-13"
-    // }
 
     // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
     const infoData = JSON.stringify({
@@ -149,20 +138,20 @@ const Create = () => {
     }
   };
 
-  const handleModalSubmit = async e => {
-    e.preventDefault();
+  // const handleModalSubmit = async e => {
+  //   e.preventDefault();
 
-    const data = [{ calendarId, boardId }];
-    setIsModal(true);
-    setModalTitle("!!!경고!!!");
-    setModalText("진짜 정말 리얼 진심 삭제 하시겠습니까?");
-    setModalBtOk(true);
-    setModalBtCancel(true);
-    setIsModal(true);
-    console.log(modalTitle, modalText);
-    console.log(isModal);
-    return;
-  };
+  //   const data = [{ calendarId, boardId }];
+  //   setIsModal(true);
+  //   setModalTitle("!!!경고!!!");
+  //   setModalText("진짜 정말 리얼 진심 삭제 하시겠습니까?");
+  //   setModalBtOk(true);
+  //   setModalBtCancel(true);
+  //   setIsModal(true);
+  //   console.log(modalTitle, modalText);
+  //   console.log(isModal);
+  //   return;
+  // };
 
   // useEffect(() => {
   //   tagify.current = new Tagify(input.current);
@@ -257,8 +246,8 @@ const Create = () => {
                     <input
                       type="time"
                       id="deadline"
-                      value={deadline}
-                      onChange={e => setDeadline(e.target.value)}
+                      value={deadline.slice(0, 5)}
+                      onChange={e => handleTimeChange(e)}
                     />
                   </div>
                   {/* <input

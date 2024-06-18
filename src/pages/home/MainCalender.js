@@ -115,7 +115,7 @@ const MainCalender = ({
   checkCalendarColorChange,
   checkedCalendarIds,
 }) => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
   const array = [];
@@ -256,11 +256,11 @@ const MainCalender = ({
       "일정 클릭 했을 때 boardId 들어오는지 체크: ",
       clickInfo.event.id,
     );
-    // navigate("/write/create", {
-    //   state: {
-    //     boardId: clickBoardId,
-    //   },
-    // });
+    navigate("/write/detail", {
+      state: {
+        boardId: clickBoardId,
+      },
+    });
   };
 
   /** 이벤트 배열 생성 */
