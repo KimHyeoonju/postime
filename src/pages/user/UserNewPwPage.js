@@ -107,22 +107,22 @@ const UserNewPwPage = ({ userInfo, rememberId }) => {
     }
   };
 
-  useEffect(() => {
-    // axios.get 으로 사용자의 정보를 주세요.
-    const postUser = async ({ userId, pwd }) => {
-      try {
-        const response = await axios.put("/api/user", { userId, pwd });
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    const sendData = {
-      userId: rememberId,
-      pwd: userNewPass,
-    };
-    postUser(sendData);
-  }, [rememberId, userNewPass]);
+  // useEffect(() => {
+  //   // axios.get 으로 사용자의 정보를 주세요.
+  //   const postUser = async ({ userId, pwd }) => {
+  //     try {
+  //       const response = await axios.put("/api/user", { userId, pwd });
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   const sendData = {
+  //     userId: rememberId,
+  //     newPw: userNewPass,
+  //   };
+  //   postUser(sendData);
+  // }, [rememberId, userNewPass]);
 
   const changePw = async () => {
     // console.log("changePwchangePw : ", userInfo);
@@ -132,7 +132,7 @@ const UserNewPwPage = ({ userInfo, rememberId }) => {
     try {
       console.log("add " + userNewPass);
       const response = await axios.patch("/api/user", {
-        userId: userInfo.userId,
+        userId: rememberId,
         newPw: userNewPass,
       });
       console.log("비밀번호 변경 완료:", response.data);

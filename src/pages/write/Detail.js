@@ -26,7 +26,9 @@ const Detail = ({ boardId }) => {
 
   const boardIdA = location.state.boardId;
   const calendarId = location.state.calendarId;
+
   const userId = sessionStorage.getItem("userId");
+
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
