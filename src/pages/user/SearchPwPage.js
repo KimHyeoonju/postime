@@ -44,8 +44,9 @@ const SearchPwPage = ({ userInfo, setRememberId }) => {
     });
     setUserModalOpen(true);
     setSendChecked(true);
-    334;
+
     setServCode(result.resultData.code);
+    setRememberId(result.resultData.userId);
   };
 
   const searchPw = async event => {
@@ -85,7 +86,7 @@ const SearchPwPage = ({ userInfo, setRememberId }) => {
       setUserModalMessage("코드가 틀렸습니다.");
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
     }
-    setRememberId(userId);
+    // setRememberId(userId);
   };
   const getUser = async ({ id, email }) => {
     try {
