@@ -14,7 +14,7 @@ const Complete = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   // 선택된 항목들의 ID를 저장
   const [selectedBoardId, setSelectBoardId] = useState([]);
-  // State 변수
+  // state 변수
   const [state, setState] = useState(3);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const Complete = () => {
   return (
     <div className="common">
       <div className="common-inner">
-        <h1>완료된 일정</h1>
+        <h1 className="common-title">완료된 일정</h1>
         <div className="common-button">
           <Button
             label="복원"

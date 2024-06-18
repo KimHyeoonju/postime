@@ -5,13 +5,13 @@ const useModal = () => {
   const [modalTitle, setModalTitle] = useState("");
   const [modalMessage, setModalMessage] = useState("");
   const [confirmAction, setConfirmAction] = useState(null);
-  const [progressAction, setProgressAction] = useState(null);
+  const [movePageAction, setMovePageAction] = useState(null);
 
-  const openModal = ({ title, message, onConfirm, onProgress }) => {
+  const openModal = ({ title, message, onConfirm, onDetail }) => {
     setModalTitle(title);
     setModalMessage(message);
     setConfirmAction(() => onConfirm);
-    setProgressAction(() => onProgress);
+    setMovePageAction(() => onDetail);
     setIsModalOpen(true);
   };
 
@@ -24,7 +24,7 @@ const useModal = () => {
     modalTitle,
     modalMessage,
     confirmAction,
-    progressAction,
+    movePageAction,
     openModal,
     closeModal,
   };

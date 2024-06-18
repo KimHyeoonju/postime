@@ -12,7 +12,7 @@ import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
 
 const calendarId = 61;
-const boardId = boardId;
+const boardId = 184;
 
 const Create = () => {
   // 모달관련

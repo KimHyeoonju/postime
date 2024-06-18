@@ -14,12 +14,17 @@ const SearchButtonStyle = styled.button`
     height: 24px;
     cursor: pointer;
     &:hover {
-      border: 1px solid #000;
+      border: 1px solid #4f546e;
+      border-radius: 10px;
     }
   }
 `;
 const ListIconStyle = styled.li`
   cursor: pointer;
+  &:hover {
+    border: 1px solid #4f546e;
+    border-radius: 10px;
+  }
 `;
 const Header = ({
   userInfo,
@@ -27,10 +32,24 @@ const Header = ({
   setSearchTextIndex,
 }) => {
   const moreMenu = useRef(null);
+  const searchAction = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleKeyUp = e => {
+      if (e.key === "Enter") {
+        searchAction.current.click();
+      }
+    };
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
+  // 로그아웃, 마이페이지 활성화/비활성화
   const handleMoreView = () => {
     if (toggle) {
       moreMenu.current.classList.remove("header-more-open");
@@ -41,16 +60,20 @@ const Header = ({
     }
   };
 
+  // 검색 버튼
   const searchBt = () => {
-    console.log(searchText);
+    console.log("검색버튼 눌렀어요", searchText);
     setSearchTextIndex(searchText);
     setSearchText("");
     navigate("/search");
   };
 
+  // 마이페이지로 이동
   const moveUserInfo = () => {
     navigate("/userinfo");
   };
+
+  // 로그아웃
   const handleLogout = () => {
     // 세션 스토리지 비우기
     sessionStorage.clear();
@@ -58,8 +81,6 @@ const Header = ({
 
     window.location.reload();
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div className="header">
@@ -89,6 +110,7 @@ const Header = ({
           </li>
           <ListIconStyle
             className="header-search"
+            ref={searchAction}
             onClick={() => {
               searchBt();
             }}

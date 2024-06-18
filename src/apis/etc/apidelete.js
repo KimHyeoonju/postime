@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// 삭제페이지 목록 불러오기
 export const getDeleteList = async () => {
   try {
     const response = await axios.get(`/api/board/deleted?signed_user_id=8`);
@@ -15,7 +16,7 @@ export const getDeleteList = async () => {
   }
 };
 
-// 3 > 1 상태변경
+// 복원 3 > 1 상태변경
 export const patchDeleteList = async selectedBoardId => {
   try {
     const response = await axios.patch(`/api/board/state`, selectedBoardId);
@@ -29,17 +30,6 @@ export const patchDeleteList = async selectedBoardId => {
     console.log(error);
   }
 };
-
-// 영구삭제
-// export const deleteRemoveList = async () => {
-//   try {
-//     const response = await axios.delete(`/api/board`, {
-//       data: [
-//         { boardId: 130, calendarId: 64 },
-//         { boardId: 1, calendarId: 1 },
-//         { boardId: 1, calendarId: 1 },
-//       ],
-//     });
 
 // 영구삭제
 export const deleteRemoveList = async selectedCalendarId => {

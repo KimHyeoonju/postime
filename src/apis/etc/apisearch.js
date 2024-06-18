@@ -18,9 +18,9 @@ export const getSearchList = async (searchTextIndex, id) => {
 };
 
 // patch  state 1 > 2
-export const patchCompleteSearchList = async apiArr => {
+export const patchCompleteSearchList = async changeStateArr => {
   try {
-    const response = await axios.patch(`/api/board/state`, apiArr);
+    const response = await axios.patch(`/api/board/state`, changeStateArr);
     const status = response.status.toString().charAt(0);
     if (status === "2") {
       return response.data;
