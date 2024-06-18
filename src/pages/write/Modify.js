@@ -9,9 +9,20 @@ import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
-import { deleteAllData, modifyAllData } from "../../apis/create/createApi";
+import {
+  deleteAllData,
+  getAllData,
+  modifyAllData,
+} from "../../apis/create/createApi";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Modify = ({ calendarId, boardId }) => {
+const Modify = () => {
+  // 1. useLocation 훅 취득
+  const location = useLocation();
+  //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
+  const boardId = location.state.boardId;
+  const calendarId = location.state.calendarId;
+
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
@@ -19,6 +30,43 @@ const Modify = ({ calendarId, boardId }) => {
   const [deadline, setDeadline] = useState();
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getAllData(boardId);
+        console.log(response);
+
+        const result = response.data.resultData;
+
+        setCreateTitle(result.title);
+        setStartDay(result.startDay);
+        setDDay(result.dDay);
+        setDeadline(result.deadLine);
+        setCreateWrite(result.content);
+        setSendFiles(response.data.files);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (boardId) {
+      getData();
+    }
+  }, [boardId]);
+
+  // 보드 저장
+  // const boardComplete = async e => {
+  //   e.preventDefault();
+  //   try {
+  //     const data = [{ boardId: boardIdA, state: 2 }];
+  //     await patchCompleteSearchList(data);
+  //     navigate("/complete");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
@@ -49,15 +97,6 @@ const Modify = ({ calendarId, boardId }) => {
     e.preventDefault();
     const formData = new FormData();
 
-    // "{
-    //   ""boardId"": 1,
-    //   ""title"": ""제목"",
-    //   ""content"": ""내용"",
-    //   ""startDay"": ""2024-04-11"",
-    //   ""deadLine"": ""12:30:00"",
-    //   ""dDay"": ""2024-04-12""
-    // }"
-
     const infoData = JSON.stringify({
       boardId: 100,
       title: createTitle,
@@ -76,12 +115,13 @@ const Modify = ({ calendarId, boardId }) => {
     modifyAllData(formData);
   };
 
-  // 보드 삭제
+  // 보드 휴지통으로
   const boardDeleteSubmit = async e => {
     e.preventDefault();
     try {
-      const data = [{ calendarId, boardId }];
+      const data = [{ boardId, state: 3 }];
       await deleteAllData(data);
+      navigate("/delete");
     } catch (error) {
       console.log(error);
     }

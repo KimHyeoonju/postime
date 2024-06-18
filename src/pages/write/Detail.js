@@ -9,7 +9,7 @@ import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
-const calendarId = 1;
+// const calendarId = 1;
 
 import {
   deleteAllData,
@@ -22,10 +22,10 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 const Detail = ({ boardId }) => {
   // 1. useLocation 훅 취득
   const location = useLocation();
-
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
-  // const boardId = location.state.boardId;
-  // console.log("boardId : ", boardId);
+  const boardIdA = location.state.boardId;
+  const calendarId = location.state.calendarId;
+  console.log("boardIdA : ", boardIdA);
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
@@ -34,7 +34,7 @@ const Detail = ({ boardId }) => {
   const [deadline, setDeadline] = useState();
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
-  // const [boardData, setBoardData] = useState(null);
+
 
   // const { boardId } = useParams();
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ const Detail = ({ boardId }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await getAllData(boardId);
+        const response = await getAllData(boardIdA);
         console.log(response);
 
         const result = response.data.resultData;
@@ -57,32 +57,39 @@ const Detail = ({ boardId }) => {
         console.log(error);
       }
     };
-    if (boardId) {
+    if (boardIdA) {
       getData();
     }
-  }, [boardId]);
-
-  // 보드 휴지통으로
-  // const boardDeleteSubmit = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     const data = [{ calendarId, boardId }];
-  //     await deleteAllData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  }, [boardIdA]);
 
   // 보드 완료
   const boardComplete = async e => {
     e.preventDefault();
     try {
-      const data = [{ boardId }];
+      const data = [{ boardId: boardIdA, state: 2 }];
       await patchCompleteSearchList(data);
       navigate("/complete");
     } catch (error) {
       console.log(error);
     }
+  };
+  // 보드 수정
+  const boardModify = async e => {
+    e.preventDefault();
+    navigate("/write/modify", {
+      state: {
+        boardId: boardIdA,
+        calendarId: calendarId,
+      },
+    });
+
+    // try {
+    //   const data = [{ boardId: boardIdA, state: 2 }];
+    //   await patchCompleteSearchList(data);
+    //   navigate("/complete");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -93,7 +100,13 @@ const Detail = ({ boardId }) => {
           <div className="write-header">
             <div className="write-button">
               <NavLink to={"/write/modify/" + boardId}>
-                <button className="write-button-primary">
+                <button
+                  className="write-button-primary"
+                  onClick={e => {
+                    boardModify(e);
+                    // console.log("클릭확인", boardId);
+                  }}
+                >
                   <span>수정</span>
                 </button>
               </NavLink>
