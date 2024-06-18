@@ -63,8 +63,14 @@ function App() {
             }
           />
           <Route path="/searchid" element={<SearchIdPage />} />
-          <Route path="/searchpw" element={<SearchPwPage />} />
-          <Route path="/usernewpw" element={<UserNewPwPage />} />
+          <Route
+            path="/searchpw"
+            element={<SearchPwPage userInfo={userInfo} />}
+          />
+          <Route
+            path="/usernewpw"
+            element={<UserNewPwPage userInfo={userInfo} />}
+          />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>

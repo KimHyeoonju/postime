@@ -11,10 +11,7 @@ import Mulitifile from "./Mulitifile";
 
 import { deleteAllData, modifyAllData } from "../../apis/create/createApi";
 
-const calendarId = 61;
-const boardId = 145;
-
-const Modify = () => {
+const Modify = ({ calendarId, boardId }) => {
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("제목입니당");
   const [startDay, setStartDay] = useState("2024-06-01");

@@ -288,12 +288,6 @@ const SignUpPage = () => {
     }
   };
 
-  // // 이메일 중복 확인 성공시
-  // useEffect(() => {
-  //   chkEmail();
-  // }, [emailCheck, userEmail]);
-  // function chkEmail() {}
-
   return (
     <div className="user-wrap">
       <div className="user-title-line">
@@ -350,9 +344,6 @@ const SignUpPage = () => {
             <label htmlFor="email" className="email-label">
               이메일
             </label>
-            {/* <div className="bubble">
-              <span>이미 존재하는 이메일입니다.</span>
-            </div> */}
           </div>
 
           <div className="check-field">
@@ -389,9 +380,6 @@ const SignUpPage = () => {
             <label htmlFor="pw" className="pw-label">
               비밀번호
             </label>
-            {/* <div className="bubble">
-              <span>잘못된 비밀번호 형식입니다.</span>
-            </div> */}
           </div>
 
           <div className="check-field">
