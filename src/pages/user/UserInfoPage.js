@@ -72,18 +72,6 @@ const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
       console.log(error);
     }
   };
-  // const updateUserInformation = async (userId, newPassword) => {
-  //   try {
-  //     const response = await axios.put(`/api/user/${userId}`, {
-  //       password: newPassword,
-  //     });
-  //     // 성공적으로 업데이트 되었을 때의 처리 (예: UI 업데이트)
-  //     console.log("회원 정보 업데이트 완료:", response.data);
-  //     // 필요 시 UI 업데이트 로직 추가
-  //   } catch (error) {
-  //     console.error("회원 정보 업데이트 실패:", error);
-  //   }
-  // };
 
   const postCheckPw = async pwd => {
     try {

@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // 로그인 안 된 상태
 // 로그인 페이지 -> 비밀번호 찾기 페이지 -> (코드 입력 후) 비밀번호 재설정 페이지입니다
-const UserNewPwPage = ({ signUserId, userInfo }) => {
+const UserNewPwPage = ({ userInfo }) => {
   console.log("불러온 내 자료: ", userInfo.userId);
   const [userNewPass, setUserNewPass] = useState("");
   const [userId, setUserId] = useState("");
@@ -16,6 +16,7 @@ const UserNewPwPage = ({ signUserId, userInfo }) => {
     // userName: signUserId?.userName || "",
     // userEmail: signUserId?.userEmail || "",
   });
+
   // const location = useLocation();
   // const navigate = useNavigate();
   // useEffect(() => {
@@ -41,6 +42,7 @@ const UserNewPwPage = ({ signUserId, userInfo }) => {
   const [userModalTitle, setUserModalTitle] = useState(false);
   const [userModalMessage, setUserModalMessage] = useState("");
   const [userModalOnConfirm, setUserModalOnConfirm] = useState(() => () => {});
+
   // 비밀번호 항목
   const handlePassWord = e => {
     setUserNewPass(e.target.value);
