@@ -17,7 +17,6 @@ const Search = ({ searchTextIndex }) => {
   const [serarchList, setSearchList] = useState([]);
   // Madal 컴포넌트에 보낼 state
   const [stateList, setSateList] = useState([]);
-  // api 용 변수
 
   // 모달창 커스텀훅
   const {
@@ -25,7 +24,7 @@ const Search = ({ searchTextIndex }) => {
     modalTitle,
     modalMessage,
     confirmAction,
-    progressAction,
+    movePageAction,
     openModal,
     closeModal,
   } = useModal();
@@ -47,10 +46,9 @@ const Search = ({ searchTextIndex }) => {
   };
 
   const handleDetailPage = (state, boardId) => {
-    console.log(state, boardId);
+    console.log("handleDetailPage 일정클릭 ", state, boardId);
     const changeStateOneArr = [{ boardId: boardId, state: 1 }];
     const changeStateTwoArr = [{ boardId: boardId, state: 2 }];
-    const changeStateThreeArr = [{ boardId: boardId, state: 3 }];
     setSateList(state);
     // console.log(boardId, state);
     if (state === 1) {
@@ -58,11 +56,12 @@ const Search = ({ searchTextIndex }) => {
       openModal({
         title: "진행중인 일정 클릭 안내",
         message:
-          "일정 상세페이지로 이동하시겠습니까? 일단은 완료페이지로갑니다",
-        onProgress: async () => {
+          "일정을 완료 하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
+        onConfirm: async () => {
           // console.log("progress 1 > 2");
           try {
             await patchCompleteSearchList(changeStateTwoArr);
+            await getSearchApi();
             closeModal();
           } catch (error) {
             console.log(error);
@@ -72,27 +71,44 @@ const Search = ({ searchTextIndex }) => {
     } else if (state === 2) {
       openModal({
         title: "완료일정 클릭 안내",
-        message: "복원 누르세요 근데 아직 복원버튼이 없으니깐 확인눌러주세요",
-        onProgress: () => {
+        message:
+          "일정을 복원하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
+        onConfirm: async () => {
           console.log("progress 2>1");
+          try {
+            await patchCompleteSearchList(changeStateOneArr);
+            await getSearchApi();
+            closeModal();
+          } catch (error) {
+            console.log(error);
+          }
         },
       });
     } else if (state === 3) {
       openModal({
         title: "삭제일정 클릭 안내",
-        message: "복원 누르세요 근데 아직 복원버튼이 없으니깐 확인눌러주세요",
-        onProgress: () => {
+        message:
+          "일정을 복원하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
+        onConfirm: async () => {
           console.log("progress 3>1");
+          try {
+            await patchCompleteSearchList(changeStateOneArr);
+            await getSearchApi();
+            closeModal();
+          } catch (error) {
+            console.log(error);
+          }
         },
       });
     }
   };
 
   return (
+
     <SearchStyle>
       <div className="common">
         <div className="common-inner">
-          <h1>{`' ${searchTextIndex} '`} 에 해당하는 검색결과 입니다.</h1>
+          <h1  className="common-title">{`' ${searchTextIndex} '`} 에 해당하는 검색결과 입니다.</h1>
           <div className="common-button"></div>
           <div className="common-menu">
             <div className="com-sizebox"></div>
@@ -109,7 +125,7 @@ const Search = ({ searchTextIndex }) => {
             <div className="cmcalender">
               <span>캘린더 명</span>
             </div>
-          </div>
+
 
           <div className="common-list-wrap">
             {serarchList.map((item, index) => (
@@ -169,16 +185,17 @@ const Search = ({ searchTextIndex }) => {
             ))}
           </div>
 
-          {/* 모달 관련 */}
-          <Modal
-            isOpen={isModalOpen}
-            title={modalTitle}
-            message={modalMessage}
-            onClose={closeModal}
-            onConfirm={confirmAction}
-            onProgress={progressAction}
-            stateList={stateList}
-          />
+        {/* 모달 관련 */}
+        <Modal
+          isOpen={isModalOpen}
+          title={modalTitle}
+          message={modalMessage}
+          onClose={closeModal}
+          onConfirm={confirmAction}
+          onDetail={movePageAction}
+          stateList={stateList}
+        />
+
         </div>
       </div>
     </SearchStyle>

@@ -18,20 +18,26 @@ const ModalInnerStyle = styled.div`
   top: 0;
   right: 150px;
   width: 100%;
-  max-width: 600px;
-  min-height: 400px;
+  max-width: 400px;
+  min-height: 250px;
   background: #fff;
   border-radius: 20px;
   overflow: hidden;
 `;
 const ModalHeaderStyle = styled.div`
-  margin-top: 50px;
+  margin-top: 20px;
   text-align: center;
+  h1 {
+    font-weight: 800;
+    font-size: 24px;
+    padding: 30px 0;
+  }
 `;
 
 const ModalMainStyle = styled.div`
-  margin-top: 10px;
-  text-align: center;
+  margin-bottom: 30px;
+  padding: 0 60px;
+  line-height: 2;
 `;
 
 const ModalFooterStyle = styled.div`
@@ -50,7 +56,7 @@ const Modal = ({
   onClose,
   onConfirm,
   stateList,
-  onProgress,
+  onDetail,
 }) => {
   if (!isOpen) return null;
   // console.log("stateList", stateList);
@@ -62,33 +68,23 @@ const Modal = ({
           <h1>{title}</h1>
         </ModalHeaderStyle>
         <ModalMainStyle>
-          <p>{message}</p>
+          <p>
+            {message}
+            <button onClick={onDetail}>상세보기</button>
+          </p>
         </ModalMainStyle>
         <ModalFooterStyle>
           {stateList === 1 ? (
             <>
-              <Button onClick={onProgress} label="복원1" />
-              <Button onClick={onClose} label="취소" />
-            </>
-          ) : stateList === 2 ? (
-            <>
-              <Button onClick={onProgress} label="복원2" />
-              <Button onClick={onClose} label="취소" />
-            </>
-          ) : stateList === 3 ? (
-            <>
-              <Button onClick={onProgress} label="복원3" />
+              <Button onClick={onConfirm} label="완료하기" />
               <Button onClick={onClose} label="취소" />
             </>
           ) : (
             <>
-              <Button onClick={onConfirm} label="확인" />
+              <Button onClick={onConfirm} label="복원하기" />
               <Button onClick={onClose} label="취소" />
             </>
           )}
-
-          {/* <button onClick={onClose}>취소</button>
-          <button onClick={onConfirm}>확인</button> */}
         </ModalFooterStyle>
       </ModalInnerStyle>
     </ModalWrapStyle>

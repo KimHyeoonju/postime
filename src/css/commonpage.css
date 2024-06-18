@@ -9,8 +9,9 @@
   padding: 0 50px;
 }
 
-.common-inner h1 {
+.common-inner .common-title {
   font-size: 30px;
+  color: #4f546e;
   padding: 50px 0;
 }
 /* 버튼 */
@@ -156,11 +157,13 @@
 }
 .statetwo {
   font-size: 14px;
+  font-weight: bold;
   text-align: center;
   color: green;
 }
 .statethree {
   font-size: 14px;
+  font-weight: bold;
   text-align: center;
   color: red;
 }

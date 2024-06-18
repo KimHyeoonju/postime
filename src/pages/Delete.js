@@ -22,9 +22,9 @@ const Delete = () => {
   const [deleteList, setDeleteList] = useState([]);
   // 체크박스 선택된 항목
   const [selectedItems, setSelectedItems] = useState([]);
-  // 선택된 항목들의 boradid, state 를 저장
+  // 선택된 항목들의 boradid, state 를 저장 (복원)
   const [selectedBoardId, setSelectBoardId] = useState([]);
-  // 선택된 항목의 boardid, calenderid를 저장
+  // 선택된 항목의 boardid, calenderid를 저장 (영구삭제)
   const [selectedCalendarId, setSelectCalendarId] = useState([]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Delete = () => {
     }
   };
 
-  // 삭제페이지 목록 불러오기
+  // 삭제페이지 목록 불러오기  ** 아이디 받아와야 함
   const getDelApi = async () => {
     const result = await getDeleteList();
     // console.log("result : ", result);
@@ -112,7 +112,7 @@ const Delete = () => {
   return (
     <div className="common">
       <div className="common-inner">
-        <h1>삭제된 일정</h1>
+        <h1 className="common-title">삭제된 일정</h1>
         <div className="common-button">
           <Button
             label="복원"
