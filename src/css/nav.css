@@ -162,6 +162,29 @@
   /* background-color: bisque; */
   margin-right: 13px;
 }
+
+.div-calendar-list-header {
+  width: 100%;
+}
+
+.calendar-list-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.calendar-list-header-title {
+  width: 100%;
+  margin-right: 20px;
+}
+
+.new-calendar-create-btn {
+  right: 0;
+  width: 21px;
+  height: 14px;
+}
+
 .nav-menu-gap {
   gap: 10px;
 }

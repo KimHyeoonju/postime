@@ -23,9 +23,11 @@ const Detail = ({ boardId }) => {
   // 1. useLocation 훅 취득
   const location = useLocation();
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
+
   const boardIdA = location.state.boardId;
   const calendarId = location.state.calendarId;
   console.log("boardIdA : ", boardIdA);
+
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");

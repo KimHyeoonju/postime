@@ -21,6 +21,7 @@ import CalendarSelectModal from "../modal/CalendarSelectModal";
 import { FaPlus, FaSquare, FaSquareCheck } from "react-icons/fa6";
 import { RiCheckboxFill } from "react-icons/ri";
 import { CalendarContext } from "../../apis/home/CalendarContext";
+import CalendarCreateModal from "../modal/CalendarCreateModal";
 
 const NavStyle = styled.div`
   position: relative;
@@ -51,6 +52,7 @@ const Nav = ({
   const [userId, setUserId] = useState(72);
   // const [userId, setUserId] = sessionStorage.getItem("userId");
 
+  console.log("Nav userId : ", userId);
   /** calendarId 저장 */
   const [calendarId, setCalendarId] = useState(null);
   /** 캘린더 리스트 배열 */
@@ -185,6 +187,20 @@ const Nav = ({
     setIsCalendarModifyModal(false);
     setModalType(0);
   };
+
+  /** 캘린더 생성 모달 활성화/비활성화 여부  */
+  const [isNewCalendarCreateModal, setIsNewCalendarCreateModal] =
+    useState(false);
+  /** 캘린더 공유, 수정 모달 관련 */
+  const calenderCalendarModalOk = e => {
+    setIsNewCalendarCreateModal(true);
+    // calendarSelectModalCancel();
+  };
+  /** 캘린더 공유, 수정 모달 닫기 함수 */
+  const calendarCreateModalCancel = () => {
+    setIsNewCalendarCreateModal(false);
+  };
+
   /** 캘린더 리스트에 선택한 캘린더의 캘린더ID, 캘린더컬러, 캘린더명 */
   const [selectCalenderId, setSelectCalenderId] = useState();
   const [selectCalenderColor, setSelectCalenderColor] = useState();
@@ -203,6 +219,8 @@ const Nav = ({
   useEffect(() => {
     calenderList();
   }, [checkedCalendars]);
+
+  /** 내 캘린더에 새로운 캘린더 추가 */
 
   const [newCheckedCalendars, setNewCheckedCalendars] = useState([]);
 
@@ -302,6 +320,11 @@ const Nav = ({
           setCheckCalendarColorChange={setCheckCalendarColorChange}
         />
       ) : null}
+      {isNewCalendarCreateModal ? (
+        <CalendarCreateModal
+          calendarCreateModalCancel={calendarCreateModalCancel}
+        />
+      ) : null}
 
       <div className="menu">
         <div className="div-menu-header">
@@ -346,16 +369,14 @@ const Nav = ({
         <div className="nav-content">
           <div className="nav-wrap">
             <div className="nav-inner">
-              <div
-                className="div-calender div-mycalender-title"
-                onClick={e => {
-                  myCalendarListSwitchOk();
-                }}
-              >
-                <h1 className="mycalender-title">
+              <div className="div-calender div-mycalender-title div-calendar-list-header">
+                <h1 className="mycalender-title calendar-list-header-title">
                   <div
                     className="mycalender-btn"
                     // onclick="calenderListBtnClick()"
+                    onClick={e => {
+                      myCalendarListSwitchOk();
+                    }}
                   >
                     {myCalendarListSwitch ? (
                       <MdOutlineKeyboardArrowDown />
@@ -365,10 +386,18 @@ const Nav = ({
                     {/* <MdOutlineKeyboardArrowUp /> */}
                     {/* <MdOutlineKeyboardArrowDown /> */}
                   </div>
-                  <span className="ns-font-bold-17">
-                    내 캘린더
-                    <FaPlus />
-                  </span>
+                  <div className="calendar-list-header">
+                    <span className="ns-font-bold-17">내 캘린더</span>
+                    <div
+                      className="new-calendar-create-btn"
+                      onClick={e => {
+                        calenderCalendarModalOk();
+                      }}
+                    >
+                      <FaPlus size="16" />
+                      {/* <FaPlus /> */}
+                    </div>
+                  </div>
                 </h1>
               </div>
               {myCalendarListSwitch ? (

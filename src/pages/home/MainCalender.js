@@ -107,6 +107,7 @@ const MainCalender = ({
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
   // const userId = 8;
   const userId = sessionStorage.getItem("userId");
+  console.log("테스트 유저명 : ", userId);
   // const userId = sessionStorage.getItem("userId");
   /** 캘린더 목록 리스트 (axios로 get한 값) */
   const [calenderArr, setCalenderArr] = useState([]);
@@ -120,7 +121,10 @@ const MainCalender = ({
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
+
+
   console.log("calenderArr : ", calenderArr);
+
   /** 캘린더에 보여줄 일정들을 axios로 get */
   const getCalender = async userId => {
     // console.log("유저 아이디 확인 : ", userId);
@@ -211,6 +215,7 @@ const MainCalender = ({
   const insertModalOpen = clickInfo => {
     const clickBoardId = clickInfo.event.id;
     const clickCalendarId = clickInfo.event._def.extendedProps.calendarId;
+
     // console.log("일정 클릭 했을 때 boardId, calendarId 들어오는지 체크");
     // console.log(clickInfo);
     // console.log(clickBoardId);
@@ -218,6 +223,7 @@ const MainCalender = ({
     //   "일정 클릭 했을 때 boardId 들어오는지 체크: ",
     //   clickInfo.event.id,
     // );
+
     navigate("/write/detail", {
       state: {
         boardId: clickBoardId,

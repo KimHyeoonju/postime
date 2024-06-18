@@ -32,7 +32,8 @@ const TodoListMenu = styled.div`
 const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const [toggle, setToggle] = useState(todoListClassAdded);
   const todoListRef = useRef(null);
-  const userId = 8;
+  // const userId = 8;
+  const userId = sessionStorage.getItem("userId");
 
   // 오늘까지
   const [todoTodayListArr, setTodoTodayListArr] = useState([]);
@@ -47,7 +48,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   }, [todoListClassAdded]);
 
   const getTodoList = async userId => {
-    // console.log(userId);
+    console.log("TodoList 받아오는 유저 아이디 : ", userId);
     try {
       const resepons = await axios.get(
         `/api/board/todo?signed_user_id=${userId}`,

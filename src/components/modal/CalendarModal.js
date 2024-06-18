@@ -46,6 +46,7 @@ const CalendarModal = ({
   selectCalenderName,
 }) => {
   const userId = 8;
+
   const userName = "김현주";
 
   // const userId = sessionStorage.getItem("memberInfo.Name");
