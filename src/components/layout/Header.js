@@ -39,6 +39,7 @@ const Header = ({
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const handleKeyUp = e => {
       if (e.key === "Enter") {
@@ -50,6 +51,7 @@ const Header = ({
       inputFocus.current.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
+
 
   // 로그아웃, 마이페이지 활성화/비활성화
   const handleMoreView = () => {
