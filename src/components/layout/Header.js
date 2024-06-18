@@ -31,23 +31,27 @@ const Header = ({
   todoListhandleButtonClick,
   setSearchTextIndex,
 }) => {
+  console.log("header", userInfo);
   const moreMenu = useRef(null);
   const searchAction = useRef(null);
+  const inputFocus = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const handleKeyUp = e => {
-  //     if (e.key === "Enter") {
-  //       searchAction.current.click();
-  //     }
-  //   };
-  //   window.addEventListener("keyup", handleKeyUp);
-  //   return () => {
-  //     window.removeEventListener("keyup", handleKeyUp);
-  //   };
-  // }, []);
+
+  useEffect(() => {
+    const handleKeyUp = e => {
+      if (e.key === "Enter") {
+        searchAction.current.click();
+      }
+    };
+    inputFocus.current.addEventListener("keyup", handleKeyUp);
+    return () => {
+      inputFocus.current.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
+
 
   // 로그아웃, 마이페이지 활성화/비활성화
   const handleMoreView = () => {
@@ -87,7 +91,7 @@ const Header = ({
       <div className="header-inner">
         <ul className="header-list">
           <li className="header-user-name">
-            {userInfo.name} 님
+            {/* {userInfo?.userName} 님 */}
             <SearchButtonStyle
               onClick={() => {
                 handleMoreView();
@@ -106,6 +110,7 @@ const Header = ({
               }}
               type="text"
               autoComplete="off"
+              ref={inputFocus}
             />
           </li>
           <ListIconStyle
