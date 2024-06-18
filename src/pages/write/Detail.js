@@ -16,9 +16,16 @@ import {
   getAllData,
   patchCompleteSearchList,
 } from "../../apis/create/createApi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 const Detail = ({ boardId }) => {
+  // 1. useLocation 훅 취득
+  const location = useLocation();
+
+  //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
+  // const boardId = location.state.boardId;
+  // console.log("boardId : ", boardId);
+
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");

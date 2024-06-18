@@ -39,13 +39,17 @@ const NavStyle = styled.div`
   }
 `;
 
+// console.log("userId : ", sessionStorage.getItem("userId"));
+
 const Nav = ({
   setNowCalendarId,
   setCheckCalendarColorChange,
   setcheckedCalendarIds,
 }) => {
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
-  const [userId, setUserId] = useState(8);
+  // const [userId, setUserId] = useState(8);
+  const [userId, setUserId] = useState(72);
+  // const [userId, setUserId] = sessionStorage.getItem("userId");
 
   /** calendarId 저장 */
   const [calendarId, setCalendarId] = useState(null);

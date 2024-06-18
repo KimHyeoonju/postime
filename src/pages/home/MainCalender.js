@@ -119,9 +119,10 @@ const MainCalender = ({
 
   /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
   const array = [];
-  /** const userId = sessionStorage.getItem("userCode"); */
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
-  const userId = 8;
+  // const userId = 8;
+  const userId = sessionStorage.getItem("userId");
+  // const userId = sessionStorage.getItem("userId");
 
   /** 캘린더 목록 리스트 (axios로 get한 값) */
   const [calenderArr, setCalenderArr] = useState([]);
@@ -155,6 +156,8 @@ const MainCalender = ({
       console.log(error);
     }
   };
+
+  // console.log("캘린더 전체 일정 : ", calenderArr);
 
   // 메뉴에서 캘린더 체크 선택할 때마다 동작
   // FullCalendar에 출력될 배열을 필터링을 하는 함수 실행
@@ -234,28 +237,16 @@ const MainCalender = ({
     return () => {};
   }, []);
 
-  // 갱신
-  // const calenderDayPrint = CalenderDayPrint => {};
-
-  // 수정 예정
-  /** 캘린더의 일정 클릭시 이벤트 */
-  const handleEventClick = clickInfo => {
-    console.log(clickInfo);
-    const event = clickInfo.event;
-    const mouseX = clickInfo.jsEvent.clientX;
-    const mouseY = clickInfo.jsEvent.clientY - 90;
-    this.setState({ selectedEvent: event, mouseX, mouseY });
-  };
-
   /** 캘린더의 일정 클릭시 상세페이지로 이동 및 boardId 전달 */
   const insertModalOpen = clickInfo => {
     const clickBoardId = clickInfo.event.id;
-    // detailPageMove(clickBoardId);
-    console.log(clickInfo);
-    console.log(
-      "일정 클릭 했을 때 boardId 들어오는지 체크: ",
-      clickInfo.event.id,
-    );
+    // console.log("일정 클릭 했을 때 boardId 들어오는지 체크");
+    // console.log(clickInfo);
+    // console.log(clickBoardId);
+    // console.log(
+    //   "일정 클릭 했을 때 boardId 들어오는지 체크: ",
+    //   clickInfo.event.id,
+    // );
     navigate("/write/detail", {
       state: {
         boardId: clickBoardId,

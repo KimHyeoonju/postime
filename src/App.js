@@ -9,9 +9,14 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Index from "./pages/Index";
 
 function App() {
+  // sessionStorage.setItem("userId", result.resultData.userId);
+  // sessionStorage.setItem("Name", result.resultData.name);
+  // sessionStorage.setItem("email", result.resultData.email);
+
   const userId = sessionStorage.getItem("userId");
-  const userEmail = sessionStorage.getItem("userEmail");
-  const userName = sessionStorage.getItem("userName");
+  const userEmail = sessionStorage.getItem("email");
+  const userName = sessionStorage.getItem("Name");
+
   const [userInfo, setUserInfo] = useState({
     userId: userId,
     userEmail: userEmail,
@@ -19,8 +24,8 @@ function App() {
   });
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
 
-  const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
-  // const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
+  // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
+  const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
 
   // const [signUserId, setSignUserId] = useState(null);
   useEffect(() => {
