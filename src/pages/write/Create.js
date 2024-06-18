@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegCalendar } from "react-icons/fa6";
 import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
@@ -7,11 +7,13 @@ import "../../css/create.css";
 import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
+import { useNavigate } from "react-router-dom";
 import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
-import { useNavigate } from "react-router-dom";
 
-const Create = ({ boardId, signUserId, calendarId }) => {
+const calendarId = localStorage.setItem("calendarId", 1);
+
+const Create = () => {
   const userId = sessionStorage.getItem("userId");
 
   // 모달관련
@@ -32,11 +34,9 @@ const Create = ({ boardId, signUserId, calendarId }) => {
   };
 
   // 모달 실행 함수
-  const modalOk = () => {
+  const handleModalConfirm = () => {
     setIsModal(false);
-    if (isModal) {
-      // navigate("/");
-    }
+    naviagte("/");
   };
 
   // 글쓰기 관련
@@ -99,12 +99,13 @@ const Create = ({ boardId, signUserId, calendarId }) => {
     // 4 번 form-data 에 키에 값으로 추가하기
     formData.append("p", dto);
     console.log(formData);
-    // sendFiles.forEach(item => {
-    //   // 5 번 이미지 파일 추가하기
-    //   formData.append("files", item);
-    // });
+    sendFiles.forEach(item => {
+      // 5 번 이미지 파일 추가하기
+      formData.append("files", item);
+    });
     // 6 번 axios 로 전달
     try {
+      console.log("데이터전송중");
       await sendCreateAllData(formData);
       naviagte("/");
     } catch (error) {
@@ -113,33 +114,30 @@ const Create = ({ boardId, signUserId, calendarId }) => {
   };
 
   // 보드 휴지통으로
-  const boardDeleteSubmit = async e => {
-    e.preventDefault();
-    const data = [
-      {
-        boardId: boardId,
-        state: 3,
-      },
-    ];
-    try {
-      await deleteAllData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const boardDeleteSubmit = async e => {
+  //   e.preventDefault();
+  //   const data = [
+  //     {
+  //       boardId: boardId,
+  //       state: 3,
+  //     },
+  //   ];
+  //   try {
+  //     await deleteAllData(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  // const handleModalSubmit = async e => {
+  // const handleModalSubmit = (e) => {
   //   e.preventDefault();
 
-  //   const data = [{ calendarId, boardId }];
   //   setIsModal(true);
   //   setModalTitle("!!!경고!!!");
   //   setModalText("진짜 정말 리얼 진심 삭제 하시겠습니까?");
   //   setModalBtOk(true);
   //   setModalBtCancel(true);
   //   setIsModal(true);
-  //   console.log(modalTitle, modalText);
-  //   console.log(isModal);
   //   return;
   // };
 
@@ -163,8 +161,6 @@ const Create = ({ boardId, signUserId, calendarId }) => {
         <Modal
           title={modalTitle}
           message={modalText}
-          // modalOk={modalOk}
-          // modalCancel={modalCancel}
           onConfirm={modalBtOk}
           onClose={modalBtCancel}
           stateList={0}
@@ -188,8 +184,8 @@ const Create = ({ boardId, signUserId, calendarId }) => {
               <form>
                 <button
                   className="write-button-primary"
-                  type="submit"
-                  onClick={e => boardDeleteSubmit(e)}
+                  type="button"
+                  onClick={e => handleModalSubmit(e)}
                 >
                   <span>삭제</span>
                 </button>
@@ -262,12 +258,6 @@ const Create = ({ boardId, signUserId, calendarId }) => {
             </div>
             {/* 이미지 업로드 부분 */}
             <Mulitifile setSendFiles={setSendFiles} sendFiles={sendFiles} />
-          </div>
-        </div>
-        {/*  수정했습니다. */}
-        <div>
-          <div className="chat-wrap">
-            <Comment boardId={boardId} signUserId={signUserId} />
           </div>
         </div>
       </div>

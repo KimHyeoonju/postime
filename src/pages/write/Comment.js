@@ -9,8 +9,9 @@ const Comment = () => {
   const location = useLocation();
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
   const boardIdA = location.state.boardId;
-  const calendarId = location.state.calendarId;
   const userId = sessionStorage.getItem("userId");
+  const calendarId = localStorage.getItem("calendarId");
+
   console.log("boardIdA : ", boardIdA);
 
   // 전체 댓글 목록
@@ -35,7 +36,7 @@ const Comment = () => {
       boardId: boardIdA,
       signedUserId: userId,
       content: chat,
-      calendarId: calendarId,
+      calendarId: localStorage.getItem("calendarId"),
     };
     const result = await postCommentInput(sendData);
     allComments();

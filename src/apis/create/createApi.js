@@ -4,7 +4,7 @@ export const sendCreateAllData = async data => {
   try {
     const header = { headers: { "Content-Type": "multipart/form-data" } };
     const response = await axios.post("/api/board", data, header);
-    // console.log(response);
+    console.log(response);
     // console.log(data);
     return response;
   } catch (error) {
@@ -14,13 +14,14 @@ export const sendCreateAllData = async data => {
 export const modifyAllData = async data => {
   try {
     const header = { headers: { "Content-Type": "multipart/form-data" } };
-    const response = await axios.post("/api/board", data, header);
+    const response = await axios.put("/api/board", data, header);
     console.log(response);
     return response;
   } catch (error) {
     console.log(error);
   }
 };
+
 export const getAllData = async boardIdA => {
   try {
     const header = { headers: { "Content-Type": "multipart/form-data" } };
