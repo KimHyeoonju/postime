@@ -5,7 +5,12 @@ import UserPwModal from "../../components/modal/UserPwModal";
 import { postCheckPw } from "../../apis/user/apiuser";
 import axios from "axios";
 
-const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
+const UserInfoPage = ({
+  signUserId,
+  setIsLogin,
+  userInfo,
+  setRememberUserPass,
+}) => {
   console.log("회원정보에 불러온 내 자료: ", userInfo);
 
   const [user, setUser] = useState({
@@ -66,7 +71,8 @@ const UserInfoPage = ({ signUserId, setIsLogin, userInfo }) => {
       } else {
         console.log("비밀번호 확인 완료");
         setUserPwModalOpen(false);
-        // updateUserInformation(user.userId, userPass);
+        console.log("userPwModalInput : ", userPwModalInput);
+        setRememberUserPass(userPwModalInput);
       }
     } catch (error) {
       console.log(error);
