@@ -97,6 +97,7 @@ const CalenderStyle = styled.div`
 `;
 const MainCalender = ({
   nowCalendarId,
+  nowCalendarUpdate,
   checkedCalendars,
   checkCalendarColorChange,
   checkedCalendarIds,
@@ -105,7 +106,6 @@ const MainCalender = ({
   /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
   const array = [];
   /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
-  // const userId = 8;
   const userId = sessionStorage.getItem("userId");
   console.log("테스트 유저명 : ", userId);
   // const userId = sessionStorage.getItem("userId");
@@ -121,7 +121,6 @@ const MainCalender = ({
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
-
 
   console.log("calenderArr : ", calenderArr);
 
@@ -143,7 +142,6 @@ const MainCalender = ({
       console.log(error);
     }
   };
-  // console.log("캘린더 전체 일정 : ", calenderArr);
   // 메뉴에서 캘린더 체크 선택할 때마다 동작
   // FullCalendar에 출력될 배열을 필터링을 하는 함수 실행
   useEffect(() => {
@@ -186,15 +184,15 @@ const MainCalender = ({
   //   setCalenderClickArr(filteredCalendars);
   // }, [activeCalendars, calenderArr]);
   // 확인
-  // 다시 배열에 값 추가?
+  // 다시 배열에 값 추가
   useEffect(() => {
     // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
     const aaa = calenderArr.filter(item =>
       checkedCalendarIds.includes(item.calendarId),
     );
     setCalenderClickArr(aaa);
-    console.log("갱신확인 : ", aaa);
   }, [checkedCalendarIds]);
+
   /** 체크박스 클릭 핸들러 */
   const handleCheckboxClick = calendarId => {
     // 활성화된 캘린더인지 확인
@@ -211,6 +209,7 @@ const MainCalender = ({
     firstCalenderDayPrint();
     return () => {};
   }, []);
+
   /** 캘린더의 일정 클릭시 상세페이지로 이동 및 boardId 전달 */
   const insertModalOpen = clickInfo => {
     const clickBoardId = clickInfo.event.id;

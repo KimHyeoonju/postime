@@ -75,17 +75,21 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
   useEffect(() => {
     console.log("INDEX.js rememberPass : ", rememberPass);
   }, [rememberPass]);
+
   // 캘린더 아이디 관련
   const [nowCalendarId, setNowCalendarId] = useState(null);
+  // 캘린더 갱신에 대해서
+  const [nowCalendarUpdate, setNowCalendarUpdate] = useState(false);
   // 체크박스가 활성화 되어 있는 캘린더ID 리스트
   const [checkedCalendarIds, setcheckedCalendarIds] = useState([]);
-  // 캘린더 색 갱신을 출력하기 위한 값
-  // const [checkCalendarColorChange, setCheckCalendarColorChange] =
-  //   useState(null);
 
   useEffect(() => {
     console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
+
+  useEffect(() => {
+    console.log("nowCalendarUpdate : ", nowCalendarUpdate);
+  }, [nowCalendarUpdate]);
 
   useEffect(() => {
     console.log("checkedCalendarIds : ", checkedCalendarIds);
@@ -112,7 +116,7 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
         <WrapStyle>
           <Nav
             setNowCalendarId={setNowCalendarId}
-            // setCheckCalendarColorChange={setCheckCalendarColorChange}
+            setNowCalendarUpdate={setNowCalendarUpdate}
             setcheckedCalendarIds={setcheckedCalendarIds}
           />
           <MainStyle>
@@ -141,7 +145,8 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
                       <MainCalender
                         nowCalendarId={nowCalendarId}
                         checkedCalendarIds={checkedCalendarIds}
-                        // checkCalendarColorChange={checkCalendarColorChange}
+                        nowCalendarUpdate={nowCalendarUpdate}
+                        setNowCalendarUpdate={setNowCalendarUpdate}
                       />
                     }
                   />

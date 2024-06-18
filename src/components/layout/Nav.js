@@ -40,19 +40,15 @@ const NavStyle = styled.div`
   }
 `;
 
-// console.log("userId : ", sessionStorage.getItem("userId"));
-
 const Nav = ({
   setNowCalendarId,
   setCheckCalendarColorChange,
   setcheckedCalendarIds,
+  setNowCalendarUpdate,
 }) => {
-  /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
-  // const [userId, setUserId] = useState(8);
   const [userId, setUserId] = useState(72);
   // const [userId, setUserId] = sessionStorage.getItem("userId");
 
-  console.log("Nav userId : ", userId);
   /** calendarId 저장 */
   const [calendarId, setCalendarId] = useState(null);
   /** 캘린더 리스트 배열 */
@@ -218,6 +214,7 @@ const Nav = ({
   /** 캘린더 수정 완료될때마다 캘린더 리스트 갱신 */
   useEffect(() => {
     calenderList();
+    setNowCalendarUpdate(true);
   }, [checkedCalendars]);
 
   /** 내 캘린더에 새로운 캘린더 추가 */
@@ -320,11 +317,11 @@ const Nav = ({
           setCheckCalendarColorChange={setCheckCalendarColorChange}
         />
       ) : null}
-      {isNewCalendarCreateModal ? (
+      {/* {isNewCalendarCreateModal ? (
         <CalendarCreateModal
           calendarCreateModalCancel={calendarCreateModalCancel}
         />
-      ) : null}
+      ) : null} */}
 
       <div className="menu">
         <div className="div-menu-header">
