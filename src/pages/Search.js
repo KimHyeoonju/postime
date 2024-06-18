@@ -3,6 +3,13 @@ import { getSearchList, patchCompleteSearchList } from "../apis/etc/apisearch";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
+import styled from "@emotion/styled";
+
+const SearchStyle = styled.div`
+  .common-inner {
+    overflow: scroll;
+  }
+`;
 
 const Search = ({ searchTextIndex }) => {
   // console.log("Search : ", searchTextIndex);
@@ -82,38 +89,39 @@ const Search = ({ searchTextIndex }) => {
   };
 
   return (
-    <div className="common">
-      <div className="common-inner">
-        <h1>{`' ${searchTextIndex} '`} 에 해당하는 검색결과 입니다.</h1>
-        <div className="common-button"></div>
-        <div className="common-menu">
-          <div className="com-sizebox"></div>
-          <div className="cmt">
-            <span>일정 명</span>
+    <SearchStyle>
+      <div className="common">
+        <div className="common-inner">
+          <h1>{`' ${searchTextIndex} '`} 에 해당하는 검색결과 입니다.</h1>
+          <div className="common-button"></div>
+          <div className="common-menu">
+            <div className="com-sizebox"></div>
+            <div className="cmt">
+              <span>일정 명</span>
+            </div>
+            <div className="com-sizebox"></div>
+            <div className="cmtxt">
+              <span> 일정 내용 </span>
+            </div>
+            <div className="cmdate">
+              <span>날짜</span>
+            </div>
+            <div className="cmcalender">
+              <span>캘린더 명</span>
+            </div>
           </div>
-          <div className="com-sizebox"></div>
-          <div className="cmtxt">
-            <span> 일정 내용 </span>
-          </div>
-          <div className="cmdate">
-            <span>날짜</span>
-          </div>
-          <div className="cmcalender">
-            <span>캘린더 명</span>
-          </div>
-        </div>
 
-        <div className="common-list-wrap">
-          {serarchList.map((item, index) => (
-            <ul
-              className="common-list"
-              key={index}
-              onClick={() => {
-                handleDetailPage(item.state, item.boardId);
-              }}
-            >
-              <li className="checkbox-area">
-                {/* {item.state === 1 ? (
+          <div className="common-list-wrap">
+            {serarchList.map((item, index) => (
+              <ul
+                className="common-list"
+                key={index}
+                onClick={() => {
+                  handleDetailPage(item.state, item.boardId);
+                }}
+              >
+                <li className="checkbox-area">
+                  {/* {item.state === 1 ? (
                     <div className="com-state">
                       <p className="stateone">진행중</p>
                     </div>
@@ -126,53 +134,54 @@ const Search = ({ searchTextIndex }) => {
                       <p className="statethree">삭제</p>
                     </div>
                   ) : null} */}
-              </li>
+                </li>
 
-              <li className="title-area">
-                <span className="com-title">{item.title}</span>
-              </li>
+                <li className="title-area">
+                  <span className="com-title">{item.title}</span>
+                </li>
 
-              <li className="state-area">
-                {item.state === 1 ? (
-                  <div className="com-state">
-                    <p className="stateone">진행중</p>
-                  </div>
-                ) : item.state === 2 ? (
-                  <div className="com-state">
-                    <p className="statetwo">완료</p>
-                  </div>
-                ) : item.state === 3 ? (
-                  <div className="com-state">
-                    <p className="statethree">삭제</p>
-                  </div>
-                ) : null}
-              </li>
+                <li className="state-area">
+                  {item.state === 1 ? (
+                    <div className="com-state">
+                      <p className="stateone">진행중</p>
+                    </div>
+                  ) : item.state === 2 ? (
+                    <div className="com-state">
+                      <p className="statetwo">완료</p>
+                    </div>
+                  ) : item.state === 3 ? (
+                    <div className="com-state">
+                      <p className="statethree">삭제</p>
+                    </div>
+                  ) : null}
+                </li>
 
-              <li className="text-area">
-                <span className="com-text">{item.content}</span>
-              </li>
-              <li className="date-area">
-                <span className="com-date">{item.dDay}</span>
-              </li>
-              <li className="calender-area">
-                <span className="com-calender">{item.calendarName}</span>
-              </li>
-            </ul>
-          ))}
+                <li className="text-area">
+                  <span className="com-text">{item.content}</span>
+                </li>
+                <li className="date-area">
+                  <span className="com-date">{item.dDay}</span>
+                </li>
+                <li className="calender-area">
+                  <span className="com-calender">{item.calendarName}</span>
+                </li>
+              </ul>
+            ))}
+          </div>
+
+          {/* 모달 관련 */}
+          <Modal
+            isOpen={isModalOpen}
+            title={modalTitle}
+            message={modalMessage}
+            onClose={closeModal}
+            onConfirm={confirmAction}
+            onProgress={progressAction}
+            stateList={stateList}
+          />
         </div>
-
-        {/* 모달 관련 */}
-        <Modal
-          isOpen={isModalOpen}
-          title={modalTitle}
-          message={modalMessage}
-          onClose={closeModal}
-          onConfirm={confirmAction}
-          onProgress={progressAction}
-          stateList={stateList}
-        />
       </div>
-    </div>
+    </SearchStyle>
   );
 };
 

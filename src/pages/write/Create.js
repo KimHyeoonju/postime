@@ -11,8 +11,8 @@ import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
 import { useNavigate } from "react-router-dom";
 
-const calendarId = 61;
-const boardId = boardId;
+const calendarId = 1;
+const boardId = 200;
 
 const Create = () => {
   // 모달관련

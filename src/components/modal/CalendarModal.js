@@ -59,6 +59,8 @@ const CalendarModal = ({
   // const [userEmail, setUserEmail] = useState("asdqwe@naver.com");
   const [userEmail, setUserEmail] = useState();
   const [calendarModalType, setCalendarModalType] = useState(1);
+  // 유저 삭제, 추가에 따른 유저 리스트 갱신을 위한
+  const [userListUpdate, setUserListUpdate] = useState(false);
 
   /** 삭제할 유저 ID */
   const [deleteUeserId, setDeleteUeserId] = useState("");
@@ -92,6 +94,12 @@ const CalendarModal = ({
   //   setCalendarListUserArr(result);
   // };
 
+  /** 유저 추가, 삭제 시 리스트 실시간 갱신 */
+  useEffect(() => {
+    firstCalenderUserList(selectCalenderId);
+    setUserListUpdate(false);
+  }, [userListUpdate]);
+
   /** 최초 렌더링 시, 공유 멤버 리스트 GET */
   const firstCalenderUserList = async selectCalenderId => {
     const result = await getCalenderUserList(selectCalenderId);
@@ -115,7 +123,7 @@ const CalendarModal = ({
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
         console.log("유저 추가 성공 : ", resepons);
-        return true;
+        return setUserListUpdate(true);
       } else {
         console.log("API 오류");
       }
@@ -159,10 +167,10 @@ const CalendarModal = ({
   useEffect(() => {
     const handler = event => {
       // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        showDeleteCheckModalCancel(false);
-        calenderUserListModalOk();
-      }
+      // if (modalRef.current && !modalRef.current.contains(event.target)) {
+      //   showDeleteCheckModalCancel(false);
+      //   calenderUserListModalOk();
+      // }
     };
 
     const handleResize = () => {
@@ -189,6 +197,7 @@ const CalendarModal = ({
           deleteUeserId={deleteUeserId}
           selectCalenderId={selectCalenderId}
           getCalenderUserList={getCalenderUserList}
+          setUserListUpdate={setUserListUpdate}
         />
       ) : null}
 
