@@ -14,7 +14,7 @@ function App() {
   const userId = sessionStorage.getItem("userId");
   const userEmail = sessionStorage.getItem("email");
   const userName = sessionStorage.getItem("name");
-  
+
   const [userInfo, setUserInfo] = useState({
     userId: userId,
     email: userEmail,

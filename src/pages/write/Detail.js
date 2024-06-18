@@ -28,7 +28,6 @@ const Detail = ({ boardId }) => {
   const calendarId = location.state.calendarId;
   console.log("boardIdA : ", boardIdA);
 
-
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
