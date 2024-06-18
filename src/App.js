@@ -15,12 +15,12 @@ function App() {
 
   const userId = sessionStorage.getItem("userId");
   const userEmail = sessionStorage.getItem("email");
-  const userName = sessionStorage.getItem("Name");
+  const userName = sessionStorage.getItem("name");
 
   const [userInfo, setUserInfo] = useState({
     userId: userId,
-    userEmail: userEmail,
-    userName: userName,
+    email: userEmail,
+    name: userName,
   });
   // const [userInfo, setUserInfo] = useState(null); // {user, ...}
 
@@ -43,11 +43,11 @@ function App() {
   useEffect(() => {
     const userInfoFromStorage = sessionStorage.getItem("userId");
     if (userInfoFromStorage) {
-      setUserInfo({
-        userId: userInfoFromStorage.userId,
-        userEmail: userInfoFromStorage.userEmail,
-        userName: userInfoFromStorage.userName,
-      });
+      // setUserInfo({
+      //   userId: userInfoFromStorage.userId,
+      //   userEmail: userInfoFromStorage.userEmail,
+      //   userName: userInfoFromStorage.userName,
+      // });
 
       // setIsLogin(false); // 로그인 상태 설정
       setIsLogin(true); // 로그인 상태 설정
@@ -57,7 +57,7 @@ function App() {
   return (
     <BrowserRouter>
       {isLogin ? ( // 로그인된 상태인 경우
-        <Index isLogin={isLogin} userInfo={userInfo} />
+        <Index userInfo={userInfo} />
       ) : (
         // 로그인되지 않은 상태인 경우
         <Routes>

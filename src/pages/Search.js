@@ -38,8 +38,8 @@ const Search = ({ searchTextIndex }) => {
     setSearchList(result.resultData);
   };
 
-  const handleDetailPage = (state, boardId) => {
-    console.log("handleDetailPage 일정클릭 ", state, boardId);
+  const handleDetailPage = (state, boardId, calendarId) => {
+    console.log("handleDetailPage 일정클릭 ", state, boardId, calendarId);
     const changeStateOneArr = [{ boardId: boardId, state: 1 }];
     const changeStateTwoArr = [{ boardId: boardId, state: 2 }];
     setSateList(state);
@@ -47,7 +47,7 @@ const Search = ({ searchTextIndex }) => {
     if (state === 1) {
       // console.log("상세페이지 모달창");
       openModal({
-        title: "진행중인 일정 클릭 안내",
+        title: "[진행중] 일정 클릭 안내",
         message:
           "일정을 완료 하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
         onConfirm: async () => {
@@ -60,10 +60,16 @@ const Search = ({ searchTextIndex }) => {
             console.log(error);
           }
         },
+        onDetail: () => {
+          console.log("페이지이동");
+          navigate("/write/detail", {
+            state: { boardId: boardId, calendarId: calendarId },
+          });
+        },
       });
     } else if (state === 2) {
       openModal({
-        title: "완료일정 클릭 안내",
+        title: "[완료] 일정 클릭 안내",
         message:
           "일정을 복원하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
         onConfirm: async () => {
@@ -76,10 +82,16 @@ const Search = ({ searchTextIndex }) => {
             console.log(error);
           }
         },
+        onDetail: () => {
+          console.log("페이지이동");
+          navigate("/write/detail", {
+            state: { boardId: boardId, calendarId: calendarId },
+          });
+        },
       });
     } else if (state === 3) {
       openModal({
-        title: "삭제일정 클릭 안내",
+        title: "[삭제] 일정 클릭 안내",
         message:
           "일정을 복원하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
         onConfirm: async () => {
@@ -91,6 +103,12 @@ const Search = ({ searchTextIndex }) => {
           } catch (error) {
             console.log(error);
           }
+        },
+        onDetail: () => {
+          console.log("페이지이동");
+          navigate("/write/detail", {
+            state: { boardId: boardId, calendarId: calendarId },
+          });
         },
       });
     }
@@ -126,7 +144,7 @@ const Search = ({ searchTextIndex }) => {
               className="common-list"
               key={index}
               onClick={() => {
-                handleDetailPage(item.state, item.boardId);
+                handleDetailPage(item.state, item.boardId, item.calendarId);
               }}
             >
               <li className="checkbox-area">
@@ -144,7 +162,6 @@ const Search = ({ searchTextIndex }) => {
                       <p className="statethree">삭제</p>
                     </div>
                   ) : null} */}
-
               </li>
 
               <li className="title-area">
