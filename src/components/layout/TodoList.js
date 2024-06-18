@@ -241,7 +241,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                   return (
                     <div
                       className="todo today-01"
-                      style={{ borderLeft: "7px solid #666666" }}
+                      style={{ borderLeft: `7px solid ${item.color}` }}
                       key={index}
                     >
                       <input
@@ -288,7 +288,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                   return (
                     <div
                       className="todo this-month-01"
-                      style={{ borderLeft: "7px solid #666666" }}
+                      style={{ borderLeft: `7px solid ${item.color}` }}
                       key={index}
                     >
                       <input
@@ -299,6 +299,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                             selectedItem =>
                               selectedItems.boardId === item.boardId,
                           );
+                          console.log(item);
                         }}
                         onChange={e =>
                           handleCheckboxChange(item, e.target.checked)

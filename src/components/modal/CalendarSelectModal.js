@@ -54,6 +54,7 @@ const CalendarSelectModal = ({ calendarSelectModalCancel, setModalType }) => {
 
   const shareSelection = e => {
     // 공유
+
     setModalType(1);
   };
 

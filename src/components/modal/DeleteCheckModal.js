@@ -66,7 +66,6 @@ const DeleteCheckModal = ({
   getCalenderUserList,
   setUserListUpdate,
 }) => {
-  // const DeleteCheckModal = ({ showDeleteCheckModal }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
   // const [userId, setUserId] = useState(8); // 나중에 아래의 세션으로 변경하기
   const userId = sessionStorage.getItem("userId");
@@ -84,7 +83,6 @@ const DeleteCheckModal = ({
     deleteUeserId,
   }) => {
     setDeleteCheck(!deleteCheck);
-    // setDeleteUeserId(2);
     console.log("userId 확인 : ", userId);
     console.log("selectCalenderId 확인 : ", selectCalenderId);
     console.log("deleteUeserId 확인 : ", deleteUeserId);
@@ -92,9 +90,6 @@ const DeleteCheckModal = ({
   };
 
   const deleteUeser = ({ userId, selectCalenderId, deleteUeserId }) => {
-    console.log(deleteCheck);
-    console.log(deleteUeserId);
-
     if (!deleteCheck) {
       // const result = deleteListUser(userId, calendarId, deleteUeserId);
       const res = deleteListUser({ userId, selectCalenderId, deleteUeserId });
@@ -114,9 +109,9 @@ const DeleteCheckModal = ({
     selectCalenderId,
     deleteUeserId,
   }) => {
-    // console.log("01", userId);
-    // console.log("02", selectCalenderId);
-    // console.log("03", deleteUeserId);
+    console.log("01", userId);
+    console.log("02", selectCalenderId);
+    console.log("03", deleteUeserId);
     try {
       const resepons = await axios.delete("/api/calendar/member", {
         data: {

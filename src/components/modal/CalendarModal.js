@@ -44,22 +44,19 @@ const CalendarModal = ({
   calenderUserListModalOk,
   selectCalenderId,
   selectCalenderName,
+  modalType,
 }) => {
-  const userId = 8;
+  const userId = 72;
 
-  const userName = "김현주";
-
-  // const userId = sessionStorage.getItem("memberInfo.Name");
-  // const userName = sessionStorage.getItem("Name");
-  const calendarId = sessionStorage.getItem("calendarId");
+  const userName = sessionStorage.getItem("name");
 
   // useRef()를 사용하여 modalRef 생성
   const modalRef = useRef(null);
   // 캘린더 공유 유저 리스트 배열
   const [calendarListUserArr, setCalendarListUserArr] = useState([]);
-  // const [userEmail, setUserEmail] = useState("asdqwe@naver.com");
   const [userEmail, setUserEmail] = useState();
   const [calendarModalType, setCalendarModalType] = useState(1);
+
   // 유저 삭제, 추가에 따른 유저 리스트 갱신을 위한
   const [userListUpdate, setUserListUpdate] = useState(false);
 
@@ -68,11 +65,10 @@ const CalendarModal = ({
 
   const getCalenderUserList = async selectCalenderId => {
     try {
-      const resepons = await axios.get(
-        `/api/calendar/member?calendar_id=${selectCalenderId}`,
-      );
+      const resepons = await axios.get(`
+      /api/calendar/member?calendar_id=${selectCalenderId}&signed_user_id=${userId}
+      `);
       const status = resepons.status.toString().charAt(0);
-      // console.log("유저리스트", resepons.data.resultData);
       if (status === "2") {
         console.log("유저 리스트 정상 GET");
         return resepons.data.resultData;
@@ -82,18 +78,8 @@ const CalendarModal = ({
       console.log(resepons.data);
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   };
-
-  // 공유 멤버 리스트 갱신처리
-  // useEffect(() => {}, []);
-
-  // const calenderUserList = async selectCalenderId => {
-  //   const result = await getCalenderUserList(selectCalenderId);
-  //   // console.log("유저 리스트 출력", result);
-  //   setCalendarListUserArr(result);
-  // };
 
   /** 유저 추가, 삭제 시 리스트 실시간 갱신 */
   useEffect(() => {
@@ -104,7 +90,6 @@ const CalendarModal = ({
   /** 최초 렌더링 시, 공유 멤버 리스트 GET */
   const firstCalenderUserList = async selectCalenderId => {
     const result = await getCalenderUserList(selectCalenderId);
-    // console.log("유저 리스트 출력", result);
     setCalendarListUserArr(result);
   };
 
@@ -114,8 +99,6 @@ const CalendarModal = ({
   }, [calenderUserListModalOk]);
 
   const calendarUserPlus = async ({ userEmail, selectCalenderId }) => {
-    console.log("입력된 이메일 : ", userEmail);
-    console.log("캘린더 ID : ", selectCalenderId);
     try {
       const resepons = await axios.post("/api/calendar/plus", {
         calendarId: selectCalenderId,
@@ -131,63 +114,41 @@ const CalendarModal = ({
       console.log(resepons.data);
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   };
 
-  // const calendarUserPlusCheck = async ({userEmail, calendarId}){
-  // 캘린더에 해당 이메일의 사용자가 추가되어 있는지 확인.
-  // }
-
-  // const getdelectUserId = async deleteUeserId => {
-  //   // console.log("A", deleteUeserId);
-  //   // console.log(calenderId);
-  //   // console.log(userId);
-  //   delectCalendarUser(userId, calenderId, deleteUeserId);
-  // };
-
-  // 수정;
-  // const deleteUserButton = ({ deleteUeserId }) => {
-  //   deleteUeserId(deleteUeserId);
-  //   showDeleteCheckModal(false);
-  // };
-
   const [isDeleteCheckModal, setIsDeleteCheckModal] = useState(false);
-  const showDeleteCheckModal = async e => {
-    console.log("삭제할 유저 ID : ", e);
-    setDeleteUeserId(e);
+  const showDeleteCheckModal = async userId => {
+    setDeleteUeserId(userId);
     setIsDeleteCheckModal(!isDeleteCheckModal);
-    // 캘린더명
-    // setCalenderId(e.target.id);
-    // setIsDeleteCheckModal(false); // 이전 모달 창 닫기
   };
   const showDeleteCheckModalCancel = e => {
     setIsDeleteCheckModal(false);
   };
 
-  useEffect(() => {
-    const handler = event => {
-      // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
-      // if (modalRef.current && !modalRef.current.contains(event.target)) {
-      //   showDeleteCheckModalCancel(false);
-      //   calenderUserListModalOk();
-      // }
-    };
+  // useEffect(() => {
+  //   const handler = event => {
+  //     // mousedown 이벤트가 발생한 영역이 모달창이 아닐 때, 모달창 제거 처리
+  //     if (modalRef.current && !modalRef.current.contains(event.target)) {
+  //       showDeleteCheckModalCancel(false);
+  //       calenderUserListModalOk();
+  //     }
+  //   };
 
-    const handleResize = () => {
-      showDeleteCheckModalCancel(false);
-      calenderUserListModalOk();
-    };
+  //   const handleResize = () => {
+  //     showDeleteCheckModalCancel(false);
+  //     calenderUserListModalOk();
+  //   };
 
-    document.addEventListener("mousedown", handler);
-    // document.addEventListener('touchstart', handler); // 모바일 대응
+  //   document.addEventListener("mousedown", handler);
+  //   // document.addEventListener('touchstart', handler); // 모바일 대응
 
-    return () => {
-      // 이벤트 핸들러 해제
-      document.removeEventListener("mousedown", handler);
-      // document.removeEventListener('touchstart', handler); // 모바일 대응
-    };
-  }, [showDeleteCheckModalCancel]);
+  //   return () => {
+  //     // 이벤트 핸들러 해제
+  //     document.removeEventListener("mousedown", handler);
+  //     // document.removeEventListener('touchstart', handler); // 모바일 대응
+  //   };
+  // }, [showDeleteCheckModalCancel]);
 
   return (
     <CalendarModalStyle>
@@ -252,7 +213,6 @@ const CalendarModal = ({
                 </div>
 
                 {calendarListUserArr.map((item, index) => {
-                  console.log(item.name);
                   return (
                     <div className="calendar-user-list-item" key={index}>
                       <p>{item.name}</p>
@@ -261,6 +221,7 @@ const CalendarModal = ({
                         onClick={
                           e => {
                             showDeleteCheckModal(item.userId);
+                            // console.log("한번 확인해보자", item.userId);
                           }
 
                           // getdelectUserId(`${item.userId}`);

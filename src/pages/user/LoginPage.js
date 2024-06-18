@@ -60,6 +60,7 @@ const LoginPage = ({ setIsLogin, setUserInfo }) => {
     // const email = result.resultData.email;
 
     sessionStorage.setItem("userId", result.resultData.userId);
+    console.log("로그인 페이지의 : ", result.resultData.userId);
     sessionStorage.setItem("name", result.resultData.name);
     sessionStorage.setItem("email", result.resultData.email);
 
