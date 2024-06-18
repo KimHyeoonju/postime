@@ -31,8 +31,10 @@ const Header = ({
   todoListhandleButtonClick,
   setSearchTextIndex,
 }) => {
+  console.log("header", userInfo);
   const moreMenu = useRef(null);
   const searchAction = useRef(null);
+  const inputFocus = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
@@ -43,9 +45,9 @@ const Header = ({
         searchAction.current.click();
       }
     };
-    window.addEventListener("keyup", handleKeyUp);
+    inputFocus.current.addEventListener("keyup", handleKeyUp);
     return () => {
-      window.removeEventListener("keyup", handleKeyUp);
+      inputFocus.current.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 
@@ -87,7 +89,7 @@ const Header = ({
       <div className="header-inner">
         <ul className="header-list">
           <li className="header-user-name">
-            {userInfo.name} 님
+            {/* {userInfo?.userName} 님 */}
             <SearchButtonStyle
               onClick={() => {
                 handleMoreView();
@@ -106,6 +108,7 @@ const Header = ({
               }}
               type="text"
               autoComplete="off"
+              ref={inputFocus}
             />
           </li>
           <ListIconStyle
