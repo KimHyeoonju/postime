@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { getResetPwd } from "../../apis/user/apiuser";
 import UserModal from "../../components/modal/UserModal";
 
-const SearchPwPage = ({ userInfo }) => {
+const SearchPwPage = ({ userInfo, setRememberId }) => {
   console.log("회원정보수정의 내 자료: ", userInfo);
+  // console.log("setRememberId : ", setRememberId);
   const navigate = useNavigate();
   const [userId, setUserId] = useState("mybirth811");
   const [userEmail, setUserEmail] = useState("tngus@naver.com");
@@ -29,6 +30,7 @@ const SearchPwPage = ({ userInfo }) => {
 
     const result = await getUser(requestData);
     console.log(result);
+    console.log("setRememberId : ", setRememberId);
     if (result.statusCode !== 2) {
       setUserModalMessage(result.resultMsg);
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
@@ -42,6 +44,7 @@ const SearchPwPage = ({ userInfo }) => {
     });
     setUserModalOpen(true);
     setSendChecked(true);
+    334;
     setServCode(result.resultData.code);
   };
 
@@ -82,6 +85,7 @@ const SearchPwPage = ({ userInfo }) => {
       setUserModalMessage("코드가 틀렸습니다.");
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
     }
+    setRememberId(userId);
   };
   const getUser = async ({ id, email }) => {
     try {

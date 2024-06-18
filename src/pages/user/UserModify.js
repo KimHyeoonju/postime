@@ -4,8 +4,9 @@ import axios from "axios";
 import UserModal from "../../components/modal/UserModal";
 import { useNavigate } from "react-router-dom";
 
-const UserModify = ({ signUserId, userInfo }) => {
+const UserModify = ({ signUserId, userInfo, rememberPass }) => {
   console.log("회원정보수정의 내 자료: ", userInfo);
+  console.log("rememberPass : ", rememberPass);
   // 입력할 항목 변수
   const [userEmail, setUserEmail] = useState(userInfo?.email || "");
   const [userEmailActive, setUserEmailActive] = useState(true);
@@ -19,7 +20,7 @@ const UserModify = ({ signUserId, userInfo }) => {
     userName: signUserId?.userName || "",
     userEmail: signUserId?.userEmail || "",
   });
-  const [userPass, setUserPass] = useState("");
+  // const [userPass, setUserPass] = useState("");
 
   // // 비밀번호 및 비밀번호 확인 일치 여부 플래그
   // const [passwordMatchError, setPasswordMatchError] = useState(false);
@@ -95,9 +96,10 @@ const UserModify = ({ signUserId, userInfo }) => {
 
     const reqData = {
       userId: userInfo.userId,
-      pwd: userPass,
+      pwd: rememberPass,
       email: userEmail,
     };
+    console.log("reqData", reqData);
 
     try {
       const response = await axios.put("/api/user", reqData);
@@ -144,10 +146,10 @@ const UserModify = ({ signUserId, userInfo }) => {
     };
     const sendData = {
       userId: user.userId,
-      pwd: userPass,
+      pwd: rememberPass,
     };
     postUser(sendData);
-  }, [user.userId, userPass]);
+  }, [user.userId, rememberPass]);
 
   return (
     <div className="user-wrap">

@@ -6,8 +6,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // 로그인 안 된 상태
 // 로그인 페이지 -> 비밀번호 찾기 페이지 -> (코드 입력 후) 비밀번호 재설정 페이지입니다
-const UserNewPwPage = ({ userInfo }) => {
-  console.log("불러온 내 자료: ", userInfo.userId);
+const UserNewPwPage = ({ userInfo, rememberId }) => {
+  // console.log("불러온 내 자료: ", userInfo.userId);
+  console.log("rememberId : ", rememberId);
   const [userNewPass, setUserNewPass] = useState("");
   const [userId, setUserId] = useState("");
   const [userNewPass2, setUserNewPass2] = useState("");
@@ -16,21 +17,6 @@ const UserNewPwPage = ({ userInfo }) => {
     // userName: signUserId?.userName || "",
     // userEmail: signUserId?.userEmail || "",
   });
-
-  // const location = useLocation();
-  // const navigate = useNavigate();
-  // useEffect(() => {
-  //   // location.state에서 userId 가져오기
-  //   if (
-  //     location.state &&
-  //     location.state.resultData &&
-  //     location.state.resultData.userId
-  //   ) {
-  //     setUserId(location.state.resultData.userId);
-  //   } else {
-  //     console.error("이전 페이지에서 userId를 찾을 수 없습니다.");
-  //   }
-  // }, [location.state]);
 
   // 비밀번호 및 비밀번호 확인 일치 여부 플래그
   const [passwordMatchError, setPasswordMatchError] = useState(false);
@@ -132,11 +118,11 @@ const UserNewPwPage = ({ userInfo }) => {
       }
     };
     const sendData = {
-      userId: user.userId,
+      userId: rememberId,
       pwd: userNewPass,
     };
     postUser(sendData);
-  }, [user.userId, userNewPass]);
+  }, [rememberId, userNewPass]);
 
   const changePw = async () => {
     // console.log("changePwchangePw : ", userInfo);
