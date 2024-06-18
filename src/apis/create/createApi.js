@@ -59,9 +59,9 @@ export const patchCompleteSearchList = async apiArr => {
 };
 
 // 댓글 기능
-export const getComment = async data => {
+export const getComment = async boardId => {
   try {
-    const response = await axios.get(`/api/board/comment?board_id=${data}`);
+    const response = await axios.get(`/api/board/comment?board_id=${boardId}`);
     return response;
   } catch (error) {
     console.log(error);
