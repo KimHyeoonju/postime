@@ -61,7 +61,7 @@ body {
 }
 
 .user-wrap label {
-  display: block;
+  display: inline-block;
   font-size: 20px;
   font-weight: bold;
   color: #0f1015;
