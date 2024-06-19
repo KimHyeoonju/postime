@@ -64,7 +64,9 @@ const WriteRoutes = () => {
   );
 };
 
+
 const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
+
   const [rememberPass, setRememberUserPass] = useState("");
 
   useEffect(() => {
@@ -151,11 +153,22 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
                     todoListClassAdded={todoListClassAdded}
                     onTodoListToggle={todoListhandleButtonClick}
                   />
-                  <Route path="/complete" element={<Complete />} />
-                  <Route path="/delete" element={<Delete />} />
+                  <Route
+                    path="/complete"
+                    element={<Complete userInfo={userInfo} />}
+                  />
+                  <Route
+                    path="/delete"
+                    element={<Delete userInfo={userInfo} />}
+                  />
                   <Route
                     path="/search"
-                    element={<Search searchTextIndex={searchTextIndex} />}
+                    element={
+                      <Search
+                        searchTextIndex={searchTextIndex}
+                        userInfo={userInfo}
+                      />
+                    }
                   />
                   <Route
                     path="/userinfo"

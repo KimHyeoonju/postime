@@ -27,7 +27,9 @@ header {
   align-items: center;
   /* position: relative; */
   margin-right: 35px;
+  font-weight: 800;
 }
+
 .header-list .header-user-name::after {
   /* position: absolute; */
 }

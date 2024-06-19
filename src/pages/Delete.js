@@ -9,7 +9,8 @@ import {
 } from "../apis/etc/apidelete";
 import DeleteModal from "../components/DeleteModal";
 
-const Delete = () => {
+const Delete = ({ userInfo }) => {
+  // console.log("삭제페이지", userInfo);
   // const {
   //   isModalOpen,
   //   modalTitle,
@@ -18,7 +19,10 @@ const Delete = () => {
   //   openModal,
   //   closeModal,
   // } = useModal();
+  // const signedUserId = sessionStorage.getItem("userId");
 
+  // 로그인 한 유저의 id
+  const loginUserId = userInfo.userId;
   // 휴지통 일정 목록
   const [deleteList, setDeleteList] = useState([]);
   // 체크박스 선택된 항목
@@ -81,7 +85,7 @@ const Delete = () => {
 
   // 삭제페이지 목록 불러오기  ** 아이디 받아와야 함
   const getDelApi = async () => {
-    const result = await getDeleteList();
+    const result = await getDeleteList(loginUserId);
     // console.log("result : ", result);
     // console.log("resultMsg : ", result.resultMsg);
     if (result.statusCode !== 2) {
