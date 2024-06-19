@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { colorSystem } from "../../css/color";
 import "./alarmmodalstyle.css";
-import moment from "moment";
 
 const AlarmModalStyle = styled.div`
   .alarm-modal-content {
@@ -12,8 +11,6 @@ const AlarmModalStyle = styled.div`
   .alarm-item {
     background-color: ${colorSystem.newAlarmC};
     border-bottom: 1px solid ${colorSystem.g800};
-    padding: 15px 10px;
-    padding-bottom: 20px;
   }
 
   .alarm-item:last-child {
@@ -35,9 +32,6 @@ const AlarmModalStyle = styled.div`
 
 const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
   const modalRef = useRef(null);
-  console.log("알림 목록 : ", alarmListArr);
-
-  // const [isNewAlarm, setIsNewAlarm] = useState(false);
 
   useEffect(() => {
     const handler = event => {
@@ -62,20 +56,6 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
     };
   }, [alarmModalCancel]);
 
-  const separateLetters = word => {
-    const words = word.split(" : ");
-    let res = "";
-    if (words[1]) {
-      res = (
-        <span className="alarm-contents">{`${words[0]}\n : ${words[1]}`}</span>
-      );
-    } else {
-      res = <span className="alarm-contents">{`${words[0]}`}</span>;
-    }
-
-    return res;
-  };
-
   return (
     <AlarmModalStyle>
       <div ref={modalRef} className="alarm-modal-wrap">
@@ -85,13 +65,8 @@ const AlarmModal = ({ alarmModalCancel, isNewAlarm, alarmListArr }) => {
               alarmListArr.map((item, index) => {
                 return (
                   <div className="alarm-item" key={index}>
-                    <span className="alarm-contents alarm-contents-none">
-                      {separateLetters(item.content)}
-                    </span>
-                    <span className="alarm-time">
-                      {/* {moment(item.createdAt).format("MM-DD")} */}
-                      {moment(item.createdAt).format("YYYY-MM-DD")}
-                    </span>
+                    <span className="alarm-contents">{item.content}</span>
+                    <span className="alarm-time">{item.createdAt}</span>
                   </div>
                 );
               })

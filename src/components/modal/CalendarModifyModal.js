@@ -125,6 +125,7 @@ const CalendarModifyModal = ({
     if (res) {
       console.log("Id", selectCalenderId);
       handleCheckboxChange(selectCalenderId);
+      // setCheckCalendarColorChange(selectCalenderId);
     }
   };
 

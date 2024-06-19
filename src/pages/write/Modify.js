@@ -15,14 +15,15 @@ import {
   modifyAllData,
 } from "../../apis/create/createApi";
 import { useLocation, useNavigate } from "react-router-dom";
-import ModifyMulitifile from "./ModifyMulitifile";
+// import ModifyMulitifile from "./ReadMulitifile";
 
 const Modify = () => {
+  const navigate = useNavigate();
   // 1. useLocation 훅 취득
   const location = useLocation();
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
-  const boardId = location.state.boardId;
-  const calendarId = location.state.calendarId;
+  // const boardId = location.state.boardId;
+  // const calendarId = location.state.calendarId;
   const userId = sessionStorage.getItem("userId");
 
   // 글쓰기 관련
@@ -32,31 +33,41 @@ const Modify = () => {
   const [deadLine, setDeadLine] = useState();
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
+  const [sendUrlFiles, setSendUrlFiles] = useState([]);
+  const [calendarId, setCalendarId] = useState(null);
+  const [boardId, setBoardId] = useState("");
 
-  const navigate = useNavigate();
+  const handleTimeChange = e => {
+    const timeValue = e.target.value;
+    const timeWithSeconds = `${timeValue}:00`;
+    setDeadLine(timeWithSeconds);
+  };
+
+  const getData = async () => {
+    try {
+      const response = await getAllData(boardId);
+      console.log("Modify.js : ", response.data.resultData);
+      const result = response.data.resultData;
+      setCreateTitle(result.title);
+      setStartDay(result.startDay);
+      setDDay(result.dDay);
+      setDeadLine(result.deadLine);
+      setCreateWrite(result.content);
+      setSendUrlFiles(result.files);
+      setCalendarId(result.calendarId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getAllData(boardId);
-        console.log(response);
+    setBoardId(location.state.boardId);
+    setCalendarId(location.state.calendarId);
+  }, []);
 
-        const result = response.data.resultData;
-
-        setCreateTitle(result.title);
-        setStartDay(result.startDay);
-        setDDay(result.dDay);
-        setDeadLine(result.deadLine);
-        setCreateWrite(result.content);
-        setSendFiles(response.data.files);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (boardId) {
-      getData();
-    }
-  }, [boardId]);
+  useEffect(() => {
+    getData();
+  }, [calendarId, boardId]);
 
   // 보드 정보 업데이트
   const boardSubmit = async e => {
@@ -65,6 +76,12 @@ const Modify = () => {
 
     const infoData = JSON.stringify({
       boardId: boardId,
+      calendarId: 1,
+      title: createTitle,
+      content: createWrite,
+      startDay: startDay,
+      deadLine: deadLine,
+      dDay: dDay,
     });
 
     const dto = new Blob([infoData], { type: "application/json" });
@@ -72,8 +89,13 @@ const Modify = () => {
     sendFiles.forEach(item => {
       formData.append("files", item);
     });
-    console.log(formData);
-    modifyAllData(formData);
+    try {
+      await modifyAllData(formData);
+      alert("캘린더로 이동합니다.");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleTitleChange = event => {
@@ -106,6 +128,7 @@ const Modify = () => {
     try {
       const data = [{ boardId, state: 3 }];
       await deleteAllData(data);
+      alert("휴지통으로 이동합니다.");
       navigate("/delete");
     } catch (error) {
       console.log(error);
@@ -166,12 +189,12 @@ const Modify = () => {
                   </div>
                   <div className="timer">
                     <SiStagetimer />
-                    <label htmlFor="deadline">마감일</label>
+                    <label htmlFor="deadLine">마감시간</label>
                     <input
                       type="time"
-                      id="deadline"
-                      value={deadLine}
-                      onChange={e => setDeadLine(e.target.value)}
+                      id="deadLine"
+                      value={deadLine ? deadLine.slice(0, 5) : ""}
+                      onChange={e => handleTimeChange(e)}
                     />
                   </div>
                 </div>
@@ -189,9 +212,13 @@ const Modify = () => {
               ></textarea>
             </div>
             {/* 이미지 업로드 부분 */}
-            <ModifyMulitifile
-              setSendFiles={setSendFiles}
+            <Mulitifile
               sendFiles={sendFiles}
+              setSendFiles={setSendFiles}
+              sendUrlFiles={sendUrlFiles}
+              setSendUrlFiles={setSendUrlFiles}
+              calendarId={calendarId}
+              boardId={boardId}
             />
           </div>
         </div>

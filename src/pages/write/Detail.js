@@ -18,6 +18,7 @@ import {
 } from "../../apis/create/createApi";
 
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import ReadMulitifile from "./ReadMulitifile";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ const Detail = () => {
   const getData = async () => {
     try {
       const response = await getAllData(boardId);
-      console.log("Detail.js : ", response.data.resultData);
+      // console.log("Detail.js : ", response.data.resultData);
       const result = response.data.resultData;
       setCreateTitle(result.title);
       setStartDay(result.startDay);
@@ -88,6 +89,7 @@ const Detail = () => {
     try {
       const data = [{ boardId: boardId, state: 2 }];
       await patchCompleteSearchList(data);
+      alert("일정 완료 목록으로 이동합니다.");
       navigate("/complete");
     } catch (error) {
       console.log(error);
@@ -102,14 +104,6 @@ const Detail = () => {
         calendarId: calendarId,
       },
     });
-
-    // try {
-    //   const data = [{ boardId: boardId, state: 2 }];
-    //   await patchCompleteSearchList(data);
-    //   navigate("/complete");
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   return (
@@ -171,7 +165,7 @@ const Detail = () => {
                   </div>
                   <div className="timer">
                     <SiStagetimer />
-                    <label htmlFor="deadline">마감일</label>
+                    <label htmlFor="deadline">마감시간</label>
                     <input
                       type="time"
                       id="deadline"
@@ -195,7 +189,7 @@ const Detail = () => {
             </div>
             {/* 이미지 업로드 부분 */}
 
-            <Mulitifile
+            <ReadMulitifile
               sendFiles={sendFiles}
               setSendFiles={setSendFiles}
               sendUrlFiles={sendUrlFiles}

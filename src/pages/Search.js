@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
 
+
 const Search = ({ searchTextIndex, userInfo }) => {
   // console.log("Search : ", searchTextIndex);
   // console.log("검색페이지", userInfo.userId);
@@ -11,6 +12,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
 
   // 로그인 한 유저의 id
   const loginUserId = userInfo.userId;
+
   // map 돌릴 검색결과 배열 담을곳
   const [serarchList, setSearchList] = useState([]);
   // Madal 컴포넌트에 보낼 state
@@ -35,7 +37,9 @@ const Search = ({ searchTextIndex, userInfo }) => {
 
   const getSearchApi = async () => {
     // console.log("함수실행 확인");
+
     const result = await getSearchList(searchTextIndex, loginUserId);
+
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
 

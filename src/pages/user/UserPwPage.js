@@ -116,6 +116,23 @@ const UserPwPage = ({ signUserId, userInfo }) => {
     }
   };
 
+  // useEffect(() => {
+  //   // axios.get 으로 사용자의 정보를 주세요.
+  //   const postUser = async ({ userId, pwd }) => {
+  //     try {
+  //       const response = await axios.put("/api/user", { userId, pwd });
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   const sendData = {
+  //     userId: user.userId,
+  //     pwd: userPass,
+  //   };
+  //   postUser(sendData);
+  // }, [user.userId, userPass]);
+
   const changePw = async () => {
     // console.log("changePwchangePw : ", userInfo);
     // console.log("changePwchangePw : ", userInfo.userId);

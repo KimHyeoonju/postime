@@ -24,13 +24,6 @@ export const modifyAllData = async data => {
 
 export const deleteURLFile = async data => {
   try {
-    // {
-    //   "boardId": 1,
-    //   "calendarId": 1,
-    //   "fileId": 1,
-    //   "fileName": "77e0e5e6-5731-4957-91d8-6efbd15b9a8e.jpg"
-    // }
-    // console.log(data);
     const response = await axios.delete("/api/board/file", { data: data });
     console.log(response);
     return response;

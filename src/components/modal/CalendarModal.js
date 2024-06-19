@@ -44,14 +44,11 @@ const CalendarModal = ({
   calenderUserListModalOk,
   selectCalenderId,
   selectCalenderName,
-  selectCalenderMtUserId,
-  selectCalenderMtUserName,
-  calenderListArr,
   modalType,
 }) => {
-  // const userId = sessionStorage.getItem("userId");
+  const userId = 72;
 
-  // const userName = sessionStorage.getItem("name");
+  const userName = sessionStorage.getItem("name");
 
   // useRef()를 사용하여 modalRef 생성
   const modalRef = useRef(null);
@@ -66,18 +63,14 @@ const CalendarModal = ({
   /** 삭제할 유저 ID */
   const [deleteUeserId, setDeleteUeserId] = useState("");
 
-  const getCalenderUserList = async (
-    selectCalenderId,
-    selectCalenderMtUserId,
-  ) => {
+  const getCalenderUserList = async selectCalenderId => {
     try {
-      const resepons = await axios.get(
-        `/api/calendar/member?calendar_id=${selectCalenderId}&owner_user_id=${selectCalenderMtUserId} `,
-      );
+      const resepons = await axios.get(`
+      /api/calendar/member?calendar_id=${selectCalenderId}&signed_user_id=${userId}
+      `);
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
         console.log("유저 리스트 정상 GET");
-        console.log("유저 리스트 정상 GET : ", resepons);
         return resepons.data.resultData;
       } else {
         console.log("API 오류");
@@ -96,11 +89,7 @@ const CalendarModal = ({
 
   /** 최초 렌더링 시, 공유 멤버 리스트 GET */
   const firstCalenderUserList = async selectCalenderId => {
-    const result = await getCalenderUserList(
-      selectCalenderId,
-      selectCalenderMtUserId,
-    );
-
+    const result = await getCalenderUserList(selectCalenderId);
     setCalendarListUserArr(result);
   };
 
@@ -161,7 +150,6 @@ const CalendarModal = ({
   //   };
   // }, [showDeleteCheckModalCancel]);
 
-  console.log("확인 : ", calendarListUserArr);
   return (
     <CalendarModalStyle>
       {isDeleteCheckModal ? (
@@ -172,7 +160,6 @@ const CalendarModal = ({
           selectCalenderId={selectCalenderId}
           getCalenderUserList={getCalenderUserList}
           setUserListUpdate={setUserListUpdate}
-          selectCalenderMtUserId={selectCalenderMtUserId}
         />
       ) : null}
 
@@ -220,43 +207,34 @@ const CalendarModal = ({
               </div>
               <div className="calendar-user-list">
                 <div className="calendar-user-list-item pk-user-id">
-                  <p>{selectCalenderMtUserName}</p>
+                  {/* 세션에서 받아오는 걸로 수정 */}
+                  <p>{userName}</p>
                   <p className="user-option pk-user-option">캘린더 소유자</p>
                 </div>
 
-                {/* <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div>
-                <div className="calendar-user-list-item">asdf</div> */}
-
-                {/* 캘린더 참여자 */}
                 {calendarListUserArr.map((item, index) => {
                   return (
                     <div className="calendar-user-list-item" key={index}>
                       <p>{item.name}</p>
-                      {selectCalenderMtUserId == selectCalenderId ? null : (
-                        <p
-                          className="user-option"
-                          onClick={
-                            e => {
-                              showDeleteCheckModal(item.userId);
-                              // console.log("한번 확인해보자", item.userId);
-                            }
-                            // getdelectUserId(`${item.userId}`);
+                      <p
+                        className="user-option"
+                        onClick={
+                          e => {
+                            showDeleteCheckModal(item.userId);
+                            // console.log("한번 확인해보자", item.userId);
                           }
-                        >
-                          <IoIosClose />
-                        </p>
-                      )}
+
+                          // getdelectUserId(`${item.userId}`);
+                        }
+                      >
+                        <IoIosClose />
+                      </p>
                     </div>
                   );
                 })}
+
                 {/* map */}
+
                 {/* <div className="calendar-user-list-item">
                   <p>멤버명</p>
                   <p
