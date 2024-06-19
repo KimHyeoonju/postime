@@ -46,8 +46,7 @@ const Nav = ({
   setcheckedCalendarIds,
   setNowCalendarUpdate,
 }) => {
-  const [userId, setUserId] = useState(72);
-  // const [userId, setUserId] = sessionStorage.getItem("userId");
+  const [userId, setUserId] = useState(sessionStorage.getItem("userId"));
 
   /** calendarId 저장 */
   const [calendarId, setCalendarId] = useState(null);
@@ -61,6 +60,7 @@ const Nav = ({
       );
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
+        console.log("캘린더 목록 : ", resepons.data.resultData);
         return resepons.data;
       } else {
         console.log("API 오류");
@@ -91,19 +91,23 @@ const Nav = ({
   };
   /** axios 로 알림 리스트 GET */
   const alarmList = async userId => {
+    console.log("알림 userId : ", userId);
+
     try {
       const resepons = await axios.get(`/api/notice?signed_user_id=${userId}`);
-      const status = resepons.status.toString().charAt(0);
-      const data = resepons.data.resultData.notice;
-      if (status === "2") {
-        if (data > 0) {
+      const status = resepons.data.statusCode;
+      const data = resepons.data.resultData;
+      console.log("알림 리스트 : ", resepons);
+      // console.log("알림 리스트 : ", data);
+
+      if (status === 2) {
+        if (data.length > 0) {
           setAlarmListArr(data);
           setIsNewAlarm(true);
         } else {
           setIsNewAlarm(false);
         }
       }
-      console.log(resepons.data);
     } catch (error) {
       console.log(error);
     }
@@ -111,16 +115,25 @@ const Nav = ({
 
   /** 캘린더 공유, 수정 기능 선택 모달 */
   const [isCalenderSelectModal, setIsCalenderSelectModal] = useState(false);
+  const [selectCalenderMtUserId, setSelectCalenderMtUserId] = useState();
+  const [selectCalenderMtUserName, setSelectCalenderMtUserName] = useState();
+
   /** 캘린더 공유, 수정 모달 관련 */
-  const calenderSelectModalOk = e => {
+  const calenderSelectModalOk = item => {
     setIsCalenderSelectModal(!isCalenderSelectModal);
     // console.log("e : ", e);
     // console.log("캘린더ID : ", e.target.id);
     // console.log("캘린더색 : ", e.target.title);
     // console.log("캘린더명 : ", e.target.outerText);
-    setSelectCalenderId(e.target.id);
-    setSelectCalenderColor(e.target.title);
-    setSelectCalenderName(e.target.outerText);
+    // console.log("캘린더소유자명 : ", e.target.outerText);
+    // console.log("캘린더소유자Id : ", e.target.outerText);
+    setSelectCalenderId(item.calendarId);
+    setSelectCalenderColor(item.color);
+    setSelectCalenderName(item.title);
+    setSelectCalenderMtUserId(item.userId);
+    setSelectCalenderMtUserName(item.name);
+    // console.log("캘린더명 : ", item);
+
     // calendarSelectModalCancel();
   };
   /** 캘린더 공유, 수정 모달 닫기 함수 */
@@ -151,8 +164,6 @@ const Nav = ({
     setIsCalenderUserListModal(!isCalenderUserListModal);
     setModalType(1);
     calendarSelectModalCancel();
-
-    // setIsCalenderSelectModal(false); // 이전 모달 창 닫기
   };
   /** 캘린더 공유 모달 닫기 기능 */
   const calendarUserListModalCancel = () => {
@@ -164,7 +175,6 @@ const Nav = ({
   const calenderCheckEvent = async calendarId => {
     // 클릭한 캘린더ID 저장(전달)
     setCalendarId(calendarId);
-
     setNowCalendarId(calendarId);
   };
 
@@ -174,8 +184,6 @@ const Nav = ({
   const calendarModifyModalOk = e => {
     setIsCalendarModifyModal(!isCalendarModifyModal);
     calendarSelectModalCancel();
-
-    // setIsCalenderSelectModal(false); // 이전 모달 창 닫기
     setModalType(0);
   };
   /** 캘린더 수정 모달 닫기 기능  */
@@ -218,7 +226,6 @@ const Nav = ({
   }, [checkedCalendars]);
 
   /** 내 캘린더에 새로운 캘린더 추가 */
-
   const [newCheckedCalendars, setNewCheckedCalendars] = useState([]);
 
   /** 체크된 캘린더들 */
@@ -254,6 +261,7 @@ const Nav = ({
   const calenderList = async () => {
     const result = await getCalenderList(userId);
     setCalenderListArr(result.resultData);
+    // console.log("확인 : ", result.resultData.userId);
   };
 
   /**최초 렌더링 : 캘린더 리스트를 가져온다. */
@@ -300,6 +308,9 @@ const Nav = ({
           selectCalenderId={selectCalenderId}
           selectCalenderName={selectCalenderName}
           modalType={modalType}
+          selectCalenderMtUserId={selectCalenderMtUserId}
+          selectCalenderMtUserName={selectCalenderMtUserName}
+          // calenderListArr={calenderListArr}
           // setDeleteUeserId={setDeleteUeserId}
           // deleteUeserId={deleteUeserId}
         />
@@ -317,11 +328,11 @@ const Nav = ({
           setCheckCalendarColorChange={setCheckCalendarColorChange}
         />
       ) : null}
-      {/* {isNewCalendarCreateModal ? (
+      {isNewCalendarCreateModal ? (
         <CalendarCreateModal
           calendarCreateModalCancel={calendarCreateModalCancel}
         />
-      ) : null} */}
+      ) : null}
 
       <div className="menu">
         <div className="div-menu-header">
@@ -426,8 +437,9 @@ const Nav = ({
                           className="calender-name"
                           id={item.calendarId}
                           title={item.color}
+                          contentEditable={item.userId}
                           onClick={e => {
-                            calenderSelectModalOk(e);
+                            calenderSelectModalOk(item);
                             // calenderSelectModalOk(item.calendarId);
                             // console.log("Item:", item.calendarId);
                             // console.log("e:", e);

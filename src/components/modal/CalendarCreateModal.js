@@ -83,7 +83,6 @@ const CalendarCreateModal = ({ calendarCreateModalCancel }) => {
     // 캘린더 리스트 갱신
     if (res) {
       calendarCreateModalCancel(false);
-      // handleCheckboxChange(selectCalenderId);
     }
   };
 
