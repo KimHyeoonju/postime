@@ -76,11 +76,12 @@
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
-<br/>
 <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white">
+<br/>
 <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">
 <img src="https://img.shields.io/badge/resetCss-black?style=for-the-badge&logo=resetCss&logoColor=white">
 <img src="https://img.shields.io/badge/emotion-black?style=for-the-badge&logo=emotion&logoColor=white">
+<img src="https://img.shields.io/badge/Moment?style=for-the-badge&logo=Moment&logoColor=white">
  </div>
 
 ## <div align=center> 프로젝트 관리 및 협업 도구 </div>
@@ -92,7 +93,7 @@
 <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
    <br/>
 <img src="https://img.shields.io/badge/figma-%23F24E1E?style=for-the-badge&logo=figma&logoColor=white">
-<img src="https://img.shields.io/static/v1?style=for-the-badge&message=Postman&color=FF6C37&logo=Postman&logoColor=FFFFFF&label=">
+<img src="https://img.shields.io/badge/Postman?style=for-the-badge&logo=Postman&logoColor=white">
 <img src="https://img.shields.io/badge/Slack-purple?logo=slack&logoColor=white">
  </div>
 
