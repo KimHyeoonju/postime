@@ -12,10 +12,10 @@ const Complete = () => {
   const [completeList, setCompleteList] = useState([]);
   // 체크박스 선택된 항목
   const [selectedItems, setSelectedItems] = useState([]);
-  // 선택된 항목들의 ID를 저장
+  // 선택된 항목들의 ID를 저장 (state 1번으로)
   const [selectedBoardId, setSelectBoardId] = useState([]);
-  // state 변수
-  const [state, setState] = useState(3);
+  // 선택된 항목들의 ID를 저장 (state 2번으로)
+  const [selectedBoardIdTwo, setSelectBoardIdTwo] = useState([]);
 
   useEffect(() => {
     getApi();
@@ -27,12 +27,18 @@ const Complete = () => {
 
     const boardIds = selectedItems.map(item => ({
       boardId: item.boardId,
-      state: state,
+      state: 1,
     }));
-    console.log(boardIds);
-    console.log(state);
+
+    const boardIdTwo = selectedItems.map(item => ({
+      boardId: item.boardId,
+      state: 3,
+    }));
+    // console.log(boardIds);
+
     setSelectBoardId(boardIds);
-  }, [selectedItems, state]);
+    setSelectBoardIdTwo(boardIdTwo);
+  }, [selectedItems]);
 
   const handleCheckboxChange = (item, isChecked) => {
     console.log("item", item);
@@ -66,24 +72,19 @@ const Complete = () => {
 
   // 완료 > 삭제 상태변경 state 2 > 3
   const handleDeleteApi = async () => {
-    // 상태 코드 셋팅 (삭제 : 3)
-    setState(3);
-    // console.log(state);
-    console.log(selectedBoardId);
-    const result = await patchDeleteCompleteList(selectedBoardId);
+    // console.log(selectedBoardIdTwo);
+    const result = await patchDeleteCompleteList(selectedBoardIdTwo);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
       return;
     }
-    setSelectBoardId([]); // 선택된 항목 ID 초기화
+    setSelectBoardIdTwo([]); // 선택된 항목 ID 초기화
     setSelectedItems([]); // 선택된 항목 초기화
     getApi(); // 완료 목록 갱신
   };
 
   // 완료 > 진행중 상태변경 state 2 > 1
   const handleProgressApi = async () => {
-    // 상태 코드 셋팅 (복원 : 1)
-    setState(1);
     const result = await patchProgressCompleteList(selectedBoardId);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
