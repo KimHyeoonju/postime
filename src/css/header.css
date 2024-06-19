@@ -2,7 +2,7 @@ header {
   position: relative;
   height: 80px;
   width: 100%;
-  background-color: #7f85a4;
+  background-color: #0f1015;
 }
 .header-inner {
   height: 80px;
@@ -23,6 +23,7 @@ header {
   height: 100%;
 }
 .header-list .header-user-name {
+  color: #fff;
   display: flex;
   align-items: center;
   /* position: relative; */
@@ -74,7 +75,7 @@ header {
   width: 0;
   height: 0;
   overflow: hidden;
-  border: 1px solid #7f85a4;
+  border: 1px solid #0f1015;
 
   z-index: 1;
 }
@@ -90,7 +91,7 @@ header {
   align-items: center;
   width: 100%;
   height: 50%;
-  border-bottom: 1px solid #7f85a4;
+  border-bottom: 1px solid #0f1015;
   cursor: pointer;
 }
 .header-my:hover {

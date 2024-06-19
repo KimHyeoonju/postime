@@ -41,7 +41,7 @@ const Create = () => {
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
   const [dDay, setDDay] = useState("");
-  const [deadLine, setDeadLine] = useState("");
+  const [deadLine, setDeadLine] = useState("00:00:00");
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
 
