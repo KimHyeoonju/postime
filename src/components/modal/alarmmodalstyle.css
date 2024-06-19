@@ -34,18 +34,28 @@
 }
 
 .alarm-item {
-  display: flex;
-  flex-direction: row;
-  padding: 15px 10px;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* padding: 15px 10px; */
+  /* padding-bottom: 10px; */
   justify-content: space-between;
+  gap: 10px;
+  position: relative;
 }
 
 .alarm-contents {
   font-size: 14px;
+  white-space: pre-wrap;
 }
 
 .alarm-time {
   font-size: 12px;
+
+  display: flex;
+  position: absolute;
+  right: 0;
+  bottom: 11px;
+  padding-right: 22px;
 }
 
 .alarm-item-none {

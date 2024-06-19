@@ -64,16 +64,11 @@ const WriteRoutes = () => {
   );
 };
 
-// 회원정보 페이지 성명/이메일
-const resultData = { name: "userName", email: "userEmail" };
-
 const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
-  console.log(userInfo);
-
   const [rememberPass, setRememberUserPass] = useState("");
 
   useEffect(() => {
-    console.log("INDEX.js rememberPass : ", rememberPass);
+    // console.log("INDEX.js rememberPass : ", rememberPass);
   }, [rememberPass]);
 
   // 캘린더 아이디 관련
@@ -84,15 +79,15 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
   const [checkedCalendarIds, setcheckedCalendarIds] = useState([]);
 
   useEffect(() => {
-    console.log("nowCalendarId : ", nowCalendarId);
+    // console.log("nowCalendarId : ", nowCalendarId);
   }, [nowCalendarId]);
 
   useEffect(() => {
-    console.log("nowCalendarUpdate : ", nowCalendarUpdate);
+    // console.log("nowCalendarUpdate : ", nowCalendarUpdate);
   }, [nowCalendarUpdate]);
 
   useEffect(() => {
-    console.log("checkedCalendarIds : ", checkedCalendarIds);
+    // console.log("checkedCalendarIds : ", checkedCalendarIds);
   }, [checkedCalendarIds]);
 
   // useEffect(() => {
