@@ -86,20 +86,10 @@
 
 .main-wrap {
   /* position: absolute; */
-  /* container-type: inline-size;
-  container-name: container-calendar-user-list; */
-
-  /* container-name: container-calendar-user-list; */
 
   width: 100%;
   height: 100%;
 }
-
-/* @container container-calendar-user-list (max-height: 190px) {
-  .calendar-user-list {
-    overflow: auto;
-  }
-} */
 
 .calendar-modal-content-title {
   font-size: 14px;
@@ -140,7 +130,6 @@ input[id="calendar-user-plus-email"]::placeholder {
   display: flex;
   /* gap: 8px; */
   flex-direction: column;
-  /* max-height: 190px; */
   max-height: 190px;
   overflow: auto;
 }

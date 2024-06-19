@@ -4,17 +4,17 @@ import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
 
 import "../../css/create.css";
-import Comment from "./Comment";
 import Mulitifile from "./Mulitifile";
 
 import { useNavigate } from "react-router-dom";
-import { deleteAllData, sendCreateAllData } from "../../apis/create/createApi";
+import { sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
 
 const calendarId = localStorage.setItem("calendarId", 1);
 
 const Create = () => {
   const userId = sessionStorage.getItem("userId");
+  const navigate = useNavigate();
 
   // 모달관련
   const [modalTitle, setModalTitle] = useState("");
@@ -25,8 +25,6 @@ const Create = () => {
   // 모달 보이는 상태값
   const [isModal, setIsModal] = useState(false);
 
-  const naviagte = useNavigate();
-
   const handleModalSubmit = e => {
     e.preventDefault();
     // 모달 활성화
@@ -36,14 +34,14 @@ const Create = () => {
   // 모달 실행 함수
   const handleModalConfirm = () => {
     setIsModal(false);
-    naviagte("/");
+    navigate("/");
   };
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
   const [dDay, setDDay] = useState("");
-  const [deadline, setDeadline] = useState("00:00:00");
+  const [deadLine, setDeadLine] = useState("");
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
 
@@ -74,7 +72,7 @@ const Create = () => {
   const handleTimeChange = e => {
     const timeValue = e.target.value;
     const timeWithSeconds = `${timeValue}:00`;
-    setDeadline(timeWithSeconds);
+    setDeadLine(timeWithSeconds);
   };
 
   // 보드 전송
@@ -91,7 +89,7 @@ const Create = () => {
       title: createTitle,
       startDay: startDay,
       content: createWrite,
-      deadLine: deadline,
+      deadLine: deadLine,
       dDay: dDay,
     });
 
@@ -100,7 +98,7 @@ const Create = () => {
     const dto = new Blob([infoData], { type: "application/json" });
     // 4 번 form-data 에 키에 값으로 추가하기
     formData.append("p", dto);
-    console.log(formData);
+    console.log("========== sendFiles : ", sendFiles);
     sendFiles.forEach(item => {
       // 5 번 이미지 파일 추가하기
       formData.append("files", item);
@@ -109,27 +107,11 @@ const Create = () => {
     try {
       console.log("데이터전송중");
       await sendCreateAllData(formData);
-      naviagte("/");
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-
-  // 보드 휴지통으로
-  // const boardDeleteSubmit = async e => {
-  //   e.preventDefault();
-  //   const data = [
-  //     {
-  //       boardId: boardId,
-  //       state: 3,
-  //     },
-  //   ];
-  //   try {
-  //     await deleteAllData(data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   // const handleModalSubmit = (e) => {
   //   e.preventDefault();
@@ -230,11 +212,11 @@ const Create = () => {
                   </div>
                   <div className="timer">
                     <SiStagetimer />
-                    <label htmlFor="deadline">마감일</label>
+                    <label htmlFor="deadLine">마감시간</label>
                     <input
                       type="time"
-                      id="deadline"
-                      value={deadline.slice(0, 5)}
+                      id="deadLine"
+                      value={deadLine.slice(0, 5)}
                       onChange={e => handleTimeChange(e)}
                     />
                   </div>

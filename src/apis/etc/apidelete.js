@@ -1,11 +1,9 @@
 import axios from "axios";
 
 // 삭제페이지 목록 불러오기
-export const getDeleteList = async loginUserId => {
+export const getDeleteList = async () => {
   try {
-    const response = await axios.get(
-      `/api/board/deleted?signed_user_id=${loginUserId}`,
-    );
+    const response = await axios.get(`/api/board/deleted?signed_user_id=8`);
     const status = response.status.toString().charAt(0);
     // console.log("resopnse : ", response);
     if (status === "2") {
