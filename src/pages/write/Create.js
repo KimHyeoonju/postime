@@ -5,11 +5,9 @@ import { SiStagetimer } from "react-icons/si";
 import "../../css/create.css";
 import Mulitifile from "./Mulitifile";
 
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { sendCreateAllData } from "../../apis/create/createApi";
 // import Modal from "../../components/Modal";
-
 
 const Create = () => {
   const userId = sessionStorage.getItem("userId");
@@ -18,7 +16,7 @@ const Create = () => {
 
   useEffect(() => {
     setCalendarId(location.state.calendarId);
-    // setCalendarName(location.state.calendarName);
+    setCalendarName(location.state.calendarName);
     // console.log("location.state.boardId : ", location.state.boardId);
     // console.log("location.state.calendarId : ", location.state.calendarId);
   }, []);
@@ -43,7 +41,6 @@ const Create = () => {
   //   setIsModal(false);
   //   navigate("/");
   // };
-
 
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
@@ -166,8 +163,6 @@ const Create = () => {
               <div className="write-header-dec">
                 <span>
                   <IoBookmarkSharp /> {calendarName}
-
-
                 </span>
                 <div className="write-header-info">
                   <div className="write-header-icon">
