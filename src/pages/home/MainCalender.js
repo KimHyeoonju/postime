@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../css/calender.css";
 import { colorSystem } from "../../css/color.js";
+import moment from "moment";
 const CalenderStyle = styled.div`
   position: relative;
   width: 100%;
@@ -190,6 +191,16 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
       backgroundColor: item.backgroundColor,
     }),
   );
+
+  console.log("calenderClickArr : ", calenderClickArr);
+
+  // const addDays = event => {
+  //   if (event.allDay) {
+  //     event.end = moment(event.end).add(1, "days");
+  //   }
+  //   return event;
+  // };
+
   return (
     <CalenderStyle>
       <div className="App">
@@ -214,6 +225,9 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
           eventColor={"#F2921D"}
           editable={true}
           eventClick={insertModalOpen}
+          // eventDataTransform={event => {
+          //   addDays(event);
+          // }}
         />
       </div>
     </CalenderStyle>

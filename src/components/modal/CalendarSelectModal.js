@@ -112,7 +112,7 @@ const CalendarSelectModal = ({
           <div
             className="calendar-select-item"
             onClick={e => {
-              insertModalOpen(e);
+              insertModalOpen({ selectCalenderName, selectCalenderId });
             }}
           >
             일정 등록

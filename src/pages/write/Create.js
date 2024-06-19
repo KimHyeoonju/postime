@@ -17,8 +17,9 @@ const Create = () => {
   useEffect(() => {
     setCalendarId(location.state.calendarId);
     setCalendarName(location.state.calendarName);
-    // console.log("location.state.boardId : ", location.state.boardId);
-    // console.log("location.state.calendarId : ", location.state.calendarId);
+    console.log("location.state.boardId : ", location.state.boardId);
+    console.log("location.state.calendarName : ", location.state.calendarName);
+
   }, []);
 
   // // 모달관련
