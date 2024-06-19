@@ -27,6 +27,7 @@ const TodoListMenu = styled.div`
 `;
 
 const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
+  // console.log("onTodoListToggle", onTodoListToggle);
   const [toggle, setToggle] = useState(todoListClassAdded);
   const todoListRef = useRef(null);
   const userId = sessionStorage.getItem("userId");
@@ -85,6 +86,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
       handleRestoreApi();
       todoListPrint();
     }
+    todoListPrint();
     return () => {};
   }, [toggle]);
 
@@ -148,9 +150,16 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   // state 1 > 2 완료 처리
   const handleRestoreApi = async () => {
     const result = await patchCompleteList(selectedBoardId);
-
+    console.log("result : ", selectedBoardId);
+    console.log("result2: ", result);
+    // if (result.statusCode !== 2) {
+    //   alert(result.resultMsg);
+    //   return;
+    // }
     setSelectBoardId([]); // 선택된 항목 ID 초기화
     setSelectedItems([]); // 선택된 항목 초기화
+
+    todoListPrint(); // 완료 목록 갱신
   };
 
   return (
@@ -236,12 +245,12 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
                       <input
                         type="checkbox"
                         className="todo-checkbox"
+                        checked={item.isChecked} // isChecked 상태에 따라 체크박스 상태 설정
                         onClick={() => {
                           selectedItems.some(
                             selectedItem =>
                               selectedItems.boardId === item.boardId,
                           );
-                          console.log(item);
                         }}
                         onChange={e =>
                           handleCheckboxChange(item, e.target.checked)
