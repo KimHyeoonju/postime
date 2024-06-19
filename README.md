@@ -80,7 +80,7 @@
 <br/>
 <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">
 <img src="https://img.shields.io/badge/resetCss-black?style=for-the-badge&logo=resetCss&logoColor=white">
-<img src="https://img.shields.io/badge/emotion-black?style=for-the-badge&logo=emotion&logoColor=white">
+<img src="https://img.shields.io/badge/emotion?style=for-the-badge&logo=emotion&logoColor=white">
 <img src="https://img.shields.io/badge/Moment?style=for-the-badge&logo=Moment&logoColor=white">
  </div>
 
