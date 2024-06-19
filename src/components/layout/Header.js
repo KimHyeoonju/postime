@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import "../../css/header.css";
 import styled from "@emotion/styled";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { IoSearchSharp } from "react-icons/io5";
+import { LuMenu } from "react-icons/lu";
 import { useNavigate } from "react-router-dom";
 
 const SearchButtonStyle = styled.button`
@@ -10,8 +12,9 @@ const SearchButtonStyle = styled.button`
 
   > svg {
     margin-top: 10px;
-    width: 24px;
-    height: 24px;
+    width: 29px;
+    height: 29px;
+    color: #fff;
     cursor: pointer;
     &:hover {
       border: 1px solid #4f546e;
@@ -19,19 +22,13 @@ const SearchButtonStyle = styled.button`
     }
   }
 `;
-const ListIconStyle = styled.li`
-  cursor: pointer;
-  &:hover {
-    border: 1px solid #4f546e;
-    border-radius: 10px;
-  }
-`;
+
 const Header = ({
   userInfo,
   todoListhandleButtonClick,
   setSearchTextIndex,
 }) => {
-  console.log("header", userInfo);
+  // console.log("header", userInfo);
   const moreMenu = useRef(null);
   const searchAction = useRef(null);
   const inputFocus = useRef(null);
@@ -41,7 +38,7 @@ const Header = ({
 
   useEffect(() => {
     const handleKeyUp = e => {
-      if (e.key === "Enter") {
+      if (e.key === "Enter" && searchAction.current) {
         searchAction.current.click();
       }
     };
@@ -89,7 +86,7 @@ const Header = ({
       <div className="header-inner">
         <ul className="header-list">
           <li className="header-user-name">
-            {userInfo?.name} 님
+            <span>{userInfo?.name}</span>님
             <SearchButtonStyle
               onClick={() => {
                 handleMoreView();
@@ -111,17 +108,18 @@ const Header = ({
               ref={inputFocus}
             />
           </li>
-          <ListIconStyle
+          <li
             className="header-search"
             ref={searchAction}
             onClick={() => {
               searchBt();
             }}
-          ></ListIconStyle>
-          <ListIconStyle
-            className="header-menu"
-            onClick={todoListhandleButtonClick}
-          ></ListIconStyle>
+          >
+            <IoSearchSharp />
+          </li>
+          <li className="header-menu" onClick={todoListhandleButtonClick}>
+            <LuMenu />
+          </li>
         </ul>
         <div className="header-more" ref={moreMenu}>
           <div className="header-my" onClick={moveUserInfo}>
