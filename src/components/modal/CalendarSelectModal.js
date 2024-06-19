@@ -28,6 +28,7 @@ const CalendarSelectModalStyle = styled.div`
 
 const CalendarSelectModal = ({
   selectCalenderId,
+  selectCalenderName,
   calendarSelectModalCancel,
   setModalType,
 }) => {
@@ -68,15 +69,25 @@ const CalendarSelectModal = ({
     // 수정
     setModalType(2);
   };
+
   const insertModalOpen = e => {
     console.log("selectCalenderId : ", selectCalenderId);
+    console.log("selectCalenderName : ", selectCalenderName);
 
     navigate("/write/create", {
       state: {
         calendarId: selectCalenderId,
+        calendarName: selectCalenderName,
       },
     });
+    // navigate(0);
+    // window.location.replace("/write/create");
+    calendarSelectModalCancel(false);
   };
+
+  // useEffect(() => {
+  //   insertModalOpen();
+  // }, [selectCalenderId]);
 
   return (
     <CalendarSelectModalStyle>

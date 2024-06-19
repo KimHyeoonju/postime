@@ -2,41 +2,42 @@ import { useEffect, useState } from "react";
 import { FaRegCalendar } from "react-icons/fa6";
 import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
-
 import "../../css/create.css";
 import Mulitifile from "./Mulitifile";
-
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { sendCreateAllData } from "../../apis/create/createApi";
 import Modal from "../../components/Modal";
-
-const calendarId = localStorage.setItem("calendarId", 1);
-
+// const calendarId = localStorage.setItem("calendarId", 1);
 const Create = () => {
   const userId = sessionStorage.getItem("userId");
   const navigate = useNavigate();
-
+  const location = useLocation();
   // 모달관련
   const [modalTitle, setModalTitle] = useState("");
   const [modalText, setModalText] = useState("");
   const [modalBtOk, setModalBtOk] = useState(false);
   const [modalBtCancel, setModalBtCancel] = useState(false);
+  const [calendarId, setCalendarId] = useState("");
+  const [calendarName, setCalendarName] = useState("");
+  useEffect(() => {
+    setCalendarId(location.state.calendarId);
+    setCalendarName(location.state.calendarName);
+    console.log("location.state.calendarName : ", location.state.calendarName);
+    console.log("location.state.calendarId : ", location.state.calendarId);
+  }, []);
 
   // 모달 보이는 상태값
   const [isModal, setIsModal] = useState(false);
-
   const handleModalSubmit = e => {
     e.preventDefault();
     // 모달 활성화
     setIsModal(true);
   };
-
   // 모달 실행 함수
   const handleModalConfirm = () => {
     setIsModal(false);
     navigate("/");
   };
-
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
@@ -44,16 +45,13 @@ const Create = () => {
   const [deadLine, setDeadLine] = useState("00:00:00");
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
-
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
     // console.log("Title:", event.target.value);
   };
-
   const handleWriteChange = event => {
     setCreateWrite(event.target.value);
   };
-
   useEffect(() => {
     const handleKeyDown = event => {
       const textarea = document.querySelector("#write-header-title");
@@ -61,14 +59,11 @@ const Create = () => {
         event.preventDefault();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
-
   const handleTimeChange = e => {
     const timeValue = e.target.value;
     const timeWithSeconds = `${timeValue}:00`;
@@ -81,10 +76,9 @@ const Create = () => {
     // 각 항목 체크하기 생략
     // 1 번 전송데이터 포맷 만들기
     const formData = new FormData();
-
     // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
     const infoData = JSON.stringify({
-      calendarId: 1,
+      calendarId: calendarId,
       signedUserId: userId,
       title: createTitle,
       startDay: startDay,
@@ -92,7 +86,6 @@ const Create = () => {
       deadLine: deadLine,
       dDay: dDay,
     });
-
     console.log("infoData : ", infoData);
     // 3 번 Blob 바이너리 데이터 만들기
     const dto = new Blob([infoData], { type: "application/json" });
@@ -112,33 +105,6 @@ const Create = () => {
       console.log(error);
     }
   };
-
-  // const handleModalSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   setIsModal(true);
-  //   setModalTitle("!!!경고!!!");
-  //   setModalText("진짜 정말 리얼 진심 삭제 하시겠습니까?");
-  //   setModalBtOk(true);
-  //   setModalBtCancel(true);
-  //   setIsModal(true);
-  //   return;
-  // };
-
-  // useEffect(() => {
-  //   tagify.current = new Tagify(input.current);
-
-  //   tagify.current.on("add", () => {
-  //     console.log(tagify.current.value);
-  //   });
-
-  //   return () => {
-  //     if (tagify.current) {
-  //       tagify.current.destroy();
-  //     }
-  //   };
-  // }, []);
-
   return (
     <div className="write-wrap">
       {isModal ? (
@@ -175,7 +141,6 @@ const Create = () => {
                 </button>
               </form>
             </div>
-
             <div className="write-header-text">
               <textarea
                 id="write-header-title"
@@ -186,11 +151,10 @@ const Create = () => {
                 value={createTitle}
                 onChange={handleTitleChange}
               ></textarea>
-
               <div className="write-header-dec">
                 <span>
-                  {/* 캘린더 아이디의 이름이 출력되어야 하나? */}
-                  <IoBookmarkSharp /> 내 캘린더
+                  <IoBookmarkSharp /> {calendarName}
+                  {/* <IoBookmarkSharp /> 내 캘린더 */}
                 </span>
                 <div className="write-header-info">
                   <div className="write-header-icon">
@@ -248,5 +212,4 @@ const Create = () => {
     </div>
   );
 };
-
 export default Create;
