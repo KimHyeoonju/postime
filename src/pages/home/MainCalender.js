@@ -26,7 +26,7 @@ const CalenderStyle = styled.div`
   }
   /* 캘린더의 헤더 영역 : toolbar 버튼  */
   .fc .fc-button-primary {
-    background-color: ${colorSystem.g500};
+    background-color: ${colorSystem.primaryB};
     border: none;
     display: flex;
     justify-content: center;
