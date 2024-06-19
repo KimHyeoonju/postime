@@ -61,7 +61,7 @@ const Header = ({
 
   // 검색 버튼
   const searchBt = () => {
-    console.log("검색버튼 눌렀어요", searchText);
+    // console.log("검색버튼 눌렀어요", searchText);
     setSearchTextIndex(searchText);
     setSearchText("");
     navigate("/search");

@@ -68,7 +68,7 @@ const WriteRoutes = () => {
 const resultData = { name: "userName", email: "userEmail" };
 
 const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
-  console.log(userInfo);
+  // console.log(userInfo);
 
   const [rememberPass, setRememberUserPass] = useState("");
 
