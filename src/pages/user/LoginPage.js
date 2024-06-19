@@ -8,8 +8,8 @@ import UserModal from "../../components/UserModal";
 const LoginPage = ({ setIsLogin, setUserInfo }) => {
   const navigate = useNavigate();
 
-  const [userId, setUserId] = useState("mybirth811");
-  const [userPass, setUserPass] = useState("Test!@#$1234");
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
   // 모달 추가
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userModalTitle, setUserModalTitle] = useState(false);
