@@ -7,11 +7,7 @@ import {
   patchProgressCompleteList,
 } from "../apis/etc/apicomplete";
 
-const Complete = ({ userInfo }) => {
-  // console.log("완료페이지", userInfo.userId);
-  // const signedUserId = sessionStorage.getItem("userId");
-  // 로그인 한 유저의 id
-  const loginUserId = userInfo.userId;
+const Complete = () => {
   // 완료된 일정 목록
   const [completeList, setCompleteList] = useState([]);
   // 체크박스 선택된 항목
@@ -59,7 +55,7 @@ const Complete = ({ userInfo }) => {
   // 완료 목록 불러오기
   //******* userid 에 따라 다른 값이 들어와야함 *******
   const getApi = async () => {
-    const result = await getCompleteList(loginUserId);
+    const result = await getCompleteList();
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
       return;
@@ -143,7 +139,7 @@ const Complete = ({ userInfo }) => {
                   onChange={e => handleCheckboxChange(item, e.target.checked)}
                   checked={selectedItems.some(
                     selectedItem => selectedItem.boardId === item.boardId,
-                  )} // 체크박스 상태 설정 ***** 이해하기 *****
+                  )} // 체크박스 상태 설정 ***** 이해해보기 *****
                 />
               </li>
               <li className="title-area">

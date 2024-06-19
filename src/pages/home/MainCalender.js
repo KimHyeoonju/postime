@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../css/calender.css";
 import { colorSystem } from "../../css/color.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import interactionPlugin from "@fullcalendar/interaction";
+import { createImmediatelyInvokedFunctionExpression } from "typescript";
+import { Navigate, useNavigate } from "react-router-dom";
+import detailPageMove from "../../apis/home/detailPageMove";
 const CalenderStyle = styled.div`
   position: relative;
   width: 100%;
@@ -15,6 +17,7 @@ const CalenderStyle = styled.div`
     position: absolute;
     width: 100%;
     bottom: 0;
+    /* height: 100%; */
   }
   /* 캘린더의 헤더 영역 */
   .fc .fc-toolbar.fc-header-toolbar {
@@ -28,6 +31,8 @@ const CalenderStyle = styled.div`
   .fc .fc-button-primary {
     background-color: ${colorSystem.g500};
     border: none;
+    /* width: 40px;
+    height: 37px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,11 +48,17 @@ const CalenderStyle = styled.div`
   .fc-toolbar-chunk .fc-toolbar-title {
     display: flex;
     height: auto;
+    /* background-color: #356EFF; */
+    /* word-break: keep-all; */
     color: ${colorSystem.g300};
   }
+  // 요일 부분(수정)
   .fc-theme-standard th {
     height: 32px;
     margin: 0 auto;
+    /* margin: auto; */
+    /* padding: auto; */
+    /* padding-top: 3.5px; */
     background: ${colorSystem.g900};
     border-top: 1px solid ${colorSystem.g800};
     border-bottom: 1px solid ${colorSystem.g800};
@@ -61,25 +72,43 @@ const CalenderStyle = styled.div`
     background-color: #fff8bd;
     color: #356eff;
   }
-
+  // 날짜별 그리드
+  .fc .fc-daygrid-day-frame {
+    /* padding: 10px; */
+  }
   // 날짜별 그리드 안 속 글자 정렬  : 왼쪽 정렬
   .fc .fc-daygrid-day-top {
     flex-direction: row;
     margin-bottom: 3px;
     padding: 10px 10px 0 10px;
   }
-
+  // 각 이벤트 요소
+  /* .fc-event {
+    cursor: pointer;
+    padding: 5px 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+  } */
   .fc-event {
     border: none;
   }
 `;
-const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
+const MainCalender = ({
+  nowCalendarId,
+  nowCalendarUpdate,
+  checkedCalendars,
+  checkCalendarColorChange,
+  checkedCalendarIds,
+}) => {
   const navigate = useNavigate();
   /** FullCalendar의 events에서 화면에 보여줄 값들의 배열 */
   const array = [];
-
+  /** 임의로 넣은 userId (8), 마지막에 세션처리를 번경하기 */
   const userId = sessionStorage.getItem("userId");
-
+  console.log("테스트 유저명 : ", userId);
+  // const userId = sessionStorage.getItem("userId");
   /** 캘린더 목록 리스트 (axios로 get한 값) */
   const [calenderArr, setCalenderArr] = useState([]);
   /** 캘린더 목록 리스트 (FullCalendar에 출력할 값) */
@@ -92,6 +121,8 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
       html: dateInfo.dayNumberText.replace("일", ""),
     };
   };
+
+  console.log("calenderArr : ", calenderArr);
 
   /** 캘린더에 보여줄 일정들을 axios로 get */
   const getCalender = async userId => {
@@ -139,7 +170,21 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
     );
     setCalenderClickArr(newName);
   };
-
+  // const reAdd = ({ filterCalendarId, calenderArr }) => {
+  //   const newName = calenderArr.filter(item =>
+  //     activeCalendars.includes(item.calendarId),
+  //   );
+  //   setCalenderClickArr(newName);
+  // };
+  // useEffect(() => {
+  //   // activeCalendars가 변경될 때마다 캘린더를 필터링하고 업데이트
+  //   const filteredCalendars = calenderArr.filter(item =>
+  //     activeCalendars.includes(item.calendarId),
+  //   );
+  //   setCalenderClickArr(filteredCalendars);
+  // }, [activeCalendars, calenderArr]);
+  // 확인
+  // 다시 배열에 값 추가
   useEffect(() => {
     // 체크된 캘린더 ID에 해당하는 캘린더만 필터링하여 표시
     const aaa = calenderArr.filter(item =>
@@ -159,7 +204,6 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
       setActiveCalendars(prev => [...prev, calendarId]);
     }
   };
-
   // 처음 화면이 렌더링 되었을 때 캘린더에 보여줄 값과 캘린더 리스트 get
   useEffect(() => {
     firstCalenderDayPrint();
@@ -171,6 +215,20 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
     const clickBoardId = clickInfo.event.id;
     const clickCalendarId = clickInfo.event._def.extendedProps.calendarId;
 
+    // console.log(
+    //   "일정 클릭 했을 때 boardId, calendarId 들어오는지 체크",
+    //   clickBoardId,
+    // );
+    // console.log(
+    //   "일정 클릭 했을 때 boardId, calendarId 들어오는지 체크",
+    //   clickCalendarId,
+    // );
+    // console.log(clickInfo);
+    // console.log(clickBoardId);
+    // console.log(
+    //   "일정 클릭 했을 때 boardId 들어오는지 체크: ",
+    //   clickInfo.event.id,
+    // );
 
     navigate("/write/detail", {
       state: {
@@ -179,7 +237,6 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
       },
     });
   };
-
   /** 이벤트 배열 생성 */
   calenderClickArr.map((item, index) =>
     array.push({
@@ -191,6 +248,7 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
       backgroundColor: item.backgroundColor,
     }),
   );
+  console.log("boardId 들어갔는지 바로 확인 : ", array);
   return (
     <CalenderStyle>
       <div className="App">
@@ -203,16 +261,52 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
             end: "today",
           }}
           buttonText={{ today: "오늘" }}
+          // titleFormat={{
+          //   year: "numeric",
+          //   month: "numeric",
+          //   end: "today",
+          // }}
           locale={"kr"}
           height={"91.4vh"}
+          // formatShortWeekday={formatShortWeekday}
           dayCellContent={dayCellContent}
+          // formatDay={(locale, date) => {
+          //   date.toLocaleString("en", { day: "numeric" });
+          // }}
+          // titleContent={({ date, view }) => null}
+          //
           fixedWeekCount={false}
           droppable={true}
           eventborderColor="none" // 이벤트 글자 색
           dayMaxEvents={true}
           aspectRatio={1.35}
           events={array}
+          // 아래는 서버가 죽었을 때 이용할 코드
+          // events={[
+          //   { title: "event 1", date: "2024-06-01" },
+          //   { title: "event 2", date: "2024-06-02", backgroundColor: "red" },
+          //   {
+          //     title: "event 3",
+          //     start: "2024-06-02",
+          //     end: "2024-06-05",
+          //     // date: "2024-06-02",
+          //     backgroundColor: "red",
+          //     borderColor: "red",
+          //     textColor: "#000000",
+          //   },
+          //   {
+          //     title: "event 4",
+          //     start: "2024-06-10",
+          //     end: "2024-06-18",
+          //     // date: "2024-06-02",
+          //     backgroundColor: "#ABD5BD",
+          //     borderColor: "#ABD5BD",
+          //     textColor: "#000000",
+          //   },
+          // ]}
           eventColor={"#F2921D"}
+          // droppable={true}
+          // dateClick={handleEventClick}
           editable={true}
           eventClick={insertModalOpen}
         />
