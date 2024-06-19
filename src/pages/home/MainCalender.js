@@ -215,7 +215,14 @@ const MainCalender = ({
     const clickBoardId = clickInfo.event.id;
     const clickCalendarId = clickInfo.event._def.extendedProps.calendarId;
 
-    // console.log("일정 클릭 했을 때 boardId, calendarId 들어오는지 체크");
+    // console.log(
+    //   "일정 클릭 했을 때 boardId, calendarId 들어오는지 체크",
+    //   clickBoardId,
+    // );
+    // console.log(
+    //   "일정 클릭 했을 때 boardId, calendarId 들어오는지 체크",
+    //   clickCalendarId,
+    // );
     // console.log(clickInfo);
     // console.log(clickBoardId);
     // console.log(

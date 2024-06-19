@@ -75,7 +75,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
     setTodoTodayListArr(result.resultData.untilTodayBoard);
     setTodoMonthListArr(result.resultData.untilThisMonthBoard);
     setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
-    console.log("캘린더 목차 확인", result.resultData);
+    // console.log("캘린더 목차 확인", result.resultData);
 
     // console.log("길이", todoListArr.length);
     // console.log(result.resultData.untilNextMonthBoard);
@@ -158,16 +158,16 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const [selectedCalendarId, setSelectCalendarId] = useState([]);
 
   useEffect(() => {
-    console.log("선택항목 : ", selectedItems);
+    // console.log("선택항목 : ", selectedItems);
 
     // 선택된 항목들의 boradid, state 를 저장
     const boardIds = selectedItems.map(item => ({
       boardId: item.boardId,
       state: 2,
     }));
-    console.log("boardIds : ", boardIds);
+    // console.log("boardIds : ", boardIds);
     setSelectBoardId(boardIds);
-    console.log("selectedBoardId : ", boardIds);
+    // console.log("selectedBoardId : ", boardIds);
 
     // 선택된 항목의 boardid, calenderid를 저장
     // const calendarIds = selectedItems.map(item => ({

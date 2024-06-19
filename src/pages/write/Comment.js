@@ -8,17 +8,17 @@ const Comment = () => {
   // 1. useLocation 훅 취득
   const location = useLocation();
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
-  const boardIdA = location.state.boardId;
+  const boardId = location.state.boardId;
   const userId = sessionStorage.getItem("userId");
   const calendarId = localStorage.getItem("calendarId");
 
-  console.log("boardIdA : ", boardIdA);
+  console.log("boardId : ", boardId);
 
   // 전체 댓글 목록
   const [commentList, setCommentList] = useState([]);
 
   const allComments = async () => {
-    const result = await getComment(boardIdA);
+    const result = await getComment(boardId);
     setCommentList(result.data.resultData);
   };
 
@@ -33,7 +33,7 @@ const Comment = () => {
   // 댓글 추가
   const addComment = async chat => {
     const sendData = {
-      boardId: boardIdA,
+      boardId: boardId,
       signedUserId: userId,
       content: chat,
       calendarId: localStorage.getItem("calendarId"),
