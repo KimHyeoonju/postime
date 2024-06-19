@@ -78,7 +78,7 @@ nav {
 button {
   width: 260px;
   height: 40px;
-  background: #512772;
+  background: #242733;
   border-radius: 10px;
   margin: 60px auto 0 auto;
   display: flex;
@@ -92,10 +92,10 @@ span {
 
 button:hover {
   background-color: #f6f7f9;
-  border-color: #512772;
+  border-color: #242733;
   transition: background-color 0.2s;
   cursor: pointer;
 }
 button:hover span {
-  color: #512772;
+  color: #242733;
 }

@@ -28,7 +28,7 @@ body {
 .user-title-line {
   margin-top: 40px;
   margin-bottom: 30px;
-  border-bottom: 5px solid #512772;
+  border-bottom: 5px solid #242733;
   display: inline-block;
   padding: 0 45px;
 }
@@ -89,7 +89,7 @@ body {
 .user-button {
   width: 260px;
   height: 40px;
-  background: #512772;
+  background: #242733;
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
@@ -107,21 +107,21 @@ body {
 
 .user-button:hover {
   background-color: #f6f7f9;
-  border-color: #512772;
+  border-color: #242733;
   border-style: solid;
   border-width: 2px;
   transition: background-color 0.2s;
   cursor: pointer;
 }
 .user-button:hover span {
-  color: #512772;
+  color: #242733;
 }
 
 .send-code,
 .double-check {
   width: 80px;
   height: 35px;
-  background: #512772;
+  background: #242733;
   border-radius: 10px;
   border-style: solid;
   border-width: 2px;
@@ -136,14 +136,14 @@ body {
 .send-code:hover,
 .double-check:hover {
   background-color: #f6f7f9;
-  border-color: #512772;
+  border-color: #242733;
   border-style: solid;
   border-width: 2px;
   transition: background-color 0.2s;
   cursor: pointer;
 }
 .user-button:hover span {
-  color: #512772;
+  color: #242733;
 }
 
 .send-code span,
@@ -155,7 +155,7 @@ body {
 
 .send-code:hover span,
 .double-check:hover span {
-  color: #512772;
+  color: #242733;
 }
 
 /* (V)/(X) 아이콘 영역 */
