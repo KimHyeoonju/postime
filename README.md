@@ -1,5 +1,3 @@
-# <div style="Visibility: hidden">POSTIME</div>
-
 <div align=center> <img src="src/image/login-logo.png" /> </div>
 
 <br>
@@ -19,15 +17,15 @@
 ## 📆 프로젝트 개발 기간
 
 2024.05.24 - 2024.06.20
-<br>
+<br/>
 
 ## 🤼 팀구성 및 역할
 
 - Front-End
-  -- 김현주 (팀장) : 메인 페이지, TodoList
-  -- 김수민 (팀원) : 일정 생성, 수정
-  -- 박성호 (팀원) : 검색, 일정 목록, 로그아웃
-  -- 조수현 (팀원) : 회원가입, 로그인, 아이디/비밀번호 찾기, 회원정보 수정
+  - 김현주 (팀장) : 메인 페이지, TodoList
+  - 김수민 (팀원) : 일정 생성, 수정
+  - 박성호 (팀원) : 검색, 일정 목록, 로그아웃
+  - 조수현 (팀원) : 회원가입, 로그인, 아이디/비밀번호 찾기, 회원정보 수정
 
 ## 🖋 주요 기능
 
@@ -102,8 +100,8 @@ Swagger
 
 ---
 
-## ➡ [IA](<https://www.figma.com/design/oqfvZdsN9zzvYtEOq9om0Z/POSTIME_IA-(View)?node-id=2107-140&t=2ddoYBgzq8knQ8YV-1>)
+[<h2> ➡ IA</h2>](<https://www.figma.com/design/oqfvZdsN9zzvYtEOq9om0Z/POSTIME_IA-(View)?node-id=2107-140&t=2ddoYBgzq8knQ8YV-1>)
 
-## ➡ [Prototype](<https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=2250-12238&t=c2QlNc9JpttuqJJ9-1>)
+[<h2> ➡ Prototype</h2>](<https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=2250-12238&t=c2QlNc9JpttuqJJ9-1>)
 
-## ➡ [화면설계서](<https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=4-9&t=c2QlNc9JpttuqJJ9-1>)
+[<h2> ➡ 화면설계서</h2>](<https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=4-9&t=c2QlNc9JpttuqJJ9-1>)
