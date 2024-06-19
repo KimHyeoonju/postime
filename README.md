@@ -100,8 +100,11 @@ Swagger
 
 ---
 
-[<h2> ➡ IA</h2>] : <https://www.figma.com/design/oqfvZdsN9zzvYtEOq9om0Z/POSTIME_IA-(View)?node-id=2107-140&t=2ddoYBgzq8knQ8YV-1>
+<h2> ➡ IA</h2>
+ : <https://www.figma.com/design/oqfvZdsN9zzvYtEOq9om0Z/POSTIME_IA-(View)?node-id=2107-140&t=2ddoYBgzq8knQ8YV-1>
 
-[<h2> ➡ Prototype</h2>](<https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=2250-12238&t=c2QlNc9JpttuqJJ9-1>)
+<h2> ➡ Prototype</h2>
+ : <https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=2250-12238&t=c2QlNc9JpttuqJJ9-1>
 
-[<h2> ➡ 화면설계서</h2>](<https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=4-9&t=c2QlNc9JpttuqJJ9-1>)
+<h2> ➡ 화면설계서</h2>
+ : <https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=4-9&t=c2QlNc9JpttuqJJ9-1>
