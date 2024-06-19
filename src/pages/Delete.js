@@ -46,7 +46,7 @@ const Delete = () => {
     // 선택된 항목들의 boradid, state 를 저장
     const boardIds = selectedItems.map(item => ({
       boardId: item.boardId,
-      state: 2,
+      state: 1,
     }));
     console.log(boardIds);
     setSelectBoardId(boardIds);
