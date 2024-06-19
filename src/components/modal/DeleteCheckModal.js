@@ -8,9 +8,6 @@ const DeleteCheckModalStyle = styled.div`
   position: absolute;
   width: auto;
 
-  /* .calendar-warning-modal-wrap {
-  display: flex;
-} */
   .main-wrap {
     display: flex;
     flex-direction: column;
@@ -64,12 +61,10 @@ const DeleteCheckModal = ({
   selectCalenderId,
   showDeleteCheckModalCancel,
   getCalenderUserList,
-  setUserListUpdate,
+  selectCalenderMtUserId,
 }) => {
   const [deleteCheck, setDeleteCheck] = useState(false);
-  // const [userId, setUserId] = useState(8); // 나중에 아래의 세션으로 변경하기
   const userId = sessionStorage.getItem("userId");
-  // const [deleteUeserId, setDeleteUeserId] = useState(1);
 
   // 캘린더에서 유저 삭제 취소 버튼 : 모달 닫음.
   const cancelDeleteCalendarUser = e => {
@@ -91,11 +86,10 @@ const DeleteCheckModal = ({
 
   const deleteUeser = ({ userId, selectCalenderId, deleteUeserId }) => {
     if (!deleteCheck) {
-      // const result = deleteListUser(userId, calendarId, deleteUeserId);
       const res = deleteListUser({ userId, selectCalenderId, deleteUeserId });
 
       if (res) {
-        getCalenderUserList(selectCalenderId);
+        getCalenderUserList(selectCalenderId, selectCalenderMtUserId);
         showDeleteCheckModalCancel();
       }
     }
@@ -122,8 +116,8 @@ const DeleteCheckModal = ({
       });
       const status = resepons.status.toString().charAt(0);
       if (status === "2") {
-        // console.log("유저 성공적으로 삭제 : ", resepons);
-        return setUserListUpdate(true);
+        console.log("유저 성공적으로 삭제 : ", resepons);
+        // return setUserListUpdate(true);
       } else {
         console.log("API 오류");
       }

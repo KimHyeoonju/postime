@@ -4,6 +4,7 @@ import { colorSystem } from "../../css/color";
 import CalendarModal from "./CalendarModal";
 import "./calendarselectmodalstyle.css";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router";
 
 const CalendarSelectModalStyle = styled.div`
   z-index: 9999999;
@@ -25,8 +26,13 @@ const CalendarSelectModalStyle = styled.div`
   }
 `;
 
-const CalendarSelectModal = ({ calendarSelectModalCancel, setModalType }) => {
+const CalendarSelectModal = ({
+  selectCalenderId,
+  calendarSelectModalCancel,
+  setModalType,
+}) => {
   const modalRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handler = event => {
@@ -62,6 +68,15 @@ const CalendarSelectModal = ({ calendarSelectModalCancel, setModalType }) => {
     // 수정
     setModalType(2);
   };
+  const insertModalOpen = e => {
+    console.log("selectCalenderId : ", selectCalenderId);
+
+    navigate("/write/create", {
+      state: {
+        calendarId: selectCalenderId,
+      },
+    });
+  };
 
   return (
     <CalendarSelectModalStyle>
@@ -82,6 +97,14 @@ const CalendarSelectModal = ({ calendarSelectModalCancel, setModalType }) => {
             }}
           >
             수정
+          </div>
+          <div
+            className="calendar-select-item"
+            onClick={e => {
+              insertModalOpen(e);
+            }}
+          >
+            일정 등록
           </div>
         </div>
       </div>
