@@ -1,7 +1,6 @@
 <div align=center> <img src="src/image/login-logo.png" /> </div>
 
 <br>
-<div style="color:red">(이모티콘 수정하기)</div>
 
 - 서비스 특징
 
@@ -11,8 +10,6 @@
 
 - 서비스 대상
   - 프로젝트를 진행하는 대학생, 자주 협업을 하는 업종 종사자
-
-<div style="color:red">(메인 이미지 추가)</div>
 
 ## 📆 프로젝트 개발 기간
 
@@ -26,11 +23,9 @@
   - 김수민 (팀원) : 일정 생성, 수정
   - 박성호 (팀원) : 검색, 일정 목록, 로그아웃
   - 조수현 (팀원) : 회원가입, 로그인, 아이디/비밀번호 찾기, 회원정보 수정
-<br/>
+    <br/>
 
 ## 🖋 주요 기능
-
-<div style="color:red">(아래에 수정하고 싶은 내용이 있다면 요청 바람)</div>
 
 > 유저 기능 (담당자 : 조수현)
 
@@ -67,7 +62,15 @@
 
 ## <div align=center> 시연 영상 </div>
 
+<br/>
+<br/>
+<br/>
+<br/>
 <div style="color:red">(길어도 됨-git에는 하나만)(전체 적인 영상)</div>
+<br/>
+<br/>
+<br/>
+<br/>
 
 ## <div align=center> 📚 사용 기술 & 라이브러리 </div>
 
@@ -100,10 +103,15 @@
 ---
 
 <h2> ➡ IA</h2>
- : <https://www.figma.com/design/oqfvZdsN9zzvYtEOq9om0Z/POSTIME_IA-(View)?node-id=2107-140&t=2ddoYBgzq8knQ8YV-1>
 
+- https://www.figma.com/design/oqfvZdsN9zzvYtEOq9om0Z/POSTIME_IA-(View)?node-id=2107-140&t=U8YUww9sZ3pwDpHQ-1
+<div align=center> <img src="src/image//AI.png" /> </div>
+
+<br/>
 <h2> ➡ Prototype</h2>
- : <https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=2250-12238&t=c2QlNc9JpttuqJJ9-1>
+
+- https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=2250-12238&t=c2QlNc9JpttuqJJ9-1
 
 <h2> ➡ 화면설계서</h2>
- : <https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=4-9&t=c2QlNc9JpttuqJJ9-1>
+
+- https://www.figma.com/design/kWrvzfThPI76oFtk7N3zaV/POSTIME(View)?node-id=4-9&t=c2QlNc9JpttuqJJ9-1

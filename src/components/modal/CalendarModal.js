@@ -172,6 +172,7 @@ const CalendarModal = ({
           selectCalenderId={selectCalenderId}
           getCalenderUserList={getCalenderUserList}
           setUserListUpdate={setUserListUpdate}
+          userListUpdate={userListUpdate}
           selectCalenderMtUserId={selectCalenderMtUserId}
         />
       ) : null}
