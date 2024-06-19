@@ -1,9 +1,11 @@
 import axios from "axios";
 
 // 완료페이지 목록 불러오기
-export const getCompleteList = async () => {
+export const getCompleteList = async loginUserId => {
   try {
-    const response = await axios.get(`/api/board/done?signed_user_id=8`);
+    const response = await axios.get(
+      `/api/board/done?signed_user_id=${loginUserId}`,
+    );
     const status = response.status.toString().charAt(0);
     // console.log("resopnse : ", response);
     if (status === "2") {
