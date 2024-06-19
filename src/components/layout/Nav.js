@@ -103,7 +103,7 @@ const Nav = ({
           setIsNewAlarm(false);
         }
       }
-      console.log(resepons.data);
+      // console.log(resepons.data);
     } catch (error) {
       console.log(error);
     }
