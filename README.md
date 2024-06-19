@@ -94,7 +94,7 @@
    <br/>
 <img src="https://img.shields.io/badge/figma-%23F24E1E?style=for-the-badge&logo=figma&logoColor=white">
 <img src="https://img.shields.io/static/v1?style=for-the-badge&message=Postman&color=FF6C37&logo=Postman&logoColor=FFFFFF&label=">
-<img src="https://img.shields.io/badge/Slack-purple?logo=slack&logoColor=white">
+<img src="https://img.shields.io/badge/Slack-4A154B.svg?&style=for-the-badge&logo=Slack&logoColor=white">
  </div>
 
 ---
