@@ -9,7 +9,7 @@
 .user-title-line {
   margin-top: 40px;
   margin-bottom: 30px;
-  border-bottom: 5px solid #512772;
+  border-bottom: 5px solid #242733;
   display: inline-block;
   padding: 0 45px;
 }
@@ -99,7 +99,7 @@
 .user-button {
   width: 260px;
   height: 40px;
-  background: #512772;
+  background: #242733;
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
@@ -115,19 +115,19 @@
 
 .user-button:hover {
   background-color: #f6f7f9;
-  border-color: #512772;
+  border-color: #242733;
   transition: background-color 0.2s;
   cursor: pointer;
 }
 .double-check:hover span,
 .user-button button:hover span {
-  color: #512772;
+  color: #242733;
 }
 
 .double-check {
   width: 80px;
   height: 35px;
-  background: #512772;
+  background: #242733;
   border-color: #0f1015;
   border-radius: 10px;
   margin-top: 10px;
@@ -145,7 +145,7 @@
   background-color: #f6f7f9;
   border-style: solid;
   border-width: 2px;
-  border-color: #512772;
+  border-color: #242733;
   transition: background-color 0.2s;
   cursor: pointer;
 }

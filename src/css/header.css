@@ -2,7 +2,7 @@ header {
   position: relative;
   height: 80px;
   width: 100%;
-  background-color: #0f1015;
+  background-color: #242733;
 }
 .header-inner {
   height: 80px;
@@ -23,11 +23,18 @@ header {
   height: 100%;
 }
 .header-list .header-user-name {
+  font-size: 18px;
   color: #fff;
   display: flex;
   align-items: center;
   /* position: relative; */
   margin-right: 35px;
+}
+.header-user-name span {
+  margin-right: 10px;
+  font-weight: bold;
+
+  color: #fff;
 }
 .header-list .header-user-name::after {
   /* position: absolute; */
@@ -50,21 +57,30 @@ header {
   border: 1px solid #cacaca;
   outline: none;
 }
-.header-list .header-search {
-  width: 24px;
-  height: 24px;
-  background: url(../image/icon-search.png) no-repeat center;
-  background-size: contain;
-  margin-right: 35px;
+.header-list .header-search svg {
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  margin-right: 25px;
   margin-left: 10px;
 }
-.header-list .header-menu {
+.header-list .header-search svg:hover {
+  border: 1px solid #4f546e;
+  border-radius: 10px;
+}
+.header-list .header-menu svg {
   display: block;
-  width: 24px;
-  height: 24px;
-  background: url(../image/icon-hbr.png) no-repeat center;
-  background-size: contain;
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+
   margin-right: 35px;
+}
+.header-list .header-menu svg:hover {
+  border: 1px solid #4f546e;
+  border-radius: 10px;
 }
 
 .header-more {

@@ -4,40 +4,47 @@ import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
 import "../../css/create.css";
 import Mulitifile from "./Mulitifile";
+
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { sendCreateAllData } from "../../apis/create/createApi";
-import Modal from "../../components/Modal";
-// const calendarId = localStorage.setItem("calendarId", 1);
+// import Modal from "../../components/Modal";
+
+
 const Create = () => {
   const userId = sessionStorage.getItem("userId");
   const navigate = useNavigate();
   const location = useLocation();
-  // 모달관련
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalText, setModalText] = useState("");
-  const [modalBtOk, setModalBtOk] = useState(false);
-  const [modalBtCancel, setModalBtCancel] = useState(false);
-  const [calendarId, setCalendarId] = useState("");
-  const [calendarName, setCalendarName] = useState("");
+
   useEffect(() => {
     setCalendarId(location.state.calendarId);
-    setCalendarName(location.state.calendarName);
-    console.log("location.state.calendarName : ", location.state.calendarName);
-    console.log("location.state.calendarId : ", location.state.calendarId);
+    // setCalendarName(location.state.calendarName);
+    // console.log("location.state.boardId : ", location.state.boardId);
+    // console.log("location.state.calendarId : ", location.state.calendarId);
   }, []);
 
-  // 모달 보이는 상태값
-  const [isModal, setIsModal] = useState(false);
-  const handleModalSubmit = e => {
-    e.preventDefault();
-    // 모달 활성화
-    setIsModal(true);
-  };
-  // 모달 실행 함수
-  const handleModalConfirm = () => {
-    setIsModal(false);
-    navigate("/");
-  };
+  // // 모달관련
+  // const [modalTitle, setModalTitle] = useState("");
+  // const [modalText, setModalText] = useState("");
+  // const [modalBtOk, setModalBtOk] = useState(false);
+  // const [modalBtCancel, setModalBtCancel] = useState(false);
+
+  // // 모달 보이는 상태값
+  // const [isModal, setIsModal] = useState(false);
+
+  // const handleModalSubmit = e => {
+  //   e.preventDefault();
+  //   // 모달 활성화
+  //   setIsModal(true);
+  // };
+
+  // // 모달 실행 함수
+  // const handleModalConfirm = () => {
+  //   setIsModal(false);
+  //   navigate("/");
+  // };
+
+
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
@@ -45,6 +52,10 @@ const Create = () => {
   const [deadLine, setDeadLine] = useState("00:00:00");
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
+
+  const [calendarId, setCalendarId] = useState("");
+  const [calendarName, setCalendarName] = useState("");
+
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
     // console.log("Title:", event.target.value);
@@ -105,9 +116,10 @@ const Create = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="write-wrap">
-      {isModal ? (
+      {/* {isModal ? (
         <Modal
           title={modalTitle}
           message={modalText}
@@ -116,7 +128,7 @@ const Create = () => {
           stateList={0}
           isOpen={isModal}
         />
-      ) : null}
+      ) : null} */}
       <div className="write-inner">
         <div className="write-header-title">
           {/* 글쓰기 상단 제목부 */}
@@ -135,7 +147,7 @@ const Create = () => {
                 <button
                   className="write-button-primary"
                   type="button"
-                  onClick={e => handleModalSubmit(e)}
+                  // onClick={e => handleModalSubmit(e)}
                 >
                   <span>삭제</span>
                 </button>
@@ -154,7 +166,8 @@ const Create = () => {
               <div className="write-header-dec">
                 <span>
                   <IoBookmarkSharp /> {calendarName}
-                  {/* <IoBookmarkSharp /> 내 캘린더 */}
+
+
                 </span>
                 <div className="write-header-info">
                   <div className="write-header-icon">
