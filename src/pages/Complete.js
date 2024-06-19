@@ -16,14 +16,14 @@ const Complete = () => {
   const [selectedBoardId, setSelectBoardId] = useState([]);
   // 선택된 항목들의 ID를 저장 (state 2번으로)
   const [selectedBoardIdTwo, setSelectBoardIdTwo] = useState([]);
-
+  const signedUserId = sessionStorage.getItem("userId");
   useEffect(() => {
     getApi();
   }, []);
 
   // *******의존성 배열 자리에 state가 추가되야할까 아닐까*******
   useEffect(() => {
-    console.log("선택항목 : ", selectedItems);
+    // console.log("선택항목 : ", selectedItems);
 
     const boardIds = selectedItems.map(item => ({
       boardId: item.boardId,
@@ -41,9 +41,9 @@ const Complete = () => {
   }, [selectedItems]);
 
   const handleCheckboxChange = (item, isChecked) => {
-    console.log("item", item);
-    console.log("isChecked", isChecked);
-    console.log("selectedItems", selectedItems);
+    // console.log("item", item);
+    // console.log("isChecked", isChecked);
+    // console.log("selectedItems", selectedItems);
 
     if (isChecked) {
       setSelectedItems(prevItems => [...prevItems, item]);
@@ -61,7 +61,7 @@ const Complete = () => {
   // 완료 목록 불러오기
   //******* userid 에 따라 다른 값이 들어와야함 *******
   const getApi = async () => {
-    const result = await getCompleteList();
+    const result = await getCompleteList(signedUserId);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
       return;

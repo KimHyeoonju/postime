@@ -23,9 +23,9 @@ function App() {
   // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
   const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
 
-  useEffect(() => {
-    console.log("나의 정보: ", rememberId);
-  }, [rememberId]);
+  // useEffect(() => {
+  //   console.log("나의 정보: ", rememberId);
+  // }, [rememberId]);
 
   useEffect(() => {
     const userInfoFromStorage = sessionStorage.getItem("userId");
