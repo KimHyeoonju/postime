@@ -86,7 +86,7 @@ const Create = () => {
 
     // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
     const infoData = JSON.stringify({
-      calendarId: calendarId,
+      calendarId: 1,
       signedUserId: userId,
       title: createTitle,
       startDay: startDay,
@@ -94,6 +94,8 @@ const Create = () => {
       deadLine: deadline,
       dDay: dDay,
     });
+
+    console.log("infoData : ", infoData);
     // 3 번 Blob 바이너리 데이터 만들기
     const dto = new Blob([infoData], { type: "application/json" });
     // 4 번 form-data 에 키에 값으로 추가하기

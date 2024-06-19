@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Index from "./pages/Index";
+import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/user/LoginPage";
 import SearchIdPage from "./pages/user/SearchIdPage";
 import SearchPwPage from "./pages/user/SearchPwPage";
-import UserNewPwPage from "./pages/user/UserNewPwPage";
 import SignUpPage from "./pages/user/SignUpPage";
-import NotFoundPage from "./pages/NotFoundPage";
-import Index from "./pages/Index";
+import UserNewPwPage from "./pages/user/UserNewPwPage";
 function App() {
-  // const [userId2, setUserId] = sessionStorage.getItem("userId");
-  // console.log("Nav userId : ", userId2);
-
   const userId = sessionStorage.getItem("userId");
   const userEmail = sessionStorage.getItem("email");
   const userName = sessionStorage.getItem("name");
@@ -20,32 +17,19 @@ function App() {
     email: userEmail,
     name: userName,
   });
+
   const [rememberId, setRememberId] = useState("");
-  // const [userInfo, setUserInfo] = useState(null); // {user, ...}
+
   // const [isLogin, setIsLogin] = useState(true); /// 로그인이 되어 있는 경우
   const [isLogin, setIsLogin] = useState(false); //  로그인이 되어 있지 않은 경우
-  // const [signUserId, setSignUserId] = useState(null);
+
   useEffect(() => {
     console.log("나의 정보: ", rememberId);
   }, [rememberId]);
-  // 로그인 했을 때 로그인 상태 유지하기
-  // sessionStorage.setItem(
-  //   "userInfo",
-  //   JSON.stringify({
-  //     userId: "myUserId",
-  //     userName: "myUserName",
-  //     userEmail: "myUserEmail",
-  //   }),
-  // );
+
   useEffect(() => {
     const userInfoFromStorage = sessionStorage.getItem("userId");
     if (userInfoFromStorage) {
-      // setUserInfo({
-      //   userId: userInfoFromStorage.userId,
-      //   userEmail: userInfoFromStorage.userEmail,
-      //   userName: userInfoFromStorage.userName,
-      // });
-
       // setIsLogin(false); // 로그인 상태 설정
       setIsLogin(true); // 로그인 상태 설정
     }
@@ -80,10 +64,6 @@ function App() {
           <Route path="/*" element={<NotFoundPage />} />
         </Routes>
       )}
-      {/* 잘못된 경로 */}
-      {/* <Routes> */}
-      {/* <Route path="*" element={<NotFoundPage />} /> */}
-      {/* </Routes> */}
     </BrowserRouter>
   );
 }

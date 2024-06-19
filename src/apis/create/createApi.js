@@ -22,10 +22,27 @@ export const modifyAllData = async data => {
   }
 };
 
-export const getAllData = async boardIdA => {
+export const deleteURLFile = async data => {
+  try {
+    // {
+    //   "boardId": 1,
+    //   "calendarId": 1,
+    //   "fileId": 1,
+    //   "fileName": "77e0e5e6-5731-4957-91d8-6efbd15b9a8e.jpg"
+    // }
+    // console.log(data);
+    const response = await axios.delete("/api/board/file", { data: data });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllData = async boardId => {
   try {
     const header = { headers: { "Content-Type": "multipart/form-data" } };
-    const response = await axios.get(`/api/board?board_id=${boardIdA}`, header);
+    const response = await axios.get(`/api/board?board_id=${boardId}`, header);
     console.log(response);
     return response;
   } catch (error) {

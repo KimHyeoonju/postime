@@ -79,14 +79,19 @@ const SearchPwPage = ({ userInfo, setRememberId }) => {
     console.log("입력 코드" + code);
     console.log("받은 코드" + servCode);
     if (servCode === code) {
-      navigate("/usernewpw");
+      setUserModalOpen(true);
+      setUserModalTitle("알림");
+      setUserModalMessage("코드 인증이 완료되었습니다.");
+      setUserModalOnConfirm(() => () => {
+        setUserModalOpen(false), navigate("/usernewpw");
+      });
+      // navigate("/usernewpw");
     } else {
       setUserModalOpen(true);
       setUserModalTitle("경고");
       setUserModalMessage("코드가 틀렸습니다.");
       setUserModalOnConfirm(() => () => setUserModalOpen(false));
     }
-    // setRememberId(userId);
   };
   const getUser = async ({ id, email }) => {
     try {
