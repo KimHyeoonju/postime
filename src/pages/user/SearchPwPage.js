@@ -9,8 +9,8 @@ const SearchPwPage = ({ userInfo, setRememberId }) => {
   console.log("비밀번호찾기의 내 자료: ", userInfo);
   // console.log("setRememberId : ", setRememberId);
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("mybirth811");
-  const [userEmail, setUserEmail] = useState("tngus@naver.com");
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [sendChecked, setSendChecked] = useState(false);
   const [code, setCode] = useState("");
   // 모달 추가
