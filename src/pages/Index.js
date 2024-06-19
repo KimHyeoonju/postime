@@ -160,7 +160,12 @@ const Index = ({ isLogin, signUserId, setIsLogin, userInfo }) => {
                   <Route path="/delete" element={<Delete />} />
                   <Route
                     path="/search"
-                    element={<Search searchTextIndex={searchTextIndex} />}
+                    element={
+                      <Search
+                        searchTextIndex={searchTextIndex}
+                        userInfo={userInfo}
+                      />
+                    }
                   />
                   <Route
                     path="/userinfo"
