@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
 import useModal from "../hooks/useModal";
 
-
 const Search = ({ searchTextIndex, userInfo }) => {
   // console.log("Search : ", searchTextIndex);
   // console.log("검색페이지", userInfo.userId);
-  // const signedUserId = sessionStorage.getItem("userId");
+  const signedUserId = sessionStorage.getItem("userId");
 
   // 로그인 한 유저의 id
   const loginUserId = userInfo.userId;
+  console.log(loginUserId, signedUserId);
 
   // map 돌릴 검색결과 배열 담을곳
   const [serarchList, setSearchList] = useState([]);
@@ -49,7 +49,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
   };
 
   const handleDetailPage = (state, boardId, calendarId) => {
-    console.log("handleDetailPage 일정클릭 ", state, boardId, calendarId);
+    // console.log("handleDetailPage 일정클릭 ", state, boardId, calendarId);
     const changeStateOneArr = [{ boardId: boardId, state: 1 }];
     const changeStateTwoArr = [{ boardId: boardId, state: 2 }];
     setSateList(state);
@@ -71,7 +71,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
           }
         },
         onDetail: () => {
-          console.log("페이지이동");
+          // console.log("페이지이동");
           navigate("/write/detail", {
             state: { boardId: boardId, calendarId: calendarId },
           });
@@ -83,7 +83,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
         message:
           "일정을 복원하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
         onConfirm: async () => {
-          console.log("progress 2>1");
+          // console.log("progress 2>1");
           try {
             await patchCompleteSearchList(changeStateOneArr);
             await getSearchApi();
@@ -93,7 +93,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
           }
         },
         onDetail: () => {
-          console.log("페이지이동");
+          // console.log("페이지이동");
           navigate("/write/detail", {
             state: { boardId: boardId, calendarId: calendarId },
           });
@@ -105,7 +105,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
         message:
           "일정을 복원하시겠습니까? 일정을 자세히 보려면 상세보기를 클릭하세요.",
         onConfirm: async () => {
-          console.log("progress 3>1");
+          // console.log("progress 3>1");
           try {
             await patchCompleteSearchList(changeStateOneArr);
             await getSearchApi();
@@ -115,7 +115,7 @@ const Search = ({ searchTextIndex, userInfo }) => {
           }
         },
         onDetail: () => {
-          console.log("페이지이동");
+          // console.log("페이지이동");
           navigate("/write/detail", {
             state: { boardId: boardId, calendarId: calendarId },
           });

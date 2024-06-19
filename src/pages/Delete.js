@@ -33,7 +33,7 @@ const Delete = () => {
   const [modalText, setModalText] = useState("");
   // 모달 보이는 상태값
   const [isModal, setIsModal] = useState(false);
-
+  const signedUserId = sessionStorage.getItem("userId");
   // load 시 목록 불러오기
   useEffect(() => {
     getDelApi();
@@ -41,14 +41,14 @@ const Delete = () => {
 
   // 선택된 항목들의 데이터 를 저장
   useEffect(() => {
-    console.log("선택항목 : ", selectedItems);
+    // console.log("선택항목 : ", selectedItems);
 
     // 선택된 항목들의 boradid, state 를 저장
     const boardIds = selectedItems.map(item => ({
       boardId: item.boardId,
       state: 1,
     }));
-    console.log(boardIds);
+    // console.log(boardIds);
     setSelectBoardId(boardIds);
 
     // 선택된 항목의 boardid, calenderid를 저장
@@ -56,15 +56,15 @@ const Delete = () => {
       boardId: item.boardId,
       calendarId: item.calendarId,
     }));
-    console.log(calendarIds);
+    // console.log(calendarIds);
     setSelectCalendarId(calendarIds);
   }, [selectedItems]);
 
   // input onchange 이벤트 핸들러
   const handleCheckboxChange = (item, isChecked) => {
-    console.log("item", item);
-    console.log("isChecked", isChecked);
-    console.log("selectedItems", selectedItems);
+    // console.log("item", item);
+    // console.log("isChecked", isChecked);
+    // console.log("selectedItems", selectedItems);
 
     if (isChecked) {
       setSelectedItems(prevItems => [...prevItems, item]);
@@ -81,7 +81,7 @@ const Delete = () => {
 
   // 삭제페이지 목록 불러오기  ** 아이디 받아와야 함
   const getDelApi = async () => {
-    const result = await getDeleteList();
+    const result = await getDeleteList(signedUserId);
     // console.log("result : ", result);
     // console.log("resultMsg : ", result.resultMsg);
     if (result.statusCode !== 2) {
@@ -94,7 +94,7 @@ const Delete = () => {
   // state 3 > 1 복원
   const handleRestoreApi = async () => {
     const result = await patchDeleteList(selectedBoardId);
-    console.log(selectedBoardId);
+    // console.log(selectedBoardId);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
       return;
@@ -127,7 +127,7 @@ const Delete = () => {
 
   // 영구삭제 모달창 핸들ㄹ러
   const handleRemoveApi = () => {
-    console.log("삭제클릭", selectedCalendarId);
+    // console.log("삭제클릭", selectedCalendarId);
     setIsModal(true);
     setModalTitle("영구삭제 안내");
     setModalText(
