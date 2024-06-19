@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { FaRegCalendar } from "react-icons/fa6";
 import { IoBookmarkSharp } from "react-icons/io5";
 import { SiStagetimer } from "react-icons/si";
-
 import "../../css/create.css";
 import Mulitifile from "./Mulitifile";
+
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { sendCreateAllData } from "../../apis/create/createApi";
 // import Modal from "../../components/Modal";
+
 
 const Create = () => {
   const userId = sessionStorage.getItem("userId");
@@ -43,6 +44,7 @@ const Create = () => {
   //   navigate("/");
   // };
 
+
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
@@ -50,18 +52,17 @@ const Create = () => {
   const [deadLine, setDeadLine] = useState("00:00:00");
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
+
   const [calendarId, setCalendarId] = useState("");
-  // const [calendarName, setCalendarName] = useState("");
+  const [calendarName, setCalendarName] = useState("");
 
   const handleTitleChange = event => {
     setCreateTitle(event.target.value);
     // console.log("Title:", event.target.value);
   };
-
   const handleWriteChange = event => {
     setCreateWrite(event.target.value);
   };
-
   useEffect(() => {
     const handleKeyDown = event => {
       const textarea = document.querySelector("#write-header-title");
@@ -69,14 +70,11 @@ const Create = () => {
         event.preventDefault();
       }
     };
-
     window.addEventListener("keydown", handleKeyDown);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
-
   const handleTimeChange = e => {
     const timeValue = e.target.value;
     const timeWithSeconds = `${timeValue}:00`;
@@ -89,7 +87,6 @@ const Create = () => {
     // 각 항목 체크하기 생략
     // 1 번 전송데이터 포맷 만들기
     const formData = new FormData();
-
     // 2 번 보낼데이터 (json 형식의 문자열로 만들기)
     const infoData = JSON.stringify({
       calendarId: calendarId,
@@ -100,7 +97,6 @@ const Create = () => {
       deadLine: deadLine,
       dDay: dDay,
     });
-
     console.log("infoData : ", infoData);
     // 3 번 Blob 바이너리 데이터 만들기
     const dto = new Blob([infoData], { type: "application/json" });
@@ -157,7 +153,6 @@ const Create = () => {
                 </button>
               </form>
             </div>
-
             <div className="write-header-text">
               <textarea
                 id="write-header-title"
@@ -168,11 +163,11 @@ const Create = () => {
                 value={createTitle}
                 onChange={handleTitleChange}
               ></textarea>
-
               <div className="write-header-dec">
                 <span>
-                  {/* <IoBookmarkSharp /> {calendarName} */}
-                  <IoBookmarkSharp /> 내 캘린더
+                  <IoBookmarkSharp /> {calendarName}
+
+
                 </span>
                 <div className="write-header-info">
                   <div className="write-header-icon">
@@ -230,5 +225,4 @@ const Create = () => {
     </div>
   );
 };
-
 export default Create;

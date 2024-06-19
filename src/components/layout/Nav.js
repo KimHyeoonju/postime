@@ -299,6 +299,7 @@ const Nav = ({
       {isCalenderSelectModal ? (
         <CalendarSelectModal
           selectCalenderId={selectCalenderId}
+          selectCalenderName={selectCalenderName}
           calendarSelectModalCancel={calendarSelectModalCancel}
           setModalType={setModalType}
         />
