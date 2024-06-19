@@ -32,7 +32,7 @@ const Complete = () => {
     console.log(boardIds);
     console.log(state);
     setSelectBoardId(boardIds);
-  }, [selectedItems]);
+  }, [selectedItems, state]);
 
   const handleCheckboxChange = (item, isChecked) => {
     console.log("item", item);
@@ -84,7 +84,6 @@ const Complete = () => {
   const handleProgressApi = async () => {
     // 상태 코드 셋팅 (복원 : 1)
     setState(1);
-
     const result = await patchProgressCompleteList(selectedBoardId);
     if (result.statusCode !== 2) {
       alert(result.resultMsg);
