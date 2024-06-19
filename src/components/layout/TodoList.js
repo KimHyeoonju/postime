@@ -71,6 +71,7 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
     setTodoMonthListArr(result.resultData.untilThisMonthBoard);
     setTodoNextMonthListArr(result.resultData.untilNextMonthBoard);
 
+
     checkDay();
   };
 
@@ -122,12 +123,15 @@ const TodoList = ({ todoListClassAdded, onTodoListToggle, todoListClose }) => {
   const [selectedBoardId, setSelectBoardId] = useState([]);
 
   useEffect(() => {
+
     // 선택된 항목들의 boradid, state 를 저장
     const boardIds = selectedItems.map(item => ({
       boardId: item.boardId,
       state: 2,
     }));
+
     setSelectBoardId(boardIds);
+
   }, [selectedItems]);
 
   // input onchange 이벤트 핸들러

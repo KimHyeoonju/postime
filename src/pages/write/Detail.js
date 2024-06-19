@@ -19,17 +19,17 @@ import {
 
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-const Detail = ({ boardId }) => {
+const Detail = () => {
+  const navigate = useNavigate();
   // 1. useLocation 훅 취득
   const location = useLocation();
+  // console.log("Detail Location: ", location.state);
   //2. location.state 에서 파라미터 취득 - 타입을 지정해줌.
 
-  const boardIdA = location.state.boardId;
-  const calendarId = location.state.calendarId;
+  // const boardId = location.state.boardId;
+  // const calendarId = location.state.calendarId;
 
   const userId = sessionStorage.getItem("userId");
-
-
   // 글쓰기 관련
   const [createTitle, setCreateTitle] = useState("");
   const [startDay, setStartDay] = useState("");
@@ -37,38 +37,56 @@ const Detail = ({ boardId }) => {
   const [deadline, setDeadline] = useState();
   const [createWrite, setCreateWrite] = useState("");
   const [sendFiles, setSendFiles] = useState([]);
+  const [sendUrlFiles, setSendUrlFiles] = useState([]);
+  const [calendarId, setCalendarId] = useState(null);
+  const [boardId, setBoardId] = useState("");
 
-  // const { boardId } = useParams();
-  const navigate = useNavigate();
+  const getData = async () => {
+    try {
+      const response = await getAllData(boardId);
+      console.log("Detail.js : ", response.data.resultData);
+      const result = response.data.resultData;
+      setCreateTitle(result.title);
+      setStartDay(result.startDay);
+      setDDay(result.dDay);
+      setDeadline(result.deadLine);
+      setCreateWrite(result.content);
+      setSendUrlFiles(result.files);
+      setCalendarId(result.calendarId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await getAllData(boardIdA);
-        console.log(response);
+    setBoardId(location.state.boardId);
+    setCalendarId(location.state.calendarId);
+    // console.log("location.state.boardId : ", location.state.boardId);
+    // console.log("location.state.calendarId : ", location.state.calendarId);
+  }, []);
 
-        const result = response.data.resultData;
+  useEffect(() => {
+    getData();
+  }, [calendarId, boardId]);
 
-        setCreateTitle(result.title);
-        setStartDay(result.startDay);
-        setDDay(result.dDay);
-        setDeadline(result.deadLine);
-        setCreateWrite(result.content);
-        setSendFiles(response.data.files);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (boardIdA) {
-      getData();
-    }
-  }, [boardIdA]);
+  // const { boardId } = useParams();
+
+  // useEffect(() => {
+  //   if (boardId) {
+  //     getData();
+  //   }
+  // }, [boardId]);
+
+  // useEffect(() => {
+  //   console.log("sendFilessendFilessendFiles : ", sendFiles);
+  //   console.log("sendFilessendFilessendFiles : ", calendarId);
+  // }, [calendarId]);
 
   // 보드 완료
   const boardComplete = async e => {
     e.preventDefault();
     try {
-      const data = [{ boardId: boardIdA, state: 2 }];
+      const data = [{ boardId: boardId, state: 2 }];
       await patchCompleteSearchList(data);
       navigate("/complete");
     } catch (error) {
@@ -80,13 +98,13 @@ const Detail = ({ boardId }) => {
     e.preventDefault();
     navigate("/write/modify", {
       state: {
-        boardId: boardIdA,
+        boardId: boardId,
         calendarId: calendarId,
       },
     });
 
     // try {
-    //   const data = [{ boardId: boardIdA, state: 2 }];
+    //   const data = [{ boardId: boardId, state: 2 }];
     //   await patchCompleteSearchList(data);
     //   navigate("/complete");
     // } catch (error) {
@@ -176,7 +194,16 @@ const Detail = ({ boardId }) => {
               ></textarea>
             </div>
             {/* 이미지 업로드 부분 */}
-            <Mulitifile sendFiles={sendFiles} readOnly />
+
+            <Mulitifile
+              sendFiles={sendFiles}
+              setSendFiles={setSendFiles}
+              sendUrlFiles={sendUrlFiles}
+              setSendUrlFiles={setSendUrlFiles}
+              calendarId={calendarId}
+              boardId={boardId}
+              readOnly
+            />
           </div>
         </div>
         {/*  수정했습니다. */}

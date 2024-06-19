@@ -171,6 +171,7 @@ const MainCalender = ({ nowCalendarId, checkedCalendarIds }) => {
     const clickBoardId = clickInfo.event.id;
     const clickCalendarId = clickInfo.event._def.extendedProps.calendarId;
 
+
     navigate("/write/detail", {
       state: {
         boardId: clickBoardId,
