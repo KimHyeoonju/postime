@@ -37,6 +37,13 @@ const Modify = () => {
   const [calendarId, setCalendarId] = useState(null);
   const [boardId, setBoardId] = useState("");
 
+  useEffect(() => {
+    setCalendarId(location.state.calendarId);
+    setBoardId(location.state.boardId);
+    // console.log("location.state.boardId : ", location.state.boardId);
+    // console.log("location.state.calendarId : ", location.state.calendarId);
+  }, []);
+
   const handleTimeChange = e => {
     const timeValue = e.target.value;
     const timeWithSeconds = `${timeValue}:00`;
@@ -76,7 +83,7 @@ const Modify = () => {
 
     const infoData = JSON.stringify({
       boardId: boardId,
-      calendarId: 1,
+      calendarId: calendarId,
       title: createTitle,
       content: createWrite,
       startDay: startDay,

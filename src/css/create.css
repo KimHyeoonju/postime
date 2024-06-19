@@ -40,14 +40,14 @@
   width: 76px;
   height: 38px;
 
-  border: solid 1px #0f1015;
+  border: solid 1px #242733;
   border-radius: 25px;
   font-size: 14px;
   font-weight: 700;
-  color: #0f1015;
+  color: #242733;
 }
 .write-button-primary:hover {
-  background-color: #0f1015;
+  background-color: #242733;
   color: #f8f8f8;
   cursor: pointer;
 }
@@ -104,7 +104,7 @@ input[type="date"]::-webkit-datetime-edit-text {
   -webkit-appearance: none;
 }
 input[type="date"]:valid {
-  color: #0f1015;
+  color: #242733;
   font-size: 15px;
 }
 
@@ -150,7 +150,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .write-main-text {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
   padding-top: 18px;
   padding-left: 10px;
 }
@@ -224,7 +224,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   align-items: center;
   background: #f8f8f8;
-  border: solid 1px #0f1015;
+  border: solid 1px #242733;
   border-radius: 50px;
   justify-content: center;
   position: absolute;
@@ -251,7 +251,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* margin: 0 auto; */
 }
 .img-upload:hover {
-  background-color: #0f1015;
+  background-color: #242733;
   color: #f8f8f8;
   cursor: pointer;
 }
@@ -318,7 +318,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   background: #fff;
   border-radius: 10px 10px 10px 0;
-  border: solid 1px #0f1015;
+  border: solid 1px #242733;
 }
 
 .chat-comment-inner:hover .comment-icon {
@@ -335,7 +335,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex;
   height: 45px;
   background: #d8dae3;
-  outline: solid 1px #0f1015;
+  outline: solid 1px #242733;
   border-radius: 5px;
   padding: 10px;
 
@@ -369,7 +369,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
   height: 45px;
   background: #d8dae3;
-  outline: solid 1px #0f1015;
+  outline: solid 1px #242733;
   border-radius: 5px;
   padding: 10px;
 
