@@ -24,7 +24,8 @@ const UserInfoPage = ({
   const [userPwModalOpen, setUserPwModalOpen] = useState(true);
   // const [userModalClose, setUserModalClose] = useState(false);
   const [userPwModalMessage, setUserPwModalMessage] = useState("");
-  const [userPwModalInput, setUserPwModalInput] = useState("Test!@#$1234");
+  // const [userPwModalInput, setUserPwModalInput] = useState("Test!@#$1234");
+  const [userPwModalInput, setUserPwModalInput] = useState("");
   const [userPwModalOnConfirm, setUserPwModalOnConfirm] = useState(
     () => () => {},
   );
