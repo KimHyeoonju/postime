@@ -62,19 +62,9 @@
 
 ## <div align=center> 시연 영상 </div>
 
-https://youtu.be/dwQGCA4aC1Y
 
-[![Video Label](http://img.youtube.com/vi/'dwQGCA4aC1Y'/0.jpg)](https://youtu.be/'dwQGCA4aC1Y')
+[![Video Label](http://img.youtube.com/vi/dwQGCA4aC1Y/0.jpg)](https://youtu.be/dwQGCA4aC1Y)
 
-
-<br/>
-<br/>
-<br/>
-<br/>
-<div style="color:red">(길어도 됨-git에는 하나만)(전체 적인 영상)</div>
-<br/>
-<br/>
-<br/>
 <br/>
 
 ## <div align=center> 📚 사용 기술 & 라이브러리 </div>
