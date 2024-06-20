@@ -62,7 +62,7 @@
 
 ## <div align=center> 시연 영상 </div>
 
-<div align=center style="witdh:100%">
+<div align=center>
 [![Video Label](http://img.youtube.com/vi/dwQGCA4aC1Y/0.jpg)](https://youtu.be/dwQGCA4aC1Y)
 </div>
 
